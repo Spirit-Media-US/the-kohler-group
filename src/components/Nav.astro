@@ -74,23 +74,23 @@ function isActive(href: string) {
 			</div>
 
 			<!-- Desktop: logo centered -->
-			<div class="hidden justify-center py-6 lg:flex">
+			<div class="hidden justify-center pt-6 lg:flex">
 				<a href="/" aria-label="The Kohler Group PLLC">
 					<img
 						src="https://static.wixstatic.com/media/2e5b58_0ea5ab642e2342b6b2a5f7578fad42e1~mv2.png"
 						alt="The Kohler Group PLLC"
-						class="h-36 w-auto"
-						width="360"
-						height="144"
+						class="h-56 w-auto"
+						width="560"
+						height="224"
 					/>
 				</a>
 			</div>
 		</div>
 	</div>
 
-	<!-- ── BOTTOM BAND: white + dark nav links ── -->
-	<div class="border-b border-gray-100 bg-white">
-		<div class="container hidden items-center justify-center gap-5 py-3 lg:flex">
+	<!-- ── BOTTOM BAND: navy + white nav links ── -->
+	<div class="bg-brand">
+		<div class="container hidden items-center justify-center gap-5 pb-4 pt-2 lg:flex">
 			{
 				navLinks.map(({ href, label, external }) => (
 					<a
@@ -100,8 +100,8 @@ function isActive(href: string) {
 						class:list={[
 							'text-xs font-medium uppercase tracking-caps transition',
 							isActive(href)
-								? 'border-b border-brand pb-0.5 text-brand'
-								: 'text-gray-600 hover:text-brand',
+								? 'border-b border-white pb-0.5 text-white'
+								: 'text-white/70 hover:text-white',
 						]}
 					>
 						{label}
@@ -109,14 +109,14 @@ function isActive(href: string) {
 				))
 			}
 
-			<span class="text-gray-300">|</span>
+			<span class="text-white/30">|</span>
 
 			<!-- Request Appointment pill -->
 			<a
 				href="https://barbara-kohler.clientsecure.me/contact-widget"
 				target="_blank"
 				rel="noopener noreferrer"
-				class="rounded-full border border-brand px-5 py-2 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-brand hover:text-white"
+				class="rounded-full border border-white px-5 py-2 text-xs font-bold uppercase tracking-ui text-white transition hover:bg-white hover:text-brand"
 			>
 				Request an Appointment
 			</a>
@@ -127,7 +127,7 @@ function isActive(href: string) {
 				target="_blank"
 				rel="noopener noreferrer"
 				aria-label="Instagram"
-				class="text-gray-400 transition hover:text-brand"
+				class="text-white/70 transition hover:text-white"
 			>
 				<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 					<path
@@ -142,7 +142,7 @@ function isActive(href: string) {
 				target="_blank"
 				rel="noopener noreferrer"
 				aria-label="Facebook"
-				class="text-gray-400 transition hover:text-brand"
+				class="text-white/70 transition hover:text-white"
 			>
 				<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
 					<path
