@@ -5,9 +5,18 @@ interface Props {
 	title: string;
 	description?: string;
 	canonicalURL?: string;
+	ogImage?: string;
 }
 
-const { title, description = 'The Kohler Group', canonicalURL = Astro.url.href } = Astro.props;
+const {
+	title,
+	description = 'The Kohler Group',
+	canonicalURL = Astro.url.href,
+	ogImage = '/og-default.png',
+} = Astro.props;
+
+const siteName = 'The Kohler Group';
+const ogImageURL = new URL(ogImage, Astro.site ?? Astro.url).href;
 ---
 
 <!doctype html>
@@ -22,10 +31,18 @@ const { title, description = 'The Kohler Group', canonicalURL = Astro.url.href }
     <title>{title}</title>
 
     <!-- Open Graph -->
+    <meta property="og:site_name" content={siteName} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonicalURL} />
     <meta property="og:type" content="website" />
+    <meta property="og:image" content={ogImageURL} />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageURL} />
   </head>
   <body>
     <slot />

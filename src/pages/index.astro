@@ -2,13 +2,34 @@
 import Layout from '@layouts/Layout.astro';
 ---
 
-<Layout title="The Kohler Group" description="Welcome to The Kohler Group.">
-  <main class="container py-16">
-    <h1 class="text-4xl font-bold text-gray-900">
-      The Kohler Group
-    </h1>
-    <p class="mt-4 text-lg text-gray-600">
-      Welcome. This site is under construction.
-    </p>
-  </main>
+<Layout
+  title="The Kohler Group"
+  description="Placeholder description — update this with your actual value proposition."
+>
+  <!-- Hero -->
+  <section class="container py-24 sm:py-32">
+    <div class="max-w-3xl">
+      <h1 class="text-5xl font-bold tracking-tight text-gray-900 sm:text-6xl">
+        The Kohler Group
+      </h1>
+      <p class="mt-6 text-xl leading-8 text-gray-600">
+        Placeholder hero copy. Replace this with a clear, compelling statement
+        about what you do and who you serve.
+      </p>
+      <div class="mt-10 flex flex-wrap items-center gap-4">
+        <a
+          href="#contact"
+          class="rounded-md bg-gray-900 px-6 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-gray-700"
+        >
+          Get in touch
+        </a>
+        <a
+          href="#about"
+          class="text-sm font-semibold text-gray-900 transition hover:text-gray-600"
+        >
+          Learn more <span aria-hidden="true">→</span>
+        </a>
+      </div>
+    </div>
+  </section>
 </Layout>
