@@ -19,77 +19,78 @@ function isActive(href: string) {
 }
 ---
 
-<header class="bg-white">
-	<!-- Top accent bar -->
-	<div class="h-1.5 bg-brand"></div>
-
-	<div class="container">
-		<!-- Logo row — centered on desktop, left+hamburger on mobile -->
-		<div class="flex items-center justify-between py-5 lg:justify-center">
-			<!-- Spacer (mobile only, keeps logo centered) -->
-			<div class="w-8 lg:hidden"></div>
-
-			<!-- Logo — CSS mask renders the white Wix PNG in brand navy on white nav -->
-			<a href="/" class="block" aria-label="The Kohler Group PLLC">
-				<div
-					class="h-16 w-44 lg:h-24 lg:w-64"
-					style="
-						background-color: #173862;
-						-webkit-mask-image: url('https://static.wixstatic.com/media/2e5b58_0ea5ab642e2342b6b2a5f7578fad42e1~mv2.png');
-						mask-image: url('https://static.wixstatic.com/media/2e5b58_0ea5ab642e2342b6b2a5f7578fad42e1~mv2.png');
-						-webkit-mask-size: contain;
-						mask-size: contain;
-						-webkit-mask-repeat: no-repeat;
-						mask-repeat: no-repeat;
-						-webkit-mask-position: center;
-						mask-position: center;
-					"
-					role="img"
-					aria-label="The Kohler Group PLLC"
-				></div>
-			</a>
-
-			<!-- Hamburger (mobile only) -->
-			<button
-				id="nav-toggle"
-				class="p-1 text-brand lg:hidden"
-				aria-label="Toggle navigation"
-				aria-expanded="false"
-				aria-controls="nav-menu"
-			>
-				<svg
-					id="icon-open"
-					class="h-6 w-6"
-					fill="none"
-					stroke="currentColor"
-					viewBox="0 0 24 24"
-					aria-hidden="true"
+<header>
+	<!-- ── TOP BAND: dark navy + centered white logo ── -->
+	<div class="bg-brand">
+		<div class="container">
+			<!-- Mobile header row: logo centered, hamburger right -->
+			<div class="flex items-center justify-between py-5 lg:hidden">
+				<div class="w-8"></div>
+				<a href="/" aria-label="The Kohler Group PLLC">
+					<img
+						src="https://static.wixstatic.com/media/2e5b58_0ea5ab642e2342b6b2a5f7578fad42e1~mv2.png"
+						alt="The Kohler Group PLLC"
+						class="h-14 w-auto"
+						width="200"
+						height="56"
+					/>
+				</a>
+				<button
+					id="nav-toggle"
+					class="p-1 text-white lg:hidden"
+					aria-label="Toggle navigation"
+					aria-expanded="false"
+					aria-controls="nav-menu"
 				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M4 6h16M4 12h16M4 18h16"></path>
-				</svg>
-				<svg
-					id="icon-close"
-					class="hidden h-6 w-6"
-					fill="none"
-					stroke="currentColor"
-					viewBox="0 0 24 24"
-					aria-hidden="true"
-				>
-					<path
-						stroke-linecap="round"
-						stroke-linejoin="round"
-						stroke-width="2"
-						d="M6 18L18 6M6 6l12 12"></path>
-				</svg>
-			</button>
+					<svg
+						id="icon-open"
+						class="h-6 w-6"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						aria-hidden="true"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M4 6h16M4 12h16M4 18h16"></path>
+					</svg>
+					<svg
+						id="icon-close"
+						class="hidden h-6 w-6"
+						fill="none"
+						stroke="currentColor"
+						viewBox="0 0 24 24"
+						aria-hidden="true"
+					>
+						<path
+							stroke-linecap="round"
+							stroke-linejoin="round"
+							stroke-width="2"
+							d="M6 18L18 6M6 6l12 12"></path>
+					</svg>
+				</button>
+			</div>
+
+			<!-- Desktop: logo centered -->
+			<div class="hidden justify-center py-6 lg:flex">
+				<a href="/" aria-label="The Kohler Group PLLC">
+					<img
+						src="https://static.wixstatic.com/media/2e5b58_0ea5ab642e2342b6b2a5f7578fad42e1~mv2.png"
+						alt="The Kohler Group PLLC"
+						class="h-20 w-auto"
+						width="240"
+						height="80"
+					/>
+				</a>
+			</div>
 		</div>
+	</div>
 
-		<!-- Desktop nav row -->
-		<div class="hidden items-center justify-center gap-5 border-t border-gray-100 py-3 lg:flex">
+	<!-- ── BOTTOM BAND: white + dark nav links ── -->
+	<div class="border-b border-gray-100 bg-white">
+		<div class="container hidden items-center justify-center gap-5 py-3 lg:flex">
 			{
 				navLinks.map(({ href, label, external }) => (
 					<a
@@ -108,7 +109,6 @@ function isActive(href: string) {
 				))
 			}
 
-			<!-- Divider -->
 			<span class="text-gray-300">|</span>
 
 			<!-- Request Appointment pill -->
@@ -126,7 +126,7 @@ function isActive(href: string) {
 				href="https://www.instagram.com/thekohlergrouppllc/"
 				target="_blank"
 				rel="noopener noreferrer"
-				aria-label="The Kohler Group on Instagram"
+				aria-label="Instagram"
 				class="text-gray-400 transition hover:text-brand"
 			>
 				<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -141,7 +141,7 @@ function isActive(href: string) {
 				href="https://www.facebook.com/thekohlergroup"
 				target="_blank"
 				rel="noopener noreferrer"
-				aria-label="The Kohler Group on Facebook"
+				aria-label="Facebook"
 				class="text-gray-400 transition hover:text-brand"
 			>
 				<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -154,7 +154,7 @@ function isActive(href: string) {
 	</div>
 
 	<!-- Mobile menu -->
-	<div id="nav-menu" class="hidden border-t border-gray-100 lg:hidden">
+	<div id="nav-menu" class="hidden border-t border-white/10 bg-brand lg:hidden">
 		<ul class="container flex flex-col gap-1 py-4">
 			{
 				navLinks.map(({ href, label, external }) => (
@@ -163,7 +163,7 @@ function isActive(href: string) {
 							href={href}
 							target={external ? '_blank' : undefined}
 							rel={external ? 'noopener noreferrer' : undefined}
-							class="block py-2 text-xs font-medium uppercase tracking-caps text-gray-700 hover:text-brand"
+							class="block py-2 text-xs font-medium uppercase tracking-caps text-white/80 hover:text-white"
 						>
 							{label}
 						</a>
@@ -175,7 +175,7 @@ function isActive(href: string) {
 					href="https://barbara-kohler.clientsecure.me/contact-widget"
 					target="_blank"
 					rel="noopener noreferrer"
-					class="inline-block rounded-full border border-brand px-6 py-2 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-brand hover:text-white"
+					class="inline-block rounded-full border border-white px-6 py-2 text-xs font-bold uppercase tracking-ui text-white transition hover:bg-white hover:text-brand"
 				>
 					Request an Appointment
 				</a>
