@@ -1,0 +1,113 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '@layouts/Layout.astro';
+
+const therapists = (await getCollection('therapists')).sort((a, b) => a.data.order - b.data.order);
+---
+
+<Layout
+	title="Our Therapists | The Kohler Group, PLLC"
+	description="Meet our licensed Christian therapists. Therapy is approached through a Christian worldview integrating clinical treatments with Biblical truths."
+>
+	<!-- ============================================================
+	     Hero Banner
+	     ============================================================ -->
+	<section
+		class="relative flex h-[250px] items-center justify-center bg-cover bg-top bg-no-repeat"
+		style="background-image: url('/images/therapists-hero.jpg')"
+	>
+		<div class="absolute inset-0 bg-brand/80"></div>
+		<div class="container relative z-10 text-center">
+			<h1 class="text-4xl font-bold uppercase tracking-caps text-white sm:text-5xl">
+				Our Therapists
+			</h1>
+		</div>
+	</section>
+
+	<!-- ============================================================
+	     Therapist Grid
+	     ============================================================ -->
+	<section class="bg-white py-20">
+		<div class="container">
+			<p class="mx-auto mb-10 max-w-xl text-center text-base text-gray-600">
+				Therapy is approached through a Christian worldview integrating clinical treatments with
+				Biblical truths.
+			</p>
+			<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+				{
+					therapists.map(async (therapist) => {
+						const { Content } = await therapist.render();
+						return (
+							<article class="flex flex-col overflow-hidden rounded-lg">
+								<!-- Headshot -->
+								<div class="aspect-square overflow-hidden bg-brand/10">
+									{therapist.data.headshot ? (
+										<img
+											src={therapist.data.headshot}
+											alt={`${therapist.data.name} headshot`}
+											class="h-full w-full object-cover object-top"
+											loading="lazy"
+										/>
+									) : (
+										<div class="flex h-full w-full items-center justify-center bg-brand/10">
+											<svg
+												class="h-24 w-24 text-brand/30"
+												fill="currentColor"
+												viewBox="0 0 24 24"
+												aria-hidden="true"
+											>
+												<path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
+											</svg>
+										</div>
+									)}
+								</div>
+
+								<!-- Info -->
+								<div class="flex flex-1 flex-col items-center bg-brand px-6 py-8 text-center">
+									{therapist.data.role && (
+										<p class="mb-1 text-xs font-semibold uppercase tracking-caps text-white/70">{therapist.data.role}</p>
+									)}
+									<h2 class="text-base font-bold uppercase tracking-caps text-white">{therapist.data.name}</h2>
+									<p class="mt-1 text-xs font-medium uppercase tracking-ui text-white/60">
+										{therapist.data.credentials}
+									</p>
+									<a
+										href={`/our-therapists/${therapist.slug}`}
+										class="mt-6 rounded-full border border-white px-8 py-2 text-xs font-bold uppercase tracking-ui text-white transition hover:bg-white hover:text-brand"
+									>
+										Read Bio
+									</a>
+								</div>
+							</article>
+						);
+					})
+				}
+			</div>
+		</div>
+	</section>
+
+	<!-- CTA -->
+	<section class="bg-white py-20">
+		<div class="container text-center">
+			<h2 class="text-3xl font-bold uppercase tracking-caps text-brand">
+				Schedule with One of Our Therapists
+			</h2>
+			<div class="mt-10 flex flex-wrap justify-center gap-4">
+				<a
+					href="https://barbara-kohler.clientsecure.me/contact-widget"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="inline-block rounded-full bg-brand px-10 py-3 text-xs font-bold uppercase tracking-ui text-white transition hover:bg-brand/90"
+				>
+					Request an Appointment
+				</a>
+				<a
+					href="tel:2527588636"
+					class="inline-block rounded-full border-2 border-brand px-8 py-3 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-brand hover:text-white"
+				>
+					Call 252-758-8636
+				</a>
+			</div>
+		</div>
+	</section>
+</Layout>
