@@ -1,0 +1,12 @@
+# Lefthook git hooks configuration
+# Docs: https://github.com/evilmartians/lefthook
+
+# NOTE: `astro check` (TypeScript diagnostics) takes 30s+ and is intentionally
+# omitted here. Run it manually before deploying: bun run astro check
+
+pre-commit:
+  commands:
+    biome:
+      glob: "*.{js,ts,jsx,tsx,json,css,astro}"
+      run: bunx biome check --write --no-errors-on-unmatched {staged_files}
+      stage_fixed: true

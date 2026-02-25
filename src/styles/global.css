@@ -1,0 +1,21 @@
+/* Tailwind CSS v4 — single import replaces @tailwind base/components/utilities */
+@import 'tailwindcss';
+
+/* Custom base styles */
+@layer base {
+	html {
+		font-family: system-ui, sans-serif;
+		scroll-behavior: smooth;
+	}
+
+	body {
+		@apply bg-white text-gray-900 antialiased;
+	}
+}
+
+/* Custom components */
+@layer components {
+	.container {
+		@apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+	}
+}
