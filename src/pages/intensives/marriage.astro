@@ -1,0 +1,395 @@
+---
+import Layout from '@layouts/Layout.astro';
+---
+
+<Layout
+	title="Marriage Intensives | The Kohler Group, PLLC"
+	description="Marriage intensives at The Kohler Group — concentrated multi-day therapy designed to restore and strengthen your marriage through Biblical principles and evidence-based care."
+>
+	<!-- Hero -->
+	<section
+		class="relative flex h-[250px] items-center justify-center bg-cover bg-top bg-no-repeat"
+		style="background-image: url('/images/therapists-hero.jpg')"
+	>
+		<div class="absolute inset-0 bg-brand/80"></div>
+		<div class="container relative z-10 text-center">
+			<h1 class="text-4xl font-bold uppercase tracking-caps text-white sm:text-5xl">
+				Marriage Intensives
+			</h1>
+		</div>
+	</section>
+
+	<!-- Intro -->
+	<section class="py-20">
+		<div class="container max-w-4xl">
+			<p class="text-base leading-relaxed text-gray-700">
+				Marriage intensives are similar to the individual intensives in that both parties are doing therapy work related to their relationship. We work to discover the root causes, heal the wounds, and help the couple rebuild their conversation and care of one another. While you are here, there will be light homework, mapping out your repetitive loops, completing worksheets in session to activate your thinking in a positive way.
+			</p>
+			<p class="mt-4 text-base leading-relaxed text-gray-700">
+				I am a Christian Counselor and have tailored the Intensive experience to bring restoration to the soul of the Christian believer who has experienced wounding and desires transformation of the spirit, soul and body. My approach is clinical and spiritual. We are an experiential psychotherapy practice in the private sector. Often, when Jesus ministered, He gave people teaching/instruction as well as a healing or miraculous experience. These intensives are inspired by this approach.
+			</p>
+		</div>
+	</section>
+
+	<!-- Client Satisfaction -->
+	<section class="bg-brand py-16">
+		<div class="container max-w-4xl text-center">
+			<p class="text-xs font-bold uppercase tracking-caps text-white/70">Client Results</p>
+			<h2 class="mt-3 text-3xl font-bold uppercase tracking-caps text-white">
+				100% Client Satisfaction
+			</h2>
+			<p class="mt-2 text-sm font-semibold uppercase tracking-caps text-white/80">
+				Based on Post-Intensive Surveys
+			</p>
+			<p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/80">
+				Following completion of their intensive, clients were invited to complete a feedback survey. Every respondent reported that the intensive met their goals and expectations, and 100% said they would recommend our individual or marriage intensives to others. Clients consistently reported improved communication with their partner, greater understanding of their faith and how it relates to their relationship, increased emotional well-being, and better conflict resolution skills.
+			</p>
+			<a
+				href="mailto:barbara@thekohlergroup.net?subject=Marriage%20Intensives"
+				class="mt-10 inline-block rounded-full bg-white px-10 py-3 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-white/90"
+			>
+				Get Started
+			</a>
+		</div>
+	</section>
+
+	<!-- Three Stages of Healing -->
+	<section class="py-20">
+		<div class="container max-w-4xl">
+			<p class="section-label mb-4">Where Are You?</p>
+			<h2 class="section-title mb-6">Healing Takes Place in Stages</h2>
+			<p class="mb-10 text-base leading-relaxed text-gray-700">
+				I find people come into therapy at one of three stages, and each of these stages has varying degrees of intensity.
+			</p>
+			<div class="space-y-6">
+				{
+					[
+						{
+							num: '1',
+							title: 'Crisis',
+							body: 'The couple is hurt or even devastated by a recent event, affair, death, tragedy, or some type of upset that has rocked their world.',
+						},
+						{
+							num: '2',
+							title: 'Seeking Awareness to Break Destructive Patterns',
+							body: 'The Couple is on a continuum of discovery that where there are destructive habits, thought or behavioral patterns in their marriage and they desire to stop making the same destructive choices or choosing the same false solutions that leave them in the same wounded place.',
+						},
+						{
+							num: '3',
+							title: 'Desiring Self Actualization',
+							body: 'The Couple is trying to break through to the next level of their marriage, family life, career, business, ministry, etc., but are still getting snagged by familiar patterns they worked so hard to overcome.',
+						},
+					].map(({ num, title, body }) => (
+						<div class="flex gap-6">
+							<div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-white">
+								{num}
+							</div>
+							<div>
+								<h3 class="font-bold uppercase tracking-caps text-brand">{title}</h3>
+								<p class="mt-2 text-sm leading-relaxed text-gray-700">{body}</p>
+							</div>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<!-- Awareness Stages -->
+	<section class="bg-gray-50 py-20">
+		<div class="container max-w-4xl">
+			<p class="section-label mb-4">The Process</p>
+			<h2 class="section-title mb-6">Awareness Comes in Stages</h2>
+			<div class="space-y-6">
+				{
+					[
+						{
+							num: '1',
+							title: 'Breaking Fallow Ground',
+							body: 'For you farmers or even gardeners, you know that not all ground is alike. Some ground is hard. It needs lots of water and lots of tilling before you can plant seed in it and expect that seed to take root. So, for some, you are in the process of breaking fallow ground to gain insight. Lack of insight. That is the very thing that fallow ground represents.',
+						},
+						{
+							num: '2',
+							title: 'Teaching',
+							body: 'Teaching is one of the most helpful things in breaking through the fallow ground.',
+						},
+						{
+							num: '3',
+							title: 'Baptism into the Holy Spirit',
+							body: 'An intimate relationship with the Holy Spirit is essential to Christian growth. If you are not baptized into the Holy Spirit, you will have difficulty gaining insight and growing in Christ.',
+						},
+						{
+							num: '4',
+							title: 'Prayer and Fasting',
+							body: 'I have found nothing that accelerates understanding like prayer and fasting (food). I can attribute many breakthroughs of all kinds to prayer and fasting food. Incidentally, the biblical model of fasting is to fast food (all, part, and sometimes water when directed by the Holy Spirit).',
+						},
+						{
+							num: '5',
+							title: 'Cultivating Good Ground',
+							body: 'Forgiving often, dealing with issues in a timely manner, and working with your spouse to have the best marriage you can have. Stop blaming and start working.',
+						},
+						{
+							num: '6',
+							title: 'Harvest',
+							body: 'Continuing to break up fallow ground in certain areas, bring in the harvest of areas where you have worked hard. Enjoy the fruit of your labors. Devoted to eliminating all deception and psychological games in your marriage and pursuing ongoing transformation that Jesus died to give you.',
+						},
+					].map(({ num, title, body }) => (
+						<div class="flex gap-6">
+							<div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-white">
+								{num}
+							</div>
+							<div>
+								<h3 class="font-bold uppercase tracking-caps text-brand">{title}</h3>
+								<p class="mt-2 text-sm leading-relaxed text-gray-700">{body}</p>
+							</div>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<!-- Barbara Kohler Image -->
+	<section class="bg-white py-10">
+		<div class="container max-w-4xl">
+			<img
+				src="/images/barbara-kohler-intensive.jpg"
+				alt="Barbara Kohler"
+				class="w-full rounded-lg object-cover shadow-md"
+			/>
+		</div>
+	</section>
+
+	<!-- While You Are Here -->
+	<section class="py-20">
+		<div class="container max-w-4xl">
+			<p class="section-label mb-4">Preparation</p>
+			<h2 class="section-title mb-8">While You Are Here</h2>
+			<ul class="space-y-4">
+				{
+					[
+						'Get plenty of rest and drink lots of water. Avoid alcohol or drug abuse.',
+						'Do not engage in risky behavior or behavior that would not be pleasing to the Lord; i.e., do not open the door to the devil. He desires your destruction. Jesus desires wholeness for you. So, I ask you not to sabotage your sanctification or healing with negative behavior.',
+						'Bring a written list of all medications and supplements you are taking.',
+						'Take good care of yourself by communing with the Holy Spirit. He wants to guide you into all truth. Make peace with truth and do not be afraid to allow the Holy Spirit into the deep places of your heart.',
+						'Trust that God will do just what you need for the time you are here. Your transformation is an ongoing process. Do not be discouraged if you feel like you did not get every issue handled in one 3- to 5-day encounter. We all have lots of material to work on! God knows how much you can process and handle. Also, if you feel like I am taking you through things too quickly, please feel free to tell me to slow down. I have a desire for you to get as much healing as possible while you are here. However, I do not want you to feel overwhelmed. You have liberty to set boundaries with me and the process.',
+					].map((item) => (
+						<li class="flex items-start gap-3">
+							<span class="mt-1.5 h-2 w-2 flex-shrink-0 rounded-full bg-brand" />
+							<p class="text-sm leading-relaxed text-gray-700">{item}</p>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</section>
+
+	<!-- Day by Day -->
+	<section class="bg-gray-50 py-20">
+		<div class="container max-w-4xl">
+			<p class="section-label mb-4">The Schedule</p>
+			<h2 class="section-title mb-10">The Five Day Marriage Intensive</h2>
+			<div class="space-y-12">
+
+				<!-- Day 1 -->
+				<div>
+					<h3 class="mb-6 text-lg font-bold uppercase tracking-caps text-brand border-b border-brand/20 pb-2">Day 1</h3>
+					<div class="space-y-6">
+						<div>
+							<p class="mb-3 text-xs font-bold uppercase tracking-caps text-brand/70">Morning Session</p>
+							<ol class="space-y-3 list-decimal pl-5">
+								{[
+									'Identify your individual and marriage goals.',
+									'Life Script Analysis and Set Goals for Therapy.',
+									'Your Life Script vs. Your Scroll – The Life God has planned for you and your marriage (Psalm 139).',
+									'Frames of Reference for Husband and Wife.',
+									'Review the Joines Personalities Adaptations Questionnaire. This is a tool used to facilitate the work and help you understand your individual personalities and how you interact with one another.',
+									'Identify prevalent negative emotions you are dealing with in your marriage on a regular basis (these are called racket emotions).',
+									'Discover why you married the person you did and vice versa.',
+									'Discover what God is wanting you to change, individually and corporately as a couple.',
+									'Contract for Change and agreeing to focus on your responsibilities for the marriage.',
+									'Agreeing, in time, to accept influence from your partner as you heal and grow.',
+								].map((item) => (
+									<li class="text-sm leading-relaxed text-gray-700">{item}</li>
+								))}
+							</ol>
+						</div>
+						<div>
+							<p class="mb-3 text-xs font-bold uppercase tracking-caps text-brand/70">Afternoon Session</p>
+							<p class="text-sm leading-relaxed text-gray-700">Individual Psychotherapy - Partner #1 or #2. You will decide, as a couple, who should go first. You will then alternate therapy sessions. The marriage intensive is designed to honor each person's journey, allowing each person to regain their sense of self in the marriage while still caring for and honoring their partner.</p>
+							<p class="mt-3 text-sm leading-relaxed text-gray-700">Re-Decision Therapy (RDT) is used as it shows how you process information and increases ego strength and ability to handle life's pressures. RDT is an excellent technique for those who struggle with self-sabotage, self-harm, self-rejection, or suicidal thoughts. While one partner is in session, the other returns to the hotel to pray, do homework assignments, read books relevant to the work, or take care of family matters.</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Day 2 -->
+				<div>
+					<h3 class="mb-6 text-lg font-bold uppercase tracking-caps text-brand border-b border-brand/20 pb-2">Day 2</h3>
+					<div>
+						<p class="mb-3 text-xs font-bold uppercase tracking-caps text-brand/70">Morning and Afternoon Sessions</p>
+						<ol class="space-y-3 list-decimal pl-5">
+							{[
+								'Individual Psychotherapy.',
+								'When not in session, partner will be working on light homework.',
+								'We will use RDT to start the process.',
+								'The flow will be like Day 1\'s afternoon session.',
+							].map((item) => (
+								<li class="text-sm leading-relaxed text-gray-700">{item}</li>
+							))}
+						</ol>
+					</div>
+				</div>
+
+				<!-- Day 3 -->
+				<div>
+					<h3 class="mb-6 text-lg font-bold uppercase tracking-caps text-brand border-b border-brand/20 pb-2">Day 3</h3>
+					<div class="space-y-6">
+						<div>
+							<p class="mb-3 text-xs font-bold uppercase tracking-caps text-brand/70">Morning Session</p>
+							<ol class="space-y-3 list-decimal pl-5">
+								{[
+									'Couples Check In – Both Partners.',
+									'Light talk about your individual work (if you choose to).',
+									'The Cooperative Contract.',
+									'Dismantling Your Psychological Games (Repetitive Loops).',
+									'Injunctions Worksheet.',
+									'How Couples Play the Accordion.',
+									'Psycho-Education Related to EMDR, Energy Work, Treating the Unconscious Mind.',
+								].map((item) => (
+									<li class="text-sm leading-relaxed text-gray-700">{item}</li>
+								))}
+							</ol>
+						</div>
+						<div>
+							<p class="mb-3 text-xs font-bold uppercase tracking-caps text-brand/70">Afternoon Session</p>
+							<ol class="space-y-3 list-decimal pl-5" start={8}>
+								{[
+									'Psychotherapy - One Partner.',
+									'Expand techniques used to achieve the desired outcome.',
+									'Begin EMDR and/or Energy Work — Energy techniques and EMDR deal with the unconscious traumas in your mind that often affect your everyday relationships: spouse, boss, pastor, children, siblings, etc. Think of it as getting the sediment off the ocean floor. Energy techniques help to clear out the unconscious traumas. The result is often a desire to read your Bible more, pray more, and praise God.',
+								].map((item) => (
+									<li class="text-sm leading-relaxed text-gray-700">{item}</li>
+								))}
+							</ol>
+							<p class="mt-4 text-sm leading-relaxed text-gray-700 italic">Father God, in His ingenious design of the body, gave a way for trauma to be released. We engage no other spirit but the Holy Spirit of God. We rely on Father God, Jesus the Son, and the Holy Spirit to hover over the process, guide the process, and bring healing and transformation in the areas you desire.</p>
+						</div>
+					</div>
+				</div>
+
+				<!-- Day 4 -->
+				<div>
+					<h3 class="mb-6 text-lg font-bold uppercase tracking-caps text-brand border-b border-brand/20 pb-2">Day 4</h3>
+					<div>
+						<p class="mb-3 text-xs font-bold uppercase tracking-caps text-brand/70">Morning and Afternoon Sessions</p>
+						<ol class="space-y-3 list-decimal pl-5">
+							{[
+								'Both partners will do individual psychotherapy.',
+								'Therapist will use EMDR, Energy Work, HeartSync prayer as needed.',
+								'Courts of Heaven Strategy may be used in the afternoon or saved for Day 5.',
+							].map((item) => (
+								<li class="text-sm leading-relaxed text-gray-700">{item}</li>
+							))}
+						</ol>
+					</div>
+				</div>
+
+				<!-- Day 5 -->
+				<div>
+					<h3 class="mb-6 text-lg font-bold uppercase tracking-caps text-brand border-b border-brand/20 pb-2">Day 5</h3>
+					<div class="space-y-6">
+						<div>
+							<p class="mb-3 text-xs font-bold uppercase tracking-caps text-brand/70">Morning Session</p>
+							<ol class="space-y-3 list-decimal pl-5">
+								{[
+									'Couples Check-In and Review.',
+									'Tying Up Loose Ends – Using the last day effectively.',
+									'Courts of Heaven, Intercessory Prayer, HeartSync.',
+								].map((item) => (
+									<li class="text-sm leading-relaxed text-gray-700">{item}</li>
+								))}
+							</ol>
+						</div>
+						<div>
+							<p class="mb-3 text-xs font-bold uppercase tracking-caps text-brand/70">Afternoon Session</p>
+							<ol class="space-y-3 list-decimal pl-5" start={4}>
+								{[
+									'Individual Psychotherapy Per Couple\'s Need.',
+									'Couple chooses who does work; the afternoon session can be broken into two individual sessions, as needed.',
+									'Closing with Re-Decision Work and After Care Plan.',
+									'Discuss coaching and follow up. Some couples benefit from regular tune ups. If you are located in NC or SC, or able to fly in for the day, half-day and whole day sessions are available. Telehealth is also available for NC or SC residents. Some couples wait one year and come back for a follow up intensive.',
+									'Solidify your plan for when you return home to maintain your progress and avoid falling into old patterns.',
+								].map((item) => (
+									<li class="text-sm leading-relaxed text-gray-700">{item}</li>
+								))}
+							</ol>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+
+	<!-- When You Get Home -->
+	<section class="py-20">
+		<div class="container max-w-4xl">
+			<p class="section-label mb-4">After the Intensive</p>
+			<h2 class="section-title mb-8">When You Get Home</h2>
+			<ol class="space-y-4 list-decimal pl-5">
+				{[
+					'Please let me know when you have arrived home or to your destination safely.',
+					'Check-in through the portal within one week to let me know how you are doing as you re-enter the atmosphere.',
+					'Live and love well.',
+				].map((item) => (
+					<li class="text-sm leading-relaxed text-gray-700">{item}</li>
+				))}
+			</ol>
+		</div>
+	</section>
+
+	<!-- For Trauma Survivors -->
+	<section class="bg-brand/5 py-16">
+		<div class="container max-w-4xl">
+			<p class="section-label mb-4">Important Note</p>
+			<h2 class="section-title mb-6">For Trauma Survivors</h2>
+			<p class="text-sm leading-relaxed text-gray-700">
+				If you are working through relational or any other type of trauma, and coming from out of state, you are responsible to have a local therapist for mental health emergencies, weekly sessions if you need, and other types of situations that need to be handled on sight with a trained therapist.
+			</p>
+		</div>
+	</section>
+
+	<!-- Closing Note -->
+	<section class="py-20">
+		<div class="container max-w-4xl">
+			<p class="text-base leading-relaxed text-gray-700">
+				Come with an open mind. Your spouse is not your enemy. They are your opportunity. If you feel like God has led you here, trust Him. If there is a particular technique you are not comfortable with, I will not compel you to engage that technique. Just know it can limit your level of transformation. If you are okay with that, I am okay with that. If you would like to seek the Lord regarding your resistance to a technique, I welcome that. Everywhere Jesus went, He gave people an experience of Himself. My prayer for your marriage is that you each experience God in a deep way and your life together will be better for having done this Intensive.
+			</p>
+		</div>
+	</section>
+
+	<!-- CTA -->
+	<section class="bg-white py-20">
+		<div class="container text-center">
+			<h2 class="text-3xl font-bold uppercase tracking-caps text-brand">
+				Ready to Begin?
+			</h2>
+			<p class="mx-auto mt-6 max-w-xl text-base text-gray-600">
+				Contact us to learn more about scheduling a Marriage Intensive. We'll help you find the right fit for your needs.
+			</p>
+			<div class="mt-10 flex flex-wrap justify-center gap-4">
+				<a
+					href="mailto:barbara@thekohlergroup.net?subject=Marriage%20Intensives"
+					class="btn-primary inline-block"
+				>
+					Get Started
+				</a>
+				<a
+					href="tel:2527588636"
+					class="inline-block border-2 border-brand px-8 py-3 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-brand hover:text-white"
+				>
+					Call 252-758-8636
+				</a>
+			</div>
+		</div>
+	</section>
+</Layout>

@@ -1,7 +1,31 @@
 /* Tailwind CSS v4 — single @import replaces the old @tailwind base/components/utilities directives */
 @import 'tailwindcss';
 
-/* Base styles */
+/* ============================================================
+   Theme
+   ============================================================ */
+@theme {
+	/* Brand — Sapphire blue (Biblical color for fidelity) */
+	--color-brand: #173862;
+	--color-brand-dark: #0e2344;
+	--color-brand-light: #1e4d87;
+
+	/* Typography */
+	--font-sans: 'Montserrat', system-ui, sans-serif;
+
+	/* Letter spacing — wide tracking is a defining characteristic of the brand */
+	--tracking-ultra: 0.25em; /* hero headline */
+	--tracking-caps: 0.1em; /* section headings, nav */
+	--tracking-ui: 0.05em; /* buttons, labels */
+
+	/* Override gray text shades to black for readability */
+	--color-gray-600: #000000;
+	--color-gray-700: #000000;
+}
+
+/* ============================================================
+   Base
+   ============================================================ */
 @layer base {
 	*,
 	*::before,
@@ -10,14 +34,13 @@
 	}
 
 	html {
-		font-family: system-ui, sans-serif;
 		scroll-behavior: smooth;
 		-webkit-text-size-adjust: 100%;
 	}
 
 	body {
-		@apply bg-white text-gray-900 antialiased;
-		line-height: 1.5;
+		@apply bg-white font-sans text-gray-900 antialiased;
+		line-height: 1.6;
 	}
 
 	img,
@@ -25,11 +48,54 @@
 		max-width: 100%;
 		height: auto;
 	}
+
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6 {
+		line-height: 1.2;
+	}
 }
 
-/* Component utilities */
+/* ============================================================
+   Components
+   ============================================================ */
 @layer components {
 	.container {
 		@apply mx-auto max-w-7xl px-4 sm:px-6 lg:px-8;
+	}
+
+	/* Buttons — base styles inlined per variant (Tailwind v4 cannot @apply component classes) */
+	.btn-primary {
+		@apply inline-block bg-brand px-8 py-3 text-xs font-bold uppercase tracking-ui text-white transition hover:bg-brand-dark;
+	}
+
+	.btn-white {
+		@apply inline-block bg-white px-8 py-3 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-gray-100;
+	}
+
+	.btn-outline {
+		@apply inline-block border-2 border-brand px-8 py-3 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-brand hover:text-white;
+	}
+
+	/* Section headings */
+	.section-label {
+		@apply text-xs font-semibold uppercase tracking-caps text-brand;
+	}
+
+	.section-title {
+		@apply text-3xl font-bold uppercase tracking-caps text-brand sm:text-4xl;
+	}
+
+	/* FAQ accordion */
+	details summary {
+		list-style: none;
+		cursor: pointer;
+	}
+
+	details summary::-webkit-details-marker {
+		display: none;
 	}
 }

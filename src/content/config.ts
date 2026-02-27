@@ -6,6 +6,7 @@ const therapists = defineCollection({
 		name: z.string(),
 		credentials: z.string(),
 		role: z.string().optional(),
+		intro: z.string().optional(),
 		// Wix CDN URLs for now — download and move to public/images/therapists/ before launch
 		headshot: z.string().optional(),
 		order: z.number(),

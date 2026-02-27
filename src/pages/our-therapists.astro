@@ -64,19 +64,18 @@ const therapists = (await getCollection('therapists')).sort((a, b) => a.data.ord
 
 								<!-- Info -->
 								<div class="flex flex-1 flex-col items-center bg-brand px-6 py-8 text-center">
-									{therapist.data.role && (
-										<p class="mb-1 text-xs font-semibold uppercase tracking-caps text-white/70">{therapist.data.role}</p>
-									)}
 									<h2 class="text-base font-bold uppercase tracking-caps text-white">{therapist.data.name}</h2>
 									<p class="mt-1 text-xs font-medium uppercase tracking-ui text-white/60">
 										{therapist.data.credentials}
 									</p>
+									<div class="mt-auto pt-6 w-full flex justify-center">
 									<a
 										href={`/our-therapists/${therapist.slug}`}
-										class="mt-6 rounded-full border border-white px-8 py-2 text-xs font-bold uppercase tracking-ui text-white transition hover:bg-white hover:text-brand"
+										class="rounded-full border border-white px-8 py-2 text-xs font-bold uppercase tracking-ui text-white transition hover:bg-white hover:text-brand"
 									>
 										Read Bio
 									</a>
+								</div>
 								</div>
 							</article>
 						);

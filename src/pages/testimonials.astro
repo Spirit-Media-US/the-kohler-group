@@ -1,0 +1,182 @@
+---
+import Layout from '@layouts/Layout.astro';
+
+const testimonials = [
+	{
+		service: 'Individual Intensive',
+		quote:
+			"The first time I came to see Barbara I was in desperate place. I had tried multiple other therapist's and types of counseling. Nothing was helping beyond essentially medicating the pain and trauma I was working through. By the time I reached her, it would've been similar to someone coming into the emergency room on a crash cart. Barely alive. I needed assistance to feed and dress myself and was not safe to drive a car. My first Intensive with Barbara put me on life support and gave me the first glimpse of Hope in many many months. I continued forward with her guidance and multiple Intensives to follow. I can honestly say that I am alive today as a result of her therapeutic techniques and work. I and my family will be forever grateful.",
+	},
+	{
+		service: 'Marriage Intensive',
+		quote:
+			'Father used Barbara Kohler to bring much needed healing and deliverance in our lives. In 38 years of marriage, our week with Barbara was one of the most impactful weeks of our life. We cannot thank Father enough for this invaluable investment into our lives. Thank you for YOU and your ministry!',
+	},
+	{
+		service: 'Individual Therapy',
+		quote:
+			'I think The Kohler Group is providing a wonderful service to aid and support the lives of those who need it. God put The Kohler Group in my life at the perfect time to make me aware of how to navigate the stresses and tough decisions that would have to be made in the future.',
+	},
+	{
+		service: 'Individual Therapy',
+		quote:
+			'I am thankful God led me to this organization. He knew. He always knows. May God continue to equip and bless you all for the work you do on this mission field.',
+	},
+	{
+		service: 'Individual Intensive',
+		quote:
+			"I wasn't sure what to expect in the beginning. But it was so much better than what I could have thought. Thank you so much!",
+	},
+	{
+		service: 'Individual Therapy',
+		quote:
+			'It was an answer to prayer to find such an understanding and professional Christian therapist.',
+	},
+	{
+		service: 'Individual Therapy',
+		quote:
+			"April is amazing. I've met with her for over a year now & she has helped me grow in my faith exponentially. She helps me to see the glass half full, she has helped me open my eyes to other perspectives beside my own, and she provides genuine counsel as a woman of God. I appreciate her and the care and compassion she has shown me.",
+	},
+	{
+		service: 'Individual Therapy',
+		quote:
+			'Thank you for everything, you guys are amazing. I have a very different perspective on therapy as a positive, compared to my earlier perception provided by the culture and beliefs of those I grew up around.',
+	},
+];
+---
+
+<Layout
+	title="Real Client Experiences | The Kohler Group, PLLC"
+	description="Read genuine testimonials from clients of The Kohler Group, PLLC. Real experiences from real people who found healing through Christian counseling."
+>
+	<!-- Hero -->
+	<section
+		class="relative flex h-[250px] items-center justify-center bg-cover bg-top bg-no-repeat"
+		style="background-image: url('/images/therapists-hero.jpg')"
+	>
+		<div class="absolute inset-0 bg-brand/80"></div>
+		<div class="container relative z-10 text-center">
+			<h1 class="text-4xl font-bold uppercase tracking-caps text-white sm:text-5xl">
+				Real Client Experiences
+			</h1>
+		</div>
+	</section>
+
+	<!-- Intro + Privacy Note -->
+	<section class="bg-white py-16">
+		<div class="container max-w-4xl text-center">
+			<p class="mb-4 text-4xl font-semibold text-brand">What Our Clients Say</p>
+			<h2 class="mb-6 text-3xl font-bold tracking-wide text-brand sm:text-4xl">Stories of Healing & Transformation</h2>
+			<p class="mx-auto max-w-2xl text-sm italic leading-relaxed text-black">
+				At The Kohler Group, PLLC, we
+				respect our clients' privacy and uphold the highest professional and ethical standards. The
+				feedback shared below comes directly from real client surveys. To protect confidentiality,
+				client names and identifying details have been redacted. Every testimonial reflects genuine
+				client experience and our continued commitment to excellence, discretion, and trust.
+			</p>
+		</div>
+	</section>
+
+	<!-- Photo Gallery Row 1 -->
+	<section class="bg-gray-50 py-4">
+		<div class="container">
+			<div class="grid grid-cols-2 gap-4 md:grid-cols-4">
+				<div class="overflow-hidden rounded-lg">
+					<img
+						src="/images/testimonial-1.jpg"
+						alt="The Kohler Group"
+						class="h-52 w-full object-cover transition duration-500 hover:scale-105"
+						loading="lazy"
+					/>
+				</div>
+				<div class="overflow-hidden rounded-lg">
+					<img
+						src="/images/testimonial-2.jpg"
+						alt="The Kohler Group"
+						class="h-52 w-full object-cover transition duration-500 hover:scale-105"
+						loading="lazy"
+					/>
+				</div>
+				<div class="overflow-hidden rounded-lg">
+					<img
+						src="/images/testimonial-3.jpg"
+						alt="The Kohler Group"
+						class="h-52 w-full object-cover transition duration-500 hover:scale-105"
+						loading="lazy"
+					/>
+				</div>
+				<div class="overflow-hidden rounded-lg">
+					<img
+						src="/images/testimonial-4.jpg"
+						alt="The Kohler Group"
+						class="h-52 w-full object-cover transition duration-500 hover:scale-105"
+						loading="lazy"
+					/>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Testimonials Grid -->
+	<section class="bg-white py-20">
+		<div class="container">
+			<div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+				{
+					testimonials.map(({ service, quote }) => (
+						<blockquote class="flex flex-col rounded-lg border border-gray-100 bg-white p-8 shadow-sm transition hover:shadow-md">
+							<div class="mb-5 flex items-center justify-between">
+								<span class="rounded-full bg-brand/10 px-3 py-1 text-xs font-bold uppercase tracking-caps text-brand">
+									{service}
+								</span>
+								<svg
+									class="h-7 w-7 flex-shrink-0 text-brand/20"
+									fill="currentColor"
+									viewBox="0 0 32 32"
+									aria-hidden="true"
+								>
+									<path d="M10 8C6.686 8 4 10.686 4 14v10h10V14H7.333C7.333 11.791 8.791 10 10 10V8zm14 0c-3.314 0-6 2.686-6 6v10h10V14h-6.667C21.333 11.791 22.791 10 24 10V8z" />
+								</svg>
+							</div>
+							<p class="flex-1 text-sm leading-relaxed text-gray-700">{quote}</p>
+							<div class="mt-6 flex gap-1">
+								{[...Array(5)].map(() => (
+									<svg class="h-4 w-4 text-brand" fill="currentColor" viewBox="0 0 20 20">
+										<path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+									</svg>
+								))}
+							</div>
+						</blockquote>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<!-- CTA -->
+	<section class="bg-white py-20">
+		<div class="container text-center">
+			<h2 class="text-3xl font-bold uppercase tracking-caps text-brand">
+				Your Story Could Be Next
+			</h2>
+			<p class="mx-auto mt-6 max-w-xl text-base text-gray-600">
+				We care about helping you heal. Take the first step today.
+			</p>
+			<div class="mt-10 flex flex-wrap justify-center gap-4">
+				<a
+					href="https://barbara-kohler.clientsecure.me/contact-widget"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="btn-primary"
+				>
+					Request an Appointment
+				</a>
+				<a
+					href="tel:2527588636"
+					class="inline-block border-2 border-brand px-8 py-3 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-brand hover:text-white"
+				>
+					Call 252-758-8636
+				</a>
+			</div>
+		</div>
+	</section>
+</Layout>

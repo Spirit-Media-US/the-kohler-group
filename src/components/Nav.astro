@@ -1,18 +1,34 @@
 ---
-// NOTE: Logo served from Wix CDN — download and host locally under public/images/ before launch.
+// Logo hosted locally at public/images/logo.png (cropped from original Wix CDN PNG)
 const navLinks = [
 	{ href: '/', label: 'Home' },
 	{ href: '/about', label: 'About' },
 	{ href: '/our-therapists', label: 'Our Therapists' },
 	{ href: '/faq', label: 'FAQ' },
-	{ href: '/intensives', label: 'Intensives' },
+	{
+		href: '',
+		label: 'Intensives',
+		children: [
+			{ href: '/intensives/about', label: 'About Intensives' },
+			{ href: '/intensives/marriage', label: 'Marriage Intensives' },
+			{ href: '/intensives/individual', label: 'Individual Intensives' },
+		],
+	},
 	{ href: '/testimonials', label: 'Real Client Experiences' },
-	{ href: 'https://barbarakohlerseminars.com', label: 'Education', external: true },
+	{
+		href: '/education/surviving-trauma',
+		label: 'Education',
+		children: [
+			{ href: '/education/surviving-trauma', label: 'Surviving Trauma' },
+			{ href: '/education/media', label: 'Media' },
+		],
+	},
 ];
 
 const currentPath = Astro.url.pathname;
 
 function isActive(href: string) {
+	if (!href) return false;
 	if (href.startsWith('http')) return false;
 	if (href === '/') return currentPath === '/';
 	return currentPath.startsWith(href);
@@ -28,7 +44,7 @@ function isActive(href: string) {
 				<div class="w-8"></div>
 				<a href="/" aria-label="The Kohler Group PLLC">
 					<img
-						src="https://static.wixstatic.com/media/2e5b58_0ea5ab642e2342b6b2a5f7578fad42e1~mv2.png"
+						src="/images/logo.png"
 						alt="The Kohler Group PLLC"
 						class="h-14 w-auto"
 						width="200"
@@ -74,14 +90,14 @@ function isActive(href: string) {
 			</div>
 
 			<!-- Desktop: logo centered -->
-			<div class="hidden justify-center pt-6 lg:flex">
+			<div class="hidden justify-center py-6 lg:flex">
 				<a href="/" aria-label="The Kohler Group PLLC">
 					<img
-						src="https://static.wixstatic.com/media/2e5b58_0ea5ab642e2342b6b2a5f7578fad42e1~mv2.png"
+						src="/images/logo.png"
 						alt="The Kohler Group PLLC"
-						class="h-96 w-auto"
-						width="960"
-						height="384"
+						class="h-28 w-auto"
+						width="1416"
+						height="921"
 					/>
 				</a>
 			</div>
@@ -90,38 +106,78 @@ function isActive(href: string) {
 
 	<!-- ── BOTTOM BAND: navy + white nav links ── -->
 	<div class="bg-brand">
-		<div class="container hidden items-center justify-center gap-5 pb-4 pt-2 lg:flex">
+		<!-- Row 1: nav links + social icons -->
+		<div class="container hidden items-center justify-center gap-5 py-2 lg:flex">
 			{
-				navLinks.map(({ href, label, external }) => (
-					<a
-						href={href}
-						target={external ? '_blank' : undefined}
-						rel={external ? 'noopener noreferrer' : undefined}
-						class:list={[
-							'text-xs font-medium uppercase tracking-caps transition',
-							isActive(href)
-								? 'border-b border-white pb-0.5 text-white'
-								: 'text-white/70 hover:text-white',
-						]}
-					>
-						{label}
-					</a>
-				))
+				navLinks.map(({ href, label, external, children }) =>
+					children ? (
+						<div class="group relative">
+							{href ? (
+								<a
+									href={href}
+									target={external ? '_blank' : undefined}
+									rel={external ? 'noopener noreferrer' : undefined}
+									class:list={[
+										'flex items-center gap-1 text-xs font-medium uppercase tracking-caps transition',
+										isActive(href)
+											? 'border-b border-white pb-0.5 text-white'
+											: 'text-white/70 hover:text-white',
+									]}
+								>
+									{label}
+									<svg class="h-3 w-3 transition group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+									</svg>
+								</a>
+							) : (
+								<button class="flex cursor-default items-center gap-1 text-xs font-medium uppercase tracking-caps text-white/70 transition hover:text-white">
+									{label}
+									<svg class="h-3 w-3 transition group-hover:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+										<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+									</svg>
+								</button>
+							)}
+							<div class="invisible absolute left-0 top-full z-50 mt-1 min-w-[180px] rounded border border-white/10 bg-brand opacity-0 shadow-lg transition-all group-hover:visible group-hover:opacity-100">
+								{children.map((child) => (
+									<a
+										href={child.href}
+										target={child.external ? '_blank' : undefined}
+										rel={child.external ? 'noopener noreferrer' : undefined}
+										class="block px-4 py-2.5 text-xs font-medium uppercase tracking-caps text-white/70 transition hover:bg-white/10 hover:text-white"
+									>
+										{child.label}
+									</a>
+								))}
+							</div>
+						</div>
+					) : (
+						<a
+							href={href}
+							target={external ? '_blank' : undefined}
+							rel={external ? 'noopener noreferrer' : undefined}
+							class:list={[
+								'text-xs font-medium uppercase tracking-caps transition',
+								isActive(href)
+									? 'border-b border-white pb-0.5 text-white'
+									: 'text-white/70 hover:text-white',
+							]}
+						>
+							{label}
+						</a>
+					)
+				)
 			}
-
-			<span class="text-white/30">|</span>
-
-			<!-- Request Appointment pill -->
+			</div>
+		<!-- Row 2: Request Appointment button + social icons -->
+		<div class="container hidden items-center justify-center gap-4 pb-4 pt-3 lg:flex">
 			<a
 				href="https://barbara-kohler.clientsecure.me/contact-widget"
 				target="_blank"
 				rel="noopener noreferrer"
-				class="rounded-full border border-white px-5 py-2 text-xs font-bold uppercase tracking-ui text-white transition hover:bg-white hover:text-brand"
+				class="rounded-full bg-white px-8 py-2 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-white/90"
 			>
 				Request an Appointment
 			</a>
-
-			<!-- Instagram -->
 			<a
 				href="https://www.instagram.com/thekohlergrouppllc/"
 				target="_blank"
@@ -130,13 +186,9 @@ function isActive(href: string) {
 				class="text-white/70 transition hover:text-white"
 			>
 				<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-					<path
-						d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
-					></path>
+					<path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"></path>
 				</svg>
 			</a>
-
-			<!-- Facebook -->
 			<a
 				href="https://www.facebook.com/thekohlergroup"
 				target="_blank"
@@ -145,9 +197,7 @@ function isActive(href: string) {
 				class="text-white/70 transition hover:text-white"
 			>
 				<svg class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-					<path
-						d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"
-					></path>
+					<path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"></path>
 				</svg>
 			</a>
 		</div>
@@ -157,16 +207,38 @@ function isActive(href: string) {
 	<div id="nav-menu" class="hidden border-t border-white/10 bg-brand lg:hidden">
 		<ul class="container flex flex-col gap-1 py-4">
 			{
-				navLinks.map(({ href, label, external }) => (
+				navLinks.map(({ href, label, external, children }) => (
 					<li>
-						<a
-							href={href}
-							target={external ? '_blank' : undefined}
-							rel={external ? 'noopener noreferrer' : undefined}
-							class="block py-2 text-xs font-medium uppercase tracking-caps text-white/80 hover:text-white"
-						>
-							{label}
-						</a>
+						{href ? (
+							<a
+								href={href}
+								target={external ? '_blank' : undefined}
+								rel={external ? 'noopener noreferrer' : undefined}
+								class="block py-2 text-xs font-medium uppercase tracking-caps text-white/80 hover:text-white"
+							>
+								{label}
+							</a>
+						) : (
+							<span class="block py-2 text-xs font-medium uppercase tracking-caps text-white/80">
+								{label}
+							</span>
+						)}
+						{children && (
+							<ul class="ml-4 flex flex-col gap-1 border-l border-white/20 pl-3">
+								{children.map((child) => (
+									<li>
+										<a
+											href={child.href}
+											target={child.external ? '_blank' : undefined}
+											rel={child.external ? 'noopener noreferrer' : undefined}
+											class="block py-1.5 text-xs font-medium uppercase tracking-caps text-white/60 hover:text-white"
+										>
+											{child.label}
+										</a>
+									</li>
+								))}
+							</ul>
+						)}
 					</li>
 				))
 			}

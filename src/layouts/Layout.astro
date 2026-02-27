@@ -1,4 +1,7 @@
 ---
+import { ViewTransitions } from 'astro:transitions';
+import Footer from '../components/Footer.astro';
+import Nav from '../components/Nav.astro';
 import '../styles/global.css';
 
 interface Props {
@@ -10,41 +13,54 @@ interface Props {
 
 const {
 	title,
-	description = 'The Kohler Group',
+	description = 'North Carolina therapy practice specializing in faith-based counseling and psychotherapy intensives.',
 	canonicalURL = Astro.url.href,
 	ogImage = '/og-default.png',
 } = Astro.props;
 
-const siteName = 'The Kohler Group';
+const siteName = 'The Kohler Group PLLC';
 const ogImageURL = new URL(ogImage, Astro.site ?? Astro.url).href;
 ---
 
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
-    <link rel="canonical" href={canonicalURL} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{title}</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalURL} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
 
-    <!-- Open Graph -->
-    <meta property="og:site_name" content={siteName} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:url" content={canonicalURL} />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content={ogImageURL} />
+		<!-- Google Fonts: Montserrat -->
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+			rel="stylesheet"
+		/>
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={ogImageURL} />
-  </head>
-  <body>
-    <slot />
-  </body>
+		<!-- Open Graph -->
+		<meta property="og:site_name" content={siteName} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalURL} />
+		<meta property="og:type" content="website" />
+		<meta property="og:image" content={ogImageURL} />
+
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImageURL} />
+		<ViewTransitions />
+	</head>
+	<body>
+		<Nav />
+		<main>
+			<slot />
+		</main>
+		<Footer />
+	</body>
 </html>

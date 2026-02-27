@@ -1,0 +1,90 @@
+---
+import Layout from '@layouts/Layout.astro';
+---
+
+<Layout
+	title="About | The Kohler Group, PLLC"
+	description="Learn about The Kohler Group's mission, vision, and values — providing high-quality Christian psychotherapy to advance the Kingdom of God."
+>
+	<!-- ============================================================
+	     Hero Banner
+	     ============================================================ -->
+	<section
+		class="relative flex min-h-[65vh] items-center bg-cover bg-left-top bg-no-repeat"
+		style="background-image: url('https://static.wixstatic.com/media/ff2c01_03afa24b99ec4a87a61ed6deaafb2c1e~mv2.jpg')"
+	>
+		<div class="absolute inset-0 bg-brand/50"></div>
+	</section>
+
+	<!-- ============================================================
+	     Mission / Vision / Values + CTA
+	     ============================================================ -->
+	<section class="py-24">
+		<div class="container">
+			<div class="mx-auto max-w-2xl text-center">
+
+				<!-- Taglines -->
+				<ul class="mb-12 space-y-3">
+					{[
+						'Biblical Values',
+						'Skilled Psychotherapy',
+						'Spiritual Gifting',
+						'Advancing the Kingdom of God',
+					].map((item) => (
+						<li class="text-2xl font-semibold uppercase tracking-caps text-brand sm:text-3xl">
+							{item}
+						</li>
+					))}
+				</ul>
+
+				<div class="mb-12 border-t border-gray-200"></div>
+
+				<!-- Mission -->
+				<h2 class="mb-3 text-3xl font-bold uppercase tracking-caps text-brand sm:text-4xl">Mission</h2>
+				<p class="text-base leading-relaxed text-black">
+					To provide high-quality psychotherapy services with the excellence worthy of Jesus
+					Christ, to build and restore people into Kingdom believers, enabling them to complete
+					their Kingdom Assignment.
+				</p>
+
+				<!-- Divider -->
+				<div class="my-10 border-t border-gray-200"></div>
+
+				<!-- Vision -->
+				<h2 class="mb-3 text-3xl font-bold uppercase tracking-caps text-brand sm:text-4xl">Vision</h2>
+				<p class="text-base leading-relaxed text-black">
+					We train, mentor and raise up highly skilled, Spirit-filled mental health clinicians
+					who have the ability to apply a multi-dimensional approach to Christian mental health
+					that results in transformation of the client. We will plant Kingdom Mental Health
+					Practices, going State to State, across the nation as God trusts us with the right
+					clinicians to join our mission.
+				</p>
+
+				<!-- Divider -->
+				<div class="my-10 border-t border-gray-200"></div>
+
+				<!-- Values -->
+				<h2 class="mb-3 text-3xl font-bold uppercase tracking-caps text-brand sm:text-4xl">Values</h2>
+				<p class="text-base leading-relaxed text-black">
+					We value spiritual gifting working in conjunction with spiritual integrity, sanctification,
+					and honor towards one another and our clients. Christianity is meant to be an ongoing
+					process of personal growth. We value biblical literacy, education, training, and
+					application.
+				</p>
+
+				<!-- CTA -->
+				<div class="mt-12">
+					<a
+						href="https://barbara-kohler.clientsecure.me/contact-widget"
+						target="_blank"
+						rel="noopener noreferrer"
+						class="inline-block rounded-full bg-brand px-10 py-3 text-xs font-bold uppercase tracking-ui text-white transition hover:bg-brand/90"
+					>
+						Request an Appointment
+					</a>
+				</div>
+			</div>
+
+		</div>
+	</section>
+</Layout>

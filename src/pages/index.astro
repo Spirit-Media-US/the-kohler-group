@@ -4,7 +4,7 @@ import Layout from '@layouts/Layout.astro';
 
 <Layout
 	title="The Kohler Group PLLC | Christian Counseling"
-	description="North Carolina therapy practice specializing in faith-based counseling and psychotherapy intensives."
+	description="North Carolina therapy practice specializing in faith based counseling and psychotherapy intensives."
 >
 	<!-- ============================================================
 	     Hero — beach image, light overlay, centered headline only
@@ -20,6 +20,14 @@ import Layout from '@layouts/Layout.astro';
 			>
 				The Future Depends on What You Do in the Present.
 			</h1>
+			<a
+				href="https://barbara-kohler.clientsecure.me/contact-widget"
+				target="_blank"
+				rel="noopener noreferrer"
+				class="mt-8 inline-block rounded-full bg-white px-10 py-3 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-white/90"
+			>
+				Get Started
+			</a>
 		</div>
 	</section>
 
@@ -28,20 +36,22 @@ import Layout from '@layouts/Layout.astro';
 	     ============================================================ -->
 	<section class="py-20">
 		<div class="container max-w-3xl">
-			<p class="text-sm leading-relaxed text-gray-700">
+			<p class="text-base leading-relaxed text-brand sm:text-lg">
 				You can feel better after a talk with a close friend or relative when dealing with moderate
 				or severe emotional distress. However, this relief is often temporary. Talking with a
 				trained professional helps alleviate emotional distress. Applying proven Biblical Principles
 				brings about lasting change that is undeniable. We want to help you move forward in your
 				God given purpose.
 			</p>
-			<p class="mt-5 text-sm leading-relaxed text-gray-700">
-				Our therapists are trained professionals who operate from a Biblical world view. We care
-				about people and want to help you realize the grace of God in your own life. Each therapist
-				has their own niche and has a track record of helping many people navigate through difficult
-				circumstances to find the peace that only God can give. Your emotional health affects your
-				spiritual life, finances, relationships, and career. Make your emotional health a priority
-				and start the healing process today.
+			<p class="mt-6 text-base leading-relaxed text-brand sm:text-lg">
+				Our therapists are trained professionals who operate from a Biblical world view. We use
+				Re-decision Therapy, EMDR, TRET (Trauma Resolution Energy Therapy), CBT-TF, and other
+				techniques to treat our clients with the appropriate modality. We care about people and
+				want to help you realize the grace of God in your own life. Each therapist has their own
+				niche and has a track record of helping many people navigate through difficult circumstances
+				to find the peace that only God can give. Your emotional health affects your spiritual
+				life, finances, relationships, and career. Make your emotional health a priority and start
+				the healing process today.
 			</p>
 		</div>
 	</section>
@@ -49,12 +59,10 @@ import Layout from '@layouts/Layout.astro';
 	<!-- ============================================================
 	     Services — dark navy, icons, pill Learn More buttons
 	     ============================================================ -->
-	<section class="bg-brand">
-		<div
-			class="container grid grid-cols-1 divide-y divide-white/20 md:grid-cols-3 md:divide-x md:divide-y-0"
-		>
+	<section class="bg-white py-16">
+		<div class="container grid grid-cols-1 gap-6 md:grid-cols-3">
 			<!-- Marriage Intensives -->
-			<div class="flex flex-col items-center py-16 text-center md:px-10">
+			<div class="flex flex-col items-center rounded-lg bg-brand py-16 text-center md:px-10">
 				<!-- Icon: two interlocking rings -->
 				<svg
 					class="mx-auto mb-6 h-14 w-14 text-white"
@@ -71,7 +79,7 @@ import Layout from '@layouts/Layout.astro';
 					Marriage<br />Intensives
 				</h2>
 				<a
-					href="/intensives"
+					href="/intensives/marriage"
 					class="mt-6 rounded-full border border-white px-8 py-2 text-xs font-bold uppercase tracking-ui text-white transition hover:bg-white hover:text-brand"
 				>
 					Learn More
@@ -79,7 +87,7 @@ import Layout from '@layouts/Layout.astro';
 			</div>
 
 			<!-- Therapy Sessions -->
-			<div class="flex flex-col items-center py-16 text-center md:px-10">
+			<div class="flex flex-col items-center rounded-lg bg-brand py-16 text-center md:px-10">
 				<!-- Icon: speech bubble with dots -->
 				<svg
 					class="mx-auto mb-6 h-14 w-14 text-white"
@@ -109,7 +117,7 @@ import Layout from '@layouts/Layout.astro';
 			</div>
 
 			<!-- Individual Intensives -->
-			<div class="flex flex-col items-center py-16 text-center md:px-10">
+			<div class="flex flex-col items-center rounded-lg bg-brand py-16 text-center md:px-10">
 				<!-- Icon: two person silhouettes -->
 				<svg
 					class="mx-auto mb-6 h-14 w-14 text-white"
@@ -131,7 +139,7 @@ import Layout from '@layouts/Layout.astro';
 					Individual<br />Intensives
 				</h2>
 				<a
-					href="/intensives"
+					href="/intensives/individual"
 					class="mt-6 rounded-full border border-white px-8 py-2 text-xs font-bold uppercase tracking-ui text-white transition hover:bg-white hover:text-brand"
 				>
 					Learn More

@@ -1,0 +1,286 @@
+---
+import Layout from '@layouts/Layout.astro';
+---
+
+<Layout
+	title="Individual Intensives | The Kohler Group, PLLC"
+	description="Individual intensives at The Kohler Group — concentrated, focused therapy designed to help you break through trauma, anxiety, grief, and unresolved wounds with lasting results."
+>
+	<!-- Hero -->
+	<section
+		class="relative flex h-[250px] items-center justify-center bg-cover bg-top bg-no-repeat"
+		style="background-image: url('/images/therapists-hero.jpg')"
+	>
+		<div class="absolute inset-0 bg-brand/80"></div>
+		<div class="container relative z-10 text-center">
+			<h1 class="text-4xl font-bold uppercase tracking-caps text-white sm:text-5xl">
+				Individual Intensives
+			</h1>
+		</div>
+	</section>
+
+	<!-- Intro -->
+	<section class="py-20">
+		<div class="container max-w-4xl">
+			<p class="text-base leading-relaxed text-gray-700">
+				I am a Christian Counselor and have tailored the Intensive experience to bring restoration to the soul of the Christian believer who has experienced wounding and desires transformation of the spirit, soul and body. My approach is clinical and spiritual. We are an experiential psychotherapy practice in the private sector. Often, when Jesus ministered, He gave people teaching/instruction as well as a healing or miraculous experience. These intensives are inspired by this approach.
+			</p>
+		</div>
+	</section>
+
+	<!-- Client Satisfaction -->
+	<section class="bg-brand py-16">
+		<div class="container max-w-4xl text-center">
+			<p class="text-xs font-bold uppercase tracking-caps text-white/70">Client Results</p>
+			<h2 class="mt-3 text-3xl font-bold uppercase tracking-caps text-white">
+				100% Client Satisfaction
+			</h2>
+			<p class="mt-2 text-sm font-semibold uppercase tracking-caps text-white/80">
+				Based on Post-Intensive Surveys
+			</p>
+			<p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/80">
+				Following completion of their intensive, clients were invited to complete a feedback survey. Every respondent reported that the intensive met their goals and expectations, and 100% said they would recommend our individual or marriage intensives to others. Clients consistently reported improved communication with their partner, greater understanding of their faith and how it relates to their relationship, increased emotional well-being, and better conflict resolution skills.
+			</p>
+			<a
+				href="mailto:barbara@thekohlergroup.net?subject=Individual%20Intensives"
+				class="mt-10 inline-block rounded-full bg-white px-10 py-3 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-white/90"
+			>
+				Get Started
+			</a>
+		</div>
+	</section>
+
+	<!-- Three Stages of Healing -->
+	<section class="py-20">
+		<div class="container max-w-4xl">
+			<p class="section-label mb-4">Where Are You?</p>
+			<h2 class="section-title mb-6">Healing Takes Place in Stages</h2>
+			<p class="mb-10 text-base leading-relaxed text-gray-700">
+				I find people come into therapy at one of three stages, and each of these stages has varying degrees of intensity.
+			</p>
+			<div class="space-y-6">
+				{
+					[
+						{
+							num: '1',
+							title: 'Crisis',
+							body: 'Client is hurt or even devastated by a recent event, affair, death, tragedy, or some type of upset that has rocked their world.',
+						},
+						{
+							num: '2',
+							title: 'Seeking Awareness to Break Destructive Patterns',
+							body: 'Client is on a continuum of discovery that there are destructive habit, thought or behavioral problems in their life and they desire to stop making the same old choices or choosing the same old solutions that leave them in the same old place.',
+						},
+						{
+							num: '3',
+							title: 'Desiring Self Actualization',
+							body: 'Client is trying to break through to the next level of their career, business, ministry, etc., but often get rubber banded back to their old patterns that they worked so hard to overcome.',
+						},
+					].map(({ num, title, body }) => (
+						<div class="flex gap-6">
+							<div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-white">
+								{num}
+							</div>
+							<div>
+								<h3 class="font-bold uppercase tracking-caps text-brand">{title}</h3>
+								<p class="mt-2 text-sm leading-relaxed text-gray-700">{body}</p>
+							</div>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<!-- Awareness Stages -->
+	<section class="bg-gray-50 py-20">
+		<div class="container max-w-4xl">
+			<p class="section-label mb-4">The Process</p>
+			<h2 class="section-title mb-6">Awareness Comes in Stages</h2>
+			<div class="space-y-6">
+				{
+					[
+						{
+							num: '1',
+							title: 'Breaking Fallow Ground',
+							body: 'For you farmers or even gardeners, you know that not all ground is alike. Some ground is hard. It needs lots of water and lots of tilling before you can plant seed in it and expect that seed to take root. So, for some, you are in the process of breaking fallow ground to gain insight. Lack of insight. That is the very thing that fallow ground represents.',
+						},
+						{
+							num: '2',
+							title: 'Teaching',
+							body: 'Teaching is one of the most helpful things in breaking through the fallow ground.',
+						},
+						{
+							num: '3',
+							title: 'Baptism into the Holy Spirit',
+							body: 'An intimate relationship with the Holy Spirit is essential to Christian growth. If you are not baptized into the Holy Spirit, you will have difficulty gaining insight and growing in Christ.',
+						},
+						{
+							num: '4',
+							title: 'Prayer and Fasting',
+							body: 'I have found nothing that accelerates understanding like prayer and fasting (food). I can attribute many breakthroughs of all kinds to prayer and fasting food. Incidentally, the biblical model of fasting is to fast food (all, part, and sometimes water when directed by the Holy Spirit).',
+						},
+						{
+							num: '5',
+							title: 'Going Deeper',
+							body: 'You have more awareness of what God is dealing with, however, you do not know how to resolve the pain. You may have destructive patterns you want to change, yet you lack the skill, knowledge, or spiritual acuity to make the change.',
+						},
+					].map(({ num, title, body }) => (
+						<div class="flex gap-6">
+							<div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-white">
+								{num}
+							</div>
+							<div>
+								<h3 class="font-bold uppercase tracking-caps text-brand">{title}</h3>
+								<p class="mt-2 text-sm leading-relaxed text-gray-700">{body}</p>
+							</div>
+						</div>
+					))
+				}
+			</div>
+		</div>
+	</section>
+
+	<!-- Barbara Kohler Image -->
+	<section class="bg-white py-10">
+		<div class="container max-w-4xl">
+			<img
+				src="/images/barbara-kohler-individual.jpg"
+				alt="Barbara Kohler"
+				class="w-full rounded-lg object-cover shadow-md"
+			/>
+		</div>
+	</section>
+
+	<!-- While You Are Here -->
+	<section class="py-20">
+		<div class="container max-w-4xl">
+			<p class="section-label mb-4">Preparation</p>
+			<h2 class="section-title mb-8">While You Are Here</h2>
+			<ul class="space-y-4">
+				{
+					[
+						'Get plenty of rest and drink lots of water.',
+						'Do not engage in risky behavior or behavior that would not be pleasing to the Lord; i.e., do not open the door to the devil. He desires your destruction. Jesus desires wholeness for you. So, I ask you not to sabotage your sanctification or healing with negative behavior.',
+						'Bring a written list of all medications and supplements you are taking.',
+						'Take good care of yourself by communing with the Holy Spirit. He wants to guide you into all truth. Make peace with truth and do not be afraid to allow the Holy Spirit into the deep places of your heart.',
+						'Trust that God will do just what you need for the time you are here. Your transformation is an ongoing process. Do not be discouraged if you feel like you did not get every issue handled in one 3- to 5-day encounter. We all have lots of material to work on! God knows how much you can process and handle. Also, if you feel like I am taking you through things too quickly, please feel free to tell me to slow down. I have a desire for you to get as much healing as possible while you are here. However, I do not want you to feel overwhelmed. You have liberty to set boundaries with me and the process.',
+					].map((item) => (
+						<li class="flex items-start gap-3">
+							<span class="mt-1.5 h-2 w-2 flex-shrink-0 rounded-full bg-brand" />
+							<p class="text-sm leading-relaxed text-gray-700">{item}</p>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</section>
+
+	<!-- Day by Day -->
+	<section class="bg-gray-50 py-20">
+		<div class="container max-w-4xl">
+			<p class="section-label mb-4">The Schedule</p>
+			<h2 class="section-title mb-6">What Happens Each Day</h2>
+			<p class="mb-10 text-base leading-relaxed text-gray-700">
+				Within the three- to five-day time frame, you and I will work together in the following way:
+			</p>
+			<div class="space-y-12">
+
+				<!-- Day 1 -->
+				<div>
+					<h3 class="mb-6 text-lg font-bold uppercase tracking-caps text-brand border-b border-brand/20 pb-2">Day One</h3>
+					<ol class="space-y-3 list-decimal pl-5">
+						{[
+							'Life Script Analysis and Set Goals/Objectives for the Intensive.',
+							'Your Life Scroll – The life God has for you.',
+							'Learning Your Frame of Reference.',
+							'Review the Joines Personalities Adaptations Questionnaire. This is a tool used to facilitate the work and help you understand your individual personality.',
+							'Identify prevalent negative emotions you are dealing with on a daily basis (these are called racket emotions).',
+							'Clarify your mental health and emotional healing goals.',
+							'Identify your protective emotions (anger, rejection, fear, abandonment, etc.).',
+							'Being clear about what you want to change… about you! Your intensive is designed to change you, how you respond, how you activate, etc. It does not change the others in your life; however, as you heal and grow, you may find others respond to you in new ways. You may discover you now have the strength to set boundaries where needed in your life.',
+							'Begin Re-Decision Therapy (RDT) — I ask everyone to do this type of work as it will show me how you process information and it will increase your ego strength and ability to handle life\'s pressures. It is also an excellent technique if you struggle with self-sabotage, self-harm, self-rejection, or suicidal thoughts.',
+						].map((item) => (
+							<li class="text-sm leading-relaxed text-gray-700">{item}</li>
+						))}
+					</ol>
+				</div>
+
+				<!-- Day 2 -->
+				<div>
+					<h3 class="mb-6 text-lg font-bold uppercase tracking-caps text-brand border-b border-brand/20 pb-2">Day Two</h3>
+					<ol class="space-y-3 list-decimal pl-5">
+						{[
+							'Complete any RDT work carried over from day one.',
+							'Begin EMDR and/or Energy Work — Certain techniques deal with the unconscious traumas in your mind. EMDR is helpful for clearing trauma associated with negative cognitions (I\'m worthless, beyond hope, a burden, too much, etc.).',
+							'Think of it as if you are getting the sediment off the ocean floor. The sediment on the ocean floor often makes the water very cloudy.',
+							'Energy techniques such as TRET (Trauma Resolution Energy Therapy) help to clear out the unconscious traumas. The result is often a desire to read your Bible more, pray more, and be close to God.',
+							'Energy work can also be helpful for those who have somatized their emotions to their body or who have severe dissociation.',
+							'I do not do any occultic work (tarot or angel cards, etc.).',
+							'From a biblical perspective, I liken it to getting the idols out of the temple. You are the temple of the Holy Spirit. Traumatic energy keeps you from fully worshipping Jesus and being all you are called to be.',
+							'Although we are using scientific techniques, Energy Work has been seen by some believers as "New Age." We are using the body\'s own positive energy to release itself from negative energy. You do not have to do energy work. I will explain the work and you have liberty to accept or decline.',
+							'Father God, in His ingenious design of the body, gave a way for trauma to be released. We engage no other spirit but the Holy Spirit of God. We rely on Father God, Jesus the Son, and the Holy Spirit to hover over the process, guide the process, and bring healing and transformation to you in the areas you desire. God, the Holy Spirit, wants to walk alongside you as a Helper in your process.',
+						].map((item) => (
+							<li class="text-sm leading-relaxed text-gray-700">{item}</li>
+						))}
+					</ol>
+				</div>
+
+				<!-- Days 3-5 -->
+				<div>
+					<h3 class="mb-6 text-lg font-bold uppercase tracking-caps text-brand border-b border-brand/20 pb-2">Days Three to Five</h3>
+					<ol class="space-y-3 list-decimal pl-5">
+						{[
+							'Complete or continue EMDR, TRET and RDT.',
+							'Use HeartSync Prayer and RDT to solidify the work you did during these three days so that, when you leave, you will feel like "everything is in place" to the extent that it can be where you are in your healing journey.',
+							'HeartSync and other prayer techniques, such as Transformational Prayer Ministry, are used throughout the Intensive to build your capacity and build joy in your heart, mind, and body.',
+							'I occasionally use Judicial Prayer (Courts of Heaven) to help people clear blocks to healing, emotional, and even financial breakthrough. Many people abandon themselves financially — this is an emotional issue as well as a spiritual issue.',
+							'Discuss follow up and future therapy. If you are working through trauma and coming from out of state, you are responsible to have a local therapist for mental health emergencies, weekly sessions if you need, and other types of situations that need to be handled on sight with a trained therapist.',
+							'We will solidify your plan for when you return home.',
+						].map((item) => (
+							<li class="text-sm leading-relaxed text-gray-700">{item}</li>
+						))}
+					</ol>
+					<p class="mt-6 text-sm leading-relaxed text-gray-600 italic border-l-4 border-brand/30 pl-4">
+						Optional — For clients in the states of NC and SC, therapist offers follow up half-day or whole day sessions in person or via telehealth. These are usually done once per month, if needed. Many clients do not feel like they need the follow up, but may choose it at a later time.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Closing Note -->
+	<section class="py-20">
+		<div class="container max-w-4xl">
+			<p class="text-base leading-relaxed text-gray-700">
+				Come with an open mind. If you feel like God has led you here, trust Him. If there is a particular technique you are not comfortable with, I will not compel you to engage that technique. Just know it can limit your level of transformation. If you are okay with that, I am okay with that. If you would like to seek the Lord regarding your resistance to a technique, I welcome that. Everywhere Jesus went, He gave people an experience of Himself. My prayer for you is that you experience God in a deep way and your life will be better for having done this Intensive.
+			</p>
+		</div>
+	</section>
+
+	<!-- CTA -->
+	<section class="bg-white py-20">
+		<div class="container text-center">
+			<h2 class="text-3xl font-bold uppercase tracking-caps text-brand">
+				Take the Next Step
+			</h2>
+			<p class="mx-auto mt-6 max-w-xl text-base text-gray-600">
+				Contact us to learn more about scheduling an Individual Intensive. We'll help you find the right fit for your needs.
+			</p>
+			<div class="mt-10 flex flex-wrap justify-center gap-4">
+				<a
+					href="mailto:barbara@thekohlergroup.net?subject=Individual%20Intensives"
+					class="btn-primary inline-block"
+				>
+					Get Started
+				</a>
+				<a
+					href="tel:2527588636"
+					class="inline-block border-2 border-brand px-8 py-3 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-brand hover:text-white"
+				>
+					Call 252-758-8636
+				</a>
+			</div>
+		</div>
+	</section>
+</Layout>
