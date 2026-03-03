@@ -19,6 +19,9 @@ pnpm-debug.log*
 .env.*
 !.env.example
 
+# large video files (deploy separately via Netlify CLI)
+public/videos/*.mp4
+
 # OS files
 .DS_Store
 Thumbs.db
