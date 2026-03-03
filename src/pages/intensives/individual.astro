@@ -19,29 +19,26 @@ import Layout from '@layouts/Layout.astro';
 		</div>
 	</section>
 
-	<!-- Video -->
-	<section class="bg-gray-50 py-16">
-		<div class="container max-w-4xl">
-			<div class="overflow-hidden rounded-xl shadow-lg">
-				<video
-					class="h-auto w-full"
-					controls
-					preload="metadata"
-					poster=""
-				>
-					<source src="/videos/individual-intensive.mp4" type="video/mp4" />
-					Your browser does not support the video tag.
-				</video>
-			</div>
-		</div>
-	</section>
-
-	<!-- Intro -->
+	<!-- Intro + Video -->
 	<section class="py-20">
-		<div class="container max-w-4xl">
-			<p class="text-base leading-relaxed text-gray-700">
-				I am a Christian Counselor and have tailored the Intensive experience to bring restoration to the soul of the Christian believer who has experienced wounding and desires transformation of the spirit, soul and body. My approach is clinical and spiritual. We are an experiential psychotherapy practice in the private sector. Often, when Jesus ministered, He gave people teaching/instruction as well as a healing or miraculous experience. These intensives are inspired by this approach.
-			</p>
+		<div class="container max-w-6xl">
+			<div class="grid items-start gap-12 lg:grid-cols-2">
+				<div>
+					<p class="text-base leading-relaxed text-gray-700">
+						I am a Christian Counselor and have tailored the Intensive experience to bring restoration to the soul of the Christian believer who has experienced wounding and desires transformation of the spirit, soul and body. My approach is clinical and spiritual. We are an experiential psychotherapy practice in the private sector. Often, when Jesus ministered, He gave people teaching/instruction as well as a healing or miraculous experience. These intensives are inspired by this approach.
+					</p>
+				</div>
+				<div class="overflow-hidden rounded-xl shadow-lg">
+					<video
+						class="h-auto w-full"
+						controls
+						preload="metadata"
+					>
+						<source src="/videos/individual-intensive.mp4" type="video/mp4" />
+						Your browser does not support the video tag.
+					</video>
+				</div>
+			</div>
 		</div>
 	</section>
 
