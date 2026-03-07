@@ -1,23 +1,38 @@
 ---
-import { getCollection } from 'astro:content';
+import { sanityClient } from '../../lib/sanity.ts';
 import Layout from '@layouts/Layout.astro';
+import { PortableText } from 'astro-portabletext';
 
 export async function getStaticPaths() {
-	const therapists = await getCollection('therapists');
-	return therapists.map((therapist) => ({
-		params: { slug: therapist.slug },
-		props: { therapist },
+	const therapists = await sanityClient.fetch(`
+		*[_type == "therapist" && active != false] {
+			"slug": slug.current,
+			"_id": _id
+		}
+	`);
+	return therapists.map((t: any) => ({
+		params: { slug: t.slug || t._id },
 	}));
 }
 
-const { therapist } = Astro.props;
-const { Content } = await therapist.render();
-const { name, credentials, role, headshot, intro } = therapist.data;
+const { slug } = Astro.params;
+const therapist = await sanityClient.fetch(`
+	*[_type == "therapist" && (slug.current == $slug || _id == $slug)][0] {
+		name,
+		credentials,
+		role,
+		intro,
+		bio,
+		"headshotUrl": headshot.asset->url,
+		specializations,
+		modalities
+	}
+`, { slug });
 ---
 
 <Layout
-	title={`${name} | The Kohler Group, PLLC`}
-	description={`Learn more about ${name}, ${credentials} — a licensed therapist at The Kohler Group, PLLC offering Christian-based counseling.`}
+	title={`${therapist.name} | The Kohler Group, PLLC`}
+	description={`Learn more about ${therapist.name}, ${therapist.credentials} — a licensed therapist at The Kohler Group, PLLC offering Christian-based counseling.`}
 >
 	<!-- Hero -->
 	<section
@@ -27,7 +42,7 @@ const { name, credentials, role, headshot, intro } = therapist.data;
 		<div class="absolute inset-0 bg-brand/80"></div>
 		<div class="container relative z-10 text-center">
 			<h1 class="text-4xl font-bold uppercase tracking-caps text-white sm:text-5xl">
-				{name}
+				{therapist.name}
 			</h1>
 		</div>
 	</section>
@@ -39,10 +54,10 @@ const { name, credentials, role, headshot, intro } = therapist.data;
 
 				<!-- Left: Photo + credentials -->
 				<div class="flex-shrink-0 text-center lg:w-64">
-					{headshot ? (
+					{therapist.headshotUrl ? (
 						<img
-							src={headshot}
-							alt={`${name} headshot`}
+							src={`${therapist.headshotUrl}?w=520&h=693&fit=crop&auto=format`}
+							alt={`${therapist.name} headshot`}
 							class="mx-auto w-full max-w-[260px] rounded-lg object-cover object-top shadow-md lg:max-w-full"
 						/>
 					) : (
@@ -52,49 +67,29 @@ const { name, credentials, role, headshot, intro } = therapist.data;
 							</svg>
 						</div>
 					)}
-
-					<!-- Credentials below photo -->
-					<p class="mt-4 text-sm font-semibold text-brand">{credentials}</p>
-					{role && (
-						<p class="mt-1 text-xs italic text-black">{role}</p>
-					)}
+					<p class="mt-4 text-sm font-semibold text-brand">{therapist.credentials}</p>
+					{therapist.role && <p class="mt-1 text-xs italic text-black">{therapist.role}</p>}
 				</div>
 
 				<!-- Right: Intro paragraph + button -->
 				<div class="flex-1">
-					<p class="text-sm leading-relaxed text-black">
-						{intro}
-					</p>
-
-					<a
-						href="mailto:office@thekohlergroup.net"
-						class="btn-primary mt-8 inline-block"
-					>
+					<p class="text-sm leading-relaxed text-black">{therapist.intro}</p>
+					<a href="mailto:office@thekohlergroup.net" class="btn-primary mt-8 inline-block">
 						Request an Appointment
 					</a>
 				</div>
-
 			</div>
 
-			<!-- Full-width: remaining bio paragraphs -->
-			{intro && (
+			<!-- Full bio from Sanity Portable Text -->
+			{therapist.bio && therapist.bio.length > 0 && (
 				<div class="prose prose-sm max-w-none mt-6 border-t border-gray-100 pt-6 text-black [&_p]:text-black [&_li]:text-black [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1 [&_ul]:mt-2 [&_p]:leading-relaxed [&_p]:mt-5 [&_strong]:text-brand">
-					<Content />
-				</div>
-			)}
-
-			{!intro && (
-				<div class="prose prose-sm max-w-none mt-6 text-black [&_p]:text-black [&_li]:text-black [&_ul]:list-disc [&_ul]:pl-5 [&_ul]:space-y-1 [&_strong]:text-brand [&_p]:leading-relaxed">
-					<Content />
+					<PortableText value={therapist.bio} />
 				</div>
 			)}
 
 			<!-- Back link -->
 			<div class="mt-10">
-				<a
-					href="/our-therapists"
-					class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-ui text-brand transition hover:text-brand/70"
-				>
+				<a href="/our-therapists" class="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-ui text-brand transition hover:text-brand/70">
 					<svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
 						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
 					</svg>

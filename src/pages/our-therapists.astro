@@ -1,17 +1,26 @@
 ---
-import { getCollection } from 'astro:content';
+import { sanityClient, urlFor } from '../lib/sanity.ts';
 import Layout from '@layouts/Layout.astro';
 
-const therapists = (await getCollection('therapists')).sort((a, b) => a.data.order - b.data.order);
+const therapists = await sanityClient.fetch(`
+  *[_type == "therapist" && active != false] | order(order asc) {
+    _id,
+    name,
+    credentials,
+    role,
+    intro,
+    "slug": slug.current,
+    "headshotUrl": headshot.asset->url,
+    order
+  }
+`);
 ---
 
 <Layout
 	title="Our Therapists | The Kohler Group, PLLC"
 	description="Meet our licensed Christian therapists. Therapy is approached through a Christian worldview integrating clinical treatments with Biblical truths."
 >
-	<!-- ============================================================
-	     Hero Banner
-	     ============================================================ -->
+	<!-- Hero Banner -->
 	<section
 		class="relative flex h-[250px] items-center justify-center bg-cover bg-top bg-no-repeat"
 		style="background-image: url('/images/therapists-hero.jpg')"
@@ -24,9 +33,7 @@ const therapists = (await getCollection('therapists')).sort((a, b) => a.data.ord
 		</div>
 	</section>
 
-	<!-- ============================================================
-	     Therapist Grid
-	     ============================================================ -->
+	<!-- Therapist Grid -->
 	<section class="bg-white py-20">
 		<div class="container">
 			<p class="mx-auto mb-10 max-w-xl text-center text-base text-gray-600">
@@ -34,53 +41,42 @@ const therapists = (await getCollection('therapists')).sort((a, b) => a.data.ord
 				Biblical truths.
 			</p>
 			<div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-				{
-					therapists.map(async (therapist) => {
-						const { Content } = await therapist.render();
-						return (
-							<article class="flex flex-col overflow-hidden rounded-lg">
-								<!-- Headshot -->
-								<div class="aspect-square overflow-hidden bg-brand/10">
-									{therapist.data.headshot ? (
-										<img
-											src={therapist.data.headshot}
-											alt={`${therapist.data.name} headshot`}
-											class="h-full w-full object-cover object-top"
-											loading="lazy"
-										/>
-									) : (
-										<div class="flex h-full w-full items-center justify-center bg-brand/10">
-											<svg
-												class="h-24 w-24 text-brand/30"
-												fill="currentColor"
-												viewBox="0 0 24 24"
-												aria-hidden="true"
-											>
-												<path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
-											</svg>
-										</div>
-									)}
+				{therapists.map((therapist: any) => (
+					<article class="flex flex-col overflow-hidden rounded-lg">
+						<!-- Headshot -->
+						<div class="aspect-square overflow-hidden bg-brand/10">
+							{therapist.headshotUrl ? (
+								<img
+									src={`${therapist.headshotUrl}?w=600&h=600&fit=crop&auto=format`}
+									alt={`${therapist.name} headshot`}
+									class="h-full w-full object-cover object-top"
+									loading="lazy"
+								/>
+							) : (
+								<div class="flex h-full w-full items-center justify-center bg-brand/10">
+									<svg class="h-24 w-24 text-brand/30" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+										<path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z" />
+									</svg>
 								</div>
-
-								<!-- Info -->
-								<div class="flex flex-1 flex-col items-center bg-brand px-6 py-8 text-center">
-									<h2 class="text-base font-bold uppercase tracking-caps text-white">{therapist.data.name}</h2>
-									<p class="mt-1 text-xs font-medium uppercase tracking-ui text-white/60">
-										{therapist.data.credentials}
-									</p>
-									<div class="mt-auto pt-6 w-full flex justify-center">
-									<a
-										href={`/our-therapists/${therapist.slug}`}
-										class="rounded-full border border-white px-8 py-2 text-xs font-bold uppercase tracking-ui text-white transition hover:bg-white hover:text-brand"
-									>
-										Read Bio
-									</a>
-								</div>
-								</div>
-							</article>
-						);
-					})
-				}
+							)}
+						</div>
+						<!-- Info -->
+						<div class="flex flex-1 flex-col items-center bg-brand px-6 py-8 text-center">
+							<h2 class="text-base font-bold uppercase tracking-caps text-white">{therapist.name}</h2>
+							<p class="mt-1 text-xs font-medium uppercase tracking-ui text-white/60">
+								{therapist.credentials}
+							</p>
+							<div class="mt-auto pt-6 w-full flex justify-center">
+								<a
+									href={`/our-therapists/${therapist.slug || therapist._id}`}
+									class="rounded-full border border-white px-8 py-2 text-xs font-bold uppercase tracking-ui text-white transition hover:bg-white hover:text-brand"
+								>
+									Read Bio
+								</a>
+							</div>
+						</div>
+					</article>
+				))}
 			</div>
 		</div>
 	</section>
