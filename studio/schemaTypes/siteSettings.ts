@@ -20,5 +20,18 @@ export default {
     { name: 'heroImage', title: 'Home Hero Image', type: 'image', options: { hotspot: true } },
     { name: 'aboutHeroImage', title: 'About Hero Image', type: 'image', options: { hotspot: true } },
     { name: 'defaultHeroImage', title: 'Default Interior Hero Image', type: 'image', options: { hotspot: true } },
+    { 
+      name: 'galleryImages', 
+      title: 'Testimonials Gallery Images', 
+      type: 'array',
+      of: [{ 
+        type: 'image', 
+        options: { hotspot: true },
+        fields: [
+          { name: 'alt', title: 'Alt Text', type: 'string' }
+        ]
+      }],
+      description: 'Gallery images displayed on the testimonials page'
+    },
   ],
 }

@@ -14,7 +14,8 @@ const testimonials = await sanityClient.fetch(`
 const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   phone, email, barbaraEmail, officeEmail, bookingUrl,
   facebook, instagram,
-  heroImage, aboutHeroImage, defaultHeroImage, logo
+  heroImage, aboutHeroImage, defaultHeroImage, logo,
+  galleryImages
 }`);
 
 ---
@@ -52,44 +53,24 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 	</section>
 
 	<!-- Photo Gallery Row 1 -->
-	<section class="bg-gray-50 py-4">
-		<div class="container">
-			<div class="grid grid-cols-2 gap-4 md:grid-cols-4">
-				<div class="overflow-hidden rounded-lg">
-					<img
-						src="https://cdn.sanity.io/images/2bom5gqg/production/5529c4b2bf6b0bda291a530cff7973f3ccbc5a71-468x311.jpg"
-						alt="The Kohler Group"
-						class="h-52 w-full object-cover transition duration-500 hover:scale-105"
-						loading="lazy"
-					/>
-				</div>
-				<div class="overflow-hidden rounded-lg">
-					<img
-						src="https://cdn.sanity.io/images/2bom5gqg/production/76e2c98fa000dda7199aba5df5525f7b38d759ba-468x311.jpg"
-						alt="The Kohler Group"
-						class="h-52 w-full object-cover transition duration-500 hover:scale-105"
-						loading="lazy"
-					/>
-				</div>
-				<div class="overflow-hidden rounded-lg">
-					<img
-						src="https://cdn.sanity.io/images/2bom5gqg/production/bf1492d28ee65b78bf5cd8baef40b10f50022c8c-415x349.jpg"
-						alt="The Kohler Group"
-						class="h-52 w-full object-cover transition duration-500 hover:scale-105"
-						loading="lazy"
-					/>
-				</div>
-				<div class="overflow-hidden rounded-lg">
-					<img
-						src="https://cdn.sanity.io/images/2bom5gqg/production/64dcec02ccd61d4a70f553ab23a09f8a3b379c3d-428x364.jpg"
-						alt="The Kohler Group"
-						class="h-52 w-full object-cover transition duration-500 hover:scale-105"
-						loading="lazy"
-					/>
+	{settings?.galleryImages && settings.galleryImages.length > 0 && (
+		<section class="bg-gray-50 py-4">
+			<div class="container">
+				<div class="grid grid-cols-2 gap-4 md:grid-cols-4">
+					{settings.galleryImages.map((image, index) => (
+						<div class="overflow-hidden rounded-lg">
+							<img
+								src={urlFor(image).width(468).height(311).fit("crop").url()}
+								alt={image.alt || `The Kohler Group gallery image ${index + 1}`}
+								class="h-52 w-full object-cover transition duration-500 hover:scale-105"
+								loading="lazy"
+							/>
+						</div>
+					))}
 				</div>
 			</div>
-		</div>
-	</section>
+		</section>
+	)}
 
 	<!-- Testimonials Grid -->
 	<section class="bg-white py-20">
