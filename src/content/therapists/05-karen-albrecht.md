@@ -2,7 +2,7 @@
 name: Karen C. Albrecht
 credentials: MS, CRC, LCMHC, LCAS
 role: Seeing clients via telehealth in NC
-headshot: /images/therapist-karen-albrecht.jpg
+headshot: https://cdn.sanity.io/images/2bom5gqg/production/1c35004fb1413d71b6bb6d7fa0bf6f7c2ca336e4-225x225.jpg
 order: 5
 intro: "Karen C. Albrecht is a Licensed Clinical Mental Health Counselor (LCMHC), Licensed Clinical Addiction Specialist (LCAS), and a Certified Rehabilitation Counselor (CRC). She has a dual Master of Science degree in Counseling and Vocational Evaluation. Karen has over 19 years of experience serving as a Deaf Blind Specialist, Rehabilitation Counselor, and Child Parent Psychotherapist to adults and children, and providing services for individuals who are Deaf, Hard of Hearing, Deaf Blind, and with multiple disabilities."
 ---

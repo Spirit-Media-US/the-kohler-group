@@ -2,7 +2,7 @@
 name: Nancy Csehoski
 credentials: LCMHC, TF-CBT
 role: Seeing clients in person in Huntersville and via telehealth in NC
-headshot: https://static.wixstatic.com/media/2e5b58_b064d84644f04f1493336da062582bcd~mv2.jpg
+headshot: https://cdn.sanity.io/images/2bom5gqg/production/98db576dc9428b3fae1b10ec49cd8c723004ce08-600x600-jpg
 order: 2
 intro: "Mrs. Nancy Csehoski is a Licensed Clinical Mental Health Counselor (LCMHC). She received her Bachelor of Arts degree from Marshall University (West Virginia) and her Masters degree from Marshall University (formerly W. V. Graduate College)."
 ---

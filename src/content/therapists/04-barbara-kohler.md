@@ -2,7 +2,7 @@
 name: Barbara J. Kohler
 credentials: MS, CRC, LCMHC, NCC
 role: Founder — Seeing clients in person in Huntersville and via telehealth in NC
-headshot: /images/therapist-barbara-kohler.jpg
+headshot: https://cdn.sanity.io/images/2bom5gqg/production/eeb91e7708bcf7838969f4b32604e1ecdff9eb84-225x225.jpg
 order: 4
 intro: "Barbara Kohler is a Licensed Clinical Mental Health Counselor and Singer/Songwriter. Barbara uses a Christ centered approach in working with clients. Applying biblical counsel — in a grace oriented style — has proven to bring about lasting change in those who desire emotional and spiritual healing. Barbara is best known for her work with trauma survivors dealing with PTSD from childhood or adult trauma. She is trained in several modalities, her primary techniques being Re-decision Therapy, TRET (Trauma Resolution Energy Therapy) and Heart Sync."
 ---

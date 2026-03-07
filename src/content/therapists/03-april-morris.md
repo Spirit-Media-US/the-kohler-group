@@ -2,7 +2,7 @@
 name: April Morris
 credentials: MS, NCC, LCMHCS
 role: Clinical Director — Seeing clients in person in Huntersville and via telehealth in NC
-headshot: /images/therapist-april-morris.png
+headshot: https://cdn.sanity.io/images/2bom5gqg/production/971d8d6c4d71a8eea197a1ccbac80aafc980a3dd-225x225.png
 order: 3
 intro: "Mrs. April Morris is a Licensed Clinical Mental Health Therapist and Supervisor through the North Carolina Board of Licensed Clinical Mental Health Counselors. April is also a Licensed Professional Counselor for the State of South Carolina. She received her Bachelor of Arts Degree from King College (now King University) in 1997. April studied Music Therapy at Radford University and continued her education to obtain a Master of Science Degree in Mental Health Counseling from Capella University (Minneapolis, Minnesota)."
 ---

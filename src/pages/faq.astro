@@ -1,56 +1,12 @@
 ---
-import Layout from '@layouts/Layout.astro';
+import { sanityClient, urlFor } from "../lib/sanity.ts";
+import Layout from "@layouts/Layout.astro";
+import { toPlainText } from "@portabletext/toolkit";
 
-const faqs = [
-	{
-		q: 'Do you offer Christian-based therapy at your practice?',
-		a: 'Yes, at our practice, we offer Christian-based therapy that integrates faith and biblical principles into the counseling process. Our therapists are experienced in providing counseling from a Christian perspective.',
-	},
-	{
-		q: 'What types of insurance do you accept?',
-		a: 'We accept the following insurance plans:<ul class="mt-2 list-disc pl-5 space-y-1"><li>BCBS of NC</li><li>BCBS from most states (check with your insurance plan)</li><li>Aetna</li><li>MedCost</li><li>Optum/United</li><li>Tri-Care (April Morris, MS, LCMHCS, NCC)</li><li>Self Pay</li><li>Church Sponsored — if your church has offered to assist with your copays or your self payment, we will be glad to connect with them providing there is a written consent on file.</li><li>Medicaid</li><li>Medicare</li></ul>',
-	},
-	{
-		q: 'How can I verify if my insurance covers therapy at your practice?',
-		a: 'To verify if your insurance covers therapy at our practice, you can provide us with your insurance information, and we will verify coverage for you to the extent your carrier provides information. We can help you understand your benefits and any out-of-pocket costs associated with therapy sessions. It is ultimately your responsibility to know what your plan covers and we will help you as much as we can!',
-	},
-	{
-		q: 'Are your therapists licensed and experienced in providing mental health therapy?',
-		a: 'Yes, all of our therapists are licensed mental health professionals with experience in providing counseling services. They have the necessary qualifications and expertise to assist you in addressing your mental health needs. We also have practicum students and interns who feel called to the Christian Counseling field and we serve as a training site for various universities.',
-	},
-	{
-		q: 'Do I have to be a Christian to receive therapy at your practice?',
-		a: 'No! Jesus loves you! And if you do not want Christian therapy, let your therapist know. We will not ask you to violate your conscience and you hopefully agree to us not violating ours by providing any ungodly counsel by biblical standards. You do not have to be a Christian to receive therapy at our practice. While we offer Christian-based therapy for those who are interested, our services are open to individuals of all faith backgrounds or those who do not identify with any particular faith. We care about helping you heal.',
-	},
-	{
-		q: 'How do you integrate Christian faith into therapy sessions?',
-		a: "Our therapists integrate Christian faith into therapy sessions by incorporating biblical principles, prayer, scripture, and discussions about faith and spirituality based on the client's preferences and comfort level. We respect each client's beliefs and tailor our approach accordingly. Several of our therapists use Re-Decision Therapy which is a faith neutral approach and very congruent with Holy Scripture. The best thing about being a Christian therapist is helping people address their respective areas of unbelief.",
-	},
-	{
-		q: 'What mental health issues do you provide therapy for?',
-		a: 'Our therapists are trained to address a wide range of mental health issues, including but not limited to depression, anxiety, trauma, PTSD, Borderline Personality Disorder, Narcissistic Personality Disorder, relationship issues, grief, stress management, and more. We work with clients to develop personalized treatment plans based on their unique needs.',
-	},
-	{
-		q: 'How many therapy sessions are typically covered by insurance?',
-		a: 'The number of therapy sessions covered by insurance varies depending on your specific insurance plan. Some plans may cover a certain number of sessions per year, while others may require pre-authorization for additional sessions. We can help you understand your insurance coverage and work with you to maximize your benefits.',
-	},
-	{
-		q: 'How can I schedule an appointment at your practice?',
-		a: 'Text or call us at 252-758-8636 to schedule an appointment. We will assist you in setting up an appointment with one of our therapists at a time that is convenient for you.',
-	},
-	{
-		q: 'Why so many forms?',
-		a: 'We are required to show informed consent on our process and policies. The Professional Disclosure Statement requires your signature prior to being treated. In your Client Portal, completing your Intake Forms gives your therapist the necessary information needed to begin treatment and write an effective treatment plan. You can do this!',
-	},
-	{
-		q: 'What is your Cancellation Policy?',
-		a: "Life happens and we all have to cancel an appointment at times. For a single session appointment, there is no fee to cancel if you do so within 24 business hours of the appointment. That means if you have an 8 am appointment on Monday morning, you need to call 252-758-8636 by 8 am Friday morning. If you need to cancel within that 24 business hours window, you will be charged the full fee for the service, depending upon the therapist you are scheduled to meet with. Of course, we take into account if you or your child are sick and you are unable to attend, or some other type of circumstance which you will need to discuss with your therapist. Otherwise, there is a fee which helps minimize disruption to the therapist's schedule and cover our administrative costs.",
-	},
-	{
-		q: 'Do you have a Statement of Faith?',
-		a: 'We provide therapy that is clinically sound and Biblically supported. As professional therapists, we are committed to helping all individuals find healing and hope in the midst of crisis, trauma, and mental, emotional, or spiritual distress. Establishing a positive therapeutic rapport with our clients is an integral part of the healing journey. As such, we believe it is important for potential clients to know our core beliefs. The following principles guide us in our personal and professional lives, including our therapy sessions. If we encounter a conflict between our guiding principles and those of a client, we will work to resolve the conflict in the best interest of the client. If the conflict adversely affects the counseling process, we will make every effort to ethically, safely, and gracefully refer the client to another professional counselor.<div class="mt-4 space-y-4"><div><strong class="text-brand">God</strong> — There is one God, eternally existent in three persons: Father, Son, and Holy Spirit, often called the Trinity. (Matthew 28:19, Mark 1:9-11, John 10:27-30, James 2:19)</div><div><strong class="text-brand">The Bible</strong> — The Bible is the only infallible, Holy Spirit inspired Word of God. It contains all the principles, promises, and provisions God has made available to believers. We counsel from theories and perspectives that align with Scripture. (2 Timothy 3:16, Isaiah 55:11, Matthew 24:35, Psalm 119:105)</div><div><strong class="text-brand">Mankind</strong> — Every person is made in the image of God, is loved by Him, and is created to have fellowship with Him. We believe that God intentionally creates each person as either male or female, which together reflect the image and nature of God. We believe that each person is uniquely created with value and purpose. We believe in the sanctity of life. (Genesis 1:26-30, 2:7, 18-22, Jeremiah 1:5)</div><div><strong class="text-brand">Sin</strong> — Sin is defined as disobeying God\'s standard of holiness as written in the Bible. Sin separates us from God and leads to eternal death. Christ\'s death on the cross paid the penalty of sin and reunites us with God, giving us eternal life. We do not believe mental illness is always a result of sin. However, one might experience emotional and mental distress as a result of sinful choices or behaviors. (Romans 3:23-26, Genesis 3:1-7, John 3:16, Acts 4:12, Ephesians 1:7)</div><div><strong class="text-brand">Salvation</strong> — Salvation is received by personal repentance and acceptance of Jesus Christ into one\'s life as Lord and Savior. Salvation is an act of free will in response to God\'s love and the drawing of the Holy Spirit. (Mark 16:15-16, Acts 2:38, Romans 10:8-13, Ephesians 2:8-9, 1 John 2:2)</div><div><strong class="text-brand">The Christian Life</strong> — Life in Christ includes complete access to the promises of God described in the Bible. The Christian life still includes trials, tests, and warfare against a spiritual enemy, referred to as Satan or the Devil in Scripture. Victory over these trials, tests, and attacks is provided through the power of the Holy Spirit, submission to the will of God, and authentic relationships with other believers. Through Biblically informed counseling, we assist our clients in working toward and gaining victory in many areas of the Christian life. (Romans 8:1-7, 12:1-2, 9-19, Ephesians 4:1-3, 1 Peter 5:8-11, Philippians 2:12-13, James 4:7)</div><div><strong class="text-brand">Marriage</strong> — We believe marriage is defined in the Bible as a sacred covenant between one man and one woman, instituted by God. In marriage, husband and wife become one both spiritually and physically. Sexual intimacy was instituted and sanctioned by God to be enjoyed only within the covenant relationship of marriage. We advocate for the restoration and continuance of marriage unless it puts a client at risk physically or psychologically. If a situation is unsafe, we believe a temporary separation in accordance with Scripture is acceptable. (Genesis 2:22-24, Malachi 2:14-16, Hebrews 13:4, Matthew 19:4-6, 1 Corinthians 6:18-20, 1 Corinthians 7:2-5)</div></div>',
-	},
-];
+const [faqs, settings] = await Promise.all([
+  sanityClient.fetch(`*[_type=="faq"] | order(order asc) { _id, question, answer, category, order }`),
+  sanityClient.fetch(`*[_type=="siteSettings"][0]{ phone, email, barbaraEmail, officeEmail, bookingUrl, facebook, instagram, heroImage, aboutHeroImage, defaultHeroImage, logo }`),
+]);
 ---
 
 <Layout
@@ -60,7 +16,7 @@ const faqs = [
 	<!-- Hero -->
 	<section
 		class="relative flex h-[250px] items-center justify-center bg-cover bg-top bg-no-repeat"
-		style="background-image: url('/images/therapists-hero.jpg')"
+		style="background-image: url('https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg')"
 	>
 		<div class="absolute inset-0 bg-brand/80"></div>
 		<div class="container relative z-10 text-center">
@@ -75,11 +31,11 @@ const faqs = [
 		<div class="container max-w-4xl">
 			<div class="divide-y divide-gray-200">
 				{
-					faqs.map(({ q, a }, i) => (
+					faqs.map(({ question, answer, _id }, i) => (
 						<details class="group py-5">
 							<summary class="flex cursor-pointer items-start justify-between gap-4">
 								<span class="text-sm font-semibold uppercase tracking-caps text-brand">
-									{q}
+									{question}
 								</span>
 								<span class="mt-0.5 flex-shrink-0 text-brand transition group-open:rotate-45">
 									<svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -92,7 +48,7 @@ const faqs = [
 									</svg>
 								</span>
 							</summary>
-							<div class="mt-4 text-sm leading-relaxed text-gray-700" set:html={a} />
+							<div class="mt-4 text-sm leading-relaxed text-gray-700" set:html={answer?.map(b => b.children?.map(s => s.text).join('')).join(' ')} />
 
 							<!-- Share Icons -->
 							<div class="mt-4 flex items-center gap-3">
@@ -100,7 +56,7 @@ const faqs = [
 
 								{/* Facebook */}
 								<a
-									href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://thekohlergroup.com/faq')}&quote=${encodeURIComponent(q)}`}
+									href={`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://thekohlergroup.com/faq')}&quote=${encodeURIComponent(question)}`}
 									target="_blank"
 									rel="noopener noreferrer"
 									title="Share on Facebook"
@@ -113,7 +69,7 @@ const faqs = [
 
 								{/* X / Twitter */}
 								<a
-									href={`https://twitter.com/intent/tweet?url=${encodeURIComponent('https://thekohlergroup.com/faq')}&text=${encodeURIComponent(q)}`}
+									href={`https://twitter.com/intent/tweet?url=${encodeURIComponent('https://thekohlergroup.com/faq')}&text=${encodeURIComponent(question)}`}
 									target="_blank"
 									rel="noopener noreferrer"
 									title="Share on X"
@@ -162,11 +118,11 @@ const faqs = [
 				Still Have Questions?
 			</h2>
 			<p class="mx-auto mt-6 max-w-xl text-base text-gray-600">
-				Call or text us at 252-758-8636 and we'll be happy to help.
+				Call or text us at {settings?.phone} and we'll be happy to help.
 			</p>
 			<div class="mt-10 flex flex-wrap justify-center gap-4">
 				<a
-					href="https://barbara-kohler.clientsecure.me/contact-widget"
+					href={settings?.bookingUrl}
 					target="_blank"
 					rel="noopener noreferrer"
 					class="btn-primary"
@@ -174,10 +130,10 @@ const faqs = [
 					Request an Appointment
 				</a>
 				<a
-					href="tel:2527588636"
+					href="tel:{settings?.phone?.replace(/-/g,"")}"
 					class="inline-block border-2 border-brand px-8 py-3 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-brand hover:text-white"
 				>
-					Call 252-758-8636
+					Call {settings?.phone}
 				</a>
 			</div>
 		</div>

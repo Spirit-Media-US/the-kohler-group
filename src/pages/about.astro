@@ -1,5 +1,12 @@
 ---
+import { sanityClient, urlFor } from '../lib/sanity.ts';
 import Layout from '@layouts/Layout.astro';
+const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
+  phone, email, barbaraEmail, officeEmail, bookingUrl,
+  facebook, instagram,
+  heroImage, aboutHeroImage, defaultHeroImage, logo
+}`);
+
 ---
 
 <Layout
@@ -11,7 +18,7 @@ import Layout from '@layouts/Layout.astro';
 	     ============================================================ -->
 	<section
 		class="relative flex min-h-[65vh] items-center bg-cover bg-left-top bg-no-repeat"
-		style="background-image: url('https://static.wixstatic.com/media/ff2c01_03afa24b99ec4a87a61ed6deaafb2c1e~mv2.jpg')"
+		style={`background-image: url(${settings?.aboutHeroImage ? urlFor(settings.aboutHeroImage).width(1920).url() : ''})`}
 	>
 		<div class="absolute inset-0 bg-brand/50"></div>
 	</section>
@@ -75,7 +82,7 @@ import Layout from '@layouts/Layout.astro';
 				<!-- CTA -->
 				<div class="mt-12">
 					<a
-						href="https://barbara-kohler.clientsecure.me/contact-widget"
+						href={settings?.bookingUrl}
 						target="_blank"
 						rel="noopener noreferrer"
 						class="inline-block rounded-full bg-brand px-10 py-3 text-xs font-bold uppercase tracking-ui text-white transition hover:bg-brand/90"

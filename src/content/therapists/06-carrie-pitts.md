@@ -1,7 +1,7 @@
 ---
 name: Carrie Pitts
 credentials: BA, MA, Licensure Pending Approval
-headshot: /images/therapist-carrie-pitts.png
+headshot: https://cdn.sanity.io/images/2bom5gqg/production/f77e7d58a13a58c1411079fc103721ba9bff8349-225x225.png
 order: 6
 intro: "The Kohler Group, PLLC is proud to announce that Carrie Pitts will be continuing with our practice as a full-time clinician, pending licensure approval. After successfully completing her internship with The Kohler Group, PLLC, Carrie will now be transitioning into a full-time role upon licensure approval."
 ---

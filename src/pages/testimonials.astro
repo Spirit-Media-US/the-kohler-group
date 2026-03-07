@@ -1,48 +1,22 @@
 ---
-import Layout from '@layouts/Layout.astro';
+import Layout from "@layouts/Layout.astro";
+import { sanityClient, urlFor } from '../lib/sanity.ts';
 
-const testimonials = [
-	{
-		service: 'Individual Intensive',
-		quote:
-			"The first time I came to see Barbara I was in desperate place. I had tried multiple other therapist's and types of counseling. Nothing was helping beyond essentially medicating the pain and trauma I was working through. By the time I reached her, it would've been similar to someone coming into the emergency room on a crash cart. Barely alive. I needed assistance to feed and dress myself and was not safe to drive a car. My first Intensive with Barbara put me on life support and gave me the first glimpse of Hope in many many months. I continued forward with her guidance and multiple Intensives to follow. I can honestly say that I am alive today as a result of her therapeutic techniques and work. I and my family will be forever grateful.",
-	},
-	{
-		service: 'Marriage Intensive',
-		quote:
-			'Father used Barbara Kohler to bring much needed healing and deliverance in our lives. In 38 years of marriage, our week with Barbara was one of the most impactful weeks of our life. We cannot thank Father enough for this invaluable investment into our lives. Thank you for YOU and your ministry!',
-	},
-	{
-		service: 'Individual Therapy',
-		quote:
-			'I think The Kohler Group is providing a wonderful service to aid and support the lives of those who need it. God put The Kohler Group in my life at the perfect time to make me aware of how to navigate the stresses and tough decisions that would have to be made in the future.',
-	},
-	{
-		service: 'Individual Therapy',
-		quote:
-			'I am thankful God led me to this organization. He knew. He always knows. May God continue to equip and bless you all for the work you do on this mission field.',
-	},
-	{
-		service: 'Individual Intensive',
-		quote:
-			"I wasn't sure what to expect in the beginning. But it was so much better than what I could have thought. Thank you so much!",
-	},
-	{
-		service: 'Individual Therapy',
-		quote:
-			'It was an answer to prayer to find such an understanding and professional Christian therapist.',
-	},
-	{
-		service: 'Individual Therapy',
-		quote:
-			"April is amazing. I've met with her for over a year now & she has helped me grow in my faith exponentially. She helps me to see the glass half full, she has helped me open my eyes to other perspectives beside my own, and she provides genuine counsel as a woman of God. I appreciate her and the care and compassion she has shown me.",
-	},
-	{
-		service: 'Individual Therapy',
-		quote:
-			'Thank you for everything, you guys are amazing. I have a very different perspective on therapy as a positive, compared to my earlier perception provided by the culture and beliefs of those I grew up around.',
-	},
-];
+const testimonials = await sanityClient.fetch(`
+  *[_type == "testimonial"] | order(order asc) {
+    _id,
+    service,
+    quote,
+    order,
+    photo
+  }
+`);
+const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
+  phone, email, barbaraEmail, officeEmail, bookingUrl,
+  facebook, instagram,
+  heroImage, aboutHeroImage, defaultHeroImage, logo
+}`);
+
 ---
 
 <Layout
@@ -52,7 +26,7 @@ const testimonials = [
 	<!-- Hero -->
 	<section
 		class="relative flex h-[250px] items-center justify-center bg-cover bg-top bg-no-repeat"
-		style="background-image: url('/images/therapists-hero.jpg')"
+		style="background-image: url('https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg')"
 	>
 		<div class="absolute inset-0 bg-brand/80"></div>
 		<div class="container relative z-10 text-center">
@@ -83,7 +57,7 @@ const testimonials = [
 			<div class="grid grid-cols-2 gap-4 md:grid-cols-4">
 				<div class="overflow-hidden rounded-lg">
 					<img
-						src="/images/testimonial-1.jpg"
+						src="https://cdn.sanity.io/images/2bom5gqg/production/5529c4b2bf6b0bda291a530cff7973f3ccbc5a71-468x311.jpg"
 						alt="The Kohler Group"
 						class="h-52 w-full object-cover transition duration-500 hover:scale-105"
 						loading="lazy"
@@ -91,7 +65,7 @@ const testimonials = [
 				</div>
 				<div class="overflow-hidden rounded-lg">
 					<img
-						src="/images/testimonial-2.jpg"
+						src="https://cdn.sanity.io/images/2bom5gqg/production/76e2c98fa000dda7199aba5df5525f7b38d759ba-468x311.jpg"
 						alt="The Kohler Group"
 						class="h-52 w-full object-cover transition duration-500 hover:scale-105"
 						loading="lazy"
@@ -99,7 +73,7 @@ const testimonials = [
 				</div>
 				<div class="overflow-hidden rounded-lg">
 					<img
-						src="/images/testimonial-3.jpg"
+						src="https://cdn.sanity.io/images/2bom5gqg/production/bf1492d28ee65b78bf5cd8baef40b10f50022c8c-415x349.jpg"
 						alt="The Kohler Group"
 						class="h-52 w-full object-cover transition duration-500 hover:scale-105"
 						loading="lazy"
@@ -107,7 +81,7 @@ const testimonials = [
 				</div>
 				<div class="overflow-hidden rounded-lg">
 					<img
-						src="/images/testimonial-4.jpg"
+						src="https://cdn.sanity.io/images/2bom5gqg/production/64dcec02ccd61d4a70f553ab23a09f8a3b379c3d-428x364.jpg"
 						alt="The Kohler Group"
 						class="h-52 w-full object-cover transition duration-500 hover:scale-105"
 						loading="lazy"
@@ -122,21 +96,26 @@ const testimonials = [
 		<div class="container">
 			<div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
 				{
-					testimonials.map(({ service, quote }) => (
+					testimonials.map(({ service, quote, photo }) => (
 						<blockquote class="flex flex-col rounded-lg border border-gray-100 bg-white p-8 shadow-sm transition hover:shadow-md">
-							<div class="mb-5 flex items-center justify-between">
+							<!-- Circle avatar centered -->
+							<div class="mb-5 flex flex-col items-center gap-3">
+								<div class="h-20 w-20 overflow-hidden rounded-full ring-2 ring-brand/20">
+									<img
+										src={photo ? urlFor(photo).width(200).height(200).fit("crop").url() : ""}
+										alt="Client photo"
+										class="h-full w-full object-cover" style="object-position: center 15%"
+										loading="lazy"
+									/>
+								</div>
 								<span class="rounded-full bg-brand/10 px-3 py-1 text-xs font-bold uppercase tracking-caps text-brand">
 									{service}
 								</span>
-								<svg
-									class="h-7 w-7 flex-shrink-0 text-brand/20"
-									fill="currentColor"
-									viewBox="0 0 32 32"
-									aria-hidden="true"
-								>
-									<path d="M10 8C6.686 8 4 10.686 4 14v10h10V14H7.333C7.333 11.791 8.791 10 10 10V8zm14 0c-3.314 0-6 2.686-6 6v10h10V14h-6.667C21.333 11.791 22.791 10 24 10V8z" />
-								</svg>
 							</div>
+							<!-- Quote -->
+							<svg class="mb-3 h-6 w-6 flex-shrink-0 text-brand/20" fill="currentColor" viewBox="0 0 32 32" aria-hidden="true">
+								<path d="M10 8C6.686 8 4 10.686 4 14v10h10V14H7.333C7.333 11.791 8.791 10 10 10V8zm14 0c-3.314 0-6 2.686-6 6v10h10V14h-6.667C21.333 11.791 22.791 10 24 10V8z" />
+							</svg>
 							<p class="flex-1 text-sm leading-relaxed text-gray-700">{quote}</p>
 							<div class="mt-6 flex gap-1">
 								{[...Array(5)].map(() => (
@@ -163,7 +142,7 @@ const testimonials = [
 			</p>
 			<div class="mt-10 flex flex-wrap justify-center gap-4">
 				<a
-					href="https://barbara-kohler.clientsecure.me/contact-widget"
+					href={settings?.bookingUrl}
 					target="_blank"
 					rel="noopener noreferrer"
 					class="btn-primary"
@@ -171,10 +150,10 @@ const testimonials = [
 					Request an Appointment
 				</a>
 				<a
-					href="tel:2527588636"
+					href="tel:{settings?.phone?.replace(/-/g,"")}"
 					class="inline-block border-2 border-brand px-8 py-3 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-brand hover:text-white"
 				>
-					Call 252-758-8636
+					Call {settings?.phone}
 				</a>
 			</div>
 		</div>

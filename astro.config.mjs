@@ -11,6 +11,7 @@ export default defineConfig({
 	integrations: [sitemap()],
 
 	vite: {
+		server: { allowedHosts: ["preview.spiritmediapublishing.com"] },
 		plugins: [tailwindcss()],
 	},
 });
