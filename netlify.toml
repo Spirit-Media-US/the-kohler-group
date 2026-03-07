@@ -23,7 +23,14 @@
 [build.processing.images]
   compress = true
 
-# Redirect www to non-www (update domain when ready)
+# Branch preview deployments — full build, no www redirect
+[context.deploy-preview]
+  command = "npm run build"
+
+[context.branch-deploy]
+  command = "npm run build"
+
+# Redirect www to non-www
 [[redirects]]
   from = "https://www.thekohlergroup.com/*"
   to = "https://thekohlergroup.com/:splat"
