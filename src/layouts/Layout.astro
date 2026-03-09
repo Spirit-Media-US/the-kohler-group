@@ -15,11 +15,11 @@ const {
 	title,
 	description = 'North Carolina therapy practice specializing in faith-based counseling and psychotherapy intensives.',
 	canonicalURL = Astro.url.href,
-	ogImage = '/og-default.png',
+	ogImage = 'https://cdn.sanity.io/images/2bom5gqg/production/69ff224b35aa2d4c0e57339b5449330d55bf8095-468x311.jpg',
 } = Astro.props;
 
 const siteName = 'The Kohler Group PLLC';
-const ogImageURL = new URL(ogImage, Astro.site ?? Astro.url).href;
+const ogImageURL = ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro.site ?? Astro.url).href;
 ---
 
 <!doctype html>
