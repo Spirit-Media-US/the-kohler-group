@@ -10,9 +10,27 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 ---
 
 <Layout
-	title="The Kohler Group PLLC | Christian Counseling"
-	description="North Carolina therapy practice specializing in faith based counseling and psychotherapy intensives."
+	title="The Kohler Group PLLC | Christian Counseling in North Carolina"
+	description="Christian counseling and psychotherapy intensives in North Carolina. Biblical principles, licensed therapists, and evidence-based care for individuals and couples."
 >
+	<script type="application/ld+json" slot="head">{JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "MedicalBusiness",
+		"name": "The Kohler Group PLLC",
+		"description": "Christian counseling and psychotherapy intensives in North Carolina using Biblical principles and evidence-based clinical care.",
+		"url": "https://thekohlergroup.com",
+		"telephone": "+13365756786",
+		"email": "office@thekohlergroup.net",
+		"address": {
+			"@type": "PostalAddress",
+			"addressRegion": "NC",
+			"addressCountry": "US"
+		},
+		"areaServed": "North Carolina",
+		"medicalSpecialty": "Psychiatry",
+		"priceRange": "$$",
+		"sameAs": []
+	})}</script>
 	<!-- ============================================================
 	     Hero — beach image, light overlay, centered headline only
 	     ============================================================ -->
