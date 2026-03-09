@@ -3,7 +3,7 @@ import { sanityClient, urlFor } from '../lib/sanity.ts';
 import Layout from '@layouts/Layout.astro';
 
 const therapists = await sanityClient.fetch(`
-  *[_type == "therapist" && active != false] | order(order asc) {
+  *[_type == "therapist" && active != false] | order(name asc) {
     _id,
     name,
     credentials,
