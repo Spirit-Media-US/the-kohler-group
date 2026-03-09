@@ -62,7 +62,12 @@ const year = new Date().getFullYear();
 
 		<!-- Copyright -->
 		<p class="mt-6 text-xs text-white">
-			&copy; {year} The Kohler Group, PLLC. All rights reserved.
+			&copy; <span id="footer-year"></span> The Kohler Group, PLLC. All rights reserved. &bull; Powered by <a href="https://spiritmediapublishing.com" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">Spirit Media</a>
 		</p>
 	</div>
 </footer>
+
+<script>
+  const el = document.getElementById('footer-year');
+  if (el) el.textContent = new Date().getFullYear().toString();
+</script>

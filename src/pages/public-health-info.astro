@@ -58,7 +58,7 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 				</ol>
 				<p>
 					If you have additional questions, please call us at
-					<a href="tel:{settings?.phone?.replace(/-/g,"")}" class="text-brand underline hover:text-brand/80">{settings?.phone}</a>
+					<a href={`tel:${settings?.phone?.replace(/-/g, '')}`} class="text-brand underline hover:text-brand/80">{settings?.phone}</a>
 					or email us at
 					<a href={`mailto:${settings?.email}`} class="text-brand underline hover:text-brand/80">info@thekohlergroup.net</a>.
 				</p>
