@@ -2,6 +2,7 @@
 import { sanityClient } from '../../lib/sanity.ts';
 import Layout from '@layouts/Layout.astro';
 import { PortableText } from 'astro-portabletext';
+import MailtoLink from '@components/MailtoLink.astro';
 
 export async function getStaticPaths() {
 	const therapists = await sanityClient.fetch(`
@@ -31,8 +32,8 @@ const therapist = await sanityClient.fetch(`
 ---
 
 <Layout
-	title={`${therapist.name} | The Kohler Group, PLLC`}
-	description={`Learn more about ${therapist.name}, ${therapist.credentials} — a licensed therapist at The Kohler Group, PLLC offering Christian-based counseling.`}
+	title={`${therapist.name}, ${therapist.credentials} | Christian Counselor — Barbara Kohler's Practice`}
+	description={`${therapist.name}, ${therapist.credentials} — a licensed Christian counselor at Barbara Kohler's practice in Huntersville, NC offering individual sessions, marriage counseling, and faith-based therapy.`}
 >
 	<!-- Hero -->
 	<section
@@ -74,9 +75,9 @@ const therapist = await sanityClient.fetch(`
 				<!-- Right: Intro paragraph + button -->
 				<div class="flex-1">
 					<p class="text-sm leading-relaxed text-black">{therapist.intro}</p>
-					<a href="mailto:office@thekohlergroup.net" class="btn-primary mt-8 inline-block">
+					<MailtoLink email="office@thekohlergroup.net" class="btn-primary mt-8 inline-block">
 						Request an Appointment
-					</a>
+					</MailtoLink>
 				</div>
 			</div>
 

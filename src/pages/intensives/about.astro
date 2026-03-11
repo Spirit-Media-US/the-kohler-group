@@ -1,6 +1,7 @@
 ---
 import { sanityClient, urlFor } from '../../lib/sanity.ts';
 import Layout from '@layouts/Layout.astro';
+import MailtoLink from '@components/MailtoLink.astro';
 const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   phone, email, barbaraEmail, officeEmail, bookingUrl,
   facebook, instagram,
@@ -10,8 +11,8 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 ---
 
 <Layout
-	title="About Intensives | The Kohler Group, PLLC"
-	description="Learn about The Kohler Group's intensive therapy programs — concentrated, focused therapy designed to bring restoration, healing, and transformation to the Christian believer."
+	title="Christian Therapy Intensives with Barbara Kohler | Marriage & Individual Programs"
+	description="Barbara Kohler offers Christian marriage intensives and individual intensives in Huntersville, NC — concentrated, multi-day faith-based therapy designed to bring restoration, healing, and transformation."
 >
 	<!-- Hero -->
 	<section
@@ -50,12 +51,12 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 			<p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/80">
 				Following completion of their intensive, clients were invited to complete a feedback survey. Every respondent reported that the intensive met their goals and expectations, and 100% said they would recommend our individual or marriage intensives to others. Clients consistently reported improved communication with their partner, greater understanding of their faith and how it relates to their relationship, increased emotional well-being, and better conflict resolution skills.
 			</p>
-			<a
-				href={`mailto:${settings?.barbaraEmail}`}
+			<MailtoLink
+				email={settings?.barbaraEmail}
 				class="mt-10 inline-block rounded-full bg-white px-10 py-3 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-white/90"
 			>
 				Get Started
-			</a>
+			</MailtoLink>
 		</div>
 	</section>
 

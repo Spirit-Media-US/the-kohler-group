@@ -1,6 +1,7 @@
 ---
 import { sanityClient, urlFor } from '../../lib/sanity.ts';
 import Layout from '@layouts/Layout.astro';
+import MailtoLink from '@components/MailtoLink.astro';
 const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   phone, email, barbaraEmail, officeEmail, bookingUrl,
   facebook, instagram,
@@ -10,8 +11,8 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 ---
 
 <Layout
-	title="Individual Intensives | The Kohler Group, PLLC"
-	description="Individual intensives at The Kohler Group — concentrated, focused therapy designed to help you break through trauma, anxiety, grief, and unresolved wounds with lasting results."
+	title="Christian Individual Intensive with Barbara Kohler | Faith-Based Therapy in Huntersville, NC"
+	description="Barbara Kohler's Christian individual intensive — a 3-to-5-day concentrated therapy experience in Huntersville, NC designed to break through trauma, anxiety, grief, and unresolved wounds through faith-based counseling."
 >
 	<!-- Hero -->
 	<section
@@ -62,12 +63,12 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 			<p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/80">
 				Following completion of their intensive, clients were invited to complete a feedback survey. Every respondent reported that the intensive met their goals and expectations, and 100% said they would recommend our individual or marriage intensives to others. Clients consistently reported improved communication with their partner, greater understanding of their faith and how it relates to their relationship, increased emotional well-being, and better conflict resolution skills.
 			</p>
-			<a
-				href={`mailto:${settings?.barbaraEmail}`}
+			<MailtoLink
+				email={settings?.barbaraEmail}
 				class="mt-10 inline-block rounded-full bg-white px-10 py-3 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-white/90"
 			>
 				Get Started
-			</a>
+			</MailtoLink>
 		</div>
 	</section>
 
@@ -289,12 +290,12 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 				Contact us to learn more about scheduling an Individual Intensive. We'll help you find the right fit for your needs.
 			</p>
 			<div class="mt-10 flex flex-wrap justify-center gap-4">
-				<a
-					href={`mailto:${settings?.barbaraEmail}`}
+				<MailtoLink
+					email={settings?.barbaraEmail}
 					class="btn-primary inline-block"
 				>
 					Get Started
-				</a>
+				</MailtoLink>
 				<a
 					href="tel:{settings?.phone?.replace(/-/g,"")}"
 					class="inline-block border-2 border-brand px-8 py-3 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-brand hover:text-white"

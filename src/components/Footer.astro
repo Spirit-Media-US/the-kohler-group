@@ -1,5 +1,6 @@
 ---
 import { sanityClient, urlFor } from "../lib/sanity";
+import MailtoLink from "./MailtoLink.astro";
 const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{ logo, phone, email, facebook, instagram }`);
 const year = new Date().getFullYear();
 ---
@@ -23,15 +24,15 @@ const year = new Date().getFullYear();
 		<div class="flex flex-wrap items-center justify-center gap-3 text-sm text-white">
 			<span>Phone: <a href="tel:2527588636" class="transition hover:text-white">{settings?.phone}</a></span>
 			<span class="text-white">|</span>
-			<a
-				href={`mailto:${settings?.email}`}
+			<MailtoLink
+				email={settings?.email}
 				class="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/10 px-4 py-1.5 text-xs font-medium text-white transition hover:bg-white/20 hover:text-white"
 			>
 				<svg class="h-3.5 w-3.5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
 					<path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25H4.5a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5H4.5a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
 				</svg>
 				Send Us an Email
-			</a>
+			</MailtoLink>
 		</div>
 
 		<!-- Address -->
