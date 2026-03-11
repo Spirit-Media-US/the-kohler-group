@@ -17,7 +17,7 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 	     Hero Banner
 	     ============================================================ -->
 	<section
-		class="relative flex min-h-[65vh] items-center bg-cover bg-center bg-no-repeat"
+		class="relative flex min-h-[65vh] items-center bg-cover bg-center lg:bg-left-top bg-no-repeat"
 		style={`background-image: url(${settings?.aboutHeroImage ? urlFor(settings.aboutHeroImage).width(1920).url() : ''})`}
 	>
 		<div class="absolute inset-0 bg-brand/50"></div>
