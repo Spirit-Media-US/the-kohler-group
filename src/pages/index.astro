@@ -10,27 +10,9 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 ---
 
 <Layout
-	title="The Kohler Group PLLC | Christian Counseling in North Carolina"
-	description="Christian counseling and psychotherapy intensives in North Carolina. Biblical principles, licensed therapists, and evidence-based care for individuals and couples."
+	title="Barbara Kohler | Christian Counseling, Marriage & Individual Intensives in Huntersville, NC"
+	description="Barbara Kohler, LCMHC — Christian counseling, marriage intensives, and individual intensives in Huntersville, NC. Faith-based psychotherapy combining clinical expertise with Biblical principles."
 >
-	<script type="application/ld+json" slot="head">{JSON.stringify({
-		"@context": "https://schema.org",
-		"@type": "MedicalBusiness",
-		"name": "The Kohler Group PLLC",
-		"description": "Christian counseling and psychotherapy intensives in North Carolina using Biblical principles and evidence-based clinical care.",
-		"url": "https://thekohlergroup.com",
-		"telephone": "+13365756786",
-		"email": "office@thekohlergroup.net",
-		"address": {
-			"@type": "PostalAddress",
-			"addressRegion": "NC",
-			"addressCountry": "US"
-		},
-		"areaServed": "North Carolina",
-		"medicalSpecialty": "Psychiatry",
-		"priceRange": "$$",
-		"sameAs": []
-	})}</script>
 	<!-- ============================================================
 	     Hero — beach image, light overlay, centered headline only
 	     ============================================================ -->
@@ -84,18 +66,10 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 	<!-- ============================================================
 	     Services — dark navy, icons, pill Learn More buttons
 	     ============================================================ -->
-	<section class="bg-white pb-16 pt-4">
+	<section class="bg-white py-16">
 		<div class="container grid grid-cols-1 gap-6 md:grid-cols-3">
 			<!-- Marriage Intensives -->
-			<div class="flex flex-col items-center rounded-lg bg-brand text-center overflow-hidden">
-				<img
-					src="https://cdn.sanity.io/images/2bom5gqg/production/79bc51e151e87d59cb1cc31823371b8bdbb30a63-4349x2903.jpg?w=800&auto=format"
-					alt="Marriage Intensives"
-					class="w-full object-cover"
-					style="max-height: 220px; object-fit: cover;"
-					loading="lazy"
-				/>
-				<div class="flex flex-col items-center py-12 px-10 w-full">
+			<div class="flex flex-col items-center rounded-lg bg-brand py-16 text-center md:px-10">
 				<!-- Icon: two interlocking rings -->
 				<svg
 					class="mx-auto mb-6 h-14 w-14 text-white"
@@ -117,19 +91,10 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 				>
 					Learn More
 				</a>
-				</div>
 			</div>
 
 			<!-- Therapy Sessions -->
-			<div class="flex flex-col items-center rounded-lg bg-brand text-center overflow-hidden">
-				<img
-					src="https://cdn.sanity.io/images/2bom5gqg/production/2ba073373a307d8e08b3a4b462d5e57c2255d573-7000x4667.jpg?w=800&auto=format"
-					alt="Therapy Sessions"
-					class="w-full object-cover"
-					style="max-height: 220px; object-fit: cover;"
-					loading="lazy"
-				/>
-				<div class="flex flex-col items-center py-12 px-10 w-full">
+			<div class="flex flex-col items-center rounded-lg bg-brand py-16 text-center md:px-10">
 				<!-- Icon: speech bubble with dots -->
 				<svg
 					class="mx-auto mb-6 h-14 w-14 text-white"
@@ -156,19 +121,10 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 				>
 					Learn More
 				</a>
-				</div>
 			</div>
 
 			<!-- Individual Intensives -->
-			<div class="flex flex-col items-center rounded-lg bg-brand text-center overflow-hidden">
-				<img
-					src="https://cdn.sanity.io/images/2bom5gqg/production/072edeab37e3c23c7441d53519ec70df92ad873a-5616x3744.jpg?w=800&auto=format"
-					alt="Individual Intensives"
-					class="w-full object-cover"
-					style="max-height: 220px; object-fit: cover;"
-					loading="lazy"
-				/>
-				<div class="flex flex-col items-center py-12 px-10 w-full">
+			<div class="flex flex-col items-center rounded-lg bg-brand py-16 text-center md:px-10">
 				<!-- Icon: two person silhouettes -->
 				<svg
 					class="mx-auto mb-6 h-14 w-14 text-white"
@@ -195,26 +151,6 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 				>
 					Learn More
 				</a>
-				</div>
-			</div>
-		</div>
-	</section>
-	<!-- Photo Gallery -->
-	<section class="bg-white py-4">
-		<div class="container">
-			<div class="grid grid-cols-2 gap-4 md:grid-cols-4">
-				<div class="overflow-hidden rounded-lg">
-					<img src="https://cdn.sanity.io/images/2bom5gqg/production/76e2c98fa000dda7199aba5df5525f7b38d759ba-468x311.jpg?w=468&h=311&fit=crop&auto=format" alt="The Kohler Group" class="h-52 w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />
-				</div>
-				<div class="overflow-hidden rounded-lg">
-					<img src="https://cdn.sanity.io/images/2bom5gqg/production/64dcec02ccd61d4a70f553ab23a09f8a3b379c3d-428x364.jpg?w=468&h=311&fit=crop&auto=format" alt="The Kohler Group" class="h-52 w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />
-				</div>
-				<div class="overflow-hidden rounded-lg">
-					<img src="https://cdn.sanity.io/images/2bom5gqg/production/5529c4b2bf6b0bda291a530cff7973f3ccbc5a71-468x311.jpg?w=468&h=311&fit=crop&auto=format" alt="The Kohler Group" class="h-52 w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />
-				</div>
-				<div class="overflow-hidden rounded-lg">
-					<img src="https://cdn.sanity.io/images/2bom5gqg/production/bf1492d28ee65b78bf5cd8baef40b10f50022c8c-415x349.jpg?w=468&h=311&fit=crop&auto=format" alt="The Kohler Group" class="h-52 w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />
-				</div>
 			</div>
 		</div>
 	</section>

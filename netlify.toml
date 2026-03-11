@@ -32,7 +32,58 @@
 
 # Redirect www to non-www
 [[redirects]]
-  from = "https://www.thekohlergroup.com/*"
-  to = "https://thekohlergroup.com/:splat"
+  from = "https://www.thekohlergroup.net/*"
+  to = "https://thekohlergroup.net/:splat"
   status = 301
   force = true
+
+# Old site URL redirects (Google still indexes these)
+[[redirects]]
+  from = "/marriage-intensives"
+  to = "/intensives/marriage/"
+  status = 301
+
+[[redirects]]
+  from = "/marriage-intensives/"
+  to = "/intensives/marriage/"
+  status = 301
+
+[[redirects]]
+  from = "/therapists/april-morris"
+  to = "/our-therapists/april-morris/"
+  status = 301
+
+[[redirects]]
+  from = "/therapists/*"
+  to = "/our-therapists/"
+  status = 301
+
+[[redirects]]
+  from = "/media"
+  to = "/education/media/"
+  status = 301
+
+[[redirects]]
+  from = "/media/"
+  to = "/education/media/"
+  status = 301
+
+[[redirects]]
+  from = "/surviving-trauma"
+  to = "/education/surviving-trauma/"
+  status = 301
+
+[[redirects]]
+  from = "/surviving-trauma/"
+  to = "/education/surviving-trauma/"
+  status = 301
+
+[[redirects]]
+  from = "/therapist-services"
+  to = "/our-therapists/"
+  status = 301
+
+[[redirects]]
+  from = "/therapist-services/"
+  to = "/our-therapists/"
+  status = 301

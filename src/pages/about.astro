@@ -10,14 +10,14 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 ---
 
 <Layout
-	title="About The Kohler Group | Christian Counseling in North Carolina"
-	description="Learn about The Kohler Group's mission, vision, and values — high-quality Christian psychotherapy to advance the Kingdom of God in North Carolina."
+	title="About Barbara Kohler & The Kohler Group | Christian Counseling in Huntersville, NC"
+	description="Meet Barbara Kohler and her team of licensed Christian counselors in Huntersville, NC. Providing faith-based psychotherapy, marriage intensives, and individual intensives to advance healing and restoration."
 >
 	<!-- ============================================================
 	     Hero Banner
 	     ============================================================ -->
 	<section
-		class="relative flex min-h-[65vh] items-center bg-cover bg-left-top bg-no-repeat"
+		class="relative flex min-h-[65vh] items-center bg-cover bg-center bg-no-repeat"
 		style={`background-image: url(${settings?.aboutHeroImage ? urlFor(settings.aboutHeroImage).width(1920).url() : ''})`}
 	>
 		<div class="absolute inset-0 bg-brand/50"></div>

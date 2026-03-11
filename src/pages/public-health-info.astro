@@ -1,6 +1,7 @@
 ---
 import { sanityClient, urlFor } from '../lib/sanity.ts';
 import Layout from '@layouts/Layout.astro';
+import MailtoLink from '@components/MailtoLink.astro';
 const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   phone, email, barbaraEmail, officeEmail, bookingUrl,
   facebook, instagram,
@@ -60,7 +61,7 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 					If you have additional questions, please call us at
 					<a href={`tel:${settings?.phone?.replace(/-/g, '')}`} class="text-brand underline hover:text-brand/80">{settings?.phone}</a>
 					or email us at
-					<a href={`mailto:${settings?.email}`} class="text-brand underline hover:text-brand/80">info@thekohlergroup.net</a>.
+					<MailtoLink email={settings?.email} class="text-brand underline hover:text-brand/80">info at thekohlergroup.net</MailtoLink>.
 				</p>
 			</div>
 		</div>
