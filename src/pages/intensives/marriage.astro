@@ -67,7 +67,7 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 				"@type": "VideoObject",
 				"name": "Christian Marriage Intensive — The Kohler Group",
 				"description": "Learn about the Christian marriage intensive experience with Barbara Kohler at The Kohler Group in Huntersville, NC.",
-				"contentUrl": "https://thekohlergroup.net/videos/marriage-intensive.mp4",
+				"contentUrl": "https://www.youtube.com/watch?v=l_mb3yx43I0",
 				"thumbnailUrl": "https://cdn.sanity.io/images/2bom5gqg/production/21282e732035fa47572f5ca27d12ae838ef7fe43-600x400.jpg",
 				"uploadDate": "2025-01-01"
 			}
@@ -103,14 +103,18 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 					</p>
 				</div>
 				<div class="overflow-hidden rounded-xl shadow-lg">
-					<video
-						class="aspect-video w-full bg-black object-cover"
-						controls
-						preload="auto"
-					>
-						<source src="/videos/marriage-intensive.mp4" type="video/mp4" />
-						Your browser does not support the video tag.
-					</video>
+					<p class="mb-2 text-xs font-semibold uppercase tracking-caps text-brand/60">Watch</p>
+					<h3 class="mb-3 text-base font-bold text-brand">Christian Marriage Intensive: Healing, Restoration &amp; Real Results | The Kohler Group</h3>
+					<div class="aspect-video w-full">
+						<iframe
+							class="h-full w-full rounded-lg"
+							src="https://www.youtube.com/embed/l_mb3yx43I0"
+							title="Christian Marriage Intensive: Healing, Restoration & Real Results | The Kohler Group"
+							frameborder="0"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+							allowfullscreen
+						></iframe>
+					</div>
 				</div>
 			</div>
 		</div>
