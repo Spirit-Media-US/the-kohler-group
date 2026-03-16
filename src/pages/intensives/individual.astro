@@ -1,7 +1,6 @@
 ---
 import { sanityClient, urlFor } from '../../lib/sanity.ts';
 import Layout from '@layouts/Layout.astro';
-import MailtoLink from '@components/MailtoLink.astro';
 const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   phone, email, barbaraEmail, officeEmail, bookingUrl,
   facebook, instagram,
@@ -11,8 +10,8 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 ---
 
 <Layout
-	title="Christian Individual Intensive with Barbara Kohler | Faith-Based Therapy in Huntersville, NC"
-	description="Barbara Kohler's Christian individual intensive — a 3-to-5-day concentrated therapy experience in Huntersville, NC designed to break through trauma, anxiety, grief, and unresolved wounds through faith-based counseling."
+	title="Individual Intensives | Huntersville, NC | The Kohler Group"
+	description="Individual intensives at The Kohler Group — concentrated, focused therapy designed to help you break through trauma, anxiety, grief, and unresolved wounds with lasting results."
 >
 	<!-- Hero -->
 	<section
@@ -37,18 +36,14 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 					</p>
 				</div>
 				<div class="overflow-hidden rounded-xl shadow-lg">
-					<p class="mb-2 text-xs font-semibold uppercase tracking-caps text-brand/60">Watch</p>
-					<h3 class="mb-3 text-base font-bold text-brand">What Is a Christian Therapy Intensive? 3–5 Days That Can Change Your Life | The Kohler Group</h3>
-					<div class="aspect-video w-full">
-						<iframe
-							class="h-full w-full rounded-lg"
-							src="https://www.youtube.com/embed/umjQnWi94X4"
-							title="What Is a Christian Therapy Intensive? 3–5 Days That Can Change Your Life | The Kohler Group"
-							frameborder="0"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-							allowfullscreen
-						></iframe>
-					</div>
+					<video
+						class="aspect-video w-full bg-black object-cover"
+						controls
+						preload="auto"
+					>
+						<source src="/videos/individual-intensive.mp4" type="video/mp4" />
+						Your browser does not support the video tag.
+					</video>
 				</div>
 			</div>
 		</div>
@@ -67,12 +62,12 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 			<p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/80">
 				Following completion of their intensive, clients were invited to complete a feedback survey. Every respondent reported that the intensive met their goals and expectations, and 100% said they would recommend our individual or marriage intensives to others. Clients consistently reported improved communication with their partner, greater understanding of their faith and how it relates to their relationship, increased emotional well-being, and better conflict resolution skills.
 			</p>
-			<MailtoLink
-				email={settings?.barbaraEmail}
+			<a
+				href={`mailto:${settings?.barbaraEmail}`}
 				class="mt-10 inline-block rounded-full bg-white px-10 py-3 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-white/90"
 			>
 				Get Started
-			</MailtoLink>
+			</a>
 		</div>
 	</section>
 
@@ -294,12 +289,12 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 				Contact us to learn more about scheduling an Individual Intensive. We'll help you find the right fit for your needs.
 			</p>
 			<div class="mt-10 flex flex-wrap justify-center gap-4">
-				<MailtoLink
-					email={settings?.barbaraEmail}
+				<a
+					href={`mailto:${settings?.barbaraEmail}`}
 					class="btn-primary inline-block"
 				>
 					Get Started
-				</MailtoLink>
+				</a>
 				<a
 					href="tel:{settings?.phone?.replace(/-/g,"")}"
 					class="inline-block border-2 border-brand px-8 py-3 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-brand hover:text-white"

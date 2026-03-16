@@ -1,7 +1,6 @@
 ---
 import { sanityClient, urlFor } from '../../lib/sanity.ts';
 import Layout from '@layouts/Layout.astro';
-import MailtoLink from '@components/MailtoLink.astro';
 const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   phone, email, barbaraEmail, officeEmail, bookingUrl,
   facebook, instagram,
@@ -11,69 +10,9 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 ---
 
 <Layout
-	title="Christian Marriage Intensive with Barbara Kohler | 5-Day Faith-Based Counseling in Huntersville, NC"
-	description="Join Barbara Kohler's Christian marriage intensive — a 5-day faith-based counseling experience in Huntersville, NC combining clinical psychotherapy with Biblical principles. 100% client satisfaction."
+	title="Marriage Intensives | Huntersville, NC | The Kohler Group"
+	description="Marriage intensives at The Kohler Group — concentrated multi-day therapy designed to restore and strengthen your marriage through Biblical principles and evidence-based care."
 >
-	<!-- JSON-LD Structured Data -->
-	<script type="application/ld+json" set:html={JSON.stringify({
-		"@context": "https://schema.org",
-		"@graph": [
-			{
-				"@type": "Service",
-				"name": "Christian Marriage Intensive",
-				"description": "A 5-day faith-based marriage intensive combining clinical psychotherapy with Biblical principles, led by licensed Christian counselor Barbara Kohler in Huntersville, NC.",
-				"provider": {
-					"@type": "LocalBusiness",
-					"name": "The Kohler Group, PLLC",
-					"url": "https://thekohlergroup.net",
-					"telephone": "+1-252-758-8636",
-					"address": {
-						"@type": "PostalAddress",
-						"streetAddress": "13420 Reese Blvd W, Daetwyler Plaza Building",
-						"addressLocality": "Huntersville",
-						"addressRegion": "NC",
-						"postalCode": "28078",
-						"addressCountry": "US"
-					},
-					"geo": {
-						"@type": "GeoCoordinates",
-						"latitude": 35.4107,
-						"longitude": -80.8428
-					},
-					"priceRange": "$$$$",
-					"image": "https://cdn.sanity.io/images/2bom5gqg/production/21282e732035fa47572f5ca27d12ae838ef7fe43-600x400.jpg"
-				},
-				"areaServed": [
-					{ "@type": "State", "name": "North Carolina" },
-					{ "@type": "State", "name": "South Carolina" },
-					{ "@type": "Country", "name": "United States" }
-				],
-				"serviceType": "Christian Marriage Counseling Intensive",
-				"url": "https://thekohlergroup.net/intensives/marriage/"
-			},
-			{
-				"@type": "Person",
-				"name": "Barbara Kohler",
-				"jobTitle": "Licensed Clinical Mental Health Counselor",
-				"honorificSuffix": "MS, LCMHC",
-				"url": "https://thekohlergroup.net/our-therapists/barbara-j-kohler/",
-				"worksFor": {
-					"@type": "LocalBusiness",
-					"name": "The Kohler Group, PLLC"
-				},
-				"knowsAbout": ["Christian counseling", "marriage intensives", "EMDR", "faith-based psychotherapy", "trauma therapy"]
-			},
-			{
-				"@type": "VideoObject",
-				"name": "Christian Marriage Intensive — The Kohler Group",
-				"description": "Learn about the Christian marriage intensive experience with Barbara Kohler at The Kohler Group in Huntersville, NC.",
-				"contentUrl": "https://www.youtube.com/watch?v=l_mb3yx43I0",
-				"thumbnailUrl": "https://cdn.sanity.io/images/2bom5gqg/production/21282e732035fa47572f5ca27d12ae838ef7fe43-600x400.jpg",
-				"uploadDate": "2025-01-01"
-			}
-		]
-	})} />
-
 	<!-- Hero -->
 	<section
 		class="relative flex h-[250px] items-center justify-center bg-cover bg-top bg-no-repeat"
@@ -82,11 +21,8 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 		<div class="absolute inset-0 bg-brand/80"></div>
 		<div class="container relative z-10 text-center">
 			<h1 class="text-4xl font-bold uppercase tracking-caps text-white sm:text-5xl">
-				Christian Marriage Intensive
+				Marriage Intensives
 			</h1>
-			<p class="mt-4 text-base font-medium text-white/80">
-				Led by Barbara Kohler, MS, LCMHC · Huntersville, NC
-			</p>
 		</div>
 	</section>
 
@@ -96,25 +32,21 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 			<div class="grid items-start gap-12 lg:grid-cols-2">
 				<div>
 					<p class="text-base leading-relaxed text-gray-700">
-						Barbara Kohler's Christian marriage intensive is a concentrated, multi-day counseling experience where both partners do deep therapy work on their relationship. Together we discover the root causes, heal the wounds, and help couples rebuild their conversation and care for one another. While you are here, there will be light homework, mapping out your repetitive loops, and completing worksheets in session to activate your thinking in a positive way.
+						Marriage intensives are similar to the individual intensives in that both parties are doing therapy work related to their relationship. We work to discover the root causes, heal the wounds, and help the couple rebuild their conversation and care of one another. While you are here, there will be light homework, mapping out your repetitive loops, completing worksheets in session to activate your thinking in a positive way.
 					</p>
 					<p class="mt-4 text-base leading-relaxed text-gray-700">
-						Barbara Kohler, MS, LCMHC, is a licensed Christian counselor with decades of experience leading faith-based marriage intensives from her practice in Huntersville, North Carolina. Her approach is both clinical and spiritual — combining evidence-based psychotherapy with Biblical principles. Often, when Jesus ministered, He gave people teaching and instruction as well as a healing or miraculous experience. These Christian marriage intensives are inspired by this approach.
+						I am a Christian Counselor and have tailored the Intensive experience to bring restoration to the soul of the Christian believer who has experienced wounding and desires transformation of the spirit, soul and body. My approach is clinical and spiritual. We are an experiential psychotherapy practice in the private sector. Often, when Jesus ministered, He gave people teaching/instruction as well as a healing or miraculous experience. These intensives are inspired by this approach.
 					</p>
 				</div>
 				<div class="overflow-hidden rounded-xl shadow-lg">
-					<p class="mb-2 text-xs font-semibold uppercase tracking-caps text-brand/60">Watch</p>
-					<h3 class="mb-3 text-base font-bold text-brand">Christian Marriage Intensive: Healing, Restoration &amp; Real Results | The Kohler Group</h3>
-					<div class="aspect-video w-full">
-						<iframe
-							class="h-full w-full rounded-lg"
-							src="https://www.youtube.com/embed/l_mb3yx43I0"
-							title="Christian Marriage Intensive: Healing, Restoration & Real Results | The Kohler Group"
-							frameborder="0"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-							allowfullscreen
-						></iframe>
-					</div>
+					<video
+						class="aspect-video w-full bg-black object-cover"
+						controls
+						preload="auto"
+					>
+						<source src="/videos/marriage-intensive.mp4" type="video/mp4" />
+						Your browser does not support the video tag.
+					</video>
 				</div>
 			</div>
 		</div>
@@ -133,12 +65,12 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 			<p class="mx-auto mt-6 max-w-2xl text-base leading-relaxed text-white/80">
 				Following completion of their intensive, clients were invited to complete a feedback survey. Every respondent reported that the intensive met their goals and expectations, and 100% said they would recommend our individual or marriage intensives to others. Clients consistently reported improved communication with their partner, greater understanding of their faith and how it relates to their relationship, increased emotional well-being, and better conflict resolution skills.
 			</p>
-			<MailtoLink
-				email={settings?.barbaraEmail}
+			<a
+				href={`mailto:${settings?.barbaraEmail}`}
 				class="mt-10 inline-block rounded-full bg-white px-10 py-3 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-white/90"
 			>
 				Get Started
-			</MailtoLink>
+			</a>
 		</div>
 	</section>
 
@@ -243,10 +175,9 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 		<div class="container max-w-4xl">
 			<img
 				src="https://cdn.sanity.io/images/2bom5gqg/production/21282e732035fa47572f5ca27d12ae838ef7fe43-600x400.jpg"
-				alt="Barbara Kohler, Christian marriage intensive counselor in Huntersville, NC"
+				alt="Barbara Kohler"
 				class="w-full rounded-lg object-cover shadow-md"
 			/>
-			<p class="mt-3 text-center text-sm text-gray-500">Barbara Kohler, MS, LCMHC — leading Christian marriage intensives in Huntersville, NC</p>
 		</div>
 	</section>
 
@@ -278,7 +209,7 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 	<section class="bg-gray-50 py-20">
 		<div class="container max-w-4xl">
 			<p class="section-label mb-4">The Schedule</p>
-			<h2 class="section-title mb-10">The Five-Day Christian Marriage Intensive</h2>
+			<h2 class="section-title mb-10">The Five Day Marriage Intensive</h2>
 			<div class="space-y-12">
 
 				<!-- Day 1 -->
@@ -467,12 +398,12 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 				Contact us to learn more about scheduling a Marriage Intensive. We'll help you find the right fit for your needs.
 			</p>
 			<div class="mt-10 flex flex-wrap justify-center gap-4">
-				<MailtoLink
-					email={settings?.barbaraEmail}
+				<a
+					href={`mailto:${settings?.barbaraEmail}`}
 					class="btn-primary inline-block"
 				>
 					Get Started
-				</MailtoLink>
+				</a>
 				<a
 					href="tel:{settings?.phone?.replace(/-/g,"")}"
 					class="inline-block border-2 border-brand px-8 py-3 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-brand hover:text-white"

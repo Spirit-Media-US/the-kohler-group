@@ -67,6 +67,46 @@ const ogImageURL = ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro
 		<slot name="head" />
 
 		<ViewTransitions />
+
+		<!-- LocalBusiness JSON-LD Structured Data -->
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "ProfessionalService",
+			"name": "The Kohler Group PLLC",
+			"description": "Faith-based Christian counseling and psychotherapy practice offering individual therapy, marriage intensives, and individual intensives.",
+			"url": "https://thekohlergroup.net",
+			"telephone": "+1-252-758-8636",
+			"address": {
+				"@type": "PostalAddress",
+				"streetAddress": "13420 Reese Blvd W",
+				"addressLocality": "Huntersville",
+				"addressRegion": "NC",
+				"postalCode": "28078",
+				"addressCountry": "US"
+			},
+			"geo": {
+				"@type": "GeoCoordinates",
+				"latitude": 35.4107,
+				"longitude": -80.8429
+			},
+			"openingHoursSpecification": [
+				{
+					"@type": "OpeningHoursSpecification",
+					"dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+					"opens": "09:00",
+					"closes": "17:00"
+				}
+			],
+			"priceRange": "$$",
+			"areaServed": [
+				{ "@type": "City", "name": "Huntersville" },
+				{ "@type": "City", "name": "Charlotte" },
+				{ "@type": "City", "name": "Cornelius" },
+				{ "@type": "City", "name": "Davidson" },
+				{ "@type": "Place", "name": "Lake Norman Area" }
+			],
+			"sameAs": []
+		})} />
 	</head>
 	<body>
 		<Nav />
