@@ -10,8 +10,8 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 ---
 
 <Layout
-	title="Surviving Trauma | Barbara Kohler — Christian Counseling for Trauma Recovery"
-	description="A message from Barbara Kohler on surviving trauma — healing from abuse, reconnecting with God, and finding restoration through Christian counseling and therapy intensives in Huntersville, NC."
+	title="Surviving Trauma | Huntersville, NC | The Kohler Group"
+	description="A message from Barbara Kohler on surviving trauma — healing from abuse, reconnecting with God, and finding restoration through Christian counseling."
 >
 	<!-- Hero -->
 	<section
@@ -94,7 +94,7 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 					Request an Appointment
 				</a>
 				<a
-					href={`tel:${settings?.phone?.replace(/-/g, '')}`}
+					href="tel:{settings?.phone?.replace(/-/g,"")}"
 					class="inline-block border-2 border-brand px-8 py-3 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-brand hover:text-white"
 				>
 					Call {settings?.phone}

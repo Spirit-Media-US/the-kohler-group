@@ -23,8 +23,8 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 ---
 
 <Layout
-	title="Our Christian Counselors | Barbara Kohler & Team in Huntersville, NC"
-	description="Meet Barbara Kohler and her team of licensed Christian counselors in Huntersville, NC. Individual sessions, marriage intensives, and individual intensives — all through a Christian worldview integrating clinical treatment with Biblical truth."
+	title="Our Christian Therapists | Huntersville, NC | The Kohler Group"
+	description="Meet our licensed Christian therapists. Therapy is approached through a Christian worldview integrating clinical treatments with Biblical truths."
 >
 	<!-- Hero Banner -->
 	<section
@@ -103,7 +103,7 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 					Request an Appointment
 				</a>
 				<a
-					href={`tel:${settings?.phone?.replace(/-/g, '')}`}
+					href="tel:{settings?.phone?.replace(/-/g,"")}"
 					class="inline-block rounded-full border-2 border-brand px-8 py-3 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-brand hover:text-white"
 				>
 					Call {settings?.phone}
