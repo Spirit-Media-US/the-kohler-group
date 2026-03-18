@@ -1,0 +1,82 @@
+---
+import { sanityClient } from '../lib/sanity.ts';
+import Layout from '@layouts/Layout.astro';
+const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
+  phone, email
+}`);
+---
+
+<Layout
+	title="Nondiscrimination Notice | The Kohler Group, PLLC"
+	description="Section 1557 nondiscrimination notice for The Kohler Group, PLLC."
+>
+	<!-- Hero -->
+	<section
+		class="relative flex h-[250px] items-center justify-center bg-cover bg-top bg-no-repeat"
+		style="background-image: url('https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg')"
+	>
+		<div class="absolute inset-0 bg-brand/80"></div>
+		<div class="container relative z-10 text-center">
+			<h1 class="text-4xl font-bold uppercase tracking-caps text-white sm:text-5xl">
+				Nondiscrimination Notice
+			</h1>
+		</div>
+	</section>
+
+	<!-- Content -->
+	<section class="py-20">
+		<div class="container max-w-3xl">
+			<p class="section-label mb-4">Your Rights</p>
+			<h2 class="section-title mb-8">Section 1557 — Affordable Care Act</h2>
+			<div class="h-px bg-gray-200 mb-8"></div>
+
+			<p class="text-sm leading-relaxed text-gray-700">
+				Section 1557 is the nondiscrimination provision of the Affordable Care Act and prohibits discrimination on the basis of race, color, national origin, sex, age, or disability in certain health programs or activities.
+			</p>
+
+			<p class="mt-6 text-sm leading-relaxed text-gray-700">
+				The Health Provider complies with applicable Federal civil rights laws and does not discriminate on the basis of race, color, national origin, age, disability, or sex. The Health Provider does not exclude people or treat them differently because of race, color, national origin, age, disability, or sex.
+			</p>
+
+			<p class="mt-6 text-sm font-semibold text-brand uppercase tracking-caps">The Health Provider:</p>
+
+			<ul class="mt-4 space-y-4 text-sm leading-relaxed text-gray-700 list-disc pl-5">
+				<li>
+					Provides free aids and services to people with disabilities to communicate effectively with us, such as:
+					<ul class="mt-2 space-y-2 list-disc pl-5">
+						<li>Qualified sign language interpreters</li>
+						<li>Written information in other formats (large print, audio, accessible electronic formats, other formats)</li>
+					</ul>
+				</li>
+				<li>
+					Provides free language services to people whose primary language is not English, such as:
+					<ul class="mt-2 space-y-2 list-disc pl-5">
+						<li>Qualified interpreters</li>
+						<li>Information written in other languages</li>
+					</ul>
+				</li>
+			</ul>
+
+			<div class="h-px bg-gray-200 my-10"></div>
+
+			<h3 class="text-sm font-semibold uppercase tracking-caps text-brand mb-4">How to File a Complaint</h3>
+			<p class="text-sm leading-relaxed text-gray-700">
+				You can file a civil rights complaint with the U.S. Department of Health and Human Services, Office for Civil Rights, electronically through the Office for Civil Rights Complaint Portal, available at{' '}
+				<a href="https://ocrportal.hhs.gov/ocr/portal/lobby.jsf" target="_blank" rel="noopener noreferrer" class="text-brand underline hover:text-brand/70">https://ocrportal.hhs.gov/ocr/portal/lobby.jsf</a>,
+				or by mail or phone at:
+			</p>
+			<address class="mt-4 not-italic text-sm leading-relaxed text-gray-700 border-l-4 border-brand/20 pl-4">
+				U.S. Department of Health and Human Services<br />
+				200 Independence Avenue, SW<br />
+				Room 509F, HHH Building<br />
+				Washington, D.C. 20201<br />
+				1-800-368-1019 &bull; 800-537-7697 (TDD)
+			</address>
+			<p class="mt-4 text-sm leading-relaxed text-gray-700">
+				Complaint forms are available at{' '}
+				<a href="http://www.hhs.gov/ocr/office/file/index.html" target="_blank" rel="noopener noreferrer" class="text-brand underline hover:text-brand/70">http://www.hhs.gov/ocr/office/file/index.html</a>.
+			</p>
+
+			</div>
+	</section>
+</Layout>

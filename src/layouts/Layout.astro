@@ -15,11 +15,11 @@ const {
 	title,
 	description = 'Barbara Kohler — Christian counseling, marriage intensives, and individual intensives in Huntersville, NC. Faith-based psychotherapy combining clinical expertise with Biblical principles.',
 	canonicalURL = Astro.url.href,
-	ogImage = '/og-default.png',
+	ogImage = 'https://cdn.sanity.io/images/2bom5gqg/production/69ff224b35aa2d4c0e57339b5449330d55bf8095-468x311.jpg',
 } = Astro.props;
 
 const siteName = 'The Kohler Group PLLC';
-const ogImageURL = new URL(ogImage, Astro.site ?? Astro.url).href;
+const ogImageURL = ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro.site ?? Astro.url).href;
 ---
 
 <!doctype html>
@@ -49,11 +49,23 @@ const ogImageURL = new URL(ogImage, Astro.site ?? Astro.url).href;
 		<meta property="og:type" content="website" />
 		<meta property="og:image" content={ogImageURL} />
 
+		<!-- Open Graph extras -->
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:image:width" content="468" />
+		<meta property="og:image:height" content="311" />
+
 		<!-- Twitter Card -->
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={ogImageURL} />
+
+		<!-- Robots -->
+		<meta name="robots" content="index, follow" />
+
+		<!-- Page-level head slot (JSON-LD, etc.) -->
+		<slot name="head" />
+
 		<ViewTransitions />
 
 		<!-- LocalBusiness JSON-LD Structured Data -->

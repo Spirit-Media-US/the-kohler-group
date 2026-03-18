@@ -52,8 +52,8 @@ const year = new Date().getFullYear();
 				>Privacy Policy</a
 			>
 			<span class="text-white">|</span>
-			<a href="https://aca.internetbrands.com/nc" target="_blank" rel="noopener noreferrer" class="uppercase tracking-ui transition hover:text-white/80"
-				>ACA Notices</a
+			<a href="/nondiscrimination-notice" class="uppercase tracking-ui transition hover:text-white/80"
+				>Nondiscrimination Notice</a
 			>
 			<span class="text-white">|</span>
 			<a href="/public-health-info" class="uppercase tracking-ui transition hover:text-white/80"
@@ -63,7 +63,12 @@ const year = new Date().getFullYear();
 
 		<!-- Copyright -->
 		<p class="mt-6 text-xs text-white">
-			&copy; {year} The Kohler Group, PLLC. All rights reserved.
+			&copy; <span id="footer-year"></span> The Kohler Group, PLLC. All rights reserved. &bull; Powered by <a href="https://spiritmediapublishing.com" target="_blank" rel="noopener" style="color:inherit;text-decoration:underline;">Spirit Media</a>
 		</p>
 	</div>
 </footer>
+
+<script>
+  const el = document.getElementById('footer-year');
+  if (el) el.textContent = new Date().getFullYear().toString();
+</script>
