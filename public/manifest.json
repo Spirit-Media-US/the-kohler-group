@@ -1,0 +1,16 @@
+{
+  "name": "The Kohler Group PLLC",
+  "short_name": "Kohler Group",
+  "description": "Christian counseling and psychotherapy in Huntersville, NC",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#ffffff",
+  "theme_color": "#173862",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

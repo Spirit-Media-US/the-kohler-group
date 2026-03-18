@@ -5,13 +5,12 @@ import { PortableText } from 'astro-portabletext';
 
 export async function getStaticPaths() {
 	const therapists = await sanityClient.fetch(`
-		*[_type == "therapist" && active != false] {
-			"slug": slug.current,
-			"_id": _id
+		*[_type == "therapist" && active != false && defined(slug.current)] {
+			"slug": slug.current
 		}
 	`);
 	return therapists.map((t: any) => ({
-		params: { slug: t.slug || t._id },
+		params: { slug: t.slug },
 	}));
 }
 
@@ -59,6 +58,9 @@ const therapist = await sanityClient.fetch(`
 							src={`${therapist.headshotUrl}?w=520&h=693&fit=crop&auto=format`}
 							alt={`${therapist.name} headshot`}
 							class="mx-auto w-full max-w-[260px] rounded-lg object-cover object-top shadow-md lg:max-w-full"
+							width="520"
+							height="693"
+							loading="lazy"
 						/>
 					) : (
 						<div class="mx-auto flex aspect-[3/4] w-full max-w-[260px] items-center justify-center rounded-lg bg-brand/10 lg:max-w-full">
