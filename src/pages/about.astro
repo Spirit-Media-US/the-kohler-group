@@ -6,12 +6,13 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   facebook, instagram,
   heroImage, aboutHeroImage, defaultHeroImage, logo
 }`);
-
+const heroPreloadUrl = settings?.aboutHeroImage ? urlFor(settings.aboutHeroImage).width(1920).url() : '';
 ---
 
 <Layout
 	title="About Our Christian Counselors | Huntersville, NC | The Kohler Group"
 	description="Learn about The Kohler Group's mission, vision, and values — providing high-quality Christian psychotherapy to advance the Kingdom of God."
+	heroPreload={heroPreloadUrl}
 >
 	<!-- ============================================================
 	     Hero Banner

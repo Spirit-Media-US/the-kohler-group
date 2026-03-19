@@ -22,6 +22,7 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 <Layout
 	title="Client Testimonials | Christian Counseling Huntersville, NC"
 	description="Read genuine testimonials from clients of The Kohler Group, PLLC. Real experiences from real people who found healing through Christian counseling."
+	heroPreload="https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"
 >
 	<!-- Hero -->
 	<section
@@ -60,8 +61,12 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 						<div class="overflow-hidden rounded-lg">
 							<img
 								src={urlFor(image).width(468).height(311).fit("crop").url()}
+								srcset={`${urlFor(image).width(234).height(156).fit("crop").url()} 234w, ${urlFor(image).width(468).height(311).fit("crop").url()} 468w`}
+								sizes="(max-width: 768px) 50vw, 25vw"
 								alt={image.alt || `The Kohler Group gallery image ${index + 1}`}
 								class="h-52 w-full object-cover transition duration-500 hover:scale-105"
+								width="468"
+								height="311"
 								loading="lazy"
 							/>
 						</div>

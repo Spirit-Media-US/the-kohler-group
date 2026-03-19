@@ -32,6 +32,7 @@ const therapist = await sanityClient.fetch(`
 <Layout
 	title={`${therapist.name} | Christian Counselor Huntersville, NC`}
 	description={`Learn more about ${therapist.name}, ${therapist.credentials} — a licensed therapist at The Kohler Group, PLLC offering Christian-based counseling.`}
+	heroPreload="https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"
 >
 	<!-- Hero -->
 	<section
@@ -56,6 +57,8 @@ const therapist = await sanityClient.fetch(`
 					{therapist.headshotUrl ? (
 						<img
 							src={`${therapist.headshotUrl}?w=520&h=693&fit=crop&auto=format`}
+							srcset={`${therapist.headshotUrl}?w=260&h=347&fit=crop&auto=format 260w, ${therapist.headshotUrl}?w=520&h=693&fit=crop&auto=format 520w`}
+							sizes="(max-width: 1024px) 260px, 256px"
 							alt={`${therapist.name} headshot`}
 							class="mx-auto w-full max-w-[260px] rounded-lg object-cover object-top shadow-md lg:max-w-full"
 							width="520"

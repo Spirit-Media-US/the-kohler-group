@@ -9,6 +9,7 @@ interface Props {
 	description?: string;
 	canonicalURL?: string;
 	ogImage?: string;
+	heroPreload?: string;
 }
 
 const {
@@ -16,6 +17,7 @@ const {
 	description = 'Barbara Kohler — Christian counseling, marriage intensives, and individual intensives in Huntersville, NC. Faith-based psychotherapy combining clinical expertise with Biblical principles.',
 	canonicalURL = Astro.url.href,
 	ogImage = 'https://cdn.sanity.io/images/2bom5gqg/production/c60dd6674bab6d1f50562e6ff3f61365e0639f1a-1416x921.png?w=1200&h=630&fit=crop',
+	heroPreload,
 } = Astro.props;
 
 const siteName = 'The Kohler Group PLLC';
@@ -36,7 +38,10 @@ const ogImageURL = ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro
 		<meta name="author" content="Barbara Kohler, LCMHC" />
 		<meta name="theme-color" content="#173862" />
 		<meta name="robots" content="index, follow" />
+		<meta name="msvalidate.01" content="477910DF31D77AFDFCAE62DF5E095405" />
 		<title>{title}</title>
+
+		{heroPreload && <link rel="preload" as="image" href={heroPreload} />}
 
 		<!-- Google Fonts: Montserrat -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -58,19 +63,11 @@ const ogImageURL = ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro
 		<meta property="og:image:alt" content="The Kohler Group PLLC — Christian counseling in Huntersville, NC" />
 		<meta property="og:locale" content="en_US" />
 
-		<!-- Open Graph extras -->
-		<meta property="og:locale" content="en_US" />
-		<meta property="og:image:width" content="468" />
-		<meta property="og:image:height" content="311" />
-
 		<!-- Twitter Card -->
 		<meta name="twitter:card" content="summary_large_image" />
 		<meta name="twitter:title" content={title} />
 		<meta name="twitter:description" content={description} />
 		<meta name="twitter:image" content={ogImageURL} />
-
-		<!-- Robots -->
-		<meta name="robots" content="index, follow" />
 
 		<!-- Page-level head slot (JSON-LD, etc.) -->
 		<slot name="head" />
@@ -85,8 +82,6 @@ const ogImageURL = ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro
 			gtag('js', new Date());
 			gtag('config', 'G-RZFT197G0F');
 		</script>
-
-		<slot name="head" />
 
 		<!-- LocalBusiness JSON-LD Structured Data -->
 		<script type="application/ld+json" set:html={JSON.stringify({
@@ -135,5 +130,19 @@ const ogImageURL = ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro
 			<slot />
 		</main>
 		<Footer />
+
+		<!-- CTA click tracking (#50) -->
+		<script is:inline>
+			document.addEventListener('click', function(e) {
+				var link = e.target.closest('a[href*="clientsecure.me"]');
+				if (link && typeof gtag === 'function') {
+					gtag('event', 'cta_click', {
+						event_category: 'booking',
+						event_label: link.textContent.trim(),
+						transport_type: 'beacon'
+					});
+				}
+			});
+		</script>
 	</body>
 </html>

@@ -25,6 +25,7 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 <Layout
 	title="Our Christian Therapists | Huntersville, NC | The Kohler Group"
 	description="Meet our licensed Christian therapists. Therapy is approached through a Christian worldview integrating clinical treatments with Biblical truths."
+	heroPreload="https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"
 >
 	<!-- Hero Banner -->
 	<section
@@ -54,8 +55,12 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 							{therapist.headshotUrl ? (
 								<img
 									src={`${therapist.headshotUrl}?w=600&h=600&fit=crop&auto=format`}
+									srcset={`${therapist.headshotUrl}?w=300&h=300&fit=crop&auto=format 300w, ${therapist.headshotUrl}?w=600&h=600&fit=crop&auto=format 600w`}
+									sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
 									alt={`${therapist.name} headshot`}
 									class="h-full w-full object-cover object-top"
+									width="600"
+									height="600"
 									loading="lazy"
 								/>
 							) : (

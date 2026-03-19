@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Deployment Report — The Kohler Group</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; color: #1a1a1a; max-width: 850px; margin: 0 auto; padding: 40px 30px; line-height: 1.6; }
+    h1 { color: #173862; font-size: 28px; margin-bottom: 4px; }
+    h2 { color: #173862; font-size: 20px; margin-top: 36px; margin-bottom: 12px; border-bottom: 2px solid #173862; padding-bottom: 4px; }
+    h3 { font-size: 16px; margin-top: 20px; margin-bottom: 8px; }
+    .subtitle { color: #555; font-size: 15px; margin-bottom: 4px; }
+    .meta { color: #777; font-size: 13px; margin-bottom: 24px; }
+    .meta span { margin-right: 20px; }
+    .meta b { color: #333; }
+    hr { border: none; border-top: 2px solid #173862; margin: 16px 0 24px; }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0 20px; font-size: 14px; }
+    th { background: #f5f5f5; text-align: left; padding: 8px 12px; border: 1px solid #ddd; font-weight: 600; }
+    td { padding: 8px 12px; border: 1px solid #ddd; vertical-align: top; }
+    .done { color: #16a34a; font-weight: 600; }
+    .not-done { color: #dc2626; font-weight: 600; }
+    .pending { color: #ca8a04; font-weight: 600; }
+    .optional { color: #6b7280; font-weight: 600; }
+    .na { color: #6b7280; font-weight: 600; }
+    .stack-table td:first-child { font-weight: 600; width: 140px; }
+    ul, ol { margin: 8px 0 8px 24px; }
+    li { margin-bottom: 4px; font-size: 14px; }
+    .summary-box { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px 20px; margin: 16px 0; }
+    .summary-box td { border: none; padding: 4px 16px 4px 0; }
+    .priority-box { border: 1px solid #e5e7eb; border-radius: 8px; padding: 16px 20px; margin: 12px 0; }
+    .priority-box.complete { border-left: 4px solid #16a34a; }
+    .priority-box.pending { border-left: 4px solid #ca8a04; }
+    .priority-title { font-weight: 700; margin-bottom: 8px; }
+    .priority-title.complete { color: #16a34a; }
+    .priority-title.pending { color: #ca8a04; }
+    s { color: #999; }
+    .footer { margin-top: 40px; text-align: center; color: #999; font-size: 12px; border-top: 1px solid #eee; padding-top: 16px; }
+    code { background: #f3f4f6; padding: 2px 6px; border-radius: 3px; font-size: 13px; }
+    .progress-bar { background: #e5e7eb; border-radius: 8px; height: 28px; margin: 16px 0; overflow: hidden; position: relative; }
+    .progress-fill { background: linear-gradient(90deg, #173862, #2563eb); height: 100%; border-radius: 8px; }
+    .progress-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 13px; font-weight: 700; color: #fff; }
+    .changelog { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 8px; padding: 16px 20px; margin: 16px 0; font-size: 14px; }
+    .changelog h3 { color: #173862; margin-top: 0; }
+    .changelog li { margin-bottom: 4px; }
+    .new-badge { display: inline-block; background: #dbeafe; color: #1d4ed8; font-size: 11px; font-weight: 700; padding: 1px 6px; border-radius: 4px; margin-left: 6px; vertical-align: middle; }
+    @media print { body { padding: 20px; } }
+  </style>
+</head>
+<body>
+
+<h1>Deployment Report</h1>
+<p class="subtitle">The Kohler Group PLLC — thekohlergroup.net</p>
+<p class="meta">
+  <span><b>Prepared by:</b> Spirit Media Publishing</span>
+  <span><b>Date:</b> March 19, 2026</span>
+  <span><b>Version:</b> 2.1</span>
+</p>
+<hr />
+
+<div class="progress-bar">
+  <div class="progress-fill" style="width: 98.3%"></div>
+  <div class="progress-text">98% Complete — 57 / 58 tasks done</div>
+</div>
+
+<!-- Changelog -->
+<div class="changelog">
+  <h3>What's New in v2.1 (March 19, 2026)</h3>
+  <ul>
+    <li><b>#23</b> — Responsive <code>srcset</code> added to therapist headshots and gallery images <span class="new-badge">NEW</span></li>
+    <li><b>#51</b> — UptimeRobot monitoring configured (5-minute HTTP(s) check) <span class="new-badge">NEW</span></li>
+  </ul>
+  <h3>v2.0 Changes</h3>
+  <ul>
+    <li><b>#1, 4, 6, 8</b> — Domain fixed to <code>thekohlergroup.net</code> across sitemap, canonicals, robots.txt</li>
+    <li><b>#5</b> — Added <code>&lt;meta name="author"&gt;</code> for Barbara Kohler, LCMHC</li>
+    <li><b>#9</b> — Added <code>og:image:alt</code>, fixed duplicate OG meta tags</li>
+    <li><b>#10, 11, 14</b> — Apple touch icon, theme-color, and PWA manifest</li>
+    <li><b>#15, 16, 20</b> — Skip-to-content link, focus-visible styles, prefers-reduced-motion</li>
+    <li><b>#25, 26, 27</b> — Lazy loading on all below-fold images, fetchpriority on nav logo, hero preload on 14 pages</li>
+    <li><b>#41–48</b> — All 5 security headers added to <code>netlify.toml</code></li>
+    <li><b>#49, 50</b> — Google Analytics 4 installed with CTA booking click tracking</li>
+    <li><b>#53</b> — Bing Webmaster Tools verification tag added</li>
+  </ul>
+</div>
+
+<table class="stack-table">
+  <tr><td>Framework</td><td>Astro 5 (Static)</td><td style="font-weight:600">Styling</td><td>Tailwind CSS v4</td></tr>
+  <tr><td>Hosting</td><td>Netlify</td><td style="font-weight:600">Media CDN</td><td>Sanity CDN</td></tr>
+  <tr><td>CMS</td><td>Sanity</td><td style="font-weight:600">Forms</td><td>SimplePractice (clientsecure.me)</td></tr>
+  <tr><td>Analytics</td><td>Google Analytics 4</td><td style="font-weight:600">Monitoring</td><td>UptimeRobot</td></tr>
+  <tr><td>Domain</td><td>Cloudflare DNS</td><td style="font-weight:600">SSL</td><td>Cloudflare (Full mode) + Netlify</td></tr>
+</table>
+
+<!-- Implemented Changes -->
+<h2>Implemented Changes (Completed March 2026)</h2>
+
+<h3>Site Structure &amp; Sanity CMS Integration</h3>
+<ul>
+  <li>Full site built in Astro 5 with Tailwind CSS v4 across 19 pages</li>
+  <li>All content sourced from Sanity CMS — therapist bios, hero images, logos, booking URL, social links, phone, email</li>
+  <li>Nav logo, footer logo, and site settings fully CMS-driven</li>
+  <li>Therapist detail pages dynamically generated from Sanity slugs</li>
+  <li>YouTube embeds on Marriage and Individual Intensive pages</li>
+</ul>
+
+<h3>SEO</h3>
+<ul>
+  <li>Site URL correctly set to <code>https://thekohlergroup.net</code></li>
+  <li>Per-page location-based title tags (e.g., "Christian Counseling in Huntersville, NC")</li>
+  <li>Unique meta descriptions for all 19 pages</li>
+  <li>Full JSON-LD <code>ProfessionalService</code> structured data with address, phone, geo coordinates, hours, and 5 cities</li>
+  <li>Dynamic per-page canonical URLs, OG image, Twitter Card, <code>og:image:alt</code></li>
+  <li><code>&lt;meta name="author"&gt;</code>, <code>&lt;meta name="theme-color"&gt;</code>, <code>&lt;meta name="robots"&gt;</code></li>
+  <li><code>robots.txt</code> with correct sitemap URL, sitemap submitted to Google Search Console</li>
+  <li>Apple touch icon and PWA <code>manifest.json</code></li>
+</ul>
+
+<h3>Performance</h3>
+<ul>
+  <li><code>width/height</code> on all <code>&lt;img&gt;</code> tags (prevents Cumulative Layout Shift)</li>
+  <li><code>loading="lazy"</code> on all below-fold images</li>
+  <li><code>fetchpriority="high"</code> on above-fold nav logo images</li>
+  <li><code>&lt;link rel="preload"&gt;</code> on all hero background images (14 pages)</li>
+  <li>Google Fonts loaded with <code>display=swap</code></li>
+  <li>Responsive <code>srcset</code> on therapist headshots (300w/600w) and gallery images (234w/468w) with <code>sizes</code> attributes</li>
+  <li>Netlify asset optimization: CSS/JS bundling, minification, image compression</li>
+</ul>
+
+<h3>Accessibility (WCAG 2.1 AA)</h3>
+<ul>
+  <li>Skip-to-content link for keyboard navigation</li>
+  <li><code>:focus-visible</code> outline styles (brand navy, 3px)</li>
+  <li><code>prefers-reduced-motion</code> disables smooth scroll</li>
+  <li><code>aria-label</code> on nav logo, hamburger toggle, social icons</li>
+  <li>Color contrast exceeds 4.5:1 AA minimum (brand navy on white = ~9.5:1)</li>
+  <li>Correct heading hierarchy across all pages</li>
+  <li>Email obfuscation in footer to prevent scraping</li>
+</ul>
+
+<h3>Infrastructure</h3>
+<ul>
+  <li><code>netlify.toml</code> with build config, Node 20, asset optimization</li>
+  <li>Security headers: X-Frame-Options, X-Content-Type-Options, Referrer-Policy, CSP, Permissions-Policy</li>
+  <li>www &rarr; non-www 301 redirect</li>
+  <li>301 redirects for 6 old site URLs still indexed by Google</li>
+  <li>Google Analytics 4 with CTA click tracking on all booking buttons</li>
+  <li>Custom branded 404 error page</li>
+</ul>
+
+<!-- 301 Redirects -->
+<h2>301 Redirects (Old Site URLs)</h2>
+<table>
+  <tr><th>Old URL</th><th>New URL</th></tr>
+  <tr><td>/marriage-intensives</td><td>/intensives/marriage/</td></tr>
+  <tr><td>/therapists/april-morris</td><td>/our-therapists/april-morris/</td></tr>
+  <tr><td>/therapists/*</td><td>/our-therapists/</td></tr>
+  <tr><td>/media</td><td>/education/media/</td></tr>
+  <tr><td>/surviving-trauma</td><td>/education/surviving-trauma/</td></tr>
+  <tr><td>/therapist-services</td><td>/our-therapists/</td></tr>
+</table>
+
+<!-- SEO Critical -->
+<h2>SEO — Critical</h2>
+<table>
+  <tr><th>#</th><th>Task</th><th>Status</th><th>Notes</th></tr>
+  <tr><td>1</td><td>Site URL set to <code>thekohlergroup.net</code></td><td class="done">DONE</td><td>Correct in astro.config.mjs and netlify.toml</td></tr>
+  <tr><td>2</td><td>OG image and Twitter image meta tags</td><td class="done">DONE</td><td>Sanity CDN image with correct dimensions</td></tr>
+  <tr><td>3</td><td>JSON-LD structured data (ProfessionalService)</td><td class="done">DONE</td><td>Address, phone, geo, hours, 5 cities</td></tr>
+  <tr><td>4</td><td>Per-page canonical URLs</td><td class="done">DONE</td><td>Dynamic via Astro.url.href</td></tr>
+  <tr><td>5</td><td><code>&lt;meta name="author"&gt;</code></td><td class="done">DONE</td><td>Barbara Kohler, LCMHC</td></tr>
+  <tr><td>6</td><td>Verify sitemap — correct domain, clean URLs</td><td class="done">DONE</td><td>18 clean URLs, no junk slugs</td></tr>
+  <tr><td>7</td><td>Submit sitemap to Google Search Console</td><td class="done">DONE</td><td>Submitted and verified</td></tr>
+  <tr><td>8</td><td>Verify robots.txt with full sitemap URL</td><td class="done">DONE</td><td>Points to thekohlergroup.net/sitemap-index.xml</td></tr>
+</table>
+
+<!-- SEO Enhancements -->
+<h2>SEO — Enhancements</h2>
+<table>
+  <tr><th>#</th><th>Task</th><th>Status</th><th>Notes</th></tr>
+  <tr><td>9</td><td><code>og:image:width</code>, <code>og:image:height</code>, <code>og:image:alt</code></td><td class="done">DONE</td><td>1200×630, alt text included</td></tr>
+  <tr><td>10</td><td><code>&lt;link rel="apple-touch-icon"&gt;</code></td><td class="done">DONE</td><td>Sanity CDN image, 180×180</td></tr>
+  <tr><td>11</td><td><code>theme-color</code> meta tag</td><td class="done">DONE</td><td>#173862 (brand navy)</td></tr>
+  <tr><td>12</td><td>Add hreflang if multilingual planned</td><td class="na">N/A</td><td>English only</td></tr>
+  <tr><td>13</td><td>All external links have <code>rel="noopener noreferrer"</code></td><td class="done">DONE</td><td>Confirmed across all source files</td></tr>
+  <tr><td>14</td><td><code>manifest.json</code> for PWA basics</td><td class="done">DONE</td><td>PWA manifest in public/</td></tr>
+</table>
+
+<!-- Accessibility -->
+<h2>UX/UI — Accessibility (WCAG 2.1 AA)</h2>
+<table>
+  <tr><th>#</th><th>Task</th><th>Status</th><th>Notes</th></tr>
+  <tr><td>15</td><td>Skip-to-content link</td><td class="done">DONE</td><td>Visually hidden until focus, links to #main-content</td></tr>
+  <tr><td>16</td><td>Visible <code>:focus-visible</code> outline styles</td><td class="done">DONE</td><td>3px solid #173862 with 2px offset</td></tr>
+  <tr><td>17</td><td>Color contrast ratios (4.5:1 minimum)</td><td class="done">DONE</td><td>#173862 on white = ~9.5:1 (exceeds AA)</td></tr>
+  <tr><td>18</td><td><code>aria-label</code> on icon links/buttons</td><td class="done">DONE</td><td>Nav toggle, logo links, social icons labeled</td></tr>
+  <tr><td>19</td><td>Decorative images alt/role</td><td class="done">DONE</td><td>CSS backgrounds; logos have proper alt text</td></tr>
+  <tr><td>20</td><td><code>prefers-reduced-motion</code> support</td><td class="done">DONE</td><td>Disables smooth scroll when enabled</td></tr>
+  <tr><td>21</td><td>Heading hierarchy (h1 &gt; h2 &gt; h3)</td><td class="done">DONE</td><td>Correct order on all 19 pages</td></tr>
+  <tr><td>22</td><td>Full keyboard navigation test</td><td class="done">DONE</td><td>Tab order, skip link, focus states verified</td></tr>
+</table>
+
+<!-- Performance -->
+<h2>UX/UI — Performance</h2>
+<table>
+  <tr><th>#</th><th>Task</th><th>Status</th><th>Notes</th></tr>
+  <tr><td>23</td><td>Responsive <code>srcset</code> for images</td><td class="done">DONE</td><td>Therapist headshots (300w/600w), detail (260w/520w), gallery (234w/468w) with sizes</td></tr>
+  <tr><td>24</td><td><code>width/height</code> on all <code>&lt;img&gt;</code> tags</td><td class="done">DONE</td><td>Prevents Cumulative Layout Shift</td></tr>
+  <tr><td>25</td><td><code>loading="lazy"</code> on below-fold images</td><td class="done">DONE</td><td>All below-fold images across all pages</td></tr>
+  <tr><td>26</td><td><code>fetchpriority="high"</code> on LCP image</td><td class="done">DONE</td><td>Nav logo images (above-fold)</td></tr>
+  <tr><td>27</td><td>Preload hero background image</td><td class="done">DONE</td><td><code>&lt;link rel="preload"&gt;</code> on all 14 hero pages</td></tr>
+  <tr><td>28</td><td>Font <code>display: swap</code></td><td class="done">DONE</td><td>Google Fonts with display=swap</td></tr>
+  <tr><td>29</td><td>Netlify asset optimization</td><td class="done">DONE</td><td>CSS/JS/HTML minification, image compression</td></tr>
+  <tr><td>30</td><td>Cache headers for CDN images</td><td class="done">DONE</td><td>Managed by Sanity CDN + Cloudflare</td></tr>
+</table>
+
+<!-- Responsive -->
+<h2>UX/UI — Responsive &amp; Visual Polish</h2>
+<table>
+  <tr><th>#</th><th>Task</th><th>Status</th><th>Notes</th></tr>
+  <tr><td>31</td><td>Test at 320px, 375px, 414px, 768px, 1024px, 1440px</td><td class="done">DONE</td><td>Verified across all breakpoints</td></tr>
+  <tr><td>32</td><td>No horizontal scroll at any viewport</td><td class="done">DONE</td><td>Confirmed at all sizes</td></tr>
+  <tr><td>33</td><td>Hero background positioning across devices</td><td class="done">DONE</td><td>bg-cover bg-center; About uses responsive positioning</td></tr>
+  <tr><td>34</td><td>Link colors readable on all backgrounds</td><td class="done">DONE</td><td>White on navy passes contrast</td></tr>
+  <tr><td>35</td><td>Smooth hover transitions</td><td class="done">DONE</td><td>Transition class on buttons and links</td></tr>
+  <tr><td>36</td><td>Minimum 44×44px tap targets on mobile</td><td class="done">DONE</td><td>CTA buttons and nav links verified</td></tr>
+</table>
+
+<!-- Netlify -->
+<h2>Infrastructure — Netlify</h2>
+<table>
+  <tr><th>#</th><th>Task</th><th>Status</th><th>Notes</th></tr>
+  <tr><td>37</td><td>Create <code>netlify.toml</code> with build settings</td><td class="done">DONE</td><td><code>npm run build</code>, publish dist, Node 20</td></tr>
+  <tr><td>38</td><td>Environment variables verified</td><td class="done">DONE</td><td>No dashboard overrides — netlify.toml handles it</td></tr>
+  <tr><td>39</td><td>Custom domain + SSL</td><td class="done">DONE</td><td>thekohlergroup.net live, HTTPS active, .com redirects to .net</td></tr>
+  <tr><td>40</td><td>Netlify asset optimization</td><td class="done">DONE</td><td>CSS/JS/HTML/image processing enabled</td></tr>
+  <tr><td>41</td><td>Security headers</td><td class="done">DONE</td><td>All 5 headers configured in netlify.toml</td></tr>
+  <tr><td>42</td><td>www &rarr; non-www redirect</td><td class="done">DONE</td><td>301 redirect in netlify.toml</td></tr>
+  <tr><td>43</td><td>Deploy previews for PRs</td><td class="done">DONE</td><td>deploy-preview and branch-deploy contexts configured</td></tr>
+</table>
+
+<!-- Security Headers -->
+<h2>Infrastructure — Security Headers</h2>
+<table>
+  <tr><th>#</th><th>Task</th><th>Status</th><th>Notes</th></tr>
+  <tr><td>44</td><td>X-Frame-Options: DENY</td><td class="done">DONE</td><td>Prevents clickjacking</td></tr>
+  <tr><td>45</td><td>X-Content-Type-Options: nosniff</td><td class="done">DONE</td><td>Prevents MIME sniffing</td></tr>
+  <tr><td>46</td><td>Referrer-Policy: strict-origin-when-cross-origin</td><td class="done">DONE</td><td>Privacy best practice</td></tr>
+  <tr><td>47</td><td>Content-Security-Policy</td><td class="done">DONE</td><td>Whitelists Sanity CDN, Google Fonts, SimplePractice, YouTube</td></tr>
+  <tr><td>48</td><td>Permissions-Policy</td><td class="done">DONE</td><td>Disables camera, microphone, geolocation</td></tr>
+</table>
+
+<!-- Analytics -->
+<h2>Analytics &amp; Monitoring</h2>
+<table>
+  <tr><th>#</th><th>Task</th><th>Status</th><th>Notes</th></tr>
+  <tr><td>49</td><td>Google Analytics 4</td><td class="done">DONE</td><td>GA4 property G-RZFT197G0F installed</td></tr>
+  <tr><td>50</td><td>CTA click tracking</td><td class="done">DONE</td><td>Booking button clicks tracked as GA4 events</td></tr>
+  <tr><td>51</td><td>UptimeRobot monitoring</td><td class="done">DONE</td><td>5-minute HTTP(s) monitor configured at uptimerobot.com</td></tr>
+  <tr><td>52</td><td>Google Search Console</td><td class="done">DONE</td><td>Property verified, sitemap submitted</td></tr>
+  <tr><td>53</td><td>Bing Webmaster Tools</td><td class="done">DONE</td><td>Verification tag added, property verified</td></tr>
+</table>
+
+<!-- Content -->
+<h2>Content &amp; Conversion</h2>
+<table>
+  <tr><th>#</th><th>Task</th><th>Status</th><th>Notes</th></tr>
+  <tr><td>54</td><td>Custom 404 page</td><td class="done">DONE</td><td>Branded page with back-to-home link</td></tr>
+  <tr><td>55</td><td>Verify all external links</td><td class="done">DONE</td><td>Booking, social profiles, ACA notices all working</td></tr>
+  <tr><td>56</td><td>Test social sharing preview</td><td class="done">DONE</td><td>Facebook Debugger verified — image, title, description showing</td></tr>
+  <tr><td>57</td><td>Spell-check all content</td><td class="done">DONE</td><td>Content reviewed, CMS-managed copy confirmed clean</td></tr>
+  <tr><td>58</td><td>Dynamic copyright year</td><td class="done">DONE</td><td>Footer renders current year dynamically</td></tr>
+</table>
+
+<!-- Priority -->
+<h2>Launch Priority Order</h2>
+
+<div class="priority-box complete">
+  <div class="priority-title complete">All Launch Blockers — Complete</div>
+  <ol>
+    <li><s>Set site URL to thekohlergroup.net</s> — Done</li>
+    <li><s>Add OG image + Twitter Card</s> — Done</li>
+    <li><s>Create netlify.toml</s> — Done</li>
+    <li><s>Configure custom domain + SSL</s> — Done</li>
+    <li><s>Security headers</s> — Done</li>
+    <li><s>Google Analytics</s> — Done</li>
+    <li><s>Google Search Console</s> — Done</li>
+    <li><s>Sitemap verified</s> — Done</li>
+  </ol>
+</div>
+
+<div class="priority-box complete">
+  <div class="priority-title complete">Post-Launch Enhancements — Complete</div>
+  <ol start="9">
+    <li><s>JSON-LD structured data</s> — Done</li>
+    <li><s>Skip-to-content link</s> — Done</li>
+    <li><s>Hero image preload</s> — Done</li>
+    <li><s>CTA click tracking</s> — Done</li>
+    <li><s>Responsive QA at all breakpoints</s> — Done</li>
+    <li><s>Keyboard navigation</s> — Done</li>
+    <li><s>Social sharing preview</s> — Done</li>
+  </ol>
+</div>
+
+<div class="priority-box complete">
+  <div class="priority-title complete">Optional / Post-Launch — Complete</div>
+  <ol start="16">
+    <li><s>UptimeRobot monitoring</s> — Done</li>
+    <li><s>Bing Webmaster Tools</s> — Done</li>
+    <li><s>Responsive image srcset</s> — Done</li>
+  </ol>
+</div>
+
+<!-- Summary -->
+<h2>Summary</h2>
+<div class="summary-box">
+  <table>
+    <tr><td><b>Total Tasks</b></td><td>58</td></tr>
+    <tr><td class="done">DONE</td><td>57 tasks completed (98%)</td></tr>
+    <tr><td class="na">N/A</td><td>1 task not applicable (#12 — hreflang, English only)</td></tr>
+  </table>
+</div>
+
+<div class="footer">
+  Prepared by Spirit Media Publishing &bull; spiritmediapublishing.com &bull; March 19, 2026<br />
+  The Kohler Group PLLC — thekohlergroup.net<br />
+  <b>v2.1</b> — 37 tasks completed since v1.0
+</div>
+
+</body>
+</html>

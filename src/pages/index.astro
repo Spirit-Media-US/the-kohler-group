@@ -6,12 +6,13 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   facebook, instagram,
   heroImage, aboutHeroImage, defaultHeroImage, logo
 }`);
-
+const heroPreloadUrl = settings?.heroImage ? urlFor(settings.heroImage).width(1920).url() : '';
 ---
 
 <Layout
 	title="Christian Counseling in Huntersville, NC | The Kohler Group PLLC"
 	description="Faith-based Christian counseling and psychotherapy in Huntersville, NC. Individual, marriage, and intensive therapy from licensed Christian counselors. Call today."
+	heroPreload={heroPreloadUrl}
 >
 	<!-- ============================================================
 	     Hero — beach image, light overlay, centered headline only
