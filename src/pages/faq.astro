@@ -1,7 +1,7 @@
 ---
 import { sanityClient, urlFor } from "../lib/sanity.ts";
 import Layout from "@layouts/Layout.astro";
-import { toPlainText } from "@portabletext/toolkit";
+import { PortableText } from "astro-portabletext";
 
 const [faqs, settings] = await Promise.all([
   sanityClient.fetch(`*[_type=="faq"] | order(order asc) { _id, question, answer, category, order }`),
@@ -49,7 +49,9 @@ const [faqs, settings] = await Promise.all([
 									</svg>
 								</span>
 							</summary>
-							<div class="mt-4 text-sm leading-relaxed text-gray-700" set:html={answer?.map(b => b.children?.map(s => s.text).join('')).join(' ')} />
+							<div class="mt-4 space-y-2 text-sm leading-relaxed text-gray-700 [&_strong]:font-semibold [&_strong]:text-gray-900">
+							<PortableText value={answer} />
+						</div>
 						</details>
 					))
 				}
