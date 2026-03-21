@@ -18,7 +18,7 @@ const heroPreloadUrl = settings?.aboutHeroImage ? urlFor(settings.aboutHeroImage
 	     Hero Banner
 	     ============================================================ -->
 	<section
-		class="relative flex min-h-[65svh] items-center bg-cover bg-center lg:bg-left-top bg-no-repeat [touch-action:pan-y]"
+		class="relative flex min-h-[420px] md:min-h-[65vh] items-center bg-cover bg-center lg:bg-left-top bg-no-repeat"
 		style={`background-image: url(${settings?.aboutHeroImage ? urlFor(settings.aboutHeroImage).width(1920).url() : ''})`}
 	>
 		<div class="absolute inset-0 bg-brand/50"></div>
