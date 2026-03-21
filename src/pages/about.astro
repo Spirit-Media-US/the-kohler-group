@@ -17,10 +17,15 @@ const heroPreloadUrl = settings?.aboutHeroImage ? urlFor(settings.aboutHeroImage
 	<!-- ============================================================
 	     Hero Banner
 	     ============================================================ -->
-	<section
-		class="relative flex min-h-[65svh] items-center bg-cover bg-center lg:bg-left-top bg-no-repeat"
-		style={`background-image: url(${settings?.aboutHeroImage ? urlFor(settings.aboutHeroImage).width(1920).url() : ''})`}
-	>
+	<section class="relative flex min-h-[65svh] items-center overflow-hidden">
+		{settings?.aboutHeroImage && (
+			<img
+				src={urlFor(settings.aboutHeroImage).width(1920).url()}
+				alt=""
+				class="absolute inset-0 h-full w-full object-cover object-center lg:object-left-top"
+				fetchpriority="high"
+			/>
+		)}
 		<div class="absolute inset-0 bg-brand/50"></div>
 	</section>
 
