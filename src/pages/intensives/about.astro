@@ -28,13 +28,26 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 		</div>
 	</section>
 
-	<!-- Intro + Video -->
+	<!-- Intro + Photo -->
 	<section class="py-20">
 		<div class="container max-w-6xl">
-			<div class="max-w-3xl">
-				<p class="text-base leading-relaxed text-gray-700">
+			<div class="flex flex-col gap-10 md:flex-row md:items-start">
+				<p class="text-base leading-relaxed text-gray-700 md:flex-1">
 					I am a Christian Counselor and have tailored the Intensive experience to bring restoration to the soul of the Christian believer who has experienced wounding and desires transformation of the spirit, soul and body. My approach is clinical and spiritual. We are an experiential psychotherapy practice in the private sector. Often, when Jesus ministered, He gave people teaching/instruction as well as a healing or miraculous experience. These intensives are inspired by this approach.
 				</p>
+				<figure class="flex-shrink-0 md:w-72">
+					<img
+						src="https://cdn.sanity.io/images/2bom5gqg/production/bc923c7086ed045549abb1546b07fcadb5518221-3000x2001.jpg"
+						alt="Barbara Kohler, Founder of The Kohler Group"
+						width="288"
+						height="192"
+						class="w-full object-cover"
+					/>
+					<figcaption class="mt-2 text-center text-xs text-gray-600">
+						Barbara Kohler<br />
+						MS, CRC, LCMHC, NCC — Founder, The Kohler Group
+					</figcaption>
+				</figure>
 			</div>
 		</div>
 	</section>
