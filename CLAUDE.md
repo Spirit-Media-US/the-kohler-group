@@ -6,7 +6,7 @@ This site: The Kohler Group | Repo: github.com/Spirit-Media-US/the-kohler-group 
 
 ## Dev Commands
 
-- `npm run dev` — local preview at localhost:4321
+- `npm run dev` — local preview at localhost:4325
 - `npm run build` — production build to dist/
 
 ## Rules
