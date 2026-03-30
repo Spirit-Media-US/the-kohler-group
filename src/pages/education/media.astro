@@ -1,12 +1,12 @@
 ---
-import { sanityClient, urlFor } from '../../lib/sanity.ts';
 import Layout from '@layouts/Layout.astro';
+import { sanityClient, urlFor } from '../../lib/sanity.ts';
+
 const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   phone, email, barbaraEmail, officeEmail, bookingUrl,
   facebook, instagram,
   heroImage, aboutHeroImage, defaultHeroImage, logo
 }`);
-
 ---
 
 <Layout
@@ -50,12 +50,12 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 				<!-- Track List -->
 				<div id="track-list" class="divide-y divide-gray-100">
 					{[
-						{ title: 'Anxiety', file: 'https://pub-d77219c850804c8ca2ddc9c193465856.r2.dev/audio/The Kohler Group PLLC - Anxiety.mp3' },
-						{ title: 'Change', file: 'https://pub-d77219c850804c8ca2ddc9c193465856.r2.dev/audio/The Kohler Group PLLC - Change.mp3' },
-						{ title: 'Grief', file: 'https://pub-d77219c850804c8ca2ddc9c193465856.r2.dev/audio/The Kohler Group PLLC - Grief.mp3' },
-						{ title: 'Honesty', file: 'https://pub-d77219c850804c8ca2ddc9c193465856.r2.dev/audio/The Kohler Group PLLC - Honesty.mp3' },
-						{ title: 'Joy', file: 'https://pub-d77219c850804c8ca2ddc9c193465856.r2.dev/audio/The Kohler Group PLLC - Joy.mp3' },
-						{ title: 'Turmoil in Relationships', file: 'https://pub-d77219c850804c8ca2ddc9c193465856.r2.dev/audio/The Kohler Group PLLC - Turmoil in Relationships.mp3' },
+						{ title: 'Anxiety', file: 'https://pub-d77219c850804c8ca2ddc9c193465856.r2.dev/audio/The%20Kohler%20Group%20PLLC%20-%20Anxiety.mp3' },
+						{ title: 'Change', file: 'https://pub-d77219c850804c8ca2ddc9c193465856.r2.dev/audio/The%20Kohler%20Group%20PLLC%20-%20Change.mp3' },
+						{ title: 'Grief', file: 'https://pub-d77219c850804c8ca2ddc9c193465856.r2.dev/audio/The%20Kohler%20Group%20PLLC%20-%20Grief.mp3' },
+						{ title: 'Honesty', file: 'https://pub-d77219c850804c8ca2ddc9c193465856.r2.dev/audio/The%20Kohler%20Group%20PLLC%20-%20Honesty.mp3' },
+						{ title: 'Joy', file: 'https://pub-d77219c850804c8ca2ddc9c193465856.r2.dev/audio/The%20Kohler%20Group%20PLLC%20-%20Joy.mp3' },
+						{ title: 'Turmoil in Relationships', file: 'https://pub-d77219c850804c8ca2ddc9c193465856.r2.dev/audio/The%20Kohler%20Group%20PLLC%20-%20Turmoil%20in%20Relationships.mp3' },
 					].map(({ title, file }, i) => (
 						<div class="track-row group py-3" data-src={file} data-index={i}>
 							<div class="flex cursor-pointer items-center gap-4">
@@ -156,7 +156,7 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 					return;
 				}
 				if (!isSame) { audio.src = row.dataset.src; current = row; }
-				audio.play();
+				audio.play().catch(() => { resetRow(row); current = null; });
 				row.querySelector('.play-icon').classList.add('hidden');
 				row.querySelector('.pause-icon').classList.remove('hidden');
 				row.querySelector('.play-btn').classList.add('border-brand','text-brand');
