@@ -1,6 +1,7 @@
 ---
-import { sanityClient } from '../lib/sanity.ts';
 import Layout from '@layouts/Layout.astro';
+import { sanityClient } from '../lib/sanity.ts';
+
 const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   phone, email
 }`);
@@ -75,7 +76,7 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 			</address>
 			<p class="mt-4 text-sm leading-relaxed text-gray-700">
 				Complaint forms are available at{' '}
-				<a href="http://www.hhs.gov/ocr/office/file/index.html" target="_blank" rel="noopener noreferrer" class="text-brand underline hover:text-brand/70">http://www.hhs.gov/ocr/office/file/index.html</a>.
+				<a href="https://www.hhs.gov/ocr/office/file/index.html" target="_blank" rel="noopener noreferrer" class="text-brand underline hover:text-brand/70">www.hhs.gov/ocr/office/file/index.html</a>.
 			</p>
 
 			</div>
