@@ -8,6 +8,8 @@ export default defineConfig({
 
 	site: 'https://thekohlergroup.net',
 
+	server: { port: 4325, host: true },
+
 	integrations: [sitemap()],
 
 	vite: {

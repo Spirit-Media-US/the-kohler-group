@@ -56,3 +56,4 @@ filesystem/
 # Report/backup files
 *.pdf
 *.bak
+.mcp.json

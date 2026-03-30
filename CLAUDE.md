@@ -6,7 +6,7 @@ This site: The Kohler Group | Repo: github.com/Spirit-Media-US/the-kohler-group 
 
 ## Dev Commands
 
-- `npm run dev` — local preview at localhost:4321
+- `npm run dev` — local preview at localhost:4325
 - `npm run build` — production build to dist/
 
 ## Rules
@@ -35,3 +35,25 @@ Run this before every commit touching these pages:
 git diff HEAD -- src/pages/intensives/marriage.astro src/pages/intensives/individual.astro src/pages/intensives/about.astro src/layouts/Layout.astro | grep '^-' | grep -i 'json\|iframe\|MailtoLink\|Barbara\|title=\|description='
 ```
 If that grep returns any lines, stop and verify the removal was intentional.
+
+---
+
+## Stitch MCP — AI Design Tool
+
+Google Stitch 2.0 is an MCP server available in this project for AI-powered design work. It generates full page designs and auto-creates design systems (colors, typography, component rules). The MCP config is already symlinked into this repo (`.mcp.json`).
+
+**When to use:** When Kevin asks for design work, new page layouts, or visual redesigns. Use Stitch first to get 80–90% of the design done visually, then implement in Astro/Tailwind.
+
+**Available tools (prefixed `mcp__stitch__`):**
+`create_project`, `generate_screen_from_text`, `create_design_system`, `apply_design_system`, `edit_screens`, `generate_variants`, `list_projects`, `list_screens`, `get_screen`, `get_project`, `list_design_systems`, `update_design_system`
+
+**Workflow:**
+1. Screenshot or paste URL into Stitch as style reference
+2. Stitch generates full design + auto-creates design system
+3. Export design.md / design system from Stitch
+4. Hand off to Claude Code for Astro/Tailwind implementation
+
+**Rules:**
+- Use Gemini 3.1 Pro in Stitch (not 3.0 Flash)
+- Stitch auto-generates a `design.md` — keep it in the project root for consistency
+- This is the standard SMP workflow for all new site builds and major redesigns
