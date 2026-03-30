@@ -11,10 +11,68 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 ---
 
 <Layout
-	title="Christian Individual Intensive with Barbara Kohler | Faith-Based Therapy in Huntersville, NC"
-	description="Barbara Kohler's Christian individual intensive — a 3-to-5-day concentrated therapy experience in Huntersville, NC designed to break through trauma, anxiety, grief, and unresolved wounds through faith-based counseling."
+	title="Christian Individual Intensive | Barbara Kohler — Huntersville NC"
+	description="3-to-5-day individual therapy intensive with Barbara Kohler in Huntersville, NC. Break through trauma, anxiety, and grief with faith-based counseling."
 	heroPreload="https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"
 >
+	<!-- JSON-LD Structured Data -->
+	<script type="application/ld+json" set:html={JSON.stringify({
+		"@context": "https://schema.org",
+		"@graph": [
+			{
+				"@type": "Service",
+				"name": "Christian Individual Intensive",
+				"description": "A 3-to-5-day faith-based individual therapy intensive combining clinical psychotherapy with Biblical principles, led by licensed Christian counselor Barbara Kohler in Huntersville, NC.",
+				"provider": {
+					"@type": "LocalBusiness",
+					"name": "The Kohler Group, PLLC",
+					"url": "https://thekohlergroup.net",
+					"telephone": "+1-252-758-8636",
+					"address": {
+						"@type": "PostalAddress",
+						"streetAddress": "13420 Reese Blvd W, Daetwyler Plaza Building",
+						"addressLocality": "Huntersville",
+						"addressRegion": "NC",
+						"postalCode": "28078",
+						"addressCountry": "US"
+					},
+					"geo": {
+						"@type": "GeoCoordinates",
+						"latitude": 35.4107,
+						"longitude": -80.8428
+					}
+				},
+				"areaServed": [
+					{ "@type": "State", "name": "North Carolina" },
+					{ "@type": "State", "name": "South Carolina" },
+					{ "@type": "Country", "name": "United States" }
+				],
+				"serviceType": "Christian Individual Counseling Intensive",
+				"url": "https://thekohlergroup.net/intensives/individual/"
+			},
+			{
+				"@type": "Person",
+				"name": "Barbara Kohler",
+				"jobTitle": "Licensed Clinical Mental Health Counselor",
+				"honorificSuffix": "MS, LCMHC",
+				"url": "https://thekohlergroup.net/our-therapists/barbara-j-kohler/",
+				"worksFor": {
+					"@type": "LocalBusiness",
+					"name": "The Kohler Group, PLLC"
+				},
+				"knowsAbout": ["Christian counseling", "individual intensives", "EMDR", "Re-decision Therapy", "Trauma Resolution Energy Therapy", "faith-based psychotherapy", "trauma therapy", "Advanced Integrative Therapy"]
+			},
+			{
+				"@type": "VideoObject",
+				"name": "What Is a Christian Therapy Intensive? | The Kohler Group",
+				"description": "Learn about the Christian individual intensive experience with Barbara Kohler at The Kohler Group in Huntersville, NC.",
+				"contentUrl": "https://www.youtube.com/watch?v=umjQnWi94X4",
+				"thumbnailUrl": "https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg",
+				"uploadDate": "2025-01-01"
+			}
+		]
+	})} />
+
 	<!-- Hero -->
 	<section
 		class="relative flex h-[250px] items-center justify-center bg-cover bg-top bg-no-repeat"

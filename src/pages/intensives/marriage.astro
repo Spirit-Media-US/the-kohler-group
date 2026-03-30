@@ -1,18 +1,18 @@
 ---
-import { sanityClient, urlFor } from '../../lib/sanity.ts';
-import Layout from '@layouts/Layout.astro';
 import MailtoLink from '@components/MailtoLink.astro';
+import Layout from '@layouts/Layout.astro';
+import { sanityClient, urlFor } from '../../lib/sanity.ts';
+
 const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   phone, email, barbaraEmail, officeEmail, bookingUrl,
   facebook, instagram,
   heroImage, aboutHeroImage, defaultHeroImage, logo
 }`);
-
 ---
 
 <Layout
-	title="Christian Marriage Intensive with Barbara Kohler | 5-Day Faith-Based Counseling in Huntersville, NC"
-	description="Christian marriage intensive retreats in Huntersville, NC — multi-day concentrated therapy for couples in crisis. Marriage restoration through Biblical counseling, Re-Decision Therapy & HeartSync. Serving Charlotte & Lake Norman."
+	title="Christian Marriage Intensive | Barbara Kohler — Huntersville NC"
+	description="5-day Christian marriage intensive with Barbara Kohler in Huntersville, NC. Faith-based couples therapy with Re-decision Therapy and HeartSync."
 	heroPreload="https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"
 >
 	<!-- JSON-LD Structured Data -->

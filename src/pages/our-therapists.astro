@@ -1,6 +1,6 @@
 ---
-import { sanityClient, urlFor } from '../lib/sanity.ts';
 import Layout from '@layouts/Layout.astro';
+import { sanityClient, urlFor } from '../lib/sanity.ts';
 
 const therapists = await sanityClient.fetch(`
   *[_type == "therapist" && active != false] | order(order asc) {
@@ -19,12 +19,11 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   facebook, instagram,
   heroImage, aboutHeroImage, defaultHeroImage, logo
 }`);
-
 ---
 
 <Layout
-	title="Our Christian Counselors | Barbara Kohler & Team in Huntersville, NC"
-	description="Meet Barbara Kohler and her team of licensed Christian counselors in Huntersville, NC. Individual sessions, marriage intensives, and individual intensives — all through a Christian worldview integrating clinical treatment with Biblical truth."
+	title="Christian Therapists Huntersville NC | Barbara Kohler & Team"
+	description="Meet Barbara Kohler's team of licensed Christian therapists in Huntersville, NC. Individual sessions, marriage intensives, and Biblical counseling near Charlotte."
 	heroPreload="https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"
 >
 	<!-- Hero Banner -->

@@ -1,18 +1,18 @@
 ---
-import { sanityClient, urlFor } from '../../lib/sanity.ts';
-import Layout from '@layouts/Layout.astro';
 import MailtoLink from '@components/MailtoLink.astro';
+import Layout from '@layouts/Layout.astro';
+import { sanityClient, urlFor } from '../../lib/sanity.ts';
+
 const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   phone, email, barbaraEmail, officeEmail, bookingUrl,
   facebook, instagram,
   heroImage, aboutHeroImage, defaultHeroImage, logo
 }`);
-
 ---
 
 <Layout
-	title="Christian Therapy Intensives with Barbara Kohler | Marriage & Individual Programs"
-	description="Barbara Kohler offers Christian marriage intensives and individual intensives in Huntersville, NC — concentrated, multi-day faith-based therapy designed to bring restoration, healing, and transformation."
+	title="Therapy Intensives | Barbara Kohler — Huntersville NC"
+	description="Barbara Kohler offers Christian marriage and individual therapy intensives in Huntersville, NC. Multi-day faith-based counseling for lasting transformation."
 	heroPreload="https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"
 >
 	<!-- Hero -->

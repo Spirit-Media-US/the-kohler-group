@@ -14,14 +14,16 @@ interface Props {
 
 const {
 	title,
-	description = 'Barbara Kohler — Christian counseling, marriage intensives, and individual intensives in Huntersville, NC. Faith-based psychotherapy combining clinical expertise with Biblical principles.',
+	description = 'Barbara Kohler — Christian counseling, marriage intensives, and individual therapy in Huntersville, NC. Faith-based psychotherapy near Charlotte and Lake Norman.',
 	canonicalURL = Astro.url.href,
 	ogImage = 'https://cdn.sanity.io/images/2bom5gqg/production/69ff224b35aa2d4c0e57339b5449330d55bf8095-468x311.jpg',
 	heroPreload,
 } = Astro.props;
 
 const siteName = 'The Kohler Group PLLC';
-const ogImageURL = ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro.site ?? Astro.url).href;
+const ogImageURL = ogImage.startsWith('http')
+	? ogImage
+	: new URL(ogImage, Astro.site ?? Astro.url).href;
 ---
 
 <!doctype html>
@@ -86,9 +88,10 @@ const ogImageURL = ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro
 		<!-- LocalBusiness JSON-LD Structured Data -->
 		<script type="application/ld+json" set:html={JSON.stringify({
 			"@context": "https://schema.org",
-			"@type": "ProfessionalService",
+			"@type": ["ProfessionalService", "MedicalBusiness"],
 			"name": "The Kohler Group PLLC",
-			"description": "Faith-based Christian counseling and psychotherapy practice offering individual therapy, marriage intensives, and individual intensives.",
+			"alternateName": "The Kohler Group",
+			"description": "Faith-based Christian counseling practice in Huntersville, NC offering individual therapy, marriage counseling, couples therapy, psychotherapy intensives, EMDR, and Re-decision Therapy. Serving Charlotte, Lake Norman, and all of North Carolina via telehealth.",
 			"url": "https://thekohlergroup.net",
 			"telephone": "+1-252-758-8636",
 			"address": {
@@ -113,14 +116,50 @@ const ogImageURL = ogImage.startsWith('http') ? ogImage : new URL(ogImage, Astro
 				}
 			],
 			"priceRange": "$$",
+			"founder": {
+				"@type": "Person",
+				"name": "Barbara Kohler",
+				"jobTitle": "Licensed Clinical Mental Health Counselor",
+				"honorificSuffix": "MS, LCMHC"
+			},
 			"areaServed": [
 				{ "@type": "City", "name": "Huntersville" },
 				{ "@type": "City", "name": "Charlotte" },
 				{ "@type": "City", "name": "Cornelius" },
 				{ "@type": "City", "name": "Davidson" },
-				{ "@type": "Place", "name": "Lake Norman Area" }
+				{ "@type": "Place", "name": "Lake Norman Area" },
+				{ "@type": "State", "name": "North Carolina" }
 			],
-			"sameAs": []
+			"serviceType": [
+				"Christian Counseling",
+				"Faith-Based Counseling",
+				"Biblical Psychotherapy",
+				"Marriage Counseling",
+				"Couples Therapy",
+				"Individual Therapy",
+				"Psychotherapy Intensives",
+				"EMDR Therapy",
+				"Re-decision Therapy",
+				"Advanced Integrative Therapy",
+				"Trauma Resolution Energy Therapy",
+				"Telehealth Therapy"
+			],
+			"hasOfferCatalog": {
+				"@type": "OfferCatalog",
+				"name": "Christian Counseling Services",
+				"itemListElement": [
+					{ "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Individual Christian Counseling" } },
+					{ "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Marriage Counseling" } },
+					{ "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Couples Therapy" } },
+					{ "@type": "Offer", "itemOffered": { "@type": "Service", "name": "5-Day Christian Marriage Intensive" } },
+					{ "@type": "Offer", "itemOffered": { "@type": "Service", "name": "3-to-5-Day Individual Intensive" } },
+					{ "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Telehealth Therapy (North Carolina)" } }
+				]
+			},
+			"sameAs": [
+				"https://www.facebook.com/thekohlergroup",
+				"https://www.instagram.com/thekohlergrouppllc/"
+			]
 		})} />
 	</head>
 	<body>
