@@ -1,19 +1,47 @@
 ---
-import { sanityClient, urlFor } from "../lib/sanity.ts";
-import Layout from "@layouts/Layout.astro";
-import { PortableText } from "astro-portabletext";
+import Layout from '@layouts/Layout.astro';
+import { PortableText } from 'astro-portabletext';
+import { sanityClient, urlFor } from '../lib/sanity.ts';
 
 const [faqs, settings] = await Promise.all([
-  sanityClient.fetch(`*[_type=="faq"] | order(order asc) { _id, question, answer, category, order }`),
-  sanityClient.fetch(`*[_type=="siteSettings"][0]{ phone, email, barbaraEmail, officeEmail, bookingUrl, facebook, instagram, heroImage, aboutHeroImage, defaultHeroImage, logo }`),
+	sanityClient.fetch(
+		`*[_type=="faq"] | order(order asc) { _id, question, answer, category, order }`,
+	),
+	sanityClient.fetch(
+		`*[_type=="siteSettings"][0]{ phone, email, barbaraEmail, officeEmail, bookingUrl, facebook, instagram, heroImage, aboutHeroImage, defaultHeroImage, logo }`,
+	),
 ]);
+
+function toPlainText(blocks: any[]): string {
+	if (!blocks) return '';
+	return blocks
+		.filter((block: any) => block._type === 'block')
+		.map((block: any) => block.children?.map((child: any) => child.text || '').join('') || '')
+		.join(' ');
+}
+
+const faqSchema = {
+	'@context': 'https://schema.org',
+	'@type': 'FAQPage',
+	mainEntity: faqs.map((faq: any) => ({
+		'@type': 'Question',
+		name: faq.question,
+		acceptedAnswer: {
+			'@type': 'Answer',
+			text: toPlainText(faq.answer),
+		},
+	})),
+};
 ---
 
 <Layout
-	title="FAQ | Barbara Kohler's Christian Counseling Practice — The Kohler Group"
-	description="Frequently asked questions about Barbara Kohler's Christian counseling practice — insurance, scheduling, marriage intensives, individual intensives, and our Statement of Faith."
+	title="FAQ | Christian Counseling Huntersville NC — Barbara Kohler"
+	description="Answers about Barbara Kohler's Christian counseling in Huntersville, NC — insurance, scheduling, marriage intensives, and faith-based therapy."
 	heroPreload="https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"
 >
+	<!-- FAQPage JSON-LD -->
+	<script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
 	<!-- Hero -->
 	<section
 		class="relative flex h-[250px] items-center justify-center bg-cover bg-top bg-no-repeat"

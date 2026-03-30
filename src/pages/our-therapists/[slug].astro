@@ -35,10 +35,37 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{ officeEm
 ---
 
 <Layout
-	title={`${therapist.name}, ${therapist.credentials} | Christian Counselor — Barbara Kohler's Practice`}
-	description={`${therapist.name}, ${therapist.credentials} — licensed Christian counselor at The Kohler Group in Huntersville, NC. Faith-based psychotherapy serving Charlotte & Lake Norman.`}
+	title={`${therapist.name}, ${therapist.credentials} | Christian Therapist Huntersville NC`}
+	description={`${therapist.name}, ${therapist.credentials} — licensed Christian therapist at The Kohler Group in Huntersville, NC. Faith-based psychotherapy serving Charlotte & Lake Norman.`}
 	heroPreload="https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"
 >
+	<!-- Person JSON-LD -->
+	<script type="application/ld+json" set:html={JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "Person",
+		"name": therapist.name,
+		"jobTitle": therapist.role || "Licensed Christian Therapist",
+		"honorificSuffix": therapist.credentials,
+		"description": therapist.intro,
+		"url": `https://thekohlergroup.net/our-therapists/${slug}/`,
+		"image": therapist.headshotUrl ? `${therapist.headshotUrl}?w=600&h=600&fit=crop` : undefined,
+		"worksFor": {
+			"@type": "ProfessionalService",
+			"name": "The Kohler Group PLLC",
+			"url": "https://thekohlergroup.net",
+			"address": {
+				"@type": "PostalAddress",
+				"streetAddress": "13420 Reese Blvd W",
+				"addressLocality": "Huntersville",
+				"addressRegion": "NC",
+				"postalCode": "28078"
+			}
+		},
+		...([...(therapist.specializations || []), ...(therapist.modalities || [])].length > 0 && {
+			"knowsAbout": [...(therapist.specializations || []), ...(therapist.modalities || [])]
+		})
+	})} />
+
 	<!-- Hero -->
 	<section
 		class="relative flex h-[250px] items-center justify-center bg-cover bg-top bg-no-repeat"

@@ -1,5 +1,5 @@
 ---
-import Layout from "@layouts/Layout.astro";
+import Layout from '@layouts/Layout.astro';
 import { sanityClient, urlFor } from '../lib/sanity.ts';
 
 const testimonials = await sanityClient.fetch(`
@@ -16,12 +16,11 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   heroImage, aboutHeroImage, defaultHeroImage, logo,
   galleryImages
 }`);
-
 ---
 
 <Layout
-	title="Client Testimonials | Barbara Kohler — Christian Counseling & Marriage Intensives"
-	description="Real experiences from clients of Barbara Kohler and The Kohler Group. Hear how Christian counseling, marriage intensives, and individual intensives brought healing and transformation."
+	title="Testimonials | Barbara Kohler — Christian Counseling Huntersville NC"
+	description="Client experiences from Barbara Kohler's Christian counseling in Huntersville, NC. Marriage intensives and faith-based therapy near Charlotte."
 	heroPreload="https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"
 >
 	<!-- Hero -->

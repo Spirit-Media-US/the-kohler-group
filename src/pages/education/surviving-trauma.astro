@@ -1,16 +1,16 @@
 ---
-import { sanityClient, urlFor } from '../../lib/sanity.ts';
 import Layout from '@layouts/Layout.astro';
+import { sanityClient, urlFor } from '../../lib/sanity.ts';
+
 const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   phone, email, barbaraEmail, officeEmail, bookingUrl,
   facebook, instagram,
   heroImage, aboutHeroImage, defaultHeroImage, logo
 }`);
-
 ---
 
 <Layout
-	title="Surviving Trauma | Barbara Kohler — Christian Counseling for Trauma Recovery"
+	title="Surviving Trauma | Barbara Kohler — Christian Therapy Huntersville NC"
 	description="A message from Barbara Kohler on surviving trauma — healing from abuse, reconnecting with God, and finding restoration through Christian counseling and therapy intensives in Huntersville, NC."
 	heroPreload="https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"
 >

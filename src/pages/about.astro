@@ -1,17 +1,20 @@
 ---
-import { sanityClient, urlFor } from '../lib/sanity.ts';
 import Layout from '@layouts/Layout.astro';
+import { sanityClient, urlFor } from '../lib/sanity.ts';
+
 const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   phone, email, barbaraEmail, officeEmail, bookingUrl,
   facebook, instagram,
   heroImage, aboutHeroImage, defaultHeroImage, logo
 }`);
-const heroPreloadUrl = settings?.aboutHeroImage ? urlFor(settings.aboutHeroImage).width(1920).url() : '';
+const heroPreloadUrl = settings?.aboutHeroImage
+	? urlFor(settings.aboutHeroImage).width(1920).url()
+	: '';
 ---
 
 <Layout
-	title="About Barbara Kohler & The Kohler Group | Christian Counseling in Huntersville, NC"
-	description="Meet Barbara Kohler and her team of licensed Christian counselors in Huntersville, NC. Providing faith-based psychotherapy, marriage intensives, and individual intensives to advance healing and restoration."
+	title="About Us | Barbara Kohler — Faith-Based Therapy Huntersville NC"
+	description="Meet Barbara Kohler and her team of Christian counselors in Huntersville, NC. Biblical psychotherapy, marriage intensives, and individual therapy near Charlotte."
 	heroPreload={heroPreloadUrl}
 >
 	<!-- ============================================================
