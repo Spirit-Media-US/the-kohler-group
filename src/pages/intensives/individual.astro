@@ -1,13 +1,13 @@
 ---
-import { sanityClient, urlFor } from '../../lib/sanity.ts';
-import Layout from '@layouts/Layout.astro';
 import MailtoLink from '@components/MailtoLink.astro';
+import Layout from '@layouts/Layout.astro';
+import { sanityClient, urlFor } from '../../lib/sanity.ts';
+
 const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   phone, email, barbaraEmail, officeEmail, bookingUrl,
   facebook, instagram,
   heroImage, aboutHeroImage, defaultHeroImage, logo
 }`);
-
 ---
 
 <Layout
@@ -305,7 +305,7 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 					Get Started
 				</MailtoLink>
 				<a
-					href="tel:{settings?.phone?.replace(/-/g,"")}"
+					href={`tel:${settings?.phone?.replace(/-/g, '')}`}
 					class="inline-block border-2 border-brand px-8 py-3 text-xs font-bold uppercase tracking-ui text-brand transition hover:bg-brand hover:text-white"
 				>
 					Call {settings?.phone}
