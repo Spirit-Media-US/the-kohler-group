@@ -17,6 +17,33 @@ const heroPreloadUrl = settings?.aboutHeroImage
 	description="Meet Barbara Kohler and her team of Christian counselors in Huntersville, NC. Biblical psychotherapy, marriage intensives, and individual therapy near Charlotte."
 	heroPreload={heroPreloadUrl}
 >
+	<script type="application/ld+json" set:html={JSON.stringify({
+		"@context": "https://schema.org",
+		"@type": "AboutPage",
+		"name": "About Us | Barbara Kohler — Faith-Based Therapy Huntersville NC",
+		"description": "Meet Barbara Kohler and her team of Christian counselors in Huntersville, NC. Biblical psychotherapy, marriage intensives, and individual therapy near Charlotte.",
+		"url": "https://thekohlergroup.net/about/",
+		"mainEntity": {
+			"@type": "LocalBusiness",
+			"name": "The Kohler Group, PLLC",
+			"url": "https://thekohlergroup.net",
+			"telephone": "+1-252-758-8636",
+			"address": {
+				"@type": "PostalAddress",
+				"streetAddress": "13420 Reese Blvd W",
+				"addressLocality": "Huntersville",
+				"addressRegion": "NC",
+				"postalCode": "28078",
+				"addressCountry": "US"
+			},
+			"founder": {
+				"@type": "Person",
+				"name": "Barbara Kohler",
+				"jobTitle": "Licensed Clinical Mental Health Counselor",
+				"honorificSuffix": "MS, LCMHC"
+			}
+		}
+	})} />
 	<!-- ============================================================
 	     Hero Banner
 	     ============================================================ -->
