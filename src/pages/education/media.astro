@@ -122,7 +122,8 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 	<script>
 		const rows = document.querySelectorAll('.track-row');
 		let current = null;
-		let audio = new Audio();
+		const audio = new Audio();
+		audio.preload = 'none';
 
 		function fmt(s) {
 			if (!isFinite(s)) return '--:--';
@@ -138,40 +139,74 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 			r.querySelector('.track-progress').classList.add('hidden');
 		}
 
-		rows.forEach((row) => {
-			// Preload duration
-			const tmp = new Audio(row.dataset.src);
-			tmp.addEventListener('loadedmetadata', () => {
-				row.querySelector('.duration').textContent = fmt(tmp.duration);
+		function activateRow(row) {
+			row.querySelector('.play-icon').classList.add('hidden');
+			row.querySelector('.pause-icon').classList.remove('hidden');
+			row.querySelector('.play-btn').classList.add('border-brand','text-brand');
+			row.querySelector('.play-btn').classList.remove('border-gray-300','text-gray-400');
+			row.querySelector('.track-progress').classList.remove('hidden');
+		}
+
+		function playTrack(row) {
+			const isSame = current === row;
+			rows.forEach(resetRow);
+
+			if (isSame && !audio.paused) {
+				audio.pause();
+				current = null;
+				return;
+			}
+
+			if (!isSame) {
+				audio.src = row.dataset.src;
+				audio.load();
+				current = row;
+			}
+
+			activateRow(row);
+			audio.play().catch(function(err) {
+				console.error('Audio playback failed:', err);
+				resetRow(row);
+				current = null;
+			});
+		}
+
+		rows.forEach(function(row) {
+			// Lazy-load duration on first hover instead of preloading all 6
+			let durationLoaded = false;
+			row.addEventListener('mouseenter', function() {
+				if (durationLoaded) return;
+				durationLoaded = true;
+				const tmp = new Audio();
+				tmp.preload = 'metadata';
+				tmp.src = row.dataset.src;
+				tmp.addEventListener('loadedmetadata', function() {
+					row.querySelector('.duration').textContent = fmt(tmp.duration);
+				});
 			});
 
-			// Play/pause on row click (but not on share wrap clicks)
-			row.querySelector('.flex.cursor-pointer').addEventListener('click', (e) => {
+			// Click on play button
+			row.querySelector('.play-btn').addEventListener('click', function(e) {
+				e.preventDefault();
+				e.stopPropagation();
+				playTrack(row);
+			});
+
+			// Click on row (title area)
+			row.querySelector('.flex.cursor-pointer').addEventListener('click', function(e) {
 				if (e.target.closest('.share-wrap')) return;
-				const isSame = current === row;
-				rows.forEach(resetRow);
-				if (isSame && !audio.paused) {
-					audio.pause();
-					current = null;
-					return;
-				}
-				if (!isSame) { audio.src = row.dataset.src; current = row; }
-				audio.play().catch(() => { resetRow(row); current = null; });
-				row.querySelector('.play-icon').classList.add('hidden');
-				row.querySelector('.pause-icon').classList.remove('hidden');
-				row.querySelector('.play-btn').classList.add('border-brand','text-brand');
-				row.querySelector('.play-btn').classList.remove('border-gray-300','text-gray-400');
-				row.querySelector('.track-progress').classList.remove('hidden');
+				if (e.target.closest('.play-btn')) return;
+				playTrack(row);
 			});
 
 			// Share dropdown hover
 			const wrap = row.querySelector('.share-wrap');
 			const dropdown = row.querySelector('.share-dropdown');
-			wrap.addEventListener('mouseenter', () => {
+			wrap.addEventListener('mouseenter', function() {
 				dropdown.classList.add('pointer-events-auto','opacity-100');
 				dropdown.classList.remove('pointer-events-none','opacity-0');
 			});
-			wrap.addEventListener('mouseleave', () => {
+			wrap.addEventListener('mouseleave', function() {
 				dropdown.classList.remove('pointer-events-auto','opacity-100');
 				dropdown.classList.add('pointer-events-none','opacity-0');
 			});
@@ -179,24 +214,24 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 			// Set share URLs
 			const pageUrl = encodeURIComponent(window.location.href);
 			const trackTitle = encodeURIComponent('The Kohler Group — ' + row.querySelector('span.text-brand').textContent);
-			row.querySelector('.share-fb').href = `https://www.facebook.com/sharer/sharer.php?u=${pageUrl}`;
-			row.querySelector('.share-tw').href = `https://twitter.com/intent/tweet?url=${pageUrl}&text=${trackTitle}`;
+			row.querySelector('.share-fb').href = 'https://www.facebook.com/sharer/sharer.php?u=' + pageUrl;
+			row.querySelector('.share-tw').href = 'https://twitter.com/intent/tweet?url=' + pageUrl + '&text=' + trackTitle;
 
 			// Copy link
-			row.querySelector('.copy-link').addEventListener('click', (e) => {
+			row.querySelector('.copy-link').addEventListener('click', function(e) {
 				e.stopPropagation();
 				navigator.clipboard.writeText(window.location.href);
 			});
 		});
 
-		// Update per-track progress bar
-		audio.addEventListener('timeupdate', () => {
+		// Progress bar
+		audio.addEventListener('timeupdate', function() {
 			if (current && audio.duration) {
 				current.querySelector('.track-bar').style.width = (audio.currentTime / audio.duration * 100) + '%';
 			}
 		});
 
-		audio.addEventListener('ended', () => {
+		audio.addEventListener('ended', function() {
 			if (current) resetRow(current);
 			current = null;
 		});
