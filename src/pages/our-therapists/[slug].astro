@@ -1,5 +1,4 @@
 ---
-import MailtoLink from '@components/MailtoLink.astro';
 import Layout from '@layouts/Layout.astro';
 import { PortableText } from 'astro-portabletext';
 import { sanityClient } from '../../lib/sanity.ts';
@@ -31,7 +30,7 @@ const therapist = await sanityClient.fetch(
 `,
 	{ slug },
 );
-const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{ officeEmail }`);
+const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{ officeEmail, bookingUrl }`);
 ---
 
 <Layout
@@ -88,13 +87,13 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{ officeEm
 				<div class="flex-shrink-0 text-center lg:w-64">
 					{therapist.headshotUrl ? (
 						<img
-							src={`${therapist.headshotUrl}?w=520&h=693&fit=crop&auto=format`}
-							srcset={`${therapist.headshotUrl}?w=260&h=347&fit=crop&auto=format 260w, ${therapist.headshotUrl}?w=520&h=693&fit=crop&auto=format 520w`}
+							src={`${therapist.headshotUrl}?w=520&h=520&fit=max&auto=format`}
+							srcset={`${therapist.headshotUrl}?w=260&h=260&fit=max&auto=format 260w, ${therapist.headshotUrl}?w=520&h=520&fit=max&auto=format 520w`}
 							sizes="(max-width: 1024px) 260px, 256px"
 							alt={`${therapist.name} headshot`}
-							class="mx-auto w-full max-w-[260px] rounded-lg object-cover object-top shadow-md lg:max-w-full"
+							class="mx-auto w-full max-w-[260px] rounded-lg object-cover object-center shadow-md lg:max-w-full"
 							width="520"
-							height="693"
+							height="520"
 							loading="lazy"
 						/>
 					) : (
@@ -111,9 +110,14 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{ officeEm
 				<!-- Right: Intro paragraph + button -->
 				<div class="flex-1">
 					<p class="text-sm leading-relaxed text-black">{therapist.intro}</p>
-					<MailtoLink email={settings?.officeEmail} class="btn-primary mt-8 inline-block">
+					<a
+						href={settings?.bookingUrl}
+						target="_blank"
+						rel="noopener noreferrer"
+						class="btn-primary mt-8 inline-block"
+					>
 						Request an Appointment
-					</MailtoLink>
+					</a>
 				</div>
 			</div>
 

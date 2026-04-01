@@ -50,16 +50,16 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 				{therapists.map((therapist: any) => (
 					<article class="flex flex-col overflow-hidden rounded-lg">
 						<!-- Headshot -->
-						<div class="aspect-square overflow-hidden bg-brand/10">
+						<div class="aspect-[3/4] overflow-hidden bg-brand/10">
 							{therapist.headshotUrl ? (
 								<img
-									src={`${therapist.headshotUrl}?w=600&h=600&fit=crop&auto=format`}
-									srcset={`${therapist.headshotUrl}?w=300&h=300&fit=crop&auto=format 300w, ${therapist.headshotUrl}?w=600&h=600&fit=crop&auto=format 600w`}
+									src={`${therapist.headshotUrl}?w=600&h=800&fit=crop&auto=format`}
+									srcset={`${therapist.headshotUrl}?w=300&h=400&fit=crop&auto=format 300w, ${therapist.headshotUrl}?w=600&h=800&fit=crop&auto=format 600w`}
 									sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
 									alt={`${therapist.name} headshot`}
-									class="h-full w-full object-cover object-top"
+									class="h-full w-full object-cover object-center"
 									width="600"
-									height="600"
+									height="800"
 									loading="lazy"
 								/>
 							) : (
