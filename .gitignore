@@ -60,3 +60,4 @@ filesystem/
 *.pdf
 *.bak
 .mcp.json
+public/studio/
