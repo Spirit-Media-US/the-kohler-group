@@ -51,7 +51,10 @@ filesystem/
 *.mp3
 
 # Sanity studio build artifacts
-.sanity/runtime/
+.sanity/
+
+# Netlify local state
+.netlify/
 
 # Report/backup files
 *.pdf
