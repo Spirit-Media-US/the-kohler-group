@@ -22,7 +22,7 @@ This site: The Kohler Group | Repo: github.com/Spirit-Media-US/the-kohler-group 
 ## Mandatory — Before Starting Work
 Always start Claude sessions from inside this directory:
 ```
-cd ~/Sites/the-kohler-group && claude
+cd /srv/sites/the-kohler-group && claude
 ```
 Running Claude from ~/ or ~/Sites/ bypasses this project's CLAUDE.md. A pre-edit hook enforces this, but following the workflow prevents warnings and ensures all project rules are loaded.
 
