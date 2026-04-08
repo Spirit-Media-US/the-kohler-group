@@ -4,6 +4,16 @@
 
 This site: The Kohler Group | Repo: github.com/Spirit-Media-US/the-kohler-group | Domain: thekohlergroup.net | Sanity ID: 2bom5gqg | R2 bucket: n/a
 
+**Migration protocol:** /home/deploy/bin/tools-api/pipelines/migration/CLAUDE.md
+**Sanity Studio:** Embedded at thekohlergroup.net/studio/ (static build)
+**Infrastructure:** Deploy webhook wired, CORS origins configured, studio deployed
+
+## Status — as of 2026-04-08
+
+### Completed & Live on Main
+- Live site, completed migration
+- Sanity Studio embedded at /studio with deploy webhook and CORS configured
+
 ## Dev Commands
 
 - `npm run dev` — local preview at localhost:4325
