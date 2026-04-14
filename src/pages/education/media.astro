@@ -14,6 +14,27 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 	description="Media and interviews from Barbara Kohler — Christian counseling insights on marriage, trauma recovery, and faith-based therapy in Huntersville, NC."
 	heroPreload="https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"
 >
+	<Fragment slot="head">
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "CollectionPage",
+			"name": "Media — The Kohler Group",
+			"description": "Educational audio content on anxiety, grief, change, and relationships from The Kohler Group Christian counseling practice.",
+			"url": "https://thekohlergroup.net/education/media",
+			"mainEntity": {
+				"@type": "ItemList",
+				"itemListElement": [
+					{ "@type": "ListItem", "position": 1, "name": "Anxiety", "url": "https://thekohlergroup.net/education/media" },
+					{ "@type": "ListItem", "position": 2, "name": "Change", "url": "https://thekohlergroup.net/education/media" },
+					{ "@type": "ListItem", "position": 3, "name": "Grief", "url": "https://thekohlergroup.net/education/media" },
+					{ "@type": "ListItem", "position": 4, "name": "Honesty", "url": "https://thekohlergroup.net/education/media" },
+					{ "@type": "ListItem", "position": 5, "name": "Joy", "url": "https://thekohlergroup.net/education/media" },
+					{ "@type": "ListItem", "position": 6, "name": "Turmoil in Relationships", "url": "https://thekohlergroup.net/education/media" }
+				]
+			},
+			"publisher": { "@type": "Organization", "name": "The Kohler Group, PLLC", "url": "https://thekohlergroup.net" }
+		})}></script>
+	</Fragment>
 	<!-- Hero -->
 	<section
 		class="relative flex h-[250px] items-center justify-center bg-cover bg-top bg-no-repeat"

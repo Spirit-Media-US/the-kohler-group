@@ -10,7 +10,35 @@ export default defineConfig({
 
 	server: { port: 4325, host: true },
 
-	integrations: [sitemap()],
+	integrations: [
+		sitemap({
+			serialize(item) {
+				const url = item.url;
+				// Homepage — highest priority
+				if (url === 'https://thekohlergroup.net/' || url === 'https://thekohlergroup.net') {
+					return { ...item, changefreq: 'weekly', priority: 1.0, lastmod: new Date().toISOString() };
+				}
+				// Core service pages
+				if (url.includes('/intensives/')) {
+					return { ...item, changefreq: 'weekly', priority: 0.9, lastmod: new Date().toISOString() };
+				}
+				// Key content pages
+				if (url.includes('/our-therapists') || url.includes('/about') || url.includes('/testimonials')) {
+					return { ...item, changefreq: 'weekly', priority: 0.8, lastmod: new Date().toISOString() };
+				}
+				// Education / FAQ
+				if (url.includes('/education/') || url.includes('/faq')) {
+					return { ...item, changefreq: 'monthly', priority: 0.7, lastmod: new Date().toISOString() };
+				}
+				// Legal / policy pages
+				if (url.includes('/privacy') || url.includes('/nondiscrimination') || url.includes('/public-health')) {
+					return { ...item, changefreq: 'yearly', priority: 0.3, lastmod: new Date().toISOString() };
+				}
+				// Default
+				return { ...item, changefreq: 'monthly', priority: 0.6, lastmod: new Date().toISOString() };
+			},
+		}),
+	],
 
 	vite: {
 		server: { allowedHosts: true },

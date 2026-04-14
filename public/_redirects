@@ -1,0 +1,21 @@
+# 301 redirects: old pre-migration URLs → new site structure
+# Google still has these old URLs indexed — redirect to preserve SEO value
+
+# Old therapist URL pattern (with middle initials and dots)
+/therapists/karen-c.-albrecht /our-therapists/karen-albrecht 301
+/therapists/karen-c-albrecht /our-therapists/karen-albrecht 301
+/therapists/april-morris /our-therapists/april-morris 301
+/therapists/barbara-j.-kohler /our-therapists/barbara-j-kohler 301
+/therapists/barbara-j-kohler /our-therapists/barbara-j-kohler 301
+/therapists/carrie-pitts /our-therapists/carrie-pitts 301
+/therapists/kaylie-sargent-ysasi /our-therapists/kaylie-sargent-ysasi 301
+/therapists/nancy-csehoski /our-therapists/nancy-csehoski 301
+/therapists/* /our-therapists 301
+
+# Old flat URLs → new nested structure
+/surviving-trauma /education/surviving-trauma 301
+/media /education/media 301
+
+# Old therapist-services page (shows in Google results)
+/therapist-services /our-therapists 301
+/therapist-services/ /our-therapists 301
