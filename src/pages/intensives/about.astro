@@ -1,13 +1,16 @@
 ---
 import MailtoLink from '@components/MailtoLink.astro';
 import Layout from '@layouts/Layout.astro';
-import { sanityClient, urlFor } from '../../lib/sanity.ts';
+import { getIntensiveStages, sanityClient, urlFor } from '../../lib/sanity.ts';
 
 const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   phone, email, barbaraEmail, officeEmail, bookingUrl,
   facebook, instagram,
   heroImage, aboutHeroImage, defaultHeroImage, logo
 }`);
+const healingStages = await getIntensiveStages('about', 'healing');
+const awarenessStages = await getIntensiveStages('about', 'awareness');
+const preparationItems = await getIntensiveStages('about', 'preparation');
 ---
 
 <Layout
@@ -116,40 +119,17 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 				I find people come into therapy at one of four stages, and each of these stages has varying degrees of intensity.
 			</p>
 			<div class="space-y-6">
-				{
-					[
-						{
-							num: '1',
-							title: 'Crisis',
-							body: 'Client is hurt or even devastated by a recent event, affair, death, tragedy, or some type of upset that has rocked their world.',
-						},
-						{
-							num: '2',
-							title: 'Seeking Awareness to Break Destructive Patterns',
-							body: 'Client is on a continuum of discovery that there are destructive habit, thought or behavioral problems in their life and they desire to stop making the same old choices or choosing the same old solutions that leave them in the same old place.',
-						},
-						{
-							num: '3',
-							title: 'Last Resort',
-							body: 'Client has tried many approaches — therapy, medication, self-help, and spiritual disciplines — and has not found the lasting change they are seeking. They come with a deep desire to break through and experience true transformation.',
-						},
-						{
-							num: '4',
-							title: 'Desiring Self Actualization',
-							body: 'Client is trying to break through to the next level of their career, business, ministry, etc., but often get rubber banded back to their old patterns that they worked so hard to overcome.',
-						},
-					].map(({ num, title, body }) => (
-						<div class="flex gap-6">
-							<div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-white">
-								{num}
-							</div>
-							<div>
-								<h3 class="font-bold uppercase tracking-caps text-brand">{title}</h3>
-								<p class="mt-2 text-sm leading-relaxed text-gray-700">{body}</p>
-							</div>
+				{healingStages.map((stage: any) => (
+					<div class="flex gap-6">
+						<div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-white">
+							{stage.number}
 						</div>
-					))
-				}
+						<div>
+							<h3 class="font-bold uppercase tracking-caps text-brand">{stage.title}</h3>
+							<p class="mt-2 text-sm leading-relaxed text-gray-700">{stage.body}</p>
+						</div>
+					</div>
+				))}
 			</div>
 		</div>
 	</section>
@@ -160,45 +140,17 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 			<p class="section-label mb-4">The Process</p>
 			<h2 class="section-title mb-6">Awareness Comes in Stages</h2>
 			<div class="space-y-6">
-				{
-					[
-						{
-							num: '1',
-							title: 'Breaking Fallow Ground',
-							body: 'For you farmers or even gardeners, you know that not all ground is alike. Some ground is hard. It needs lots of water and lots of tilling before you can plant seed in it and expect that seed to take root. So, for some, you are in the process of breaking fallow ground to gain insight. Lack of insight. That is the very thing that fallow ground represents.',
-						},
-						{
-							num: '2',
-							title: 'Teaching',
-							body: 'Teaching is one of the most helpful things in breaking through the fallow ground.',
-						},
-						{
-							num: '3',
-							title: 'Baptism into the Holy Spirit',
-							body: 'An intimate relationship with the Holy Spirit is essential to Christian growth. If you are not baptized into the Holy Spirit, you will have difficulty gaining insight and growing in Christ.',
-						},
-						{
-							num: '4',
-							title: 'Prayer and Fasting',
-							body: 'I have found nothing that accelerates understanding like prayer and fasting (food). I can attribute many breakthroughs of all kinds to prayer and fasting food. Incidentally, the biblical model of fasting is to fast food (all, part, and sometimes water when directed by the Holy Spirit).',
-						},
-						{
-							num: '5',
-							title: 'Going Deeper',
-							body: 'You have more awareness of what God is dealing with, however, you do not know how to resolve the pain. You may have destructive patterns you want to change, yet you lack the skill, knowledge, or spiritual acuity to make the change.',
-						},
-					].map(({ num, title, body }) => (
-						<div class="flex gap-6">
-							<div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-white">
-								{num}
-							</div>
-							<div>
-								<h3 class="font-bold uppercase tracking-caps text-brand">{title}</h3>
-								<p class="mt-2 text-sm leading-relaxed text-gray-700">{body}</p>
-							</div>
+				{awarenessStages.map((stage: any) => (
+					<div class="flex gap-6">
+						<div class="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full bg-brand text-sm font-bold text-white">
+							{stage.number}
 						</div>
-					))
-				}
+						<div>
+							<h3 class="font-bold uppercase tracking-caps text-brand">{stage.title}</h3>
+							<p class="mt-2 text-sm leading-relaxed text-gray-700">{stage.body}</p>
+						</div>
+					</div>
+				))}
 			</div>
 		</div>
 	</section>
@@ -209,20 +161,12 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 			<p class="section-label mb-4">Preparation</p>
 			<h2 class="section-title mb-8">While You Are Here</h2>
 			<ul class="space-y-4">
-				{
-					[
-						'Get plenty of rest and drink lots of water.',
-						'Do not engage in risky behavior or behavior that would not be pleasing to the Lord; i.e., do not open the door to the devil. He desires your destruction. Jesus desires wholeness for you. So, I ask you not to sabotage your sanctification or healing with negative behavior.',
-						'Bring a written list of all medications and supplements you are taking.',
-						'Take good care of yourself by communing with the Holy Spirit. He wants to guide you into all truth. Make peace with truth and do not be afraid to allow the Holy Spirit into the deep places of your heart.',
-						'Trust that God will do just what you need for the time you are here. Your transformation is an ongoing process. Do not be discouraged if you feel like you did not get every issue handled in one 3- to 5-day encounter. We all have lots of material to work on! God knows how much you can process and handle. Also, if you feel like I am taking you through things too quickly, please feel free to tell me to slow down. I have a desire for you to get as much healing as possible while you are here. However, I do not want you to feel overwhelmed. You have liberty to set boundaries with me and the process.',
-					].map((item) => (
-						<li class="flex items-start gap-3">
-							<span class="mt-1.5 h-2 w-2 flex-shrink-0 rounded-full bg-brand" />
-							<p class="text-sm leading-relaxed text-gray-700">{item}</p>
-						</li>
-					))
-				}
+				{preparationItems.map((item: any) => (
+					<li class="flex items-start gap-3">
+						<span class="mt-1.5 h-2 w-2 flex-shrink-0 rounded-full bg-brand" />
+						<p class="text-sm leading-relaxed text-gray-700">{item.body}</p>
+					</li>
+				))}
 			</ul>
 		</div>
 	</section>
