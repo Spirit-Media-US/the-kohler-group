@@ -23,6 +23,31 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 	description="Client experiences from Barbara Kohler's Christian counseling in Huntersville, NC. Marriage intensives and faith-based therapy near Charlotte."
 	heroPreload="https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"
 >
+	<Fragment slot="head">
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "LocalBusiness",
+			"name": "The Kohler Group, PLLC",
+			"url": "https://thekohlergroup.net",
+			"aggregateRating": {
+				"@type": "AggregateRating",
+				"ratingValue": "5",
+				"bestRating": "5",
+				"ratingCount": String(testimonials.length),
+				"reviewCount": String(testimonials.length)
+			},
+			"review": testimonials.slice(0, 5).map((t: any) => ({
+				"@type": "Review",
+				"reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
+				"reviewBody": t.quote,
+				"author": { "@type": "Person", "name": "Anonymous Client" },
+				"itemReviewed": {
+					"@type": "ProfessionalService",
+					"name": t.service || "Christian Counseling"
+				}
+			}))
+		})}></script>
+	</Fragment>
 	<!-- Hero -->
 	<section
 		class="relative flex h-[250px] items-center justify-center bg-cover bg-top bg-no-repeat"

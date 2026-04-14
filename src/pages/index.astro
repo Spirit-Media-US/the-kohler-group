@@ -15,6 +15,31 @@ const heroPreloadUrl = settings?.heroImage ? urlFor(settings.heroImage).width(19
 	description="Barbara Kohler offers Christian counseling, marriage intensives, and individual therapy in Huntersville, NC. Faith-based psychotherapy near Charlotte."
 	heroPreload={heroPreloadUrl}
 >
+	<Fragment slot="head">
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "WebSite",
+			"name": "The Kohler Group PLLC",
+			"url": "https://thekohlergroup.net",
+			"description": "Christian counseling, marriage intensives, and individual therapy in Huntersville, NC.",
+			"publisher": {
+				"@type": "Organization",
+				"name": "The Kohler Group, PLLC",
+				"url": "https://thekohlergroup.net"
+			}
+		})}></script>
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "BreadcrumbList",
+			"itemListElement": [
+				{ "@type": "ListItem", "position": 1, "name": "Home", "item": "https://thekohlergroup.net/" },
+				{ "@type": "ListItem", "position": 2, "name": "Marriage Intensives", "item": "https://thekohlergroup.net/intensives/marriage" },
+				{ "@type": "ListItem", "position": 3, "name": "Individual Intensives", "item": "https://thekohlergroup.net/intensives/individual" },
+				{ "@type": "ListItem", "position": 4, "name": "Our Therapists", "item": "https://thekohlergroup.net/our-therapists" },
+				{ "@type": "ListItem", "position": 5, "name": "Testimonials", "item": "https://thekohlergroup.net/testimonials" }
+			]
+		})}></script>
+	</Fragment>
 	<!-- ============================================================
 	     Hero — beach image, light overlay, centered headline only
 	     ============================================================ -->
