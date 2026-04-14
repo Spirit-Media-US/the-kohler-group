@@ -1,6 +1,17 @@
-import therapist from './therapist'
-import testimonial from './testimonial'
-import faq from './faq'
-import siteSettings from './siteSettings'
+import faq from './faq';
+import intensiveDaySchedule from './intensiveDaySchedule';
+import intensiveStage from './intensiveStage';
+import mediaTrack from './mediaTrack';
+import siteSettings from './siteSettings';
+import testimonial from './testimonial';
+import therapist from './therapist';
 
-export const schemaTypes = [therapist, testimonial, faq, siteSettings]
+export const schemaTypes = [
+	therapist,
+	testimonial,
+	faq,
+	siteSettings,
+	mediaTrack,
+	intensiveStage,
+	intensiveDaySchedule,
+];
