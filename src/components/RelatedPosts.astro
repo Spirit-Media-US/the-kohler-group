@@ -8,7 +8,7 @@ interface Props {
 const { currentSlug, currentTags = [] } = Astro.props;
 
 const allPosts = await sanityClient.fetch(
-	`*[_type == "blogPost" && slug.current != $slug] {
+	`*[_type == "blogPost" && defined(slug.current) && slug.current != $slug] {
 		"slug": "/blog/" + slug.current,
 		title,
 		excerpt,
@@ -19,8 +19,10 @@ const allPosts = await sanityClient.fetch(
 	{ slug: currentSlug.replace('/blog/', '') },
 );
 
-const formatDate = (dateString: string) => {
+const formatDate = (dateString: string | undefined | null) => {
+	if (!dateString) return '';
 	const date = new Date(dateString);
+	if (Number.isNaN(date.getTime())) return '';
 	return date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
 };
 
