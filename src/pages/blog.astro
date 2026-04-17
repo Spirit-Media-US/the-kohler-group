@@ -1,0 +1,288 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { sanityClient } from '../lib/sanity';
+
+const FALLBACK_IMAGE =
+	'https://cdn.sanity.io/images/2bom5gqg/production/69ff224b35aa2d4c0e57339b5449330d55bf8095-468x311.jpg?w=800&auto=format';
+
+const rawSanityPosts = await sanityClient.fetch(`
+	*[_type == "blogPost"] | order(publishDate desc) {
+		"slug": "/blog/" + slug.current,
+		title,
+		excerpt,
+		"image": coalesce(heroImage.asset->url + "?w=800&auto=format", "${FALLBACK_IMAGE}"),
+		"imagePosition": "center center",
+		"author": coalesce(author, "Add Author Name Here"),
+		"date": publishDate,
+		tags
+	}
+`);
+
+const MONTHS = [
+	'January',
+	'February',
+	'March',
+	'April',
+	'May',
+	'June',
+	'July',
+	'August',
+	'September',
+	'October',
+	'November',
+	'December',
+];
+const sanityPostsFormatted = rawSanityPosts.map((p: any) => {
+	const d = new Date(p.date);
+	return {
+		...p,
+		excerpt: p.excerpt || '',
+		tags: p.tags || [],
+		date: `${MONTHS[d.getUTCMonth()]} ${d.getUTCDate()}, ${d.getUTCFullYear()}`,
+	};
+});
+const SANITY_POSTS_JSON = JSON.stringify(sanityPostsFormatted);
+
+// Placeholder stock images for the decorative hero grid. Hosted on Sanity CDN
+// (site CSP restricts external images). Used to fill the 3×3 grid until real
+// posts exist. Aria-hidden decorative only.
+const PLACEHOLDER_IMAGES = [
+	'https://cdn.sanity.io/images/2bom5gqg/production/7ce6190dbb4c37d22943141b6436e1ba39c789c6-1200x1200.jpg?w=800&auto=format',
+	'https://cdn.sanity.io/images/2bom5gqg/production/e9dd4ed482ff207541715a9f734bfc4321ed5be5-1200x1200.jpg?w=800&auto=format',
+	'https://cdn.sanity.io/images/2bom5gqg/production/ce13636350cc1a4759170e2eb8f8159b580121d2-1200x1200.jpg?w=800&auto=format',
+	'https://cdn.sanity.io/images/2bom5gqg/production/7a0d3a792baa631190c26b2b508230e7c6462824-1200x1200.jpg?w=800&auto=format',
+	'https://cdn.sanity.io/images/2bom5gqg/production/2156cefa928625a53e4e706bcfd6954f72b7ff90-1200x1200.jpg?w=800&auto=format',
+	'https://cdn.sanity.io/images/2bom5gqg/production/04d8db85a23a44a53dfd4f6dbb7f0851241ffc2a-1200x1200.jpg?w=800&auto=format',
+	'https://cdn.sanity.io/images/2bom5gqg/production/b06a2f2ce49c847aa033c69399cf56ac8abbd628-1200x1200.jpg?w=800&auto=format',
+	'https://cdn.sanity.io/images/2bom5gqg/production/b311e45dbcb4ff89076604f5e061d72c47db79f0-1200x1200.jpg?w=800&auto=format',
+	'https://cdn.sanity.io/images/2bom5gqg/production/eaadefde71f849e55365cb6dbb44dc0b3b6ade87-1200x1200.jpg?w=800&auto=format',
+];
+
+const gridTiles: string[] = rawSanityPosts.slice(0, 9).map((p: any) => p.image);
+let phIdx = 0;
+while (gridTiles.length < 9) {
+	gridTiles.push(PLACEHOLDER_IMAGES[phIdx % PLACEHOLDER_IMAGES.length]);
+	phIdx++;
+}
+---
+
+<Layout
+	title="The Kohler Group Blog — Christian Counseling Insights"
+	description="Articles, insights, and updates from The Kohler Group — Barbara Kohler, LCMHC, on faith-based counseling, marriage intensives, and healing."
+>
+	<Fragment slot="head">
+		<meta name="keywords" content="The Kohler Group blog, Christian counseling blog, Barbara Kohler, faith-based therapy, marriage intensives, Huntersville NC counseling" />
+		<script type="application/ld+json" set:html={JSON.stringify({
+			"@context": "https://schema.org",
+			"@type": "Blog",
+			"name": "The Kohler Group Blog",
+			"url": "https://thekohlergroup.net/blog",
+			"description": "Articles, insights, and updates from The Kohler Group — Barbara Kohler, LCMHC.",
+			"publisher": { "@type": "Organization", "name": "The Kohler Group PLLC", "url": "https://thekohlergroup.net" }
+		})}></script>
+	</Fragment>
+
+		<!-- HERO -->
+		<section class="bg-white px-6 py-12 lg:py-20 lg:px-8 overflow-hidden">
+			<div class="mx-auto max-w-7xl">
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+					<div>
+						<p class="section-label mb-4">Blog</p>
+						<h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold uppercase tracking-caps text-brand">Welcome to<br />Our Blog</h1>
+						<p class="mt-6 text-lg text-gray-700 max-w-xl">Insights, updates, and resources from The Kohler Group.</p>
+					</div>
+					<div class="hidden lg:grid grid-cols-3 gap-3" aria-hidden="true">
+						{gridTiles.map((image: string, i: number) => {
+							const positions = [
+								'center center', 'center top',    'center center',
+								'center top',    'center center', 'center bottom',
+								'center center', 'center top',   'center center',
+							];
+							return (
+								<div class="relative rounded-2xl overflow-hidden aspect-square">
+									<img src={image} alt="" loading="lazy" class="w-full h-full object-cover" style={`object-position: ${positions[i % 9]};`} />
+								</div>
+							);
+						})}
+					</div>
+				</div>
+			</div>
+		</section>
+
+
+		<!-- SEARCH + FILTER (sticky) -->
+		<section class="bg-white border-y border-gray-200 px-6 py-4 lg:px-8 sticky top-0 z-10 shadow-sm">
+			<div class="mx-auto max-w-7xl flex flex-col gap-3">
+				<div class="flex items-center gap-3">
+					<div class="relative flex-1">
+						<svg class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+							<path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+						</svg>
+						<input
+							id="blog-search"
+							type="search"
+							placeholder="Search by keyword, topic, or tag..."
+							class="w-full pl-9 pr-4 py-2 rounded-lg border border-gray-300 bg-white text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent"
+						/>
+					</div>
+					<p id="results-count" class="text-sm text-gray-500 whitespace-nowrap shrink-0"></p>
+				</div>
+				<div class="flex items-center gap-2 flex-wrap">
+					<span class="text-xs font-semibold text-gray-500 uppercase tracking-caps shrink-0">Filter:</span>
+					<button data-tag="all" class="tag-chip active px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-ui border transition-colors bg-brand text-white border-brand">All</button>
+					<button data-tag="Clinical Perspective" class="tag-chip px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-ui border border-gray-300 text-gray-700 hover:border-brand hover:text-brand transition-colors">Clinical Perspective</button>
+					<button data-tag="Trauma Healing" class="tag-chip px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-ui border border-gray-300 text-gray-700 hover:border-brand hover:text-brand transition-colors">Trauma Healing</button>
+					<button data-tag="Christian Counseling" class="tag-chip px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-ui border border-gray-300 text-gray-700 hover:border-brand hover:text-brand transition-colors">Christian Counseling</button>
+				</div>
+			</div>
+		</section>
+
+		<!-- POSTS GRID -->
+		<section class="bg-gray-50 py-12 lg:py-20 px-6 lg:px-8">
+			<div class="max-w-7xl mx-auto">
+				<div id="posts-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+
+				<div id="no-results" class="hidden text-center py-20">
+					<p class="text-2xl font-bold uppercase tracking-caps text-brand mb-2">No posts found</p>
+					<p class="text-gray-600 text-sm">Try a different keyword or <button onclick="clearSearch()" class="text-brand font-semibold hover:underline">clear the search</button>.</p>
+				</div>
+
+				<div id="pagination" class="mt-12 flex items-center justify-center gap-2 flex-wrap"></div>
+			</div>
+		</section>
+
+		<script id="sanity-posts-data" type="application/json" set:html={SANITY_POSTS_JSON}></script>
+</Layout>
+
+<script>
+const SANITY_POSTS = JSON.parse(document.getElementById('sanity-posts-data')?.textContent || '[]');
+
+const POSTS_PER_PAGE = 6;
+
+const POSTS = [...SANITY_POSTS];
+
+let currentPage = 1;
+let filteredPosts = [...POSTS];
+let activeTag = 'all';
+let activeSearch = '';
+
+function applyFilters() {
+	filteredPosts = POSTS.filter(p => {
+		const matchesTag = activeTag === 'all' || (p.tags || []).includes(activeTag);
+		const q = activeSearch.toLowerCase();
+		const matchesSearch = !q || (p.title || '').toLowerCase().includes(q) ||
+			(p.excerpt || '').toLowerCase().includes(q) ||
+			(p.tags || []).some(t => t.toLowerCase().includes(q)) ||
+			(p.author || '').toLowerCase().includes(q);
+		return matchesTag && matchesSearch;
+	});
+	currentPage = 1;
+	renderPosts();
+}
+
+function renderPosts() {
+	const grid = document.getElementById('posts-grid');
+	const noResults = document.getElementById('no-results');
+	const count = document.getElementById('results-count');
+	if (!grid || !noResults || !count) return;
+	const start = (currentPage - 1) * POSTS_PER_PAGE;
+	const pagePosts = filteredPosts.slice(start, start + POSTS_PER_PAGE);
+
+	if (filteredPosts.length === 0) {
+		grid.innerHTML = '';
+		noResults.classList.remove('hidden');
+		count.textContent = POSTS.length === 0 ? 'No posts yet' : '0 posts';
+	} else {
+		noResults.classList.add('hidden');
+		count.textContent = filteredPosts.length === POSTS.length
+			? `${POSTS.length} post${POSTS.length === 1 ? '' : 's'}`
+			: `${filteredPosts.length} of ${POSTS.length} posts`;
+		grid.innerHTML = pagePosts.map(post => `
+			<a href="${post.slug}" class="group bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
+				<div class="h-48 overflow-hidden">
+					<img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" style="object-position: ${post.imagePosition};" />
+				</div>
+				<div class="p-6">
+					<div class="flex flex-wrap gap-1.5 mb-3">
+						${(post.tags || []).slice(0, 2).map(t => `<span class="text-xs font-semibold uppercase tracking-ui text-brand bg-brand/10 rounded-full px-2.5 py-0.5">${t}</span>`).join('')}
+					</div>
+					<h3 class="text-xl font-bold text-brand mb-2 leading-snug group-hover:text-brand-dark transition-colors">${post.title}</h3>
+					<p class="text-sm text-gray-700 mb-4 leading-relaxed">${post.excerpt}</p>
+					<div class="flex items-center justify-between text-sm text-gray-500">
+						<span>${post.author} · ${post.date}</span>
+						<span class="text-brand font-semibold uppercase tracking-ui text-xs group-hover:underline">Read →</span>
+					</div>
+				</div>
+			</a>
+		`).join('');
+	}
+
+	renderPagination();
+}
+
+function renderPagination() {
+	const pagination = document.getElementById('pagination');
+	if (!pagination) return;
+	const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
+
+	if (totalPages <= 1) {
+		pagination.innerHTML = '';
+		return;
+	}
+
+	let html = '';
+	html += `<button onclick="goToPage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''} class="px-4 py-2 rounded-lg border text-xs font-semibold uppercase tracking-ui transition-colors ${currentPage === 1 ? 'border-gray-200 text-gray-300 cursor-not-allowed' : 'border-gray-300 text-gray-700 hover:bg-gray-100'}">← Prev</button>`;
+	for (let i = 1; i <= totalPages; i++) {
+		html += `<button onclick="goToPage(${i})" class="w-9 h-9 rounded-lg text-sm font-semibold transition-colors ${i === currentPage ? 'bg-brand text-white' : 'border border-gray-300 text-gray-700 hover:bg-gray-100'}">${i}</button>`;
+	}
+	html += `<button onclick="goToPage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''} class="px-4 py-2 rounded-lg border text-xs font-semibold uppercase tracking-ui transition-colors ${currentPage === totalPages ? 'border-gray-200 text-gray-300 cursor-not-allowed' : 'border-gray-300 text-gray-700 hover:bg-gray-100'}">Next →</button>`;
+
+	pagination.innerHTML = html;
+}
+
+window.goToPage = function goToPage(page) {
+	const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
+	if (page < 1 || page > totalPages) return;
+	currentPage = page;
+	renderPosts();
+	document.getElementById('posts-grid')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+window.clearSearch = function clearSearch() {
+	const input = document.getElementById('blog-search');
+	if (input) input.value = '';
+	activeSearch = '';
+	activeTag = 'all';
+	document.querySelectorAll('.tag-chip').forEach(b => {
+		b.classList.remove('active', 'bg-brand', 'text-white', 'border-brand');
+		b.classList.add('border-gray-300', 'text-gray-700');
+	});
+	const allBtn = document.querySelector('[data-tag="all"]');
+	if (allBtn) {
+		allBtn.classList.add('bg-brand', 'text-white', 'border-brand');
+		allBtn.classList.remove('border-gray-300', 'text-gray-700');
+	}
+	applyFilters();
+}
+
+document.getElementById('blog-search')?.addEventListener('input', (e) => {
+	activeSearch = e.target.value.trim();
+	applyFilters();
+});
+
+document.querySelectorAll('.tag-chip').forEach(btn => {
+	btn.addEventListener('click', () => {
+		activeTag = btn.getAttribute('data-tag');
+		document.querySelectorAll('.tag-chip').forEach(b => {
+			b.classList.remove('active', 'bg-brand', 'text-white', 'border-brand');
+			b.classList.add('border-gray-300', 'text-gray-700');
+		});
+		btn.classList.add('active', 'bg-brand', 'text-white', 'border-brand');
+		btn.classList.remove('border-gray-300', 'text-gray-700');
+		applyFilters();
+	});
+});
+
+document.addEventListener('astro:page-load', () => renderPosts());
+renderPosts();
+</script>

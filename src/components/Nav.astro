@@ -1,6 +1,9 @@
 ---
 import { sanityClient, urlFor } from '../lib/sanity';
-const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{ logo, bookingUrl, phone, facebook, instagram }`);
+
+const settings = await sanityClient.fetch(
+	`*[_type=="siteSettings"][0]{ logo, bookingUrl, phone, facebook, instagram }`,
+);
 const logoUrl = settings?.logo ? urlFor(settings.logo).width(400).url() : null;
 const navLinks = [
 	{ href: '/', label: 'Home' },
@@ -23,6 +26,7 @@ const navLinks = [
 		children: [
 			{ href: '/education/surviving-trauma', label: 'Surviving Trauma' },
 			{ href: '/education/media', label: 'Media' },
+			{ href: '/blog', label: 'Blog' },
 		],
 	},
 ];

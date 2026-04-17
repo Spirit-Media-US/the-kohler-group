@@ -18,6 +18,14 @@ export default defineConfig({
 				if (url === 'https://thekohlergroup.net/' || url === 'https://thekohlergroup.net') {
 					return { ...item, changefreq: 'weekly', priority: 1.0, lastmod: new Date().toISOString() };
 				}
+				// Blog posts — high priority, weekly refresh
+				if (url.includes('/blog/') && !url.endsWith('/blog/')) {
+					return { ...item, changefreq: 'weekly', priority: 0.9, lastmod: new Date().toISOString() };
+				}
+				// Blog index
+				if (url.endsWith('/blog') || url.endsWith('/blog/')) {
+					return { ...item, changefreq: 'weekly', priority: 0.8, lastmod: new Date().toISOString() };
+				}
 				// Core service pages
 				if (url.includes('/intensives/')) {
 					return { ...item, changefreq: 'weekly', priority: 0.9, lastmod: new Date().toISOString() };
