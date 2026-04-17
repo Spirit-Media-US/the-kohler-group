@@ -1,3 +1,4 @@
+import blogPost from './blogPost';
 import faq from './faq';
 import intensiveDaySchedule from './intensiveDaySchedule';
 import intensiveStage from './intensiveStage';
@@ -14,4 +15,5 @@ export const schemaTypes = [
 	mediaTrack,
 	intensiveStage,
 	intensiveDaySchedule,
+	blogPost,
 ];
