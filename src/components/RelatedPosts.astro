@@ -41,7 +41,7 @@ const related = allPosts
 		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
 			{related.map((post: any) => (
 				<a href={post.slug} class="group bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
-					<div class="h-36 overflow-hidden">
+					<div class="aspect-[3/2] overflow-hidden">
 						{post.heroImage ? (
 							<img
 								src={urlFor(post.heroImage).width(768).height(512).format('webp').url()}
