@@ -31,9 +31,7 @@ function renderPortableText(blocks: any[]): string {
 				if (marks.length > 0) {
 					if (marks.includes('strong')) text = `<strong>${text}</strong>`;
 					if (marks.includes('em')) text = `<em>${text}</em>`;
-					const linkMark = marks.find(
-						(m: any) => m && typeof m === 'object' && m._type === 'link',
-					);
+					const linkMark = marks.find((m: any) => m && typeof m === 'object' && m._type === 'link');
 					if (linkMark?.href) {
 						text = `<a href="${linkMark.href}" class="text-brand hover:underline" target="_blank" rel="noopener noreferrer">${text}</a>`;
 					}
@@ -87,10 +85,7 @@ function renderPortableText(blocks: any[]): string {
 			output.push(
 				`<h3 class="text-xl font-bold uppercase tracking-caps text-brand mt-8 mb-3">${textContent}</h3>`,
 			);
-		else
-			output.push(
-				`<p class="text-lg text-gray-800 leading-relaxed mb-4">${textContent}</p>`,
-			);
+		else output.push(`<p class="text-lg text-gray-800 leading-relaxed mb-4">${textContent}</p>`);
 	}
 
 	flushList();
@@ -136,8 +131,8 @@ const bodyHtml = renderPortableText(post.body);
 	</Fragment>
 
 		<!-- HERO IMAGE -->
-		<div class="w-full">
-			<img src={heroImage} alt={post.heroImage?.alt || post.title} class="w-full h-72 lg:h-[600px] object-cover" />
+		<div class="w-full bg-brand">
+			<img src={heroImage} alt={post.heroImage?.alt || post.title} class="w-full h-72 lg:h-[520px] object-cover object-top" />
 		</div>
 
 		<!-- POST HEADER -->

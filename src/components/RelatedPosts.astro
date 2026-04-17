@@ -46,7 +46,7 @@ const related = allPosts
 							<img
 								src={urlFor(post.heroImage).width(768).height(512).format('webp').url()}
 								alt={post.heroImage?.alt || post.title}
-								class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+								class="w-full h-full object-cover object-top transition-transform duration-300 group-hover:scale-105"
 							/>
 						) : (
 							<div class="w-full h-full bg-gray-200 flex items-center justify-center">
