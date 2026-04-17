@@ -22,41 +22,79 @@ if (!post) {
 function renderPortableText(blocks: any[]): string {
 	if (!Array.isArray(blocks)) return '';
 
-	return blocks
-		.map((block: any) => {
-			if (!block || block._type !== 'block') return '';
-
-			const children = Array.isArray(block.children) ? block.children : [];
-			const rawText = children.map((c: any) => c?.text || '').join('');
-			if (/^\{[\w]+\}\s*[—–-]\s*\{[\w]+\}$/.test(rawText.trim())) return '';
-
-			const textContent = children
-				.map((child: any) => {
-					if (!child) return '';
-					let text = child.text || '';
-					const marks = Array.isArray(child.marks) ? child.marks : [];
-					if (marks.length > 0) {
-						if (marks.includes('strong')) text = `<strong>${text}</strong>`;
-						if (marks.includes('em')) text = `<em>${text}</em>`;
-						const linkMark = marks.find(
-							(m: any) => m && typeof m === 'object' && m._type === 'link',
-						);
-						if (linkMark?.href) {
-							text = `<a href="${linkMark.href}" class="text-brand hover:underline" target="_blank" rel="noopener noreferrer">${text}</a>`;
-						}
+	const renderChildren = (children: any[]): string =>
+		children
+			.map((child: any) => {
+				if (!child) return '';
+				let text = child.text || '';
+				const marks = Array.isArray(child.marks) ? child.marks : [];
+				if (marks.length > 0) {
+					if (marks.includes('strong')) text = `<strong>${text}</strong>`;
+					if (marks.includes('em')) text = `<em>${text}</em>`;
+					const linkMark = marks.find(
+						(m: any) => m && typeof m === 'object' && m._type === 'link',
+					);
+					if (linkMark?.href) {
+						text = `<a href="${linkMark.href}" class="text-brand hover:underline" target="_blank" rel="noopener noreferrer">${text}</a>`;
 					}
-					return text;
-				})
-				.join('');
+				}
+				return text;
+			})
+			.join('');
 
-			const style = block.style || 'normal';
-			if (style === 'h2')
-				return `<h2 class="text-2xl font-bold uppercase tracking-caps text-brand mt-12 mb-4">${textContent}</h2>`;
-			if (style === 'h3')
-				return `<h3 class="text-xl font-bold uppercase tracking-caps text-brand mt-8 mb-3">${textContent}</h3>`;
-			return `<p class="text-lg text-gray-800 leading-relaxed mb-4">${textContent}</p>`;
-		})
-		.join('');
+	const output: string[] = [];
+	let listBuffer: string[] = [];
+	let listType: string | null = null;
+
+	const flushList = () => {
+		if (listBuffer.length === 0) return;
+		const tag = listType === 'number' ? 'ol' : 'ul';
+		const listClass = listType === 'number' ? 'list-decimal' : 'list-disc';
+		output.push(
+			`<${tag} class="${listClass} pl-6 mb-6 space-y-2 text-lg text-gray-800 leading-relaxed">${listBuffer.join('')}</${tag}>`,
+		);
+		listBuffer = [];
+		listType = null;
+	};
+
+	for (const block of blocks) {
+		if (!block || block._type !== 'block') {
+			flushList();
+			continue;
+		}
+
+		const children = Array.isArray(block.children) ? block.children : [];
+		const rawText = children.map((c: any) => c?.text || '').join('');
+		if (/^\{[\w]+\}\s*[—–-]\s*\{[\w]+\}$/.test(rawText.trim())) continue;
+
+		const textContent = renderChildren(children);
+
+		if (block.listItem) {
+			if (listType && listType !== block.listItem) flushList();
+			listType = block.listItem;
+			listBuffer.push(`<li>${textContent}</li>`);
+			continue;
+		}
+
+		flushList();
+
+		const style = block.style || 'normal';
+		if (style === 'h2')
+			output.push(
+				`<h2 class="text-2xl font-bold uppercase tracking-caps text-brand mt-12 mb-4">${textContent}</h2>`,
+			);
+		else if (style === 'h3')
+			output.push(
+				`<h3 class="text-xl font-bold uppercase tracking-caps text-brand mt-8 mb-3">${textContent}</h3>`,
+			);
+		else
+			output.push(
+				`<p class="text-lg text-gray-800 leading-relaxed mb-4">${textContent}</p>`,
+			);
+	}
+
+	flushList();
+	return output.join('');
 }
 
 const formatDate = (dateString: string) => {
