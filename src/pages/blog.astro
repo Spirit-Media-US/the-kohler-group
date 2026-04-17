@@ -43,18 +43,19 @@ const sanityPostsFormatted = rawSanityPosts.map((p: any) => {
 });
 const SANITY_POSTS_JSON = JSON.stringify(sanityPostsFormatted);
 
-// Placeholder stock images for the decorative hero grid (Picsum Photos, deterministic seeds).
-// Used to fill the 3×3 grid until real posts exist. Aria-hidden decorative only.
+// Placeholder stock images for the decorative hero grid. Hosted on Sanity CDN
+// (site CSP restricts external images). Used to fill the 3×3 grid until real
+// posts exist. Aria-hidden decorative only.
 const PLACEHOLDER_IMAGES = [
-	'https://picsum.photos/seed/kohler-serenity/800/800',
-	'https://picsum.photos/seed/kohler-hope/800/800',
-	'https://picsum.photos/seed/kohler-peace/800/800',
-	'https://picsum.photos/seed/kohler-calm/800/800',
-	'https://picsum.photos/seed/kohler-dawn/800/800',
-	'https://picsum.photos/seed/kohler-forest/800/800',
-	'https://picsum.photos/seed/kohler-mountain/800/800',
-	'https://picsum.photos/seed/kohler-ocean/800/800',
-	'https://picsum.photos/seed/kohler-sky/800/800',
+	'https://cdn.sanity.io/images/2bom5gqg/production/7ce6190dbb4c37d22943141b6436e1ba39c789c6-1200x1200.jpg?w=800&auto=format',
+	'https://cdn.sanity.io/images/2bom5gqg/production/e9dd4ed482ff207541715a9f734bfc4321ed5be5-1200x1200.jpg?w=800&auto=format',
+	'https://cdn.sanity.io/images/2bom5gqg/production/ce13636350cc1a4759170e2eb8f8159b580121d2-1200x1200.jpg?w=800&auto=format',
+	'https://cdn.sanity.io/images/2bom5gqg/production/7a0d3a792baa631190c26b2b508230e7c6462824-1200x1200.jpg?w=800&auto=format',
+	'https://cdn.sanity.io/images/2bom5gqg/production/2156cefa928625a53e4e706bcfd6954f72b7ff90-1200x1200.jpg?w=800&auto=format',
+	'https://cdn.sanity.io/images/2bom5gqg/production/04d8db85a23a44a53dfd4f6dbb7f0851241ffc2a-1200x1200.jpg?w=800&auto=format',
+	'https://cdn.sanity.io/images/2bom5gqg/production/b06a2f2ce49c847aa033c69399cf56ac8abbd628-1200x1200.jpg?w=800&auto=format',
+	'https://cdn.sanity.io/images/2bom5gqg/production/b311e45dbcb4ff89076604f5e061d72c47db79f0-1200x1200.jpg?w=800&auto=format',
+	'https://cdn.sanity.io/images/2bom5gqg/production/eaadefde71f849e55365cb6dbb44dc0b3b6ade87-1200x1200.jpg?w=800&auto=format',
 ];
 
 const gridTiles: string[] = rawSanityPosts.slice(0, 9).map((p: any) => p.image);
