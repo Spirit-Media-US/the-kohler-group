@@ -11,7 +11,7 @@ const rawSanityPosts = await sanityClient.fetch(`
 		title,
 		excerpt,
 		"image": coalesce(heroImage.asset->url + "?w=800&auto=format", "${FALLBACK_IMAGE}"),
-		"imagePosition": "center top",
+		"imagePosition": "center center",
 		"author": coalesce(author, "Add Author Name Here"),
 		"date": publishDate,
 		tags
@@ -71,10 +71,15 @@ const SANITY_POSTS_JSON = JSON.stringify(sanityPostsFormatted);
 					</div>
 					{rawSanityPosts.length > 0 && (
 						<div class="hidden lg:grid grid-cols-3 gap-3" aria-hidden="true">
-							{rawSanityPosts.slice(0, 9).map((post: any) => {
+							{rawSanityPosts.slice(0, 9).map((post: any, i: number) => {
+								const positions = [
+									'center center', 'center top',    'center center',
+									'center top',    'center center', 'center bottom',
+									'center center', 'center top',   'center center',
+								];
 								return (
 									<div class="relative rounded-2xl overflow-hidden aspect-square">
-										<img src={post.image} alt="" class="w-full h-full object-cover object-top" />
+										<img src={post.image} alt="" class="w-full h-full object-cover" style={`object-position: ${positions[i % 9]};`} />
 									</div>
 								);
 							})}
@@ -174,7 +179,7 @@ function renderPosts() {
 			: `${filteredPosts.length} of ${POSTS.length} posts`;
 		grid.innerHTML = pagePosts.map(post => `
 			<a href="${post.slug}" class="group bg-white rounded-2xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden">
-				<div class="aspect-[3/2] overflow-hidden">
+				<div class="h-48 overflow-hidden">
 					<img src="${post.image}" alt="${post.title}" class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" style="object-position: ${post.imagePosition};" />
 				</div>
 				<div class="p-6">

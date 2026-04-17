@@ -131,8 +131,8 @@ const bodyHtml = renderPortableText(post.body);
 	</Fragment>
 
 		<!-- HERO IMAGE -->
-		<div class="w-full bg-brand">
-			<img src={heroImage} alt={post.heroImage?.alt || post.title} class="block w-full h-auto max-w-4xl mx-auto" />
+		<div class="w-full">
+			<img src={heroImage} alt={post.heroImage?.alt || post.title} class="w-full h-72 lg:h-[600px] object-cover" />
 		</div>
 
 		<!-- POST HEADER -->
