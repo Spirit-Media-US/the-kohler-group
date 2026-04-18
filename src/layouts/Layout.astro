@@ -43,15 +43,23 @@ const ogImageURL = ogImage.startsWith('http')
 		<meta name="msvalidate.01" content="477910DF31D77AFDFCAE62DF5E095405" />
 		<title>{title}</title>
 
-		{heroPreload && <link rel="preload" as="image" href={heroPreload} />}
+		{heroPreload && <link rel="preload" as="image" href={heroPreload} fetchpriority="high" />}
 
-		<!-- Google Fonts: Montserrat -->
+		<!-- Google Fonts: Montserrat (non-blocking) -->
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link
+			rel="preload"
+			as="style"
 			href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap"
-			rel="stylesheet"
+			onload="this.onload=null;this.rel='stylesheet'"
 		/>
+		<noscript>
+			<link
+				href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap"
+				rel="stylesheet"
+			/>
+		</noscript>
 
 		<!-- Open Graph -->
 		<meta property="og:site_name" content={siteName} />
@@ -76,13 +84,26 @@ const ogImageURL = ogImage.startsWith('http')
 
 		<ViewTransitions />
 
-		<!-- Google Analytics 4 -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-RZFT197G0F"></script>
+		<!-- Google Analytics 4 (deferred until after load for better LCP/TBT) -->
 		<script is:inline>
 			window.dataLayer = window.dataLayer || [];
 			function gtag(){dataLayer.push(arguments);}
-			gtag('js', new Date());
-			gtag('config', 'G-RZFT197G0F');
+			window.gtag = gtag;
+			function loadGA() {
+				if (window.__gaLoaded) return;
+				window.__gaLoaded = true;
+				var s = document.createElement('script');
+				s.async = true;
+				s.src = 'https://www.googletagmanager.com/gtag/js?id=G-RZFT197G0F';
+				document.head.appendChild(s);
+				gtag('js', new Date());
+				gtag('config', 'G-RZFT197G0F');
+			}
+			if (document.readyState === 'complete') {
+				setTimeout(loadGA, 1);
+			} else {
+				window.addEventListener('load', function(){ setTimeout(loadGA, 1); });
+			}
 		</script>
 
 		<!-- LocalBusiness JSON-LD Structured Data -->
