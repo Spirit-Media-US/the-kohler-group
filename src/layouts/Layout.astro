@@ -84,7 +84,7 @@ const ogImageURL = ogImage.startsWith('http')
 
 		<ViewTransitions />
 
-		<!-- Google Analytics 4 (deferred until after load for better LCP/TBT) -->
+		<!-- Google Analytics 4 (loaded on first user interaction to protect LCP/TBT) -->
 		<script is:inline>
 			window.dataLayer = window.dataLayer || [];
 			function gtag(){dataLayer.push(arguments);}
@@ -99,11 +99,11 @@ const ogImageURL = ogImage.startsWith('http')
 				gtag('js', new Date());
 				gtag('config', 'G-RZFT197G0F');
 			}
-			if (document.readyState === 'complete') {
-				setTimeout(loadGA, 1);
-			} else {
-				window.addEventListener('load', function(){ setTimeout(loadGA, 1); });
-			}
+			var gaEvents = ['scroll', 'mousemove', 'touchstart', 'keydown', 'click'];
+			function gaTrigger(){ gaEvents.forEach(function(e){ window.removeEventListener(e, gaTrigger, {passive:true}); }); loadGA(); }
+			gaEvents.forEach(function(e){ window.addEventListener(e, gaTrigger, {passive:true, once:true}); });
+			// Fallback: load after 8s even if no interaction (keeps analytics intact)
+			setTimeout(function(){ if(!window.__gaLoaded) loadGA(); }, 8000);
 		</script>
 
 		<!-- LocalBusiness JSON-LD Structured Data -->
