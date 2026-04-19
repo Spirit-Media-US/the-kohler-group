@@ -86,19 +86,6 @@ const heroPreloadUrl = heroDesktopUrl;
 		</div>
 	</section>
 
-	<!-- Mobile-only beach band — lazy-loads below the hero so it never participates in mobile LCP. -->
-	<section class="md:hidden">
-		<img
-			src={heroMobileUrl}
-			alt=""
-			width="800"
-			height="450"
-			loading="lazy"
-			decoding="async"
-			class="block w-full h-auto"
-		/>
-	</section>
-
 	<!-- ============================================================
 	     Intro — plain paragraphs, no heading
 	     ============================================================ -->
@@ -122,6 +109,20 @@ const heroPreloadUrl = heroDesktopUrl;
 				the healing process today.
 			</p>
 		</div>
+	</section>
+
+	<!-- Mobile-only beach band — sits below the intro paragraphs so it loads after the
+	     initial viewport (below PSI's 823px fold) and never participates in mobile LCP. -->
+	<section class="md:hidden">
+		<img
+			src={heroMobileUrl}
+			alt=""
+			width="800"
+			height="450"
+			loading="lazy"
+			decoding="async"
+			class="block w-full h-auto"
+		/>
 	</section>
 
 	<!-- ============================================================
