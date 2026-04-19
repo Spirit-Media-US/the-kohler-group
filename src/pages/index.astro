@@ -7,7 +7,12 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   facebook, instagram,
   heroImage, aboutHeroImage, defaultHeroImage, logo
 }`);
-const heroPreloadUrl = settings?.heroImage ? urlFor(settings.heroImage).width(1920).url() : '';
+// Hero served from R2 (same origin as fonts → single TLS handshake, lower LCP).
+// To refresh: re-crop in Sanity and re-upload via /home/deploy/bin/.env R2 creds.
+const heroMobileUrl = 'https://assets.spiritmediapublishing.com/the-kohler-group/hero-mobile.webp';
+const heroDesktopUrl =
+	'https://assets.spiritmediapublishing.com/the-kohler-group/hero-desktop.webp';
+const heroPreloadUrl = heroMobileUrl;
 ---
 
 <Layout
@@ -44,9 +49,23 @@ const heroPreloadUrl = settings?.heroImage ? urlFor(settings.heroImage).width(19
 	     Hero — beach image, light overlay, centered headline only
 	     ============================================================ -->
 	<section
-		class="relative flex min-h-[50vh] items-center justify-center bg-cover bg-center bg-no-repeat"
-		style={`background-image: url(${settings?.heroImage ? urlFor(settings.heroImage).width(1920).url() : ''})`}
+		class="relative flex min-h-[420px] md:min-h-[65vh] items-center justify-center overflow-hidden"
 	>
+		{heroMobileUrl && (
+			<picture>
+				<source media="(min-width: 768px)" srcset={heroDesktopUrl} />
+				<img
+					src={heroMobileUrl}
+					alt=""
+					width="1600"
+					height="900"
+					fetchpriority="high"
+					loading="eager"
+					decoding="async"
+					class="absolute inset-0 h-full w-full object-cover"
+				/>
+			</picture>
+		)}
 		<div class="absolute inset-0 bg-brand/40"></div>
 		<div class="container relative z-10 py-20 text-center">
 			<h1
@@ -101,11 +120,14 @@ const heroPreloadUrl = settings?.heroImage ? urlFor(settings.heroImage).width(19
 			<!-- Marriage Intensives -->
 			<div class="flex flex-col items-center rounded-lg bg-brand text-center overflow-hidden">
 				<img
-					src="https://cdn.sanity.io/images/2bom5gqg/production/79bc51e151e87d59cb1cc31823371b8bdbb30a63-4349x2903.jpg?w=800&auto=format"
+					src="https://cdn.sanity.io/images/2bom5gqg/production/79bc51e151e87d59cb1cc31823371b8bdbb30a63-4349x2903.jpg?w=600&h=220&fit=crop&fm=webp&q=75"
 					alt="Marriage Intensives"
+					width="600"
+					height="220"
 					class="w-full object-cover"
 					style="max-height: 220px; object-fit: cover;"
 					loading="lazy"
+					decoding="async"
 				/>
 				<div class="flex flex-col items-center py-12 px-10 w-full">
 				<!-- Icon: two interlocking rings -->
@@ -127,7 +149,7 @@ const heroPreloadUrl = settings?.heroImage ? urlFor(settings.heroImage).width(19
 					href="/intensives/marriage"
 					class="mt-6 rounded-full border border-white px-8 py-2 text-xs font-bold uppercase tracking-ui text-white transition hover:bg-white hover:text-brand"
 				>
-					Learn More
+					Learn More<span class="sr-only"> about Marriage Intensives</span>
 				</a>
 				</div>
 			</div>
@@ -135,11 +157,14 @@ const heroPreloadUrl = settings?.heroImage ? urlFor(settings.heroImage).width(19
 			<!-- Therapy Sessions -->
 			<div class="flex flex-col items-center rounded-lg bg-brand text-center overflow-hidden">
 				<img
-					src="https://cdn.sanity.io/images/2bom5gqg/production/2ba073373a307d8e08b3a4b462d5e57c2255d573-7000x4667.jpg?w=800&auto=format"
+					src="https://cdn.sanity.io/images/2bom5gqg/production/2ba073373a307d8e08b3a4b462d5e57c2255d573-7000x4667.jpg?w=600&h=220&fit=crop&fm=webp&q=75"
 					alt="Therapy Sessions"
+					width="600"
+					height="220"
 					class="w-full object-cover"
 					style="max-height: 220px; object-fit: cover;"
 					loading="lazy"
+					decoding="async"
 				/>
 				<div class="flex flex-col items-center py-12 px-10 w-full">
 				<!-- Icon: speech bubble with dots -->
@@ -166,7 +191,7 @@ const heroPreloadUrl = settings?.heroImage ? urlFor(settings.heroImage).width(19
 					href="/our-therapists"
 					class="mt-6 rounded-full border border-white px-8 py-2 text-xs font-bold uppercase tracking-ui text-white transition hover:bg-white hover:text-brand"
 				>
-					Learn More
+					Learn More<span class="sr-only"> about our Therapists</span>
 				</a>
 				</div>
 			</div>
@@ -174,11 +199,14 @@ const heroPreloadUrl = settings?.heroImage ? urlFor(settings.heroImage).width(19
 			<!-- Individual Intensives -->
 			<div class="flex flex-col items-center rounded-lg bg-brand text-center overflow-hidden">
 				<img
-					src="https://cdn.sanity.io/images/2bom5gqg/production/072edeab37e3c23c7441d53519ec70df92ad873a-5616x3744.jpg?w=800&auto=format"
+					src="https://cdn.sanity.io/images/2bom5gqg/production/072edeab37e3c23c7441d53519ec70df92ad873a-5616x3744.jpg?w=600&h=220&fit=crop&fm=webp&q=75"
 					alt="Individual Intensives"
+					width="600"
+					height="220"
 					class="w-full object-cover"
 					style="max-height: 220px; object-fit: cover;"
 					loading="lazy"
+					decoding="async"
 				/>
 				<div class="flex flex-col items-center py-12 px-10 w-full">
 				<!-- Icon: two person silhouettes -->
@@ -205,7 +233,7 @@ const heroPreloadUrl = settings?.heroImage ? urlFor(settings.heroImage).width(19
 					href="/intensives/individual"
 					class="mt-6 rounded-full border border-white px-8 py-2 text-xs font-bold uppercase tracking-ui text-white transition hover:bg-white hover:text-brand"
 				>
-					Learn More
+					Learn More<span class="sr-only"> about Individual Intensives</span>
 				</a>
 				</div>
 			</div>
@@ -217,16 +245,16 @@ const heroPreloadUrl = settings?.heroImage ? urlFor(settings.heroImage).width(19
 		<div class="container">
 			<div class="grid grid-cols-2 gap-4 md:grid-cols-4">
 				<div class="overflow-hidden rounded-lg">
-					<img src="https://cdn.sanity.io/images/2bom5gqg/production/76e2c98fa000dda7199aba5df5525f7b38d759ba-468x311.jpg?w=468&h=311&fit=crop&auto=format" alt="The Kohler Group" class="h-52 w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />
+					<img src="https://cdn.sanity.io/images/2bom5gqg/production/76e2c98fa000dda7199aba5df5525f7b38d759ba-468x311.jpg?w=468&h=311&fit=crop&fm=webp&q=75" alt="The Kohler Group" width="468" height="311" class="h-52 w-full object-cover transition duration-500 hover:scale-105" loading="lazy" decoding="async" />
 				</div>
 				<div class="overflow-hidden rounded-lg">
-					<img src="https://cdn.sanity.io/images/2bom5gqg/production/64dcec02ccd61d4a70f553ab23a09f8a3b379c3d-428x364.jpg?w=468&h=311&fit=crop&auto=format" alt="The Kohler Group" class="h-52 w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />
+					<img src="https://cdn.sanity.io/images/2bom5gqg/production/64dcec02ccd61d4a70f553ab23a09f8a3b379c3d-428x364.jpg?w=468&h=311&fit=crop&fm=webp&q=75" alt="The Kohler Group" width="468" height="311" class="h-52 w-full object-cover transition duration-500 hover:scale-105" loading="lazy" decoding="async" />
 				</div>
 				<div class="overflow-hidden rounded-lg">
-					<img src="https://cdn.sanity.io/images/2bom5gqg/production/5529c4b2bf6b0bda291a530cff7973f3ccbc5a71-468x311.jpg?w=468&h=311&fit=crop&auto=format" alt="The Kohler Group" class="h-52 w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />
+					<img src="https://cdn.sanity.io/images/2bom5gqg/production/5529c4b2bf6b0bda291a530cff7973f3ccbc5a71-468x311.jpg?w=468&h=311&fit=crop&fm=webp&q=75" alt="The Kohler Group" width="468" height="311" class="h-52 w-full object-cover transition duration-500 hover:scale-105" loading="lazy" decoding="async" />
 				</div>
 				<div class="overflow-hidden rounded-lg">
-					<img src="https://cdn.sanity.io/images/2bom5gqg/production/bf1492d28ee65b78bf5cd8baef40b10f50022c8c-415x349.jpg?w=468&h=311&fit=crop&auto=format" alt="The Kohler Group" class="h-52 w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />
+					<img src="https://cdn.sanity.io/images/2bom5gqg/production/bf1492d28ee65b78bf5cd8baef40b10f50022c8c-415x349.jpg?w=468&h=311&fit=crop&fm=webp&q=75" alt="The Kohler Group" width="468" height="311" class="h-52 w-full object-cover transition duration-500 hover:scale-105" loading="lazy" decoding="async" />
 				</div>
 			</div>
 		</div>

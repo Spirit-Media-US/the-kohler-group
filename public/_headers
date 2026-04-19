@@ -1,6 +1,13 @@
 /*
   X-Frame-Options: SAMEORIGIN
   X-Content-Type-Options: nosniff
+  X-Robots-Tag: index, follow
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' https://cdn.sanity.io data:; media-src 'self' https://pub-d77219c850804c8ca2ddc9c193465856.r2.dev; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://pub-d77219c850804c8ca2ddc9c193465856.r2.dev https://static.cloudflareinsights.com; frame-src https://barbara-kohler.clientsecure.me https://www.youtube.com; base-uri 'self'; form-action 'self'
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com; style-src 'self' 'unsafe-inline'; font-src 'self' https://assets.spiritmediapublishing.com; img-src 'self' https://cdn.sanity.io https://assets.spiritmediapublishing.com data:; media-src 'self' https://pub-d77219c850804c8ca2ddc9c193465856.r2.dev; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://pub-d77219c850804c8ca2ddc9c193465856.r2.dev https://static.cloudflareinsights.com; frame-src https://barbara-kohler.clientsecure.me https://www.youtube.com; base-uri 'self'; form-action 'self'
+
+# Homepage — 103 Early Hints for LCP resources (CF Pages auto-forwards as Early Hints)
+/
+  Link: <https://assets.spiritmediapublishing.com/the-kohler-group/hero-mobile.webp>; rel=preload; as=image; fetchpriority=high
+  Link: <https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-300.woff2>; rel=preload; as=font; type="font/woff2"; crossorigin
+  Link: <https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-400.woff2>; rel=preload; as=font; type="font/woff2"; crossorigin

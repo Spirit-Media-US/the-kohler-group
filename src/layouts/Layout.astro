@@ -31,6 +31,14 @@ const ogImageURL = ogImage.startsWith('http')
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- Priority hints — hero image + LCP fonts discovered before anything else -->
+		<link rel="preconnect" href="https://assets.spiritmediapublishing.com" crossorigin />
+		<link rel="preconnect" href="https://cdn.sanity.io" crossorigin />
+		{heroPreload && <link rel="preload" as="image" href={heroPreload} fetchpriority="high" />}
+		<link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-300.woff2" crossorigin />
+		<link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-400.woff2" crossorigin />
+
 		<meta name="description" content={description} />
 		<link rel="canonical" href={canonicalURL} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -42,16 +50,51 @@ const ogImageURL = ogImage.startsWith('http')
 		<meta name="robots" content="index, follow" />
 		<meta name="msvalidate.01" content="477910DF31D77AFDFCAE62DF5E095405" />
 		<title>{title}</title>
+		<!-- Critical CSS: hand-picked above-the-fold styles. Full Tailwind bundle loads async below. -->
+		<style is:inline>
+			/* @font-face at top level — CSS spec forbids it inside @layer */
+			@font-face{font-family:'Montserrat';font-style:normal;font-weight:300;font-display:optional;src:url('https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-300.woff2') format('woff2')}
+			@font-face{font-family:'Montserrat';font-style:normal;font-weight:400;font-display:optional;src:url('https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-400.woff2') format('woff2')}
+			@font-face{font-family:'Montserrat';font-style:normal;font-weight:600;font-display:optional;src:url('https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-600.woff2') format('woff2')}
 
-		{heroPreload && <link rel="preload" as="image" href={heroPreload} />}
-
-		<!-- Google Fonts: Montserrat -->
-		<link rel="preconnect" href="https://fonts.googleapis.com" />
-		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link
-			href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap"
-			rel="stylesheet"
-		/>
+			/* All critical CSS wrapped in @layer base so Tailwind v4's async
+			   @layer utilities always wins the cascade. Unlayered rules beat
+			   every @layer rule regardless of specificity — leaving this
+			   unwrapped caused SMP prod grids to collapse 2026-04-19. */
+			@layer base {
+				*,*::before,*::after{box-sizing:border-box;border:0 solid}
+				html{-webkit-text-size-adjust:100%;line-height:1.5}
+				body{margin:0;background:#fff;font-family:'Montserrat',system-ui,sans-serif;color:#0a0a0a;line-height:1.6;-webkit-font-smoothing:antialiased}
+				img,picture,svg{display:block;max-width:100%;height:auto}
+				h1,h2,h3,h4,h5,h6{margin:0;font:inherit;line-height:1.2}
+				a{color:inherit;text-decoration:inherit}
+				button{font:inherit;color:inherit;background:transparent;cursor:pointer;padding:0;border:0}
+				.container{width:100%;margin-inline:auto;padding-inline:1rem;max-width:80rem}
+				@media(min-width:640px){.container{padding-inline:1.5rem}}
+				@media(min-width:1024px){.container{padding-inline:2rem}}
+				.relative{position:relative}.absolute{position:absolute}.inset-0{inset:0}.flex{display:flex}.hidden{display:none}.inline-block{display:inline-block}
+				@media(min-width:1024px){.lg\:hidden{display:none}.lg\:flex{display:flex}}
+				.items-center{align-items:center}.justify-between{justify-content:space-between}.justify-center{justify-content:center}
+				.h-full{height:100%}.w-full{width:100%}.h-14{height:3.5rem}.w-auto{width:auto}.w-8{width:2rem}
+				.min-h-\[420px\]{min-height:420px}@media(min-width:768px){.md\:min-h-\[65vh\]{min-height:65vh}}
+				.max-w-3xl{max-width:48rem}.max-w-xl{max-width:36rem}.max-w-7xl{max-width:80rem}
+				.mx-auto{margin-inline:auto}.mt-4{margin-top:1rem}.mt-8{margin-top:2rem}
+				.py-5{padding-block:1.25rem}.py-20{padding-block:5rem}.py-3{padding-block:.75rem}.px-10{padding-inline:2.5rem}.p-1{padding:.25rem}
+				.text-white{color:#fff}.text-white\/90{color:rgb(255 255 255 / .9)}.text-white\/70{color:rgb(255 255 255 / .7)}.text-white\/80{color:rgb(255 255 255 / .8)}.text-brand{color:#173862}
+				.bg-brand{background-color:#173862}.bg-brand\/40{background-color:rgb(23 56 98 / .4)}.bg-white{background-color:#fff}
+				.text-3xl{font-size:1.875rem;line-height:2.25rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:.875rem;line-height:1.25rem}.text-xs{font-size:.75rem;line-height:1rem}
+				.font-medium{font-weight:500}.gap-1{gap:.25rem}.gap-5{gap:1.25rem}.py-2{padding-block:.5rem}.tracking-caps{letter-spacing:.1em}
+				@media(min-width:640px){.sm\:text-4xl{font-size:2.25rem;line-height:2.5rem}.sm\:text-xl{font-size:1.25rem;line-height:1.75rem}}
+				@media(min-width:1024px){.lg\:text-5xl{font-size:3rem;line-height:1}}
+				.text-center{text-align:center}.uppercase{text-transform:uppercase}.font-light{font-weight:300}.font-bold{font-weight:700}
+				.tracking-ultra{letter-spacing:.25em}.tracking-ui{letter-spacing:.05em}
+				.overflow-hidden{overflow:hidden}.object-cover{object-fit:cover}.z-10{z-index:10}.rounded-full{border-radius:9999px}
+				.transition{transition:all .15s cubic-bezier(.4,0,.2,1)}
+				.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+			}
+		</style>
+		<link rel="stylesheet" href="/deferred.css" media="print" onload="this.media='all'" />
+		<noscript><link rel="stylesheet" href="/deferred.css" /></noscript>
 
 		<!-- Open Graph -->
 		<meta property="og:site_name" content={siteName} />
@@ -76,13 +119,26 @@ const ogImageURL = ogImage.startsWith('http')
 
 		<ViewTransitions />
 
-		<!-- Google Analytics 4 -->
-		<script async src="https://www.googletagmanager.com/gtag/js?id=G-RZFT197G0F"></script>
+		<!-- Google Analytics 4 (loaded on first user interaction to protect LCP/TBT) -->
 		<script is:inline>
 			window.dataLayer = window.dataLayer || [];
 			function gtag(){dataLayer.push(arguments);}
-			gtag('js', new Date());
-			gtag('config', 'G-RZFT197G0F');
+			window.gtag = gtag;
+			function loadGA() {
+				if (window.__gaLoaded) return;
+				window.__gaLoaded = true;
+				var s = document.createElement('script');
+				s.async = true;
+				s.src = 'https://www.googletagmanager.com/gtag/js?id=G-RZFT197G0F';
+				document.head.appendChild(s);
+				gtag('js', new Date());
+				gtag('config', 'G-RZFT197G0F');
+			}
+			var gaEvents = ['scroll', 'mousemove', 'touchstart', 'keydown', 'click'];
+			function gaTrigger(){ gaEvents.forEach(function(e){ window.removeEventListener(e, gaTrigger, {passive:true}); }); loadGA(); }
+			gaEvents.forEach(function(e){ window.addEventListener(e, gaTrigger, {passive:true, once:true}); });
+			// Fallback: load after 8s even if no interaction (keeps analytics intact)
+			setTimeout(function(){ if(!window.__gaLoaded) loadGA(); }, 8000);
 		</script>
 
 		<!-- LocalBusiness JSON-LD Structured Data -->
