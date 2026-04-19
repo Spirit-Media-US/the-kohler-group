@@ -31,6 +31,14 @@ const ogImageURL = ogImage.startsWith('http')
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+		<!-- Priority hints — hero image + LCP fonts discovered before anything else -->
+		<link rel="preconnect" href="https://assets.spiritmediapublishing.com" crossorigin />
+		<link rel="preconnect" href="https://cdn.sanity.io" crossorigin />
+		{heroPreload && <link rel="preload" as="image" href={heroPreload} fetchpriority="high" />}
+		<link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-300.woff2" crossorigin />
+		<link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-400.woff2" crossorigin />
+
 		<meta name="description" content={description} />
 		<link rel="canonical" href={canonicalURL} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -42,16 +50,6 @@ const ogImageURL = ogImage.startsWith('http')
 		<meta name="robots" content="index, follow" />
 		<meta name="msvalidate.01" content="477910DF31D77AFDFCAE62DF5E095405" />
 		<title>{title}</title>
-
-		<!-- Preconnect: warm TLS to critical origins before the parser hits their resources -->
-		<link rel="preconnect" href="https://cdn.sanity.io" crossorigin />
-		<link rel="preconnect" href="https://assets.spiritmediapublishing.com" crossorigin />
-
-		{heroPreload && <link rel="preload" as="image" href={heroPreload} fetchpriority="high" />}
-
-		<!-- Self-hosted fonts from R2 — preload weights used above the fold (hero 300, body 400) -->
-		<link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-300.woff2" crossorigin />
-		<link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-400.woff2" crossorigin />
 		<!-- Critical CSS: hand-picked above-the-fold styles. Full Tailwind bundle loads async below. -->
 		<style is:inline>
 			@font-face{font-family:'Montserrat';font-style:normal;font-weight:300;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-300.woff2') format('woff2')}
