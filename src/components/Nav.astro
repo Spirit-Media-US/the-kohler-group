@@ -4,7 +4,12 @@ import { sanityClient, urlFor } from '../lib/sanity';
 const settings = await sanityClient.fetch(
 	`*[_type=="siteSettings"][0]{ logo, bookingUrl, phone, facebook, instagram }`,
 );
-const logoUrl = settings?.logo ? urlFor(settings.logo).width(400).url() : null;
+const logoMobileUrl = settings?.logo
+	? urlFor(settings.logo).width(200).url()
+	: 'https://cdn.sanity.io/images/2bom5gqg/production/c60dd6674bab6d1f50562e6ff3f61365e0639f1a-1416x921.png?w=200';
+const logoDesktopUrl = settings?.logo
+	? urlFor(settings.logo).width(400).url()
+	: 'https://cdn.sanity.io/images/2bom5gqg/production/c60dd6674bab6d1f50562e6ff3f61365e0639f1a-1416x921.png?w=400';
 const navLinks = [
 	{ href: '/', label: 'Home' },
 	{ href: '/about', label: 'About' },
@@ -50,7 +55,7 @@ function isActive(href: string) {
 				<div class="w-8"></div>
 				<a href="/" aria-label="The Kohler Group PLLC">
 					<img
-						src={logoUrl || 'https://cdn.sanity.io/images/2bom5gqg/production/c60dd6674bab6d1f50562e6ff3f61365e0639f1a-1416x921.png'}
+						src={logoMobileUrl}
 						alt="The Kohler Group PLLC"
 						class="h-14 w-auto"
 						width="86"
@@ -100,7 +105,7 @@ function isActive(href: string) {
 			<div class="hidden justify-center py-6 lg:flex">
 				<a href="/" aria-label="The Kohler Group PLLC">
 					<img
-						src={logoUrl || 'https://cdn.sanity.io/images/2bom5gqg/production/c60dd6674bab6d1f50562e6ff3f61365e0639f1a-1416x921.png'}
+						src={logoDesktopUrl}
 						alt="The Kohler Group PLLC"
 						class="h-28 w-auto"
 						width="172"
