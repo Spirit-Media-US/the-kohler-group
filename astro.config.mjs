@@ -1,4 +1,5 @@
 import sitemap from '@astrojs/sitemap';
+import inline from '@playform/inline';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 
@@ -9,6 +10,10 @@ export default defineConfig({
 	site: 'https://thekohlergroup.net',
 
 	server: { port: 4325, host: true },
+
+	build: {
+		inlineStylesheets: 'auto',
+	},
 
 	integrations: [
 		sitemap({
@@ -46,6 +51,7 @@ export default defineConfig({
 				return { ...item, changefreq: 'monthly', priority: 0.6, lastmod: new Date().toISOString() };
 			},
 		}),
+		inline(),
 	],
 
 	vite: {
