@@ -13,11 +13,13 @@ const [user, domain] = email.split('@');
 </a>
 
 <script>
-	document.addEventListener('astro:page-load', () => {
+	function initMailto() {
 		document.querySelectorAll<HTMLAnchorElement>('a[data-mu][data-md]').forEach((el) => {
 			const u = el.dataset.mu;
 			const d = el.dataset.md;
 			if (u && d) el.href = `mailto:${u}@${d}`;
 		});
-	});
+	}
+	if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initMailto);
+	else initMailto();
 </script>

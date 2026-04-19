@@ -1,5 +1,4 @@
 ---
-import { ViewTransitions } from 'astro:transitions';
 import Footer from '../components/Footer.astro';
 import Nav from '../components/Nav.astro';
 import '../styles/global.css';
@@ -116,8 +115,6 @@ const ogImageURL = ogImage.startsWith('http')
 
 		<!-- Page-level head slot (JSON-LD, etc.) -->
 		<slot name="head" />
-
-		<ViewTransitions />
 
 		<!-- Google Analytics 4 (loaded on first user interaction to protect LCP/TBT) -->
 		<script is:inline>
