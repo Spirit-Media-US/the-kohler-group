@@ -11,7 +11,7 @@ export default defineConfig({
 	server: { port: 4325, host: true },
 
 	build: {
-		inlineStylesheets: 'auto',
+		inlineStylesheets: 'always',
 	},
 
 	integrations: [
