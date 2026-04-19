@@ -1,14 +1,5 @@
-/* Non-critical @font-face declarations.
-   Loaded lazily via <link rel="preload" as="style" onload=...> in Layout.astro.
-   The LCP-critical weights (400, 600) stay inlined in <style> in Layout.astro. */
-@font-face {
-	font-family: 'Montserrat';
-	font-style: normal;
-	font-weight: 300;
-	font-display: swap;
-	src: url('https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-300.woff2')
-		format('woff2');
-}
+/* Non-critical @font-face declarations — async loaded via media="print" onload swap in Layout.astro.
+   Critical weights (300 hero, 400 body, 600 nav) are inlined in Layout.astro. */
 @font-face {
 	font-family: 'Montserrat';
 	font-style: normal;
