@@ -7,13 +7,11 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   facebook, instagram,
   heroImage, aboutHeroImage, defaultHeroImage, logo
 }`);
-// Mobile-first: preload a smaller webp hero for LCP on mobile (16:9 crop matches displayed aspect ratio)
-const heroMobileUrl = settings?.heroImage
-	? urlFor(settings.heroImage).width(800).height(450).fit('crop').format('webp').quality(75).url()
-	: '';
-const heroDesktopUrl = settings?.heroImage
-	? urlFor(settings.heroImage).width(1600).height(900).fit('crop').format('webp').quality(80).url()
-	: '';
+// Hero served from R2 (same origin as fonts → single TLS handshake, lower LCP).
+// To refresh: re-crop in Sanity and re-upload via /home/deploy/bin/.env R2 creds.
+const heroMobileUrl = 'https://assets.spiritmediapublishing.com/the-kohler-group/hero-mobile.webp';
+const heroDesktopUrl =
+	'https://assets.spiritmediapublishing.com/the-kohler-group/hero-desktop.webp';
 const heroPreloadUrl = heroMobileUrl;
 ---
 
