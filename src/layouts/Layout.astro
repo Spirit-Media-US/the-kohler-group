@@ -43,6 +43,10 @@ const ogImageURL = ogImage.startsWith('http')
 		<meta name="msvalidate.01" content="477910DF31D77AFDFCAE62DF5E095405" />
 		<title>{title}</title>
 
+		<!-- Preconnect: warm TLS to critical origins before the parser hits their resources -->
+		<link rel="preconnect" href="https://cdn.sanity.io" crossorigin />
+		<link rel="preconnect" href="https://assets.spiritmediapublishing.com" crossorigin />
+
 		{heroPreload && <link rel="preload" as="image" href={heroPreload} fetchpriority="high" />}
 
 		<!-- Self-hosted fonts from R2 — preload weights used above the fold (hero 300, body 400) -->
