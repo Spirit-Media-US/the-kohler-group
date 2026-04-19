@@ -7,12 +7,12 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   facebook, instagram,
   heroImage, aboutHeroImage, defaultHeroImage, logo
 }`);
-// Mobile-first: preload a smaller webp hero for LCP on mobile
+// Mobile-first: preload a smaller webp hero for LCP on mobile (16:9 crop matches displayed aspect ratio)
 const heroMobileUrl = settings?.heroImage
-	? urlFor(settings.heroImage).width(800).format('webp').quality(75).url()
+	? urlFor(settings.heroImage).width(800).height(450).fit('crop').format('webp').quality(75).url()
 	: '';
 const heroDesktopUrl = settings?.heroImage
-	? urlFor(settings.heroImage).width(1600).format('webp').quality(80).url()
+	? urlFor(settings.heroImage).width(1600).height(900).fit('crop').format('webp').quality(80).url()
 	: '';
 const heroPreloadUrl = heroMobileUrl;
 ---
@@ -122,11 +122,14 @@ const heroPreloadUrl = heroMobileUrl;
 			<!-- Marriage Intensives -->
 			<div class="flex flex-col items-center rounded-lg bg-brand text-center overflow-hidden">
 				<img
-					src="https://cdn.sanity.io/images/2bom5gqg/production/79bc51e151e87d59cb1cc31823371b8bdbb30a63-4349x2903.jpg?w=600&fm=webp&q=75"
+					src="https://cdn.sanity.io/images/2bom5gqg/production/79bc51e151e87d59cb1cc31823371b8bdbb30a63-4349x2903.jpg?w=600&h=220&fit=crop&fm=webp&q=75"
 					alt="Marriage Intensives"
+					width="600"
+					height="220"
 					class="w-full object-cover"
 					style="max-height: 220px; object-fit: cover;"
 					loading="lazy"
+					decoding="async"
 				/>
 				<div class="flex flex-col items-center py-12 px-10 w-full">
 				<!-- Icon: two interlocking rings -->
@@ -156,11 +159,14 @@ const heroPreloadUrl = heroMobileUrl;
 			<!-- Therapy Sessions -->
 			<div class="flex flex-col items-center rounded-lg bg-brand text-center overflow-hidden">
 				<img
-					src="https://cdn.sanity.io/images/2bom5gqg/production/2ba073373a307d8e08b3a4b462d5e57c2255d573-7000x4667.jpg?w=600&fm=webp&q=75"
+					src="https://cdn.sanity.io/images/2bom5gqg/production/2ba073373a307d8e08b3a4b462d5e57c2255d573-7000x4667.jpg?w=600&h=220&fit=crop&fm=webp&q=75"
 					alt="Therapy Sessions"
+					width="600"
+					height="220"
 					class="w-full object-cover"
 					style="max-height: 220px; object-fit: cover;"
 					loading="lazy"
+					decoding="async"
 				/>
 				<div class="flex flex-col items-center py-12 px-10 w-full">
 				<!-- Icon: speech bubble with dots -->
@@ -195,11 +201,14 @@ const heroPreloadUrl = heroMobileUrl;
 			<!-- Individual Intensives -->
 			<div class="flex flex-col items-center rounded-lg bg-brand text-center overflow-hidden">
 				<img
-					src="https://cdn.sanity.io/images/2bom5gqg/production/072edeab37e3c23c7441d53519ec70df92ad873a-5616x3744.jpg?w=600&fm=webp&q=75"
+					src="https://cdn.sanity.io/images/2bom5gqg/production/072edeab37e3c23c7441d53519ec70df92ad873a-5616x3744.jpg?w=600&h=220&fit=crop&fm=webp&q=75"
 					alt="Individual Intensives"
+					width="600"
+					height="220"
 					class="w-full object-cover"
 					style="max-height: 220px; object-fit: cover;"
 					loading="lazy"
+					decoding="async"
 				/>
 				<div class="flex flex-col items-center py-12 px-10 w-full">
 				<!-- Icon: two person silhouettes -->
@@ -238,16 +247,16 @@ const heroPreloadUrl = heroMobileUrl;
 		<div class="container">
 			<div class="grid grid-cols-2 gap-4 md:grid-cols-4">
 				<div class="overflow-hidden rounded-lg">
-					<img src="https://cdn.sanity.io/images/2bom5gqg/production/76e2c98fa000dda7199aba5df5525f7b38d759ba-468x311.jpg?w=468&h=311&fit=crop&fm=webp&q=75" alt="The Kohler Group" class="h-52 w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />
+					<img src="https://cdn.sanity.io/images/2bom5gqg/production/76e2c98fa000dda7199aba5df5525f7b38d759ba-468x311.jpg?w=468&h=311&fit=crop&fm=webp&q=75" alt="The Kohler Group" width="468" height="311" class="h-52 w-full object-cover transition duration-500 hover:scale-105" loading="lazy" decoding="async" />
 				</div>
 				<div class="overflow-hidden rounded-lg">
-					<img src="https://cdn.sanity.io/images/2bom5gqg/production/64dcec02ccd61d4a70f553ab23a09f8a3b379c3d-428x364.jpg?w=468&h=311&fit=crop&fm=webp&q=75" alt="The Kohler Group" class="h-52 w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />
+					<img src="https://cdn.sanity.io/images/2bom5gqg/production/64dcec02ccd61d4a70f553ab23a09f8a3b379c3d-428x364.jpg?w=468&h=311&fit=crop&fm=webp&q=75" alt="The Kohler Group" width="468" height="311" class="h-52 w-full object-cover transition duration-500 hover:scale-105" loading="lazy" decoding="async" />
 				</div>
 				<div class="overflow-hidden rounded-lg">
-					<img src="https://cdn.sanity.io/images/2bom5gqg/production/5529c4b2bf6b0bda291a530cff7973f3ccbc5a71-468x311.jpg?w=468&h=311&fit=crop&fm=webp&q=75" alt="The Kohler Group" class="h-52 w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />
+					<img src="https://cdn.sanity.io/images/2bom5gqg/production/5529c4b2bf6b0bda291a530cff7973f3ccbc5a71-468x311.jpg?w=468&h=311&fit=crop&fm=webp&q=75" alt="The Kohler Group" width="468" height="311" class="h-52 w-full object-cover transition duration-500 hover:scale-105" loading="lazy" decoding="async" />
 				</div>
 				<div class="overflow-hidden rounded-lg">
-					<img src="https://cdn.sanity.io/images/2bom5gqg/production/bf1492d28ee65b78bf5cd8baef40b10f50022c8c-415x349.jpg?w=468&h=311&fit=crop&fm=webp&q=75" alt="The Kohler Group" class="h-52 w-full object-cover transition duration-500 hover:scale-105" loading="lazy" />
+					<img src="https://cdn.sanity.io/images/2bom5gqg/production/bf1492d28ee65b78bf5cd8baef40b10f50022c8c-415x349.jpg?w=468&h=311&fit=crop&fm=webp&q=75" alt="The Kohler Group" width="468" height="311" class="h-52 w-full object-cover transition duration-500 hover:scale-105" loading="lazy" decoding="async" />
 				</div>
 			</div>
 		</div>

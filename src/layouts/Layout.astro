@@ -45,10 +45,8 @@ const ogImageURL = ogImage.startsWith('http')
 
 		{heroPreload && <link rel="preload" as="image" href={heroPreload} fetchpriority="high" />}
 
-		<!-- Self-hosted fonts from R2 — LCP-critical weights (300 hero, 400 body, 600 nav) inlined; rest loaded async -->
+		<!-- Self-hosted fonts from R2 — only preload LCP hero font; other weights load on demand -->
 		<link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-300.woff2" crossorigin />
-		<link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-400.woff2" crossorigin />
-		<link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-600.woff2" crossorigin />
 		<style is:inline>
 			@font-face{font-family:'Montserrat';font-style:normal;font-weight:300;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-300.woff2') format('woff2');}
 			@font-face{font-family:'Montserrat';font-style:normal;font-weight:400;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-400.woff2') format('woff2');}
