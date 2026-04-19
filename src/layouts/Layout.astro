@@ -53,9 +53,9 @@ const ogImageURL = ogImage.startsWith('http')
 		<!-- Critical CSS: hand-picked above-the-fold styles. Full Tailwind bundle loads async below. -->
 		<style is:inline>
 			/* @font-face at top level — CSS spec forbids it inside @layer */
-			@font-face{font-family:'Montserrat';font-style:normal;font-weight:300;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-300.woff2') format('woff2')}
-			@font-face{font-family:'Montserrat';font-style:normal;font-weight:400;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-400.woff2') format('woff2')}
-			@font-face{font-family:'Montserrat';font-style:normal;font-weight:600;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-600.woff2') format('woff2')}
+			@font-face{font-family:'Montserrat';font-style:normal;font-weight:300;font-display:optional;src:url('https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-300.woff2') format('woff2')}
+			@font-face{font-family:'Montserrat';font-style:normal;font-weight:400;font-display:optional;src:url('https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-400.woff2') format('woff2')}
+			@font-face{font-family:'Montserrat';font-style:normal;font-weight:600;font-display:optional;src:url('https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-600.woff2') format('woff2')}
 
 			/* All critical CSS wrapped in @layer base so Tailwind v4's async
 			   @layer utilities always wins the cascade. Unlayered rules beat
