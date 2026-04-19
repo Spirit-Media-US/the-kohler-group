@@ -1,5 +1,4 @@
 import sitemap from '@astrojs/sitemap';
-import inline from '@playform/inline';
 import tailwindcss from '@tailwindcss/vite';
 import { defineConfig } from 'astro/config';
 
@@ -12,7 +11,7 @@ export default defineConfig({
 	server: { port: 4325, host: true },
 
 	build: {
-		inlineStylesheets: 'auto',
+		inlineStylesheets: 'always',
 	},
 
 	integrations: [
@@ -51,7 +50,6 @@ export default defineConfig({
 				return { ...item, changefreq: 'monthly', priority: 0.6, lastmod: new Date().toISOString() };
 			},
 		}),
-		inline(),
 	],
 
 	vite: {
