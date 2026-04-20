@@ -1,0 +1,88 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e3]:
+    - generic [ref=e6]:
+      - link "The Kohler Group PLLC" [ref=e7] [cursor=pointer]:
+        - /url: /
+        - img "The Kohler Group PLLC" [ref=e8]
+      - button "Toggle navigation" [ref=e9] [cursor=pointer]:
+        - img [ref=e10]
+  - main [ref=e12]:
+    - generic [ref=e14]:
+      - heading "The Future Depends on What You Do in the Present." [level=1] [ref=e15]
+      - paragraph [ref=e16]: Christian Counseling in Huntersville, NC
+      - link "Get Started" [ref=e17] [cursor=pointer]:
+        - /url: https://barbara-kohler.clientsecure.me/contact-widget
+    - generic [ref=e20]:
+      - paragraph [ref=e21]: You can feel better after a talk with a close friend or relative when dealing with moderate or severe emotional distress. However, this relief is often temporary. Talking with a trained professional helps alleviate emotional distress. Applying proven Biblical Principles brings about lasting change that is undeniable. We want to help you move forward in your God given purpose.
+      - paragraph [ref=e22]: Our therapists are trained professionals who operate from a Biblical world view. We use Re-decision Therapy, EMDR, TRET (Trauma Resolution Energy Therapy), CBT-TF, and other techniques to treat our clients with the appropriate modality. We care about people and want to help you realize the grace of God in your own life. Each therapist has their own niche and has a track record of helping many people navigate through difficult circumstances to find the peace that only God can give. Your emotional health affects your spiritual life, finances, relationships, and career. Make your emotional health a priority and start the healing process today.
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - img "Marriage Intensives" [ref=e26]
+        - generic [ref=e27]:
+          - img [ref=e28]
+          - heading "Marriage Intensives" [level=2] [ref=e31]:
+            - text: Marriage
+            - text: Intensives
+          - link "Learn More about Marriage Intensives" [ref=e32] [cursor=pointer]:
+            - /url: /intensives/marriage
+            - text: Learn More
+            - generic [ref=e33]: about Marriage Intensives
+      - generic [ref=e34]:
+        - img "Therapy Sessions" [ref=e35]
+        - generic [ref=e36]:
+          - img [ref=e37]
+          - heading "Therapy Sessions" [level=2] [ref=e42]:
+            - text: Therapy
+            - text: Sessions
+          - link "Learn More about our Therapists" [ref=e43] [cursor=pointer]:
+            - /url: /our-therapists
+            - text: Learn More
+            - generic [ref=e44]: about our Therapists
+      - generic [ref=e45]:
+        - img "Individual Intensives" [ref=e46]
+        - generic [ref=e47]:
+          - img [ref=e48]
+          - heading "Individual Intensives" [level=2] [ref=e53]:
+            - text: Individual
+            - text: Intensives
+          - link "Learn More about Individual Intensives" [ref=e54] [cursor=pointer]:
+            - /url: /intensives/individual
+            - text: Learn More
+            - generic [ref=e55]: about Individual Intensives
+    - generic [ref=e58]:
+      - img "The Kohler Group" [ref=e60]
+      - img "The Kohler Group" [ref=e62]
+      - img "The Kohler Group" [ref=e64]
+      - img "The Kohler Group" [ref=e66]
+  - contentinfo [ref=e67]:
+    - generic [ref=e68]:
+      - link "The Kohler Group PLLC" [ref=e70] [cursor=pointer]:
+        - /url: /
+        - img "The Kohler Group PLLC" [ref=e71]
+      - generic [ref=e72]:
+        - generic [ref=e73]:
+          - text: "Phone:"
+          - link "704-948-1268" [ref=e74] [cursor=pointer]:
+            - /url: tel:2527588636
+        - generic [ref=e75]: "|"
+        - link "Send Us an Email" [ref=e76] [cursor=pointer]:
+          - /url: mailto:info@thekohlergroup.net
+          - img [ref=e77]
+          - text: Send Us an Email
+      - paragraph [ref=e79]: "Huntersville Location: Daetwyler Plaza Building, 13420 Reese Blvd W, Huntersville, NC 28078"
+      - paragraph [ref=e80]: We see clients in person at our Huntersville, NC location (North Charlotte) and offer Telehealth Services in North and South Carolina.
+      - generic [ref=e81]:
+        - link "Privacy Policy" [ref=e82] [cursor=pointer]:
+          - /url: /privacy-policy
+        - generic [ref=e83]: "|"
+        - link "Nondiscrimination Notice" [ref=e84] [cursor=pointer]:
+          - /url: /nondiscrimination-notice
+        - generic [ref=e85]: "|"
+        - link "Public Health Info" [ref=e86] [cursor=pointer]:
+          - /url: /public-health-info
+      - paragraph [ref=e87]:
+        - text: © 2026 The Kohler Group, PLLC. All rights reserved. • Powered by
+        - link "Spirit Media" [ref=e88] [cursor=pointer]:
+          - /url: https://spiritmediapublishing.com
