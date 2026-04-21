@@ -12,15 +12,13 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 const heroMobileUrl = 'https://assets.spiritmediapublishing.com/the-kohler-group/hero-mobile.webp';
 const heroDesktopUrl =
 	'https://assets.spiritmediapublishing.com/the-kohler-group/hero-desktop.webp';
-// Preload only on ≥768px so mobile LCP becomes the H1 text node (not the photo).
-const heroPreloadUrl = heroDesktopUrl;
+const heroPreloadUrl = heroMobileUrl;
 ---
 
 <Layout
 	title="Christian Counseling Huntersville NC | Barbara Kohler & The Kohler Group"
 	description="Barbara Kohler offers Christian counseling, marriage intensives, and individual therapy in Huntersville, NC. Faith-based psychotherapy near Charlotte."
 	heroPreload={heroPreloadUrl}
-	heroPreloadMedia="(min-width: 768px)"
 >
 	<Fragment slot="head">
 		<script type="application/ld+json" set:html={JSON.stringify({
@@ -48,24 +46,27 @@ const heroPreloadUrl = heroDesktopUrl;
 		})}></script>
 	</Fragment>
 	<!-- ============================================================
-	     Hero — text-first on mobile (H1 is the LCP), beach background on
-	     md+. The mobile beach photo renders below in its own band so it
-	     never participates in mobile LCP. See performance-gate.md §6.
+	     Hero — beach image, light overlay, centered headline only
 	     ============================================================ -->
 	<section
-		class="relative flex min-h-[420px] md:min-h-[65vh] items-center justify-center overflow-hidden bg-brand"
+		class="relative flex min-h-[420px] md:min-h-[65vh] items-center justify-center overflow-hidden"
 	>
-		<img
-			src={heroDesktopUrl}
-			alt=""
-			width="1600"
-			height="900"
-			fetchpriority="high"
-			loading="eager"
-			decoding="async"
-			class="absolute inset-0 hidden h-full w-full object-cover md:block"
-		/>
-		<div class="absolute inset-0 hidden bg-brand/40 md:block"></div>
+		{heroMobileUrl && (
+			<picture>
+				<source media="(min-width: 768px)" srcset={heroDesktopUrl} />
+				<img
+					src={heroMobileUrl}
+					alt=""
+					width="1600"
+					height="900"
+					fetchpriority="high"
+					loading="eager"
+					decoding="async"
+					class="absolute inset-0 h-full w-full object-cover"
+				/>
+			</picture>
+		)}
+		<div class="absolute inset-0 bg-brand/40"></div>
 		<div class="container relative z-10 py-20 text-center">
 			<h1
 				class="mx-auto max-w-3xl text-3xl font-light uppercase tracking-ultra text-white sm:text-4xl lg:text-5xl"
@@ -109,20 +110,6 @@ const heroPreloadUrl = heroDesktopUrl;
 				the healing process today.
 			</p>
 		</div>
-	</section>
-
-	<!-- Mobile-only beach band — sits below the intro paragraphs so it loads after the
-	     initial viewport (below PSI's 823px fold) and never participates in mobile LCP. -->
-	<section class="md:hidden">
-		<img
-			src={heroMobileUrl}
-			alt=""
-			width="800"
-			height="450"
-			loading="lazy"
-			decoding="async"
-			class="block w-full h-auto"
-		/>
 	</section>
 
 	<!-- ============================================================
