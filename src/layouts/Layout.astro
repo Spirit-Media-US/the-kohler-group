@@ -9,6 +9,8 @@ interface Props {
 	canonicalURL?: string;
 	ogImage?: string;
 	heroPreload?: string;
+	heroPreloadSrcset?: string;
+	heroPreloadSizes?: string;
 }
 
 const {
@@ -17,6 +19,8 @@ const {
 	canonicalURL = Astro.url.href,
 	ogImage = 'https://cdn.sanity.io/images/2bom5gqg/production/69ff224b35aa2d4c0e57339b5449330d55bf8095-468x311.jpg',
 	heroPreload,
+	heroPreloadSrcset,
+	heroPreloadSizes,
 } = Astro.props;
 
 const siteName = 'The Kohler Group PLLC';
@@ -34,7 +38,16 @@ const ogImageURL = ogImage.startsWith('http')
 		<!-- Priority hints — hero image + LCP fonts discovered before anything else -->
 		<link rel="preconnect" href="https://assets.spiritmediapublishing.com" crossorigin />
 		<link rel="preconnect" href="https://cdn.sanity.io" crossorigin />
-		{heroPreload && <link rel="preload" as="image" href={heroPreload} fetchpriority="high" />}
+		{heroPreload && (
+			<link
+				rel="preload"
+				as="image"
+				href={heroPreload}
+				imagesrcset={heroPreloadSrcset}
+				imagesizes={heroPreloadSizes}
+				fetchpriority="high"
+			/>
+		)}
 		<link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-300.woff2" crossorigin />
 		<link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-400.woff2" crossorigin />
 
