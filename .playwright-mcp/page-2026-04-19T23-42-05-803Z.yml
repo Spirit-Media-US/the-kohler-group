@@ -1,0 +1,129 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#main-content"
+  - banner [ref=e3]:
+    - link "The Kohler Group PLLC" [ref=e7] [cursor=pointer]:
+      - /url: /
+      - img "The Kohler Group PLLC" [ref=e8]
+    - generic [ref=e9]:
+      - generic [ref=e10]:
+        - link "Home" [ref=e11] [cursor=pointer]:
+          - /url: /
+        - link "About" [ref=e12] [cursor=pointer]:
+          - /url: /about
+        - link "Our Therapists" [ref=e13] [cursor=pointer]:
+          - /url: /our-therapists
+        - link "FAQ" [ref=e14] [cursor=pointer]:
+          - /url: /faq
+        - generic [ref=e15]:
+          - button "Intensives" [ref=e16]:
+            - text: Intensives
+            - img [ref=e17]
+          - generic [ref=e19]:
+            - link "About Intensives" [ref=e20] [cursor=pointer]:
+              - /url: /intensives/about
+            - link "Marriage Intensives" [ref=e21] [cursor=pointer]:
+              - /url: /intensives/marriage
+            - link "Individual Intensives" [ref=e22] [cursor=pointer]:
+              - /url: /intensives/individual
+        - link "Real Client Experiences" [ref=e23] [cursor=pointer]:
+          - /url: /testimonials
+        - generic [ref=e24]:
+          - link "Education" [ref=e25] [cursor=pointer]:
+            - /url: /education/surviving-trauma
+            - text: Education
+            - img [ref=e26]
+          - generic [ref=e28]:
+            - link "Surviving Trauma" [ref=e29] [cursor=pointer]:
+              - /url: /education/surviving-trauma
+            - link "Media" [ref=e30] [cursor=pointer]:
+              - /url: /education/media
+            - link "Blog" [ref=e31] [cursor=pointer]:
+              - /url: /blog
+      - generic [ref=e32]:
+        - link "Request an Appointment" [ref=e33] [cursor=pointer]:
+          - /url: https://barbara-kohler.clientsecure.me/contact-widget
+        - link "Instagram" [ref=e34] [cursor=pointer]:
+          - /url: https://www.instagram.com/thekohlergrouppllc/
+          - img [ref=e35]
+        - link "Facebook" [ref=e37] [cursor=pointer]:
+          - /url: https://www.facebook.com/thekohlergroup
+          - img [ref=e38]
+  - main [ref=e40]:
+    - generic [ref=e43]:
+      - heading "The Future Depends on What You Do in the Present." [level=1] [ref=e44]
+      - paragraph [ref=e45]: Christian Counseling in Huntersville, NC
+      - link "Get Started" [ref=e46] [cursor=pointer]:
+        - /url: https://barbara-kohler.clientsecure.me/contact-widget
+    - generic [ref=e48]:
+      - paragraph [ref=e49]: You can feel better after a talk with a close friend or relative when dealing with moderate or severe emotional distress. However, this relief is often temporary. Talking with a trained professional helps alleviate emotional distress. Applying proven Biblical Principles brings about lasting change that is undeniable. We want to help you move forward in your God given purpose.
+      - paragraph [ref=e50]: Our therapists are trained professionals who operate from a Biblical world view. We use Re-decision Therapy, EMDR, TRET (Trauma Resolution Energy Therapy), CBT-TF, and other techniques to treat our clients with the appropriate modality. We care about people and want to help you realize the grace of God in your own life. Each therapist has their own niche and has a track record of helping many people navigate through difficult circumstances to find the peace that only God can give. Your emotional health affects your spiritual life, finances, relationships, and career. Make your emotional health a priority and start the healing process today.
+    - generic [ref=e52]:
+      - generic [ref=e53]:
+        - img "Marriage Intensives" [ref=e54]
+        - generic [ref=e55]:
+          - img [ref=e56]
+          - heading "Marriage Intensives" [level=2] [ref=e59]:
+            - text: Marriage
+            - text: Intensives
+          - link "Learn More about Marriage Intensives" [ref=e60] [cursor=pointer]:
+            - /url: /intensives/marriage
+            - text: Learn More
+            - generic [ref=e61]: about Marriage Intensives
+      - generic [ref=e62]:
+        - img "Therapy Sessions" [ref=e63]
+        - generic [ref=e64]:
+          - img [ref=e65]
+          - heading "Therapy Sessions" [level=2] [ref=e70]:
+            - text: Therapy
+            - text: Sessions
+          - link "Learn More about our Therapists" [ref=e71] [cursor=pointer]:
+            - /url: /our-therapists
+            - text: Learn More
+            - generic [ref=e72]: about our Therapists
+      - generic [ref=e73]:
+        - img "Individual Intensives" [ref=e74]
+        - generic [ref=e75]:
+          - img [ref=e76]
+          - heading "Individual Intensives" [level=2] [ref=e81]:
+            - text: Individual
+            - text: Intensives
+          - link "Learn More about Individual Intensives" [ref=e82] [cursor=pointer]:
+            - /url: /intensives/individual
+            - text: Learn More
+            - generic [ref=e83]: about Individual Intensives
+    - generic [ref=e86]:
+      - img "The Kohler Group" [ref=e88]
+      - img "The Kohler Group" [ref=e90]
+      - img "The Kohler Group" [ref=e92]
+      - img "The Kohler Group" [ref=e94]
+  - contentinfo [ref=e95]:
+    - generic [ref=e96]:
+      - link "The Kohler Group PLLC" [ref=e98] [cursor=pointer]:
+        - /url: /
+        - img "The Kohler Group PLLC" [ref=e99]
+      - generic [ref=e100]:
+        - generic [ref=e101]:
+          - text: "Phone:"
+          - link "704-948-1268" [ref=e102] [cursor=pointer]:
+            - /url: tel:2527588636
+        - generic [ref=e103]: "|"
+        - link "Send Us an Email" [ref=e104] [cursor=pointer]:
+          - /url: mailto:info@thekohlergroup.net
+          - img [ref=e105]
+          - text: Send Us an Email
+      - paragraph [ref=e107]: "Huntersville Location: Daetwyler Plaza Building, 13420 Reese Blvd W, Huntersville, NC 28078"
+      - paragraph [ref=e108]: We see clients in person at our Huntersville, NC location (North Charlotte) and offer Telehealth Services in North and South Carolina.
+      - generic [ref=e109]:
+        - link "Privacy Policy" [ref=e110] [cursor=pointer]:
+          - /url: /privacy-policy
+        - generic [ref=e111]: "|"
+        - link "Nondiscrimination Notice" [ref=e112] [cursor=pointer]:
+          - /url: /nondiscrimination-notice
+        - generic [ref=e113]: "|"
+        - link "Public Health Info" [ref=e114] [cursor=pointer]:
+          - /url: /public-health-info
+      - paragraph [ref=e115]:
+        - text: © 2026 The Kohler Group, PLLC. All rights reserved. • Powered by
+        - link "Spirit Media" [ref=e116] [cursor=pointer]:
+          - /url: https://spiritmediapublishing.com
