@@ -12,13 +12,19 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 const heroMobileUrl = 'https://assets.spiritmediapublishing.com/the-kohler-group/hero-mobile.webp';
 const heroDesktopUrl =
 	'https://assets.spiritmediapublishing.com/the-kohler-group/hero-desktop.webp';
-const heroPreloadUrl = heroMobileUrl;
+// Responsive preload — picks hero-mobile (640w) under 768px, hero-desktop (1200w) above.
+// Without imagesrcset, desktop wastes a preload on the mobile hero and fetches the
+// desktop hero cold after HTML parse, which was capping desktop PSI at 97.
+const heroPreloadSrcset = `${heroMobileUrl} 640w, ${heroDesktopUrl} 1200w`;
+const heroPreloadSizes = '(max-width: 767px) 640px, 1200px';
 ---
 
 <Layout
 	title="Christian Counseling Huntersville NC | Barbara Kohler & The Kohler Group"
 	description="Barbara Kohler offers Christian counseling, marriage intensives, and individual therapy in Huntersville, NC. Faith-based psychotherapy near Charlotte."
-	heroPreload={heroPreloadUrl}
+	heroPreload={heroMobileUrl}
+	heroPreloadSrcset={heroPreloadSrcset}
+	heroPreloadSizes={heroPreloadSizes}
 >
 	<Fragment slot="head">
 		<script type="application/ld+json" set:html={JSON.stringify({
