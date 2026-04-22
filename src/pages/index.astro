@@ -12,13 +12,22 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 const heroMobileUrl = 'https://assets.spiritmediapublishing.com/the-kohler-group/hero-mobile.webp';
 const heroDesktopUrl =
 	'https://assets.spiritmediapublishing.com/the-kohler-group/hero-desktop.webp';
-const heroPreloadUrl = heroMobileUrl;
+// Inline mobile hero as data URI at build time — removes the network roundtrip
+// so LCP paints as the HTML streams. R2 stays source of truth; each build refetches.
+const heroMobileBuffer = await fetch(heroMobileUrl).then((r) => {
+	if (!r.ok) throw new Error(`Hero mobile fetch failed: ${r.status} ${heroMobileUrl}`);
+	return r.arrayBuffer();
+});
+const heroMobileDataUri = `data:image/webp;base64,${Buffer.from(heroMobileBuffer).toString('base64')}`;
+// Only desktop benefits from preload — mobile is inline.
+const heroPreloadUrl = heroDesktopUrl;
 ---
 
 <Layout
 	title="Christian Counseling Huntersville NC | Barbara Kohler & The Kohler Group"
 	description="Barbara Kohler offers Christian counseling, marriage intensives, and individual therapy in Huntersville, NC. Faith-based psychotherapy near Charlotte."
 	heroPreload={heroPreloadUrl}
+	heroPreloadMedia="(min-width: 768px)"
 >
 	<Fragment slot="head">
 		<script type="application/ld+json" set:html={JSON.stringify({
@@ -51,21 +60,19 @@ const heroPreloadUrl = heroMobileUrl;
 	<section
 		class="relative flex min-h-[420px] md:min-h-[65vh] items-center justify-center overflow-hidden"
 	>
-		{heroMobileUrl && (
-			<picture>
-				<source media="(min-width: 768px)" srcset={heroDesktopUrl} />
-				<img
-					src={heroMobileUrl}
-					alt=""
-					width="1600"
-					height="900"
-					fetchpriority="high"
-					loading="eager"
-					decoding="async"
-					class="absolute inset-0 h-full w-full object-cover"
-				/>
-			</picture>
-		)}
+		<picture>
+			<source media="(min-width: 768px)" srcset={heroDesktopUrl} />
+			<img
+				src={heroMobileDataUri}
+				alt=""
+				width="1600"
+				height="900"
+				fetchpriority="high"
+				loading="eager"
+				decoding="async"
+				class="absolute inset-0 h-full w-full object-cover"
+			/>
+		</picture>
 		<div class="absolute inset-0 bg-brand/40"></div>
 		<div class="container relative z-10 py-20 text-center">
 			<h1
