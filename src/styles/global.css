@@ -118,20 +118,3 @@
 		display: none;
 	}
 }
-
-/* ============================================================
-   Utilities — override Tailwind v4's default .transition utility
-   to only transition composited props (transform, opacity).
-   Lighthouse "Avoid non-composited animations" flags every element
-   that registers a transition on color / bg-color / border-color /
-   box-shadow — the Tailwind default covers all of those. Narrowing
-   to composited-only removes the audit hit. UX tradeoff: hover
-   color fades snap instantly instead of 150ms fade.
-   ============================================================ */
-@layer utilities {
-	.transition {
-		transition-property: transform, opacity;
-		transition-duration: 150ms;
-		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-	}
-}
