@@ -1,37 +1,77 @@
 export default {
-  name: 'siteSettings',
-  title: 'Site Settings',
-  type: 'document',
-  __experimental_actions: ['update', 'publish'],
-  fields: [
-    { name: 'practiceName', title: 'Practice Name', type: 'string' },
-    { name: 'tagline', title: 'Tagline', type: 'string' },
-    { name: 'phone', title: 'Phone Number', type: 'string' },
-    { name: 'email', title: 'General Email', type: 'string' },
-    { name: 'barbaraEmail', title: 'Barbara Email', type: 'string' },
-    { name: 'officeEmail', title: 'Office Email', type: 'string' },
-    { name: 'bookingUrl', title: 'Booking / Scheduling URL', type: 'url' },
-    { name: 'address', title: 'Office Address', type: 'text' },
-    { name: 'telehealth', title: 'Telehealth States', type: 'string' },
-    { name: 'youtube', title: 'YouTube Channel URL', type: 'url' },
-    { name: 'facebook', title: 'Facebook URL', type: 'url' },
-    { name: 'instagram', title: 'Instagram URL', type: 'url' },
-    { name: 'logo', title: 'Logo', type: 'image' },
-    { name: 'heroImage', title: 'Home Hero Image', type: 'image', options: { hotspot: true } },
-    { name: 'aboutHeroImage', title: 'About Hero Image', type: 'image', options: { hotspot: true } },
-    { name: 'defaultHeroImage', title: 'Default Interior Hero Image', type: 'image', options: { hotspot: true } },
-    { 
-      name: 'galleryImages', 
-      title: 'Testimonials Gallery Images', 
-      type: 'array',
-      of: [{ 
-        type: 'image', 
-        options: { hotspot: true },
-        fields: [
-          { name: 'alt', title: 'Alt Text', type: 'string' }
-        ]
-      }],
-      description: 'Gallery images displayed on the testimonials page'
-    },
-  ],
-}
+	name: 'siteSettings',
+	title: 'Site Settings',
+	type: 'document',
+	__experimental_actions: ['update', 'publish'],
+	fields: [
+		{ name: 'practiceName', title: 'Practice Name', type: 'string' },
+		{ name: 'tagline', title: 'Tagline', type: 'string' },
+		{ name: 'phone', title: 'Phone Number', type: 'string' },
+		{ name: 'email', title: 'General Email', type: 'string' },
+		{ name: 'barbaraEmail', title: 'Barbara Email', type: 'string' },
+		{ name: 'officeEmail', title: 'Office Email', type: 'string' },
+		{ name: 'bookingUrl', title: 'Booking / Scheduling URL', type: 'url' },
+		{ name: 'address', title: 'Office Address', type: 'text' },
+		{ name: 'telehealth', title: 'Telehealth States', type: 'string' },
+		{ name: 'youtube', title: 'YouTube Channel URL', type: 'url' },
+		{ name: 'facebook', title: 'Facebook URL', type: 'url' },
+		{ name: 'instagram', title: 'Instagram URL', type: 'url' },
+		{ name: 'logo', title: 'Logo', type: 'image' },
+		{ name: 'heroImage', title: 'Home Hero Image', type: 'image', options: { hotspot: true } },
+		{
+			name: 'aboutHeroImage',
+			title: 'About Hero Image',
+			type: 'image',
+			options: { hotspot: true },
+		},
+		{
+			name: 'defaultHeroImage',
+			title: 'Default Interior Hero Image',
+			type: 'image',
+			options: { hotspot: true },
+		},
+		{
+			name: 'galleryImages',
+			title: 'Testimonials Gallery Images',
+			type: 'array',
+			of: [
+				{
+					type: 'image',
+					options: { hotspot: true },
+					fields: [{ name: 'alt', title: 'Alt Text', type: 'string' }],
+				},
+			],
+			description: 'Gallery images displayed on the testimonials page',
+		},
+		// ---------------- Save Our Marriage landing page ----------------
+		{
+			name: 'somVideoUrl',
+			title: 'SOM — Barbara Video URL',
+			type: 'url',
+			description:
+				'YouTube embed URL for "A Message from Barbara" on /save-our-marriage. Leave blank to show the placeholder.',
+		},
+		{
+			name: 'somHeroBackground',
+			title: 'SOM — Hero Background Image (optional)',
+			type: 'image',
+			options: { hotspot: true },
+			description:
+				'Optional background image for the /save-our-marriage hero. A navy overlay sits on top automatically.',
+		},
+		{
+			name: 'somBarbaraPhoto',
+			title: 'SOM — Barbara Bio Photo',
+			type: 'image',
+			options: { hotspot: true },
+			description:
+				'Portrait used in the bio section of /save-our-marriage. Defaults to the existing intensive portrait if blank.',
+		},
+		{
+			name: 'somPrice',
+			title: 'SOM — Marriage Intensive Price',
+			type: 'string',
+			description: 'Displayed price on /save-our-marriage. Default: $15,000',
+		},
+	],
+};

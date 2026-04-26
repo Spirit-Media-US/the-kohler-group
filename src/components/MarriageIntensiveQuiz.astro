@@ -1,0 +1,765 @@
+---
+interface Props {
+	barbaraEmail: string;
+	bookingUrl: string;
+	phone: string;
+}
+const { barbaraEmail, bookingUrl, phone } = Astro.props;
+const phoneDigits = phone.replace(/[^0-9]/g, '');
+---
+
+<div
+	class="som-quiz som-widget-wrapper"
+	data-barbara-user={barbaraEmail.split('@')[0]}
+	data-barbara-domain={barbaraEmail.split('@')[1]}
+	data-booking-url={bookingUrl}
+	data-phone={phone}
+	data-phone-digits={phoneDigits}
+>
+	<div class="som-widget-header">
+		<p class="som-section-label">First Step</p>
+		<h2>Marriage Intensive Screening</h2>
+		<p>Eight short questions. Your answers are private and used only to prepare for your consultation.</p>
+	</div>
+
+	<div class="som-widget-body">
+		<!-- Quiz Card -->
+		<div data-quiz-stage>
+			<!-- Progress -->
+			<p class="som-progress-label" data-q-counter>Question 1 of 8</p>
+			<div class="som-progress-bar"><div class="som-progress-fill" style="width:13%" data-q-bar></div></div>
+
+			<form data-q-form novalidate>
+				<!-- Q1 -->
+				<div class="som-question-block is-active" data-step="1">
+					<p class="som-question-number">Question 01</p>
+					<p class="som-question-text">Are you struggling in your marriage right now?</p>
+					<div class="som-choices" data-radios="q1">
+						<button type="button" class="som-choice-btn" data-choice="A"><span class="som-choice-letter">A</span><span>Yes — we are in a real crisis</span></button>
+						<button type="button" class="som-choice-btn" data-choice="B"><span class="som-choice-letter">B</span><span>Yes — we are both miserable, but committed to working through our issues</span></button>
+						<button type="button" class="som-choice-btn" data-choice="C"><span class="som-choice-letter">C</span><span>Yes — we are talking about divorce because we don't see how to fix this</span></button>
+						<button type="button" class="som-choice-btn" data-choice="D"><span class="som-choice-letter">D</span><span>Somewhat — things are strained but not in crisis</span></button>
+						<button type="button" class="som-choice-btn" data-choice="E"><span class="som-choice-letter">E</span><span>Not in crisis, but we want something deeper</span></button>
+					</div>
+				</div>
+
+				<!-- Q2 -->
+				<div class="som-question-block" data-step="2">
+					<p class="som-question-number">Question 02</p>
+					<p class="som-question-text">On a scale of 1–10, how would you rate your marriage today?</p>
+					<div class="som-scale-value" data-q2-display>5</div>
+					<p class="som-scale-desc" data-q2-label>Some hope, but uncertain</p>
+					<div class="som-scale-labels">
+						<span>1 — In serious trouble</span>
+						<span>10 — Great marriage</span>
+					</div>
+					<input type="range" name="q2" min="1" max="10" value="5" />
+				</div>
+
+				<!-- Q3 -->
+				<div class="som-question-block" data-step="3">
+					<p class="som-question-number">Question 03</p>
+					<p class="som-question-text">How many marriage counselors have you seen before?</p>
+					<div class="som-choices" data-radios="q3">
+						<button type="button" class="som-choice-btn" data-choice="A"><span class="som-choice-letter">A</span><span>None — this would be our first</span></button>
+						<button type="button" class="som-choice-btn" data-choice="B"><span class="som-choice-letter">B</span><span>One</span></button>
+						<button type="button" class="som-choice-btn" data-choice="C"><span class="som-choice-letter">C</span><span>Two or three</span></button>
+						<button type="button" class="som-choice-btn" data-choice="D"><span class="som-choice-letter">D</span><span>More than three — and nothing has worked</span></button>
+					</div>
+				</div>
+
+				<!-- Q4 -->
+				<div class="som-question-block" data-step="4">
+					<p class="som-question-number">Question 04</p>
+					<p class="som-question-text">How much hope do you have that your marriage can be good?</p>
+					<div class="som-scale-value" data-q4-display>5</div>
+					<p class="som-scale-desc" data-q4-label>Some hope, but uncertain</p>
+					<div class="som-scale-labels">
+						<span>1 — Almost none</span>
+						<span>10 — I believe we can get there</span>
+					</div>
+					<input type="range" name="q4" min="1" max="10" value="5" />
+				</div>
+
+				<!-- Q5 -->
+				<div class="som-question-block" data-step="5">
+					<p class="som-question-number">Question 05</p>
+					<p class="som-question-text">Are you willing to travel to Huntersville, NC and commit to working on your marriage for 5 consecutive days?</p>
+					<div class="som-choices" data-radios="q5">
+						<button type="button" class="som-choice-btn" data-choice="A"><span class="som-choice-letter">A</span><span>Yes — we are willing to travel</span></button>
+						<button type="button" class="som-choice-btn" data-choice="B"><span class="som-choice-letter">B</span><span>We are already local to the Charlotte / Lake Norman area</span></button>
+						<button type="button" class="som-choice-btn" data-choice="C"><span class="som-choice-letter">C</span><span>Maybe — I'd want to know more first</span></button>
+						<button type="button" class="som-choice-btn" data-choice="D"><span class="som-choice-letter">D</span><span>No — travel is not possible for us right now</span></button>
+					</div>
+				</div>
+
+				<!-- Q6 -->
+				<div class="som-question-block" data-step="6">
+					<p class="som-question-number">Question 06</p>
+					<p class="som-question-text">Are you willing to learn new things and try approaches you haven't tried before?</p>
+					<div class="som-choices" data-radios="q6">
+						<button type="button" class="som-choice-btn" data-choice="A"><span class="som-choice-letter">A</span><span>Yes — we are open to whatever it takes</span></button>
+						<button type="button" class="som-choice-btn" data-choice="B"><span class="som-choice-letter">B</span><span>Mostly — I have some reservations but I'm willing</span></button>
+						<button type="button" class="som-choice-btn" data-choice="C"><span class="som-choice-letter">C</span><span>I'd need to understand what's involved first</span></button>
+					</div>
+				</div>
+
+				<!-- Q7 -->
+				<div class="som-question-block" data-step="7">
+					<p class="som-question-number">Question 07</p>
+					<p class="som-question-text">Would you like a complimentary 30-minute consultation with Barbara to see if this is the right fit?</p>
+					<div class="som-choices" data-radios="q7">
+						<button type="button" class="som-choice-btn" data-choice="A"><span class="som-choice-letter">A</span><span>Yes — I'd love that</span></button>
+						<button type="button" class="som-choice-btn" data-choice="B"><span class="som-choice-letter">B</span><span>I want a bit more information first</span></button>
+						<button type="button" class="som-choice-btn" data-choice="C"><span class="som-choice-letter">C</span><span>No, I'm not ready at this time</span></button>
+					</div>
+				</div>
+
+				<!-- Q8 -->
+				<div class="som-question-block" data-step="8">
+					<p class="som-question-number">Question 08</p>
+					<p class="som-question-text">Last step — please share how Barbara's team can reach you.</p>
+					<p class="som-question-helper">
+						Your information is private and used only to prepare for your consultation.
+					</p>
+					<div class="som-fields">
+						<label class="som-field"><span>Your Name</span><input type="text" name="name" required autocomplete="name" /></label>
+						<label class="som-field"><span>Email</span><input type="email" name="email" required autocomplete="email" /></label>
+						<label class="som-field"><span>Phone</span><input type="tel" name="phone" required autocomplete="tel" /></label>
+						<label class="som-field"><span>Anything you'd like Barbara to know? <em>(optional)</em></span><textarea name="note" rows="3"></textarea></label>
+					</div>
+				</div>
+
+				<!-- Hidden inputs to hold radio answers (set by choice buttons) -->
+				<input type="hidden" name="q1" data-radio-input="q1" />
+				<input type="hidden" name="q3" data-radio-input="q3" />
+				<input type="hidden" name="q5" data-radio-input="q5" />
+				<input type="hidden" name="q6" data-radio-input="q6" />
+				<input type="hidden" name="q7" data-radio-input="q7" />
+
+				<div class="som-widget-nav">
+					<button type="button" class="som-btn-back" data-q-back>← Back</button>
+					<button type="button" class="som-btn-next" data-q-next>Continue →</button>
+					<button type="submit" class="som-btn-next hidden" data-q-submit>Request My Consult →</button>
+				</div>
+			</form>
+		</div>
+
+		<!-- Outcome screens -->
+		<div class="som-result-screen" data-outcome="qualified">
+			<div class="som-result-icon" aria-hidden="true">✦</div>
+			<h2 class="som-result-title">You Sound Like a <em>Great Fit.</em></h2>
+			<p class="som-result-body">
+				Based on your answers, the Marriage Intensive may be exactly what you and your spouse need. Barbara would love to connect with you for a complimentary 30-minute consultation — no obligation, no pressure.
+			</p>
+			<div class="som-result-cta-row">
+				<a href={bookingUrl} target="_blank" rel="noopener" class="som-btn-primary">Schedule Your Free Consult</a>
+				<a href={`tel:${phoneDigits}`} class="som-btn-outline-gold">Or Call: {phone}</a>
+			</div>
+			<p class="som-result-fineprint">A confirmation email has been sent to Barbara's office with your responses.</p>
+		</div>
+
+		<div class="som-result-screen" data-outcome="not-ready">
+			<div class="som-result-icon" aria-hidden="true">†</div>
+			<h2 class="som-result-title">We Completely <em>Understand.</em></h2>
+			<p class="som-result-body">
+				Not everyone is ready at the same moment — and that's okay. What would be most helpful for you right now?
+			</p>
+			<div class="som-soft-stack">
+				<button type="button" class="som-soft-btn" data-go="individual"><span class="som-choice-letter">A</span><span>Learn about Barbara's Individual Psychotherapy &amp; Personal Growth Intensives</span></button>
+				<button type="button" class="som-soft-btn" data-go="phone-only"><span class="som-choice-letter">B</span><span>Call when I'm ready — just give me the number</span></button>
+			</div>
+		</div>
+
+		<div class="som-result-screen" data-outcome="individual">
+			<div class="som-result-icon" aria-hidden="true">✦</div>
+			<h2 class="som-result-title">Individual Intensive <em>Inquiry</em></h2>
+			<p class="som-result-body">
+				Barbara's Individual Psychotherapy &amp; Personal Growth Intensives offer the same multidimensional approach — focused on you as an individual. Complete the form and Barbara's team will be in touch.
+			</p>
+			<form class="som-fields" data-individual-form novalidate>
+				<label class="som-field"><span>Your Name</span><input type="text" name="name" required autocomplete="name" /></label>
+				<label class="som-field"><span>Email</span><input type="email" name="email" required autocomplete="email" /></label>
+				<label class="som-field"><span>Phone</span><input type="tel" name="phone" required autocomplete="tel" /></label>
+				<label class="som-field"><span>What would you like Barbara to know?</span><textarea name="note" rows="3"></textarea></label>
+				<div class="som-widget-nav">
+					<button type="button" class="som-btn-back" data-go-back>← Go Back</button>
+					<button type="submit" class="som-btn-next">Submit Inquiry →</button>
+				</div>
+			</form>
+		</div>
+
+		<div class="som-result-screen" data-outcome="thank-you">
+			<div class="som-result-icon" aria-hidden="true">✦</div>
+			<h2 class="som-result-title">Thank <em>You!</em></h2>
+			<p class="som-result-body">
+				We've received your inquiry. Barbara's team will be in touch soon to share more information and explore whether this is a good fit.
+			</p>
+			<a href="https://thekohlergroup.net" class="som-btn-outline-gold">Visit TheKohlerGroup.net</a>
+		</div>
+
+		<div class="som-result-screen" data-outcome="phone-only">
+			<div class="som-result-icon" aria-hidden="true">†</div>
+			<h2 class="som-result-title">Sounds <em>Good.</em></h2>
+			<p class="som-result-body">
+				Call us when you would like to explore services. We will be here when you are ready.
+			</p>
+			<a href={`tel:${phoneDigits}`} class="som-result-phone">{phone}</a>
+			<p class="som-result-fineprint">The Kohler Group, PLLC · Huntersville, NC</p>
+			<button type="button" class="som-btn-back" data-go-back style="margin-top:32px">← Go Back</button>
+		</div>
+
+		<div class="som-result-screen" data-outcome="travel-impossible">
+			<div class="som-result-icon" aria-hidden="true">†</div>
+			<h2 class="som-result-title">We <em>Understand.</em></h2>
+			<p class="som-result-body">
+				The Marriage Intensive is a significant commitment — and it's not right for everyone at every moment. If you'd like to learn more or explore whether this might become an option for you, we'd welcome a conversation when you're ready.
+			</p>
+			<a href="https://thekohlergroup.net" class="som-btn-outline-gold">Learn More at TheKohlerGroup.net</a>
+		</div>
+	</div>
+</div>
+
+<style is:global>
+	/* Quiz widget styling — uses values from Barbara's prototype */
+	body.som-page .som-progress-label {
+		font-size: 10px;
+		font-weight: 600;
+		letter-spacing: 3px;
+		text-transform: uppercase;
+		color: var(--som-mid-gray);
+		margin-bottom: 12px;
+		text-align: right;
+	}
+	body.som-page .som-progress-bar {
+		height: 3px;
+		background: var(--som-light-gray);
+		margin-bottom: 40px;
+		position: relative;
+	}
+	body.som-page .som-progress-fill {
+		height: 100%;
+		background: var(--som-gold);
+		transition: width .5s ease;
+	}
+
+	body.som-page .som-question-block { display: none; }
+	body.som-page .som-question-block.is-active { display: block; animation: somFadeIn .4s ease; }
+	@keyframes somFadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+	body.som-page .som-question-number {
+		font-size: 10px;
+		font-weight: 700;
+		letter-spacing: 4px;
+		text-transform: uppercase;
+		color: var(--som-gold);
+		margin-bottom: 10px;
+	}
+	body.som-page .som-question-text {
+		font-family: 'Cormorant Garamond', Georgia, serif;
+		font-size: 26px;
+		font-weight: 400;
+		color: var(--som-sapphire-deep);
+		line-height: 1.3;
+		margin-bottom: 32px;
+	}
+	body.som-page .som-question-helper {
+		font-size: 13px;
+		color: var(--som-mid-gray);
+		margin-top: -16px;
+		margin-bottom: 24px;
+		line-height: 1.6;
+	}
+
+	body.som-page .som-choices { display: flex; flex-direction: column; gap: 12px; }
+	body.som-page .som-choice-btn {
+		background: transparent;
+		border: 1px solid var(--som-light-gray);
+		padding: 16px 24px;
+		text-align: left;
+		cursor: pointer;
+		font-family: 'Montserrat', system-ui, sans-serif;
+		font-size: 14px;
+		font-weight: 400;
+		color: var(--som-text);
+		display: flex;
+		align-items: center;
+		gap: 16px;
+		transition: all .25s ease;
+		width: 100%;
+	}
+	body.som-page .som-choice-btn:hover {
+		border-color: var(--som-sapphire);
+		background: rgba(26,74,138,0.04);
+		color: var(--som-sapphire);
+	}
+	body.som-page .som-choice-btn.is-selected {
+		border-color: var(--som-sapphire);
+		background: var(--som-sapphire-deep);
+		color: #fff;
+	}
+	body.som-page .som-choice-letter {
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 1px;
+		width: 24px;
+		height: 24px;
+		min-width: 24px;
+		border: 1px solid currentColor;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		opacity: 0.6;
+	}
+	body.som-page .som-choice-btn.is-selected .som-choice-letter { opacity: 1; }
+
+	body.som-page .som-scale-value {
+		text-align: center;
+		font-family: 'Cormorant Garamond', Georgia, serif;
+		font-size: 48px;
+		font-weight: 300;
+		color: var(--som-sapphire-deep);
+		line-height: 1;
+		margin-bottom: 4px;
+	}
+	body.som-page .som-scale-desc {
+		text-align: center;
+		font-size: 12px;
+		color: var(--som-mid-gray);
+		font-style: italic;
+		min-height: 20px;
+		margin-bottom: 24px;
+	}
+	body.som-page .som-scale-labels {
+		display: flex;
+		justify-content: space-between;
+		font-size: 11px;
+		font-weight: 500;
+		color: var(--som-mid-gray);
+		margin-bottom: 12px;
+		letter-spacing: 0.5px;
+	}
+	body.som-page input[type="range"] {
+		-webkit-appearance: none;
+		appearance: none;
+		width: 100%;
+		height: 3px;
+		background: var(--som-light-gray);
+		outline: none;
+		cursor: pointer;
+	}
+	body.som-page input[type="range"]::-webkit-slider-thumb {
+		-webkit-appearance: none;
+		appearance: none;
+		width: 22px;
+		height: 22px;
+		background: var(--som-sapphire-deep);
+		border-radius: 50%;
+		cursor: pointer;
+		border: 3px solid #fff;
+		box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+	}
+	body.som-page input[type="range"]::-moz-range-thumb {
+		width: 22px;
+		height: 22px;
+		background: var(--som-sapphire-deep);
+		border-radius: 50%;
+		cursor: pointer;
+		border: 3px solid #fff;
+		box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+	}
+
+	body.som-page .som-fields {
+		display: grid;
+		gap: 16px;
+	}
+	body.som-page .som-field { display: block; }
+	body.som-page .som-field > span {
+		display: block;
+		font-size: 10px;
+		font-weight: 600;
+		letter-spacing: 2px;
+		text-transform: uppercase;
+		color: var(--som-mid-gray);
+		margin-bottom: 8px;
+	}
+	body.som-page .som-field input,
+	body.som-page .som-field textarea {
+		width: 100%;
+		padding: 12px 16px;
+		font-family: 'Montserrat', system-ui, sans-serif;
+		font-size: 14px;
+		color: var(--som-text);
+		background: #fff;
+		border: 1px solid var(--som-light-gray);
+		outline: none;
+		transition: border-color .15s ease;
+	}
+	body.som-page .som-field input:focus,
+	body.som-page .som-field textarea:focus { border-color: var(--som-sapphire); }
+	body.som-page .som-field input.invalid,
+	body.som-page .som-field textarea.invalid { border-color: #c0392b; }
+
+	body.som-page .som-widget-nav {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: 40px;
+		padding-top: 32px;
+		border-top: 1px solid var(--som-light-gray);
+	}
+	body.som-page .som-btn-back {
+		background: none;
+		border: 0;
+		font-family: 'Montserrat', system-ui, sans-serif;
+		font-size: 12px;
+		font-weight: 600;
+		letter-spacing: 2px;
+		text-transform: uppercase;
+		color: var(--som-mid-gray);
+		cursor: pointer;
+		padding: 0;
+		transition: color .2s ease;
+	}
+	body.som-page .som-btn-back:hover { color: var(--som-sapphire); }
+	body.som-page .som-btn-back:disabled { opacity: 0; pointer-events: none; }
+	body.som-page .som-btn-next {
+		background: var(--som-sapphire-deep);
+		border: 0;
+		font-family: 'Montserrat', system-ui, sans-serif;
+		font-size: 12px;
+		font-weight: 600;
+		letter-spacing: 2px;
+		text-transform: uppercase;
+		color: #fff;
+		cursor: pointer;
+		padding: 16px 36px;
+		transition: background .25s ease, transform .2s ease;
+	}
+	body.som-page .som-btn-next:hover { background: var(--som-sapphire-light); transform: translateY(-1px); }
+	body.som-page .som-btn-next.hidden { display: none; }
+
+	body.som-page .som-result-screen { display: none; text-align: center; padding: 16px 0; }
+	body.som-page .som-result-screen.is-active { display: block; animation: somFadeIn .5s ease; }
+	body.som-page .som-result-icon {
+		font-family: 'Cormorant Garamond', Georgia, serif;
+		font-size: 48px;
+		color: var(--som-gold);
+		margin-bottom: 20px;
+		line-height: 1;
+	}
+	body.som-page .som-result-title {
+		font-family: 'Cormorant Garamond', Georgia, serif;
+		font-size: 34px;
+		font-weight: 400;
+		color: var(--som-sapphire-deep);
+		margin-bottom: 16px;
+		line-height: 1.2;
+	}
+	body.som-page .som-result-title em { font-style: italic; color: var(--som-gold); }
+	body.som-page .som-result-body {
+		font-size: 15px;
+		font-weight: 300;
+		color: var(--som-mid-gray);
+		line-height: 1.8;
+		margin: 0 auto 32px;
+		max-width: 500px;
+	}
+	body.som-page .som-result-cta-row {
+		display: flex;
+		justify-content: center;
+		gap: 12px;
+		flex-wrap: wrap;
+		margin-bottom: 16px;
+	}
+	body.som-page .som-result-fineprint {
+		font-size: 12px;
+		color: var(--som-mid-gray);
+		margin-top: 16px;
+	}
+	body.som-page .som-result-phone {
+		display: inline-block;
+		font-family: 'Cormorant Garamond', Georgia, serif;
+		font-size: 40px;
+		font-weight: 300;
+		color: var(--som-gold);
+		margin: 16px 0 8px;
+		text-decoration: none;
+	}
+	body.som-page .som-result-phone:hover { color: var(--som-gold-light); }
+	body.som-page .som-soft-stack {
+		display: flex;
+		flex-direction: column;
+		gap: 12px;
+		max-width: 480px;
+		margin: 0 auto;
+	}
+	body.som-page .som-soft-btn {
+		display: flex;
+		align-items: center;
+		gap: 16px;
+		text-align: left;
+		background: #fff;
+		border: 1px solid var(--som-light-gray);
+		padding: 16px 24px;
+		font-family: 'Montserrat', system-ui, sans-serif;
+		font-size: 14px;
+		font-weight: 400;
+		color: var(--som-text);
+		cursor: pointer;
+		transition: all .25s ease;
+		width: 100%;
+	}
+	body.som-page .som-soft-btn:hover {
+		border-color: var(--som-sapphire);
+		background: rgba(26,74,138,0.04);
+		color: var(--som-sapphire);
+	}
+</style>
+
+<script>
+	type Answers = Record<string, string>;
+
+	function initQuiz(root: HTMLElement) {
+		const form = root.querySelector<HTMLFormElement>('[data-q-form]');
+		const back = root.querySelector<HTMLButtonElement>('[data-q-back]');
+		const next = root.querySelector<HTMLButtonElement>('[data-q-next]');
+		const submit = root.querySelector<HTMLButtonElement>('[data-q-submit]');
+		const counter = root.querySelector<HTMLElement>('[data-q-counter]');
+		const bar = root.querySelector<HTMLElement>('[data-q-bar]');
+		const stage = root.querySelector<HTMLElement>('[data-quiz-stage]');
+		if (!form || !back || !next || !submit || !counter || !bar || !stage) return;
+
+		const TOTAL = 8;
+		let step = 1;
+
+		const labelFor = (n: number) => {
+			if (n <= 2) return 'In serious trouble';
+			if (n <= 4) return 'Struggling but still here';
+			if (n <= 6) return 'Some hope, but uncertain';
+			if (n <= 8) return 'Doing well — and growing';
+			return 'Strong and thriving';
+		};
+		const labelForHope = (n: number) => {
+			if (n <= 2) return 'Almost no hope';
+			if (n <= 4) return 'A flicker of hope';
+			if (n <= 6) return 'Some hope, but uncertain';
+			if (n <= 8) return 'Real, growing hope';
+			return 'Confident we can get there';
+		};
+
+		const q2 = form.querySelector<HTMLInputElement>('input[name="q2"]');
+		const q2d = root.querySelector<HTMLElement>('[data-q2-display]');
+		const q2l = root.querySelector<HTMLElement>('[data-q2-label]');
+		q2?.addEventListener('input', () => {
+			if (q2d) q2d.textContent = q2.value;
+			if (q2l) q2l.textContent = labelFor(parseInt(q2.value, 10));
+		});
+		const q4 = form.querySelector<HTMLInputElement>('input[name="q4"]');
+		const q4d = root.querySelector<HTMLElement>('[data-q4-display]');
+		const q4l = root.querySelector<HTMLElement>('[data-q4-label]');
+		q4?.addEventListener('input', () => {
+			if (q4d) q4d.textContent = q4.value;
+			if (q4l) q4l.textContent = labelForHope(parseInt(q4.value, 10));
+		});
+
+		// Choice buttons drive hidden radio inputs
+		root.querySelectorAll<HTMLDivElement>('[data-radios]').forEach((group) => {
+			const name = group.dataset.radios!;
+			const hidden = root.querySelector<HTMLInputElement>(`[data-radio-input="${name}"]`);
+			group.querySelectorAll<HTMLButtonElement>('.som-choice-btn').forEach((btn) => {
+				btn.addEventListener('click', () => {
+					group.querySelectorAll('.som-choice-btn').forEach((b) => b.classList.remove('is-selected'));
+					btn.classList.add('is-selected');
+					if (hidden) hidden.value = btn.dataset.choice!;
+				});
+			});
+		});
+
+		const showStep = (n: number) => {
+			step = n;
+			root.querySelectorAll<HTMLElement>('.som-question-block').forEach((el) => {
+				el.classList.toggle('is-active', parseInt(el.dataset.step ?? '0', 10) === n);
+			});
+			counter!.textContent = `${Math.round((n / TOTAL) * 100)}% · Question ${n} of ${TOTAL}`;
+			bar!.style.width = `${Math.round((n / TOTAL) * 100)}%`;
+			back!.disabled = n === 1;
+			const isLast = n === TOTAL;
+			next!.classList.toggle('hidden', isLast);
+			submit!.classList.toggle('hidden', !isLast);
+		};
+
+		const validateStep = (n: number): boolean => {
+			if (n === 8) {
+				const name = form.querySelector<HTMLInputElement>('input[name="name"]');
+				const email = form.querySelector<HTMLInputElement>('input[name="email"]');
+				const phoneEl = form.querySelector<HTMLInputElement>('input[name="phone"]');
+				let ok = true;
+				[name, email, phoneEl].forEach((el) => {
+					if (!el) return;
+					const v = el.value.trim();
+					const valid = v.length > 0 && (el.type !== 'email' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+					el.classList.toggle('invalid', !valid);
+					if (!valid) ok = false;
+				});
+				return ok;
+			}
+			if (n === 2 || n === 4) return true;
+			const hidden = form.querySelector<HTMLInputElement>(`[data-radio-input="q${n}"]`);
+			return !!hidden?.value;
+		};
+
+		next.addEventListener('click', () => {
+			if (!validateStep(step)) {
+				const active = root.querySelector<HTMLElement>('.som-question-block.is-active');
+				if (active && !active.querySelector('.som-q-error')) {
+					const note = document.createElement('p');
+					note.className = 'som-q-error';
+					note.style.cssText = 'color:#c0392b;font-size:12px;margin-top:14px;letter-spacing:1px;text-transform:uppercase;font-weight:600';
+					note.textContent = 'Please choose an answer to continue.';
+					active.appendChild(note);
+				}
+				return;
+			}
+			root.querySelectorAll('.som-q-error').forEach((el) => el.remove());
+			if (step < TOTAL) showStep(step + 1);
+		});
+
+		back.addEventListener('click', () => { if (step > 1) showStep(step - 1); });
+
+		const collectAnswers = (): Answers => {
+			const data = new FormData(form);
+			const a: Answers = {};
+			['q1', 'q2', 'q3', 'q4', 'q5', 'q6', 'q7'].forEach((k) => {
+				const v = data.get(k); if (v != null) a[k] = String(v);
+			});
+			a.name = String(data.get('name') ?? '');
+			a.email = String(data.get('email') ?? '');
+			a.phone = String(data.get('phone') ?? '');
+			a.note = String(data.get('note') ?? '');
+			return a;
+		};
+
+		const decideOutcome = (a: Answers): string => {
+			if (a.q5 === 'D') return 'travel-impossible';
+			if (a.q7 === 'C') return 'not-ready';
+			return 'qualified';
+		};
+
+		const showOutcome = (key: string) => {
+			stage.style.display = 'none';
+			root.querySelectorAll<HTMLElement>('.som-result-screen').forEach((el) => el.classList.remove('is-active'));
+			const target = root.querySelector<HTMLElement>(`[data-outcome="${key}"]`);
+			if (target) {
+				target.classList.add('is-active');
+				target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			}
+		};
+
+		const friendlyAnswer = (q: string, v: string): string => {
+			const map: Record<string, Record<string, string>> = {
+				q1: { A: 'In real crisis', B: 'Both miserable but committed', C: 'Talking about divorce', D: 'Strained but not in crisis', E: 'Not in crisis — want something deeper' },
+				q3: { A: 'None', B: 'One', C: 'Two or three', D: 'More than three' },
+				q5: { A: 'Willing to travel', B: 'Local to Charlotte / Lake Norman', C: 'Maybe — wants more info', D: 'Travel not possible' },
+				q6: { A: 'Open to whatever it takes', B: 'Mostly willing', C: 'Wants to understand first' },
+				q7: { A: 'Yes — would love that', B: 'Wants more info first', C: 'Not ready right now' },
+			};
+			return map[q]?.[v] ?? v;
+		};
+
+		const buildMailto = (
+			to: string,
+			subject: string,
+			a: Answers,
+			kind: 'screening' | 'individual',
+		): string => {
+			const lines: string[] = [];
+			lines.push(`From: ${a.name || '(no name)'}`);
+			lines.push(`Email: ${a.email || '(no email)'}`);
+			lines.push(`Phone: ${a.phone || '(no phone)'}`);
+			lines.push('');
+			if (kind === 'screening') {
+				lines.push('--- Marriage Intensive Screening ---');
+				if (a.q1) lines.push(`1. Struggling now: ${friendlyAnswer('q1', a.q1)}`);
+				if (a.q2) lines.push(`2. Marriage rating today: ${a.q2}/10`);
+				if (a.q3) lines.push(`3. Counselors seen before: ${friendlyAnswer('q3', a.q3)}`);
+				if (a.q4) lines.push(`4. Hope level: ${a.q4}/10`);
+				if (a.q5) lines.push(`5. Travel to Huntersville: ${friendlyAnswer('q5', a.q5)}`);
+				if (a.q6) lines.push(`6. Open to new approaches: ${friendlyAnswer('q6', a.q6)}`);
+				if (a.q7) lines.push(`7. Wants free 30-min consult: ${friendlyAnswer('q7', a.q7)}`);
+			} else {
+				lines.push('--- Individual Intensive Inquiry ---');
+				lines.push('Source: /save-our-marriage screening (Q7 = not ready, chose individual track)');
+			}
+			if (a.note) {
+				lines.push('');
+				lines.push('Notes from prospect:');
+				lines.push(a.note);
+			}
+			lines.push('');
+			lines.push('---');
+			lines.push('Submitted from saveourmarriage.us / thekohlergroup.net/save-our-marriage');
+			const body = lines.join('\n');
+			return `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+		};
+
+		const buildBarbaraEmail = () => {
+			const u = root.dataset.barbaraUser;
+			const d = root.dataset.barbaraDomain;
+			return `${u}@${d}`;
+		};
+
+		form.addEventListener('submit', (e) => {
+			e.preventDefault();
+			if (!validateStep(8)) return;
+			const a = collectAnswers();
+			const outcome = decideOutcome(a);
+			const subject = `Marriage Intensive Inquiry — ${a.name || 'Prospect'}`;
+			window.location.href = buildMailto(buildBarbaraEmail(), subject, a, 'screening');
+			setTimeout(() => showOutcome(outcome), 200);
+		});
+
+		root.querySelectorAll<HTMLButtonElement>('[data-go]').forEach((btn) => {
+			btn.addEventListener('click', () => showOutcome(btn.dataset.go!));
+		});
+		root.querySelectorAll<HTMLButtonElement>('[data-go-back]').forEach((btn) => {
+			btn.addEventListener('click', () => showOutcome('not-ready'));
+		});
+
+		const indForm = root.querySelector<HTMLFormElement>('[data-individual-form]');
+		indForm?.addEventListener('submit', (e) => {
+			e.preventDefault();
+			const data = new FormData(indForm);
+			const a: Answers = {
+				name: String(data.get('name') ?? ''),
+				email: String(data.get('email') ?? ''),
+				phone: String(data.get('phone') ?? ''),
+				note: String(data.get('note') ?? ''),
+			};
+			let ok = true;
+			indForm.querySelectorAll<HTMLInputElement>('input[required]').forEach((el) => {
+				const v = el.value.trim();
+				const valid = v.length > 0 && (el.type !== 'email' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+				el.classList.toggle('invalid', !valid);
+				if (!valid) ok = false;
+			});
+			if (!ok) return;
+			const subject = `Individual Intensive Inquiry — ${a.name || 'Prospect'}`;
+			window.location.href = buildMailto(buildBarbaraEmail(), subject, a, 'individual');
+			setTimeout(() => showOutcome('thank-you'), 200);
+		});
+
+		showStep(1);
+	}
+
+	function bootQuizzes() {
+		document.querySelectorAll<HTMLElement>('.som-quiz').forEach(initQuiz);
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', bootQuizzes);
+	} else {
+		bootQuizzes();
+	}
+</script>
