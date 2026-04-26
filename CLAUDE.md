@@ -8,11 +8,43 @@ This site: The Kohler Group | Repo: github.com/Spirit-Media-US/the-kohler-group 
 **Sanity Studio:** Embedded at thekohlergroup.net/studio/ (static build)
 **Infrastructure:** Deploy webhook wired, CORS origins configured, studio deployed
 
-## Status — as of 2026-04-08
+## Status — as of 2026-04-26
 
 ### Completed & Live on Main
 - Live site, completed migration
 - Sanity Studio embedded at /studio with deploy webhook and CORS configured
+
+### On dev — pending Kevin's "push to main"
+- `/save-our-marriage` landing page for Barbara's $15K Marriage Intensive funnel.
+  Built to Barbara's HTML prototype design (sapphire+gold+cream, Cormorant
+  Garamond serif). 8-question screening quiz with 3 branched outcomes
+  (qualified / not-ready / travel-impossible) plus an Individual Intensive
+  sub-form. Submit fires a mailto: to `siteSettings.barbaraEmail` with all
+  answers pre-filled (TKG isn't in our GHL — matches the existing MailtoLink
+  pattern on the rest of the site). Existing `/intensives/marriage` page
+  untouched. Dev preview: https://dev.the-kohler-group.pages.dev/save-our-marriage
+- `Layout.astro` now supports `landing={true}` prop that suppresses the global
+  `<Nav>` and `<Footer>` for funnel pages, while keeping all SEO/preload/
+  font/JSON-LD machinery intact. Existing pages render unchanged.
+- `siteSettings` schema extended with 4 SOM fields: `somVideoUrl`,
+  `somHeroBackground`, `somBarbaraPhoto`, `somPrice`. Barbara can edit from
+  Studio without code changes. Defaults render correctly when fields are blank.
+- Cormorant Garamond self-hosted to `assets.spiritmediapublishing.com/fonts/cormorant-garamond/`
+  per the perf gate. Single weight (400) preloaded; rest load via `font-display:swap`.
+- SOM page CSS scoped under `body.som-page` so the navy/gold/cream palette and
+  Cormorant serif don't leak into the rest of TKG. Verbatim port of Barbara's
+  prototype CSS.
+- Couples thumbnails strip above "Who This Is For": 4 square photos —
+  young-couple + senior-couple from Sanity, plus 2 lifestyle couple photos
+  hot-linked from `images.unsplash.com` (`img-src` allowlist updated in
+  `public/_headers`).
+
+### Blocked — pending Barbara
+- `saveourmarriage.us` → 301 redirect to `/save-our-marriage`. Waiting on
+  Barbara to confirm where the domain is registered. Once known: if it's
+  on Cloudflare, add a redirect rule; if elsewhere, set a host-level 301.
+- "Message from Barbara" video — placeholder card renders until Barbara
+  records and pastes the YouTube URL into Studio's `SOM — Barbara Video URL`.
 
 ## Dev Commands
 
