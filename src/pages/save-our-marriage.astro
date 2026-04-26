@@ -8,25 +8,22 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   somVideoUrl, somHeroBackground, somBarbaraPhoto, somPrice
 }`);
 
-// Defaults — used when Sanity fields are empty so the page never breaks
 const price = settings?.somPrice || '$15,000';
 const videoUrl: string | null = settings?.somVideoUrl || null;
 const bookingUrl = settings?.bookingUrl || 'https://thekohlergroup.clientsecure.me';
 const barbaraEmail = settings?.barbaraEmail || 'barbara@thekohlergroup.net';
 const phone = settings?.phone || '704-948-1268';
 
-// Barbara photo — Sanity-overridable, falls back to existing intensive portrait
 const barbaraPhotoUrl = settings?.somBarbaraPhoto
 	? urlFor(settings.somBarbaraPhoto)
 			.width(800)
-			.height(800)
+			.height(1067)
 			.fit('crop')
 			.format('webp')
 			.quality(85)
 			.url()
-	: 'https://cdn.sanity.io/images/2bom5gqg/production/21282e732035fa47572f5ca27d12ae838ef7fe43-600x400.jpg?w=800&h=800&fit=crop&auto=format';
+	: 'https://cdn.sanity.io/images/2bom5gqg/production/21282e732035fa47572f5ca27d12ae838ef7fe43-600x400.jpg?w=800&h=1067&fit=crop&auto=format';
 
-// Optional hero background image — when set, sits behind a navy overlay
 const heroBgUrl = settings?.somHeroBackground
 	? urlFor(settings.somHeroBackground).width(1920).format('webp').quality(80).url()
 	: null;
@@ -43,7 +40,6 @@ const ogImage = barbaraPhotoUrl;
 	landing={true}
 >
 	<Fragment slot="head">
-		<!-- Cormorant Garamond — self-hosted serif used only on this page -->
 		<link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-400.woff2" crossorigin />
 		<style is:inline>
 			@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:300;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-300.woff2') format('woff2')}
@@ -52,7 +48,12 @@ const ogImage = barbaraPhotoUrl;
 			@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:600;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-600.woff2') format('woff2')}
 			@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:400;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-400-italic.woff2') format('woff2')}
 
-			/* SOM design tokens — scoped to body.som-page so they never leak into the rest of TKG */
+			/* ======================================================================
+			   Save Our Marriage — ported verbatim from Barbara's prototype CSS,
+			   scoped under body.som-page so nothing leaks into the rest of TKG.
+			   Wrapped in @layer base so Tailwind v4 utilities can still override
+			   on the few elements where we mix classes.
+			   ====================================================================== */
 			@layer base {
 				body.som-page {
 					--som-sapphire: #1a4a8a;
@@ -66,138 +67,623 @@ const ogImage = barbaraPhotoUrl;
 					--som-mid-gray: #666;
 					--som-light-gray: #e8e4de;
 					--som-text: #2d2d2d;
-					background: var(--som-warm-white);
+					font-family: 'Montserrat', system-ui, sans-serif;
 					color: var(--som-text);
-				}
-				body.som-page .som-serif { font-family: 'Cormorant Garamond', Georgia, serif; }
-				body.som-page .som-italic-gold { font-style: italic; color: var(--som-gold); }
-				body.som-page .som-eyebrow {
-					font-size: 0.7rem;
-					font-weight: 600;
-					letter-spacing: 0.25em;
-					text-transform: uppercase;
-					color: var(--som-gold);
-				}
-				body.som-page .som-eyebrow-light {
-					color: var(--som-gold-light);
-				}
-				body.som-page .som-divider {
-					color: var(--som-gold);
-					font-size: 1.5rem;
-					font-family: 'Cormorant Garamond', Georgia, serif;
-				}
-				body.som-page .som-btn-gold {
-					display: inline-block;
-					background: var(--som-gold);
-					color: #fff;
-					padding: 0.95rem 2rem;
-					font-size: 0.78rem;
-					font-weight: 600;
-					letter-spacing: 0.18em;
-					text-transform: uppercase;
-					transition: background 0.18s ease;
-				}
-				body.som-page .som-btn-gold:hover { background: #a07f30; }
-				body.som-page .som-btn-outline {
-					display: inline-block;
-					border: 1.5px solid var(--som-gold);
-					color: var(--som-gold);
-					padding: 0.95rem 2rem;
-					font-size: 0.78rem;
-					font-weight: 600;
-					letter-spacing: 0.18em;
-					text-transform: uppercase;
-					transition: background 0.18s ease, color 0.18s ease;
-				}
-				body.som-page .som-btn-outline:hover { background: var(--som-gold); color: #fff; }
-				body.som-page .som-btn-sapphire {
-					display: inline-block;
-					background: var(--som-sapphire-deep);
-					color: #fff;
-					padding: 0.85rem 1.75rem;
-					font-size: 0.78rem;
-					font-weight: 600;
-					letter-spacing: 0.18em;
-					text-transform: uppercase;
-					transition: background 0.18s ease;
-					cursor: pointer;
-					border: 0;
-				}
-				body.som-page .som-btn-sapphire:hover { background: var(--som-sapphire); }
-				body.som-page .som-btn-sapphire:disabled { opacity: 0.45; cursor: not-allowed; }
-
-				body.som-page .som-card {
-					background: #fff;
-					border: 1px solid var(--som-light-gray);
-					padding: 2.25rem 1.75rem;
-				}
-				body.som-page .som-card-num {
-					font-family: 'Cormorant Garamond', Georgia, serif;
-					font-size: 2.25rem;
-					font-weight: 300;
-					color: var(--som-gold);
-					line-height: 1;
-					margin-bottom: 1.25rem;
-				}
-				body.som-page .som-card h3 {
-					font-family: 'Cormorant Garamond', Georgia, serif;
-					font-size: 1.4rem;
-					font-weight: 500;
-					color: var(--som-sapphire-deep);
-					margin-bottom: 0.85rem;
-					line-height: 1.25;
-				}
-				body.som-page .som-card p {
-					font-size: 0.92rem;
-					line-height: 1.65;
-					color: var(--som-mid-gray);
+					background: var(--som-warm-white);
+					overflow-x: hidden;
 				}
 
-				body.som-page .som-stat-num {
-					font-family: 'Cormorant Garamond', Georgia, serif;
-					font-size: 3.25rem;
-					font-weight: 300;
-					color: var(--som-gold);
-					line-height: 1;
-				}
-
-				body.som-page .som-bullet::before {
-					content: '✦';
-					color: var(--som-gold);
-					margin-right: 0.6rem;
-					font-size: 0.7em;
-					vertical-align: middle;
-				}
-
-				/* Hero — pure CSS gradient unless an image is set, no LCP image cost */
+				/* ─── HERO ─── */
 				body.som-page .som-hero {
-					background: linear-gradient(135deg, #0a1f42 0%, #0f2d5a 45%, #1a4a8a 100%);
-					color: #fff;
+					min-height: 100vh;
+					background: linear-gradient(160deg, var(--som-sapphire-deep) 0%, var(--som-sapphire) 50%, #1e3a6e 100%);
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-content: center;
+					text-align: center;
+					padding: 80px 24px 60px;
 					position: relative;
 					overflow: hidden;
 				}
-				body.som-page .som-hero.has-bg::before {
+				body.som-page .som-hero::before {
 					content: '';
 					position: absolute;
 					inset: 0;
-					background-image: var(--som-hero-bg);
-					background-size: cover;
-					background-position: center;
-					opacity: 0.32;
+					background:
+						radial-gradient(ellipse at 30% 20%, rgba(184,150,62,0.15) 0%, transparent 60%),
+						radial-gradient(ellipse at 70% 80%, rgba(255,255,255,0.05) 0%, transparent 50%);
 					z-index: 0;
 				}
 				body.som-page .som-hero.has-bg::after {
 					content: '';
 					position: absolute;
 					inset: 0;
-					background: linear-gradient(135deg, rgba(10,31,66,0.7) 0%, rgba(15,45,90,0.85) 100%);
-					z-index: 1;
+					background-image: var(--som-hero-bg);
+					background-size: cover;
+					background-position: center;
+					opacity: 0.18;
+					z-index: 0;
 				}
 				body.som-page .som-hero > * { position: relative; z-index: 2; }
+				body.som-page .som-hero-cross {
+					position: absolute;
+					opacity: 0.04;
+					font-size: 400px;
+					color: #fff;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					user-select: none;
+					line-height: 1;
+					z-index: 1;
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					pointer-events: none;
+				}
+				body.som-page .som-hero-eyebrow {
+					font-size: 11px;
+					font-weight: 600;
+					letter-spacing: 4px;
+					text-transform: uppercase;
+					color: var(--som-gold-light);
+					margin-bottom: 24px;
+				}
+				body.som-page .som-hero h1 {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: clamp(48px, 8vw, 96px);
+					font-weight: 300;
+					color: #fff;
+					line-height: 1.05;
+					margin-bottom: 8px;
+				}
+				body.som-page .som-hero h1 em {
+					font-style: italic;
+					color: var(--som-gold-light);
+				}
+				body.som-page .som-hero-subtitle {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: clamp(20px, 3vw, 28px);
+					font-weight: 300;
+					font-style: italic;
+					color: rgba(255,255,255,0.78);
+					margin-bottom: 40px;
+				}
+				body.som-page .som-hero-divider {
+					width: 60px;
+					height: 1px;
+					background: var(--som-gold);
+					margin: 0 auto 32px;
+				}
+				body.som-page .som-hero-body {
+					font-size: 16px;
+					font-weight: 300;
+					color: rgba(255,255,255,0.82);
+					max-width: 560px;
+					line-height: 1.8;
+					margin: 0 auto 48px;
+				}
+				body.som-page .som-cta-group {
+					display: flex;
+					gap: 16px;
+					flex-wrap: wrap;
+					justify-content: center;
+				}
+				body.som-page .som-btn-primary {
+					background: var(--som-gold);
+					color: #fff;
+					font-size: 12px;
+					font-weight: 600;
+					letter-spacing: 2px;
+					text-transform: uppercase;
+					padding: 18px 40px;
+					border: 0;
+					cursor: pointer;
+					text-decoration: none;
+					display: inline-block;
+					transition: background .3s ease, transform .2s ease;
+				}
+				body.som-page .som-btn-primary:hover {
+					background: var(--som-gold-light);
+					transform: translateY(-2px);
+				}
+				body.som-page .som-btn-outline-light {
+					background: transparent;
+					color: #fff;
+					font-size: 12px;
+					font-weight: 600;
+					letter-spacing: 2px;
+					text-transform: uppercase;
+					padding: 17px 40px;
+					border: 1px solid rgba(255,255,255,0.4);
+					cursor: pointer;
+					text-decoration: none;
+					display: inline-block;
+					transition: border-color .3s ease, background .3s ease;
+				}
+				body.som-page .som-btn-outline-light:hover {
+					border-color: #fff;
+					background: rgba(255,255,255,0.08);
+				}
+				body.som-page .som-btn-outline-gold {
+					background: transparent;
+					color: var(--som-gold);
+					font-size: 12px;
+					font-weight: 600;
+					letter-spacing: 2px;
+					text-transform: uppercase;
+					padding: 17px 40px;
+					border: 1px solid var(--som-gold);
+					cursor: pointer;
+					text-decoration: none;
+					display: inline-block;
+					transition: background .3s ease, color .3s ease;
+				}
+				body.som-page .som-btn-outline-gold:hover {
+					background: var(--som-gold);
+					color: #fff;
+				}
+				body.som-page .som-hero-scroll {
+					position: absolute;
+					bottom: 32px;
+					left: 50%;
+					transform: translateX(-50%);
+					color: rgba(255,255,255,0.4);
+					font-size: 11px;
+					letter-spacing: 3px;
+					text-transform: uppercase;
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					gap: 8px;
+					z-index: 2;
+				}
+				body.som-page .som-hero-scroll::after {
+					content: '';
+					width: 1px;
+					height: 40px;
+					background: rgba(255,255,255,0.3);
+					animation: somScrollPulse 2s ease-in-out infinite;
+				}
+				@keyframes somScrollPulse {
+					0%, 100% { opacity: 0.3; transform: scaleY(1); }
+					50% { opacity: 0.8; transform: scaleY(1.2); }
+				}
+
+				/* ─── SHARED SECTION ELEMENTS ─── */
+				body.som-page .som-section-label {
+					font-size: 10px;
+					font-weight: 700;
+					letter-spacing: 5px;
+					text-transform: uppercase;
+					color: var(--som-gold);
+					margin-bottom: 16px;
+				}
+				body.som-page .som-section-title {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: clamp(36px, 5vw, 56px);
+					font-weight: 400;
+					color: var(--som-sapphire-deep);
+					line-height: 1.15;
+					margin-bottom: 24px;
+				}
+				body.som-page .som-section-title em { font-style: italic; color: var(--som-gold); }
+				body.som-page .som-section-body {
+					font-size: 15px;
+					font-weight: 300;
+					color: var(--som-mid-gray);
+					max-width: 600px;
+					margin: 0 auto 48px;
+					line-height: 1.9;
+				}
+				body.som-page .som-container { max-width: 1100px; margin: 0 auto; }
+
+				/* ─── VIDEO SECTION ─── */
+				body.som-page .som-video-section {
+					background: var(--som-cream);
+					padding: 100px 24px;
+					text-align: center;
+				}
+				body.som-page .som-video-placeholder {
+					max-width: 800px;
+					margin: 0 auto;
+					background: var(--som-sapphire-deep);
+					aspect-ratio: 16/9;
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-content: center;
+					color: rgba(255,255,255,0.5);
+					position: relative;
+					overflow: hidden;
+				}
+				body.som-page .som-video-placeholder::before {
+					content: '';
+					position: absolute;
+					inset: 0;
+					background: linear-gradient(135deg, rgba(184,150,62,0.10) 0%, transparent 60%);
+				}
+				body.som-page .som-video-play-icon {
+					width: 72px;
+					height: 72px;
+					border: 2px solid rgba(255,255,255,0.3);
+					border-radius: 50%;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					margin-bottom: 16px;
+					position: relative;
+				}
+				body.som-page .som-video-play-icon::after {
+					content: '';
+					border-style: solid;
+					border-width: 12px 0 12px 22px;
+					border-color: transparent transparent transparent rgba(255,255,255,0.6);
+					margin-left: 6px;
+				}
+				body.som-page .som-video-placeholder p {
+					font-size: 13px;
+					letter-spacing: 2px;
+					text-transform: uppercase;
+					position: relative;
+					z-index: 2;
+				}
+				body.som-page .som-video-iframe {
+					max-width: 800px;
+					margin: 0 auto;
+					aspect-ratio: 16/9;
+					overflow: hidden;
+					position: relative;
+				}
+				body.som-page .som-video-iframe iframe {
+					width: 100%;
+					height: 100%;
+					border: 0;
+				}
+
+				/* ─── TRUTH STRIP ─── */
+				body.som-page .som-truth-strip {
+					background: var(--som-sapphire-deep);
+					padding: 70px 24px;
+					text-align: center;
+				}
+				body.som-page .som-truth-strip blockquote {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: clamp(24px, 4vw, 44px);
+					font-weight: 300;
+					font-style: italic;
+					color: #fff;
+					max-width: 800px;
+					margin: 0 auto;
+					line-height: 1.4;
+				}
+				body.som-page .som-truth-strip cite {
+					display: block;
+					font-family: 'Montserrat', system-ui, sans-serif;
+					font-size: 11px;
+					font-weight: 600;
+					letter-spacing: 3px;
+					text-transform: uppercase;
+					color: var(--som-gold-light);
+					margin-top: 20px;
+					font-style: normal;
+				}
+
+				/* ─── PILLARS (Why This Works) ─── */
+				body.som-page .som-different-section {
+					padding: 100px 24px;
+					background: var(--som-warm-white);
+				}
+				body.som-page .som-section-header { text-align: center; margin-bottom: 70px; }
+				body.som-page .som-pillars-grid {
+					display: grid;
+					grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+					gap: 2px;
+					background: var(--som-light-gray);
+				}
+				body.som-page .som-pillar {
+					background: var(--som-warm-white);
+					padding: 48px 40px;
+					position: relative;
+					transition: background .3s ease;
+				}
+				body.som-page .som-pillar:hover { background: var(--som-cream); }
+				body.som-page .som-pillar-number {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: 72px;
+					font-weight: 300;
+					color: var(--som-light-gray);
+					line-height: 1;
+					margin-bottom: 16px;
+				}
+				body.som-page .som-pillar-accent {
+					width: 30px;
+					height: 2px;
+					background: var(--som-gold);
+					margin-bottom: 20px;
+				}
+				body.som-page .som-pillar h3 {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: 24px;
+					font-weight: 500;
+					color: var(--som-sapphire-deep);
+					margin-bottom: 14px;
+					line-height: 1.2;
+				}
+				body.som-page .som-pillar p {
+					font-size: 14px;
+					font-weight: 300;
+					color: var(--som-mid-gray);
+					line-height: 1.8;
+				}
+
+				/* ─── WHO THIS IS FOR ─── */
+				body.som-page .som-who-section { background: var(--som-cream); padding: 100px 24px; }
+				body.som-page .som-two-col {
+					display: grid;
+					grid-template-columns: 1fr 1fr;
+					gap: 80px;
+					align-items: start;
+				}
+				@media (max-width: 768px) { body.som-page .som-two-col { grid-template-columns: 1fr; gap: 48px; } }
+				body.som-page .som-who-list {
+					list-style: none;
+					padding: 0;
+					margin: 0;
+					display: flex;
+					flex-direction: column;
+					gap: 24px;
+				}
+				body.som-page .som-who-list li {
+					display: flex;
+					gap: 20px;
+					align-items: flex-start;
+				}
+				body.som-page .som-who-icon {
+					width: 8px;
+					height: 8px;
+					background: var(--som-gold);
+					border-radius: 50%;
+					flex-shrink: 0;
+					margin-top: 7px;
+				}
+				body.som-page .som-who-list li span {
+					font-size: 15px;
+					font-weight: 300;
+					line-height: 1.7;
+					color: var(--som-text);
+				}
+				body.som-page .som-stat-box {
+					background: var(--som-sapphire-deep);
+					color: #fff;
+					padding: 48px 40px;
+				}
+				body.som-page .som-stat-box + .som-stat-box { margin-top: 24px; }
+				body.som-page .som-stat-number {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: 72px;
+					font-weight: 300;
+					color: var(--som-gold-light);
+					line-height: 1;
+				}
+				body.som-page .som-stat-label {
+					font-size: 12px;
+					font-weight: 600;
+					letter-spacing: 2px;
+					text-transform: uppercase;
+					color: rgba(255,255,255,0.6);
+					margin-top: 8px;
+				}
+				body.som-page .som-stat-caption {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: 18px;
+					font-style: italic;
+					font-weight: 300;
+					color: rgba(255,255,255,0.78);
+					margin-top: 16px;
+					line-height: 1.7;
+				}
+				body.som-page .som-pull-quote {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-style: italic;
+					font-weight: 300;
+					font-size: clamp(20px, 2.5vw, 28px);
+					color: var(--som-sapphire-deep);
+					line-height: 1.5;
+					max-width: 900px;
+					margin: 64px auto 0;
+					text-align: center;
+				}
+
+				/* ─── BARBARA BIO ─── */
+				body.som-page .som-bio-section { padding: 100px 24px; background: var(--som-warm-white); }
+				body.som-page .som-bio-inner {
+					max-width: 900px;
+					margin: 0 auto;
+					display: grid;
+					grid-template-columns: 1fr 2fr;
+					gap: 70px;
+					align-items: start;
+				}
+				@media (max-width: 700px) {
+					body.som-page .som-bio-inner { grid-template-columns: 1fr; gap: 40px; }
+				}
+				body.som-page .som-bio-portrait {
+					aspect-ratio: 3/4;
+					width: 100%;
+					object-fit: cover;
+					display: block;
+				}
+				body.som-page .som-bio-name {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: 38px;
+					font-weight: 400;
+					color: var(--som-sapphire-deep);
+					margin-bottom: 4px;
+				}
+				body.som-page .som-bio-licensure {
+					font-size: 11px;
+					font-weight: 600;
+					letter-spacing: 2px;
+					text-transform: uppercase;
+					color: var(--som-mid-gray);
+					margin-bottom: 18px;
+				}
+				body.som-page .som-bio-credentials {
+					display: flex;
+					gap: 8px;
+					flex-wrap: wrap;
+					margin-bottom: 24px;
+				}
+				body.som-page .som-cred-tag {
+					font-size: 10px;
+					font-weight: 700;
+					letter-spacing: 2px;
+					text-transform: uppercase;
+					padding: 5px 12px;
+					background: var(--som-sapphire-deep);
+					color: #fff;
+				}
+				body.som-page .som-bio-text p {
+					font-size: 15px;
+					font-weight: 300;
+					line-height: 1.9;
+					color: var(--som-text);
+					margin-bottom: 16px;
+				}
+				body.som-page .som-bio-text p:last-child { margin-bottom: 0; }
+
+				/* ─── INVESTMENT ─── */
+				body.som-page .som-investment-section {
+					background: var(--som-sapphire-deep);
+					padding: 100px 24px;
+					text-align: center;
+					color: #fff;
+				}
+				body.som-page .som-investment-section .som-section-title { color: #fff; }
+				body.som-page .som-investment-section .som-section-body { color: rgba(255,255,255,0.65); }
+				body.som-page .som-investment-price {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: clamp(56px, 10vw, 100px);
+					font-weight: 300;
+					color: var(--som-gold-light);
+					line-height: 1;
+					margin: 40px 0 8px;
+				}
+				body.som-page .som-investment-duration {
+					font-size: 13px;
+					font-weight: 600;
+					letter-spacing: 3px;
+					text-transform: uppercase;
+					color: rgba(255,255,255,0.5);
+					margin-bottom: 28px;
+				}
+				body.som-page .som-investment-fineprint {
+					font-size: 13px;
+					line-height: 1.7;
+					color: rgba(255,255,255,0.55);
+					max-width: 560px;
+					margin: 0 auto 40px;
+				}
+				body.som-page .som-investment-fineprint .muted { color: rgba(255,255,255,0.35); }
+				body.som-page .som-investment-includes {
+					display: flex;
+					flex-wrap: wrap;
+					justify-content: center;
+					gap: 12px;
+					max-width: 700px;
+					margin: 0 auto 56px;
+				}
+				body.som-page .som-include-item {
+					font-size: 11px;
+					font-weight: 500;
+					letter-spacing: 1.5px;
+					padding: 10px 20px;
+					border: 1px solid rgba(255,255,255,0.22);
+					color: rgba(255,255,255,0.78);
+					text-transform: uppercase;
+				}
+
+				/* ─── WIDGET / SCREENER ─── */
+				body.som-page .som-widget-section { background: var(--som-cream); padding: 100px 24px; }
+				body.som-page .som-widget-wrapper {
+					max-width: 680px;
+					margin: 0 auto;
+					background: #fff;
+					box-shadow: 0 8px 60px rgba(0,0,0,0.08);
+					overflow: hidden;
+				}
+				body.som-page .som-widget-header {
+					background: var(--som-sapphire-deep);
+					padding: 48px 48px 36px;
+					text-align: center;
+				}
+				body.som-page .som-widget-header .som-section-label { color: var(--som-gold-light); }
+				body.som-page .som-widget-header h2 {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: 32px;
+					font-weight: 400;
+					color: #fff;
+					line-height: 1.2;
+					margin-bottom: 12px;
+				}
+				body.som-page .som-widget-header p {
+					font-size: 13px;
+					font-weight: 300;
+					color: rgba(255,255,255,0.62);
+					line-height: 1.7;
+				}
+				body.som-page .som-widget-body { padding: 48px; }
+				@media (max-width: 600px) {
+					body.som-page .som-widget-body { padding: 32px 24px; }
+					body.som-page .som-widget-header { padding: 36px 24px 28px; }
+					body.som-page .som-pillar { padding: 36px 28px; }
+				}
+
+				/* ─── FOOTER ─── */
+				body.som-page .som-footer {
+					background: var(--som-charcoal);
+					padding: 60px 24px;
+					text-align: center;
+					color: rgba(255,255,255,0.4);
+				}
+				body.som-page .som-footer-name {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: 22px;
+					font-weight: 400;
+					color: #fff;
+					margin-bottom: 8px;
+				}
+				body.som-page .som-footer-meta {
+					font-size: 13px;
+					line-height: 1.7;
+					color: rgba(255,255,255,0.5);
+				}
+				body.som-page .som-footer-links {
+					display: flex;
+					justify-content: center;
+					gap: 32px;
+					flex-wrap: wrap;
+					margin: 24px 0;
+				}
+				body.som-page .som-footer-links a {
+					color: rgba(255,255,255,0.5);
+					text-decoration: none;
+					font-size: 11px;
+					font-weight: 600;
+					letter-spacing: 2px;
+					text-transform: uppercase;
+					transition: color .2s ease;
+				}
+				body.som-page .som-footer-links a:hover { color: var(--som-gold-light); }
+				body.som-page .som-footer-legal {
+					font-size: 12px;
+					line-height: 1.7;
+					max-width: 700px;
+					margin: 0 auto;
+				}
 			}
 		</style>
 
-		<!-- JSON-LD: Service + Person -->
 		<script is:inline type="application/ld+json" set:html={JSON.stringify({
 			"@context": "https://schema.org",
 			"@graph": [
@@ -254,142 +740,103 @@ const ogImage = barbaraPhotoUrl;
 		})} />
 	</Fragment>
 
-	<script is:inline>
-		document.body.classList.add('som-page');
-	</script>
+	<script is:inline>document.body.classList.add('som-page');</script>
 
 	<!-- =============== HERO =============== -->
-	<section
-		class:list={["som-hero", "px-6", "lg:px-8", "py-20", "lg:py-28", heroBgUrl && "has-bg"]}
-		style={heroBgUrl ? `--som-hero-bg: url('${heroBgUrl}')` : undefined}
-	>
-		<div class="mx-auto max-w-4xl text-center">
-			<p class="som-eyebrow som-eyebrow-light text-[0.65rem]">
-				Save Our Marriage · 5-Day Marriage Intensive · Barbara Kohler, LCMHC
-			</p>
-			<div class="som-divider mt-8 mb-2" aria-hidden="true">†</div>
-			<p class="text-[0.7rem] uppercase tracking-[0.25em] text-white/70 mb-12">
-				The Kohler Group, PLLC · Huntersville, NC
-			</p>
-
-			<h1 class="som-serif text-5xl sm:text-6xl lg:text-7xl font-light leading-[1.05] text-white">
-				Your Marriage<br />
-				Can Be <span class="som-italic-gold">Saved.</span>
-			</h1>
-
-			<p class="som-serif italic text-2xl sm:text-3xl text-white/85 mt-8 font-light">
-				But not with another hour of weekly counseling.
-			</p>
-
-			<p class="text-base sm:text-lg leading-relaxed text-white/85 mt-10 max-w-2xl mx-auto">
-				The 5-Day Marriage Intensive is for couples who are done drifting, done fighting, and ready — truly ready — to do something transformative. For couples who believe their marriage is worth everything it takes.
-			</p>
-
-			<div class="mt-12">
-				<a href="#screening" class="som-btn-gold">Find Out If You Qualify</a>
-			</div>
-
-			<a href="#video" class="block mt-20 text-[0.7rem] uppercase tracking-[0.25em] text-white/60 hover:text-white/90 transition-colors">
-				How This Works<br />
-				<span class="text-2xl mt-2 block animate-bounce" aria-hidden="true">↓</span>
-			</a>
+	<section class:list={["som-hero", heroBgUrl && "has-bg"]} style={heroBgUrl ? `--som-hero-bg: url('${heroBgUrl}')` : undefined}>
+		<div class="som-hero-cross" aria-hidden="true">†</div>
+		<p class="som-hero-eyebrow">The Kohler Group, PLLC · Huntersville, NC</p>
+		<h1>
+			Your Marriage<br />
+			Can Be <em>Saved.</em>
+		</h1>
+		<p class="som-hero-subtitle">But not with another hour of weekly counseling.</p>
+		<div class="som-hero-divider" aria-hidden="true"></div>
+		<p class="som-hero-body">
+			The 5-Day Marriage Intensive is for couples who are done drifting, done fighting, and ready — truly ready — to do something transformative. For couples who believe their marriage is worth everything it takes.
+		</p>
+		<div class="som-cta-group">
+			<a href="#screening" class="som-btn-primary">Find Out If You Qualify</a>
+			<a href="#video" class="som-btn-outline-light">How This Works</a>
 		</div>
+		<div class="som-hero-scroll" aria-hidden="true">Scroll</div>
 	</section>
 
-	<!-- =============== VIDEO MESSAGE =============== -->
-	<section id="video" class="px-6 lg:px-8 py-20 lg:py-28" style="background:var(--som-cream)">
-		<div class="mx-auto max-w-4xl text-center">
-			<p class="som-eyebrow">A Message from Barbara</p>
-			<h2 class="som-serif text-4xl sm:text-5xl lg:text-6xl font-light leading-tight mt-6" style="color:var(--som-sapphire-deep)">
-				Hear What's<br />
-				<span class="som-italic-gold">Possible</span>
-			</h2>
-			<p class="text-base sm:text-lg leading-relaxed mt-8 max-w-2xl mx-auto" style="color:var(--som-mid-gray)">
-				Before you read another word, watch this. Barbara will tell you in her own words what the Marriage Intensive is — and why it's unlike anything you've tried before.
-			</p>
-
-			<div class="mt-12">
-				{videoUrl ? (
-					<div class="aspect-video rounded-md overflow-hidden shadow-lg">
-						<iframe
-							src={videoUrl}
-							title="A Message from Barbara"
-							loading="lazy"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-							allowfullscreen
-							class="w-full h-full"
-						></iframe>
-					</div>
-				) : (
-					<div
-						class="aspect-video flex flex-col items-center justify-center rounded-md shadow-lg"
-						style="background:linear-gradient(135deg,#0f2d5a 0%,#1a4a8a 100%)"
-						aria-label="Video coming soon"
-					>
-						<div
-							class="w-20 h-20 rounded-full flex items-center justify-center mb-5"
-							style="background:rgba(184,150,62,0.18); border:1.5px solid var(--som-gold-light)"
-						>
-							<svg width="32" height="32" viewBox="0 0 24 24" fill="var(--som-gold-light)" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
-						</div>
-						<p class="text-[0.7rem] uppercase tracking-[0.25em] text-white/70">Video Coming Soon</p>
-					</div>
-				)}
+	<!-- =============== VIDEO =============== -->
+	<section id="video" class="som-video-section">
+		<p class="som-section-label">A Message from Barbara</p>
+		<h2 class="som-section-title">Hear What's <em>Possible</em></h2>
+		<p class="som-section-body">
+			Before you read another word, watch this. Barbara will tell you in her own words what the Marriage Intensive is — and why it's unlike anything you've tried before.
+		</p>
+		{videoUrl ? (
+			<div class="som-video-iframe">
+				<iframe
+					src={videoUrl}
+					title="A Message from Barbara"
+					loading="lazy"
+					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+					allowfullscreen
+				></iframe>
 			</div>
-
-			<div class="mt-16">
-				<p class="som-serif italic text-2xl sm:text-3xl font-light leading-snug max-w-2xl mx-auto" style="color:var(--som-sapphire-deep)">
-					"What God has joined together, let no man separate."
-				</p>
-				<p class="text-[0.7rem] uppercase tracking-[0.25em] mt-4" style="color:var(--som-gold)">
-					Matthew 19:6 · NASB
-				</p>
+		) : (
+			<div class="som-video-placeholder" aria-label="Video coming soon">
+				<div class="som-video-play-icon" aria-hidden="true"></div>
+				<p>Video Coming Soon</p>
 			</div>
-		</div>
+		)}
 	</section>
 
-	<!-- =============== WHY THIS WORKS =============== -->
-	<section class="px-6 lg:px-8 py-20 lg:py-28" style="background:var(--som-warm-white); border-top:1px solid var(--som-light-gray)">
-		<div class="mx-auto max-w-6xl">
-			<div class="text-center mb-16">
-				<p class="som-eyebrow">Why This Works</p>
-				<h2 class="som-serif text-4xl sm:text-5xl font-light leading-tight mt-6" style="color:var(--som-sapphire-deep)">
-					This Is Not Typical Marriage Therapy.<br />
-					<span class="som-italic-gold">This Is Transformation.</span>
-				</h2>
-				<p class="text-base sm:text-lg leading-relaxed mt-8 max-w-3xl mx-auto" style="color:var(--som-mid-gray)">
+	<!-- =============== TRUTH STRIP =============== -->
+	<section class="som-truth-strip">
+		<blockquote>"What God has joined together, let no man separate."</blockquote>
+		<cite>Matthew 19:6 · NASB</cite>
+	</section>
+
+	<!-- =============== PILLARS =============== -->
+	<section class="som-different-section">
+		<div class="som-container">
+			<div class="som-section-header">
+				<p class="som-section-label">Why This Works</p>
+				<h2 class="som-section-title">This Is Not Typical Marriage Therapy.<br /><em>This Is Transformation.</em></h2>
+				<p class="som-section-body">
 					Most couples have been to counselors. Many have been to multiple counselors. What they haven't experienced is a clinical process that addresses the root — spiritually, neurologically, and emotionally — in concentrated, consecutive days of focused work.
 				</p>
 			</div>
-
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-px" style="background:var(--som-light-gray)">
-				<div class="som-card">
-					<div class="som-card-num">01</div>
+			<div class="som-pillars-grid">
+				<div class="som-pillar">
+					<div class="som-pillar-number">01</div>
+					<div class="som-pillar-accent"></div>
 					<h3>Five Consecutive Days of Focused Work</h3>
 					<p>Weekly 50-minute sessions have a ceiling. Real change requires sustained time. Five uninterrupted days create the momentum and depth that months of weekly sessions rarely reach.</p>
 				</div>
-				<div class="som-card">
-					<div class="som-card-num">02</div>
+				<div class="som-pillar">
+					<div class="som-pillar-number">02</div>
+					<div class="som-pillar-accent"></div>
 					<h3>Four Clinical Modalities Working Together</h3>
 					<p>Re-Decision Therapy, EMDR, HeartSync, Judicial Prayer and TRET address your marriage on every level — the early decisions you made about yourself, the lies and/or trauma stored in the deepest parts of your psyche as well as your body, and the spiritual fragmentation that talk therapy cannot touch.</p>
 				</div>
-				<div class="som-card">
-					<div class="som-card-num">03</div>
+				<div class="som-pillar">
+					<div class="som-pillar-number">03</div>
+					<div class="som-pillar-accent"></div>
 					<h3>Faith-Integrated &amp; Clinically Grounded</h3>
 					<p>Barbara holds a Master's degree in Rehabilitation Counseling Studies which looks at the client holistically. She has been licensed as an LCMHC since 2002, and is an ordained minister. She brings 30 years of clinical excellence and the power of Christ-centered prayer into the same room — because healing requires a multidimensional approach.</p>
 				</div>
-				<div class="som-card">
-					<div class="som-card-num">04</div>
+				<div class="som-pillar">
+					<div class="som-pillar-number">04</div>
+					<div class="som-pillar-accent"></div>
 					<h3>You Work on the Root, Not Just the Symptoms</h3>
 					<p>Most couples fight about money, kids, and sex. But those aren't the real issues. The real issues are the early decisions each of you made about your worth, your safety, and what love looks like — formed long before you ever met.</p>
 				</div>
-				<div class="som-card">
-					<div class="som-card-num">05</div>
+				<div class="som-pillar">
+					<div class="som-pillar-number">05</div>
+					<div class="som-pillar-accent"></div>
 					<h3>100% Client Satisfaction Reported</h3>
 					<p>Our clients surveyed report being completely satisfied with their Marriage Intensive experience and 100% said they would recommend it to others.</p>
 				</div>
-				<div class="som-card">
-					<div class="som-card-num">06</div>
+				<div class="som-pillar">
+					<div class="som-pillar-number">06</div>
+					<div class="som-pillar-accent"></div>
 					<h3>Couples Travel From Across the Country</h3>
 					<p>Couples travel from across the Carolinas and the entire United States to work with Barbara. This is not local-only care — it is a nationally recognized specialized program you cannot find everywhere.</p>
 				</div>
@@ -398,178 +845,131 @@ const ogImage = barbaraPhotoUrl;
 	</section>
 
 	<!-- =============== WHO THIS IS FOR =============== -->
-	<section class="px-6 lg:px-8 py-20 lg:py-28" style="background:var(--som-cream)">
-		<div class="mx-auto max-w-6xl">
-			<div class="text-center mb-14">
-				<p class="som-eyebrow">Who This Is For</p>
-				<h2 class="som-serif text-4xl sm:text-5xl font-light leading-tight mt-6" style="color:var(--som-sapphire-deep)">
-					You May Be Ready<br />
-					<span class="som-italic-gold">If This Is You</span>
-				</h2>
-				<p class="text-base sm:text-lg leading-relaxed mt-8 max-w-3xl mx-auto" style="color:var(--som-mid-gray)">
+	<section class="som-who-section">
+		<div class="som-container">
+			<div class="som-section-header">
+				<p class="som-section-label">Who This Is For</p>
+				<h2 class="som-section-title">You May Be Ready<br /><em>If This Is You</em></h2>
+				<p class="som-section-body">
 					Couples arrive at the Marriage Intensive from different places. What they share is a willingness to stop surviving and start truly living together.
 				</p>
 			</div>
-
-			<div class="grid grid-cols-1 lg:grid-cols-3 gap-12 lg:gap-16">
-				<ul class="lg:col-span-2 space-y-4 text-base leading-relaxed" style="color:var(--som-text)">
-					<li class="som-bullet">You've been to counseling before — maybe multiple counselors — and you're still in the same place.</li>
-					<li class="som-bullet">You've experienced betrayal, affair, or a devastating rupture you don't know how to heal.</li>
-					<li class="som-bullet">You're on a slow drift and you recognize it — and you're ready to stop.</li>
-					<li class="som-bullet">Your faith matters to you, and you want a counselor who takes that seriously — not just tolerates it.</li>
-					<li class="som-bullet">You're willing to come to Huntersville, NC for five days and invest fully in the process.</li>
-					<li class="som-bullet">You sense there's a depth of connection and freedom you haven't reached — and you want it.</li>
-					<li class="som-bullet">You want to have a biblical marriage where you both experience walking as heirs together of the grace of life (1 Peter 3:7).</li>
+			<div class="som-two-col">
+				<ul class="som-who-list">
+					<li><span class="som-who-icon" aria-hidden="true"></span><span>You've been to counseling before — maybe multiple counselors — and you're still in the same place.</span></li>
+					<li><span class="som-who-icon" aria-hidden="true"></span><span>You've experienced betrayal, affair, or a devastating rupture you don't know how to heal.</span></li>
+					<li><span class="som-who-icon" aria-hidden="true"></span><span>You're on a slow drift and you recognize it — and you're ready to stop.</span></li>
+					<li><span class="som-who-icon" aria-hidden="true"></span><span>Your faith matters to you, and you want a counselor who takes that seriously — not just tolerates it.</span></li>
+					<li><span class="som-who-icon" aria-hidden="true"></span><span>You're willing to come to Huntersville, NC for five days and invest fully in the process.</span></li>
+					<li><span class="som-who-icon" aria-hidden="true"></span><span>You sense there's a depth of connection and freedom you haven't reached — and you want it.</span></li>
+					<li><span class="som-who-icon" aria-hidden="true"></span><span>You want to have a biblical marriage where you both experience walking as heirs together of the grace of life (1 Peter 3:7).</span></li>
 				</ul>
-
-				<div class="space-y-8 p-8" style="background:var(--som-sapphire-deep); color:#fff">
-					<div>
-						<div class="som-stat-num">18+</div>
-						<p class="text-sm leading-relaxed mt-3 text-white/85">Years of Clinical Experience Working with Couples</p>
+				<div>
+					<div class="som-stat-box">
+						<div class="som-stat-number">18+</div>
+						<div class="som-stat-label">Years Working with Couples</div>
+						<p class="som-stat-caption">"I have walked alongside couples carrying some of the heaviest things imaginable — betrayal, generational trauma, years of disconnection."</p>
 					</div>
-					<div>
-						<div class="som-stat-num">30+</div>
-						<p class="text-sm leading-relaxed mt-3 text-white/85">Years of Experience Working in the Counseling Field, Including Business Executives, Entrepreneurs, and the Families Who Enable Them to Be Successful</p>
+					<div class="som-stat-box">
+						<div class="som-stat-number">30+</div>
+						<div class="som-stat-label">Years in the Counseling Field</div>
+						<p class="som-stat-caption">Including business executives, entrepreneurs, and the families who enable them to be successful.</p>
 					</div>
-					<div>
-						<div class="som-stat-num">100%</div>
-						<p class="text-sm leading-relaxed mt-3 text-white/85">Client Satisfaction Rate</p>
+					<div class="som-stat-box">
+						<div class="som-stat-number">100%</div>
+						<div class="som-stat-label">Client Satisfaction Rate</div>
+						<p class="som-stat-caption">Post-intensive surveys show every respondent said the program met their goals and that they would recommend it to others.</p>
 					</div>
 				</div>
 			</div>
-
-			<blockquote class="som-serif italic text-xl sm:text-2xl leading-relaxed mt-16 max-w-4xl mx-auto text-center" style="color:var(--som-sapphire-deep)">
-				"I have walked alongside couples carrying some of the heaviest things imaginable — betrayal, generational trauma, years of disconnection. And I have watched God move in those marriages in ways that were, honestly, remarkable."
-			</blockquote>
+			<p class="som-pull-quote">
+				"And I have watched God move in those marriages in ways that were, honestly, remarkable."
+			</p>
 		</div>
 	</section>
 
 	<!-- =============== BARBARA BIO =============== -->
-	<section class="px-6 lg:px-8 py-20 lg:py-28" style="background:var(--som-warm-white)">
-		<div class="mx-auto max-w-5xl">
-			<p class="som-eyebrow text-center">Your Guide</p>
-			<h2 class="som-serif text-4xl sm:text-5xl font-light leading-tight mt-6 text-center" style="color:var(--som-sapphire-deep)">
-				Barbara Kohler
-			</h2>
-
-			<div class="flex flex-wrap justify-center gap-2 mt-6 mb-2">
-				{['MS', 'CRC', 'LCMHC', 'NCC'].map((cred) => (
-					<span class="text-[0.7rem] uppercase tracking-[0.18em] px-3 py-1 border" style="border-color:var(--som-gold); color:var(--som-gold)">{cred}</span>
-				))}
+	<section class="som-bio-section">
+		<div class="som-container">
+			<div class="som-section-header" style="margin-bottom:48px">
+				<p class="som-section-label">Your Guide</p>
 			</div>
-			<p class="text-center text-sm" style="color:var(--som-mid-gray)">
-				Licensed Since 2002 · Ordained Minister
-			</p>
-
-			<div class="grid grid-cols-1 md:grid-cols-3 gap-10 mt-12 items-start">
-				<div class="md:col-span-1">
-					<img
-						src={barbaraPhotoUrl}
-						alt="Barbara Kohler, MS, LCMHC — Founder, The Kohler Group, PLLC"
-						width="800"
-						height="800"
-						loading="lazy"
-						decoding="async"
-						class="w-full aspect-square object-cover"
-						style="border:1px solid var(--som-light-gray)"
-					/>
-				</div>
-				<div class="md:col-span-2 space-y-5 text-base leading-relaxed" style="color:var(--som-text)">
-					<p>
-						Barbara Kohler is the Founder and CEO of The Kohler Group, PLLC — a faith-integrated Christian psychotherapy practice located in Huntersville, NC, serving the greater Charlotte and Lake Norman area, with in-person and telehealth across North and South Carolina.
-					</p>
-					<p>
-						She has been a Licensed Clinical Mental Health Counselor since 2002 and holds National Certified Counselor credentials since 2009. She is also an ordained minister — a distinction that shapes every aspect of how she works with couples.
-					</p>
-					<p>
-						Barbara uses a multidimensional approach in working with individuals and couples. She integrates several powerful, effective modalities including EMDR, Re-Decision Therapy, HeartSync, Judicial Prayer, and TRET. Her approach addresses marriages at the root of each individual's life, to enable the couple to set aside toxic blaming and deal with spiritual fractures that have never been fully healed.
-					</p>
-					<a href="https://thekohlergroup.net" class="som-btn-outline mt-4">Visit thekohlergroup.net</a>
+			<div class="som-bio-inner">
+				<img
+					src={barbaraPhotoUrl}
+					alt="Barbara Kohler, MS, LCMHC — Founder, The Kohler Group, PLLC"
+					width="800"
+					height="1067"
+					loading="lazy"
+					decoding="async"
+					class="som-bio-portrait"
+				/>
+				<div class="som-bio-text">
+					<h3 class="som-bio-name">Barbara Kohler</h3>
+					<p class="som-bio-licensure">Licensed Since 2002 · Ordained Minister</p>
+					<div class="som-bio-credentials">
+						<span class="som-cred-tag">MS</span>
+						<span class="som-cred-tag">CRC</span>
+						<span class="som-cred-tag">LCMHC</span>
+						<span class="som-cred-tag">NCC</span>
+					</div>
+					<p>Barbara Kohler is the Founder and CEO of The Kohler Group, PLLC — a faith-integrated Christian psychotherapy practice located in Huntersville, NC, serving the greater Charlotte and Lake Norman area, with in-person and telehealth across North and South Carolina.</p>
+					<p>She has been a Licensed Clinical Mental Health Counselor since 2002 and holds National Certified Counselor credentials since 2009. She is also an ordained minister — a distinction that shapes every aspect of how she works with couples.</p>
+					<p>Barbara uses a multidimensional approach in working with individuals and couples. She integrates several powerful, effective modalities including EMDR, Re-Decision Therapy, HeartSync, Judicial Prayer, and TRET. Her approach addresses marriages at the root of each individual's life, to enable the couple to set aside toxic blaming and deal with spiritual fractures that have never been fully healed.</p>
+					<a href="https://thekohlergroup.net" class="som-btn-outline-gold" style="margin-top:24px">Visit thekohlergroup.net</a>
 				</div>
 			</div>
 		</div>
 	</section>
 
 	<!-- =============== INVESTMENT =============== -->
-	<section class="px-6 lg:px-8 py-20 lg:py-28 text-center" style="background:var(--som-sapphire-deep); color:#fff">
-		<div class="mx-auto max-w-4xl">
-			<p class="som-eyebrow som-eyebrow-light">Your Investment</p>
-			<h2 class="som-serif text-4xl sm:text-5xl lg:text-6xl font-light leading-tight mt-6">
-				What It Costs to<br />
-				<span class="som-italic-gold">Save Your Marriage</span>
-			</h2>
-			<p class="text-base sm:text-lg leading-relaxed mt-8 max-w-2xl mx-auto text-white/80">
-				Consider what divorce costs — financially, spiritually, and in the lives of your children. The Marriage Intensive is not inexpensive. But for couples who are serious, it is one of the most significant investments they will ever make.
-			</p>
-
-			<div class="mt-14">
-				<p class="som-serif text-7xl sm:text-8xl font-light leading-none" style="color:var(--som-gold)">{price}</p>
-				<p class="text-[0.7rem] uppercase tracking-[0.25em] mt-3 text-white/70">Five Consecutive Days</p>
-				<p class="text-sm leading-relaxed mt-6 max-w-2xl mx-auto text-white/75">
-					Includes All Assessments, Educational Materials, and Personality Survey<br />
-					Post-Intensive Coaching Package Available for Purchase<br />
-					<span class="text-white/55 text-xs">(Travel and Lodging Is at Your Own Expense)</span>
-				</p>
-			</div>
-
-			<ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-10 gap-y-3 max-w-2xl mx-auto mt-12 text-sm text-left" style="color:rgba(255,255,255,0.88)">
-				<li class="som-bullet">Five full clinical days</li>
-				<li class="som-bullet">Pre-intensive consultation</li>
-				<li class="som-bullet">Re-Decision Therapy</li>
-				<li class="som-bullet">EMDR</li>
-				<li class="som-bullet">HeartSync</li>
-				<li class="som-bullet">TRET</li>
-				<li class="som-bullet">Faith-integrated prayer</li>
-				<li class="som-bullet">Post-intensive planning</li>
-			</ul>
-
-			<div class="mt-14">
-				<a href="#screening" class="som-btn-gold">See If You Qualify — Free Consult</a>
-			</div>
+	<section class="som-investment-section">
+		<p class="som-section-label" style="color:var(--som-gold-light)">Your Investment</p>
+		<h2 class="som-section-title">What It Costs to<br /><em>Save Your Marriage</em></h2>
+		<p class="som-section-body">
+			Consider what divorce costs — financially, spiritually, and in the lives of your children. The Marriage Intensive is not inexpensive. But for couples who are serious, it is one of the most significant investments they will ever make.
+		</p>
+		<div class="som-investment-price">{price}</div>
+		<p class="som-investment-duration">Five Consecutive Days</p>
+		<p class="som-investment-fineprint">
+			Includes all assessments, educational materials, and personality survey.<br />
+			Post-intensive coaching package available for purchase.<br />
+			<span class="muted">(Travel and lodging is at your own expense.)</span>
+		</p>
+		<div class="som-investment-includes">
+			<span class="som-include-item">Five Full Clinical Days</span>
+			<span class="som-include-item">Pre-Intensive Consultation</span>
+			<span class="som-include-item">Re-Decision Therapy</span>
+			<span class="som-include-item">EMDR</span>
+			<span class="som-include-item">HeartSync</span>
+			<span class="som-include-item">TRET</span>
+			<span class="som-include-item">Judicial Prayer</span>
+			<span class="som-include-item">Post-Intensive Planning</span>
 		</div>
+		<a href="#screening" class="som-btn-primary">See If You Qualify — Free Consult</a>
 	</section>
 
-	<!-- =============== QUIZ =============== -->
-	<section id="screening" class="px-6 lg:px-8 py-20 lg:py-28" style="background:var(--som-cream)">
-		<div class="mx-auto max-w-3xl">
-			<div class="text-center mb-12">
-				<p class="som-eyebrow">First Step</p>
-				<h2 class="som-serif text-4xl sm:text-5xl font-light leading-tight mt-6" style="color:var(--som-sapphire-deep)">
-					Is the Marriage Intensive<br />
-					<span class="som-italic-gold">Right for You?</span>
-				</h2>
-				<p class="text-base sm:text-lg leading-relaxed mt-8 max-w-2xl mx-auto" style="color:var(--som-mid-gray)">
-					Answer eight short questions. If it looks like a good fit, you'll be invited to schedule a complimentary 30-minute consultation with Barbara — no obligation, no pressure.
-				</p>
-			</div>
-
-			<MarriageIntensiveQuiz
-				barbaraEmail={barbaraEmail}
-				bookingUrl={bookingUrl}
-				phone={phone}
-			/>
-		</div>
+	<!-- =============== QUIZ / SCREENER =============== -->
+	<section id="screening" class="som-widget-section">
+		<MarriageIntensiveQuiz
+			barbaraEmail={barbaraEmail}
+			bookingUrl={bookingUrl}
+			phone={phone}
+		/>
 	</section>
 
 	<!-- =============== FOOTER =============== -->
-	<footer class="px-6 lg:px-8 py-16" style="background:var(--som-sapphire-deep); color:#fff">
-		<div class="mx-auto max-w-4xl text-center">
-			<div class="som-divider mb-3" aria-hidden="true">†</div>
-			<p class="som-serif text-2xl sm:text-3xl font-light" style="color:var(--som-gold-light)">The Kohler Group, PLLC</p>
-			<p class="text-sm mt-3 text-white/80">Barbara Kohler, MS, CRC, LCMHC, NCC · Licensed Since 2002</p>
-			<p class="text-sm mt-2 text-white/65">13420 Reese Blvd West, Daetwyler Plaza, Huntersville, NC 28078</p>
-
-			<div class="flex justify-center gap-3 sm:gap-6 flex-wrap mt-6 text-[0.7rem] uppercase tracking-[0.2em]">
-				<a href="https://thekohlergroup.net" class="text-white/85 hover:text-white transition-colors">TheKohlerGroup.net</a>
-				<span class="text-white/30">·</span>
-				<a href="https://thekohlergroup.net/intensives/marriage" class="text-white/85 hover:text-white transition-colors">Marriage Intensives</a>
-				<span class="text-white/30">·</span>
-				<a href={`tel:${phone.replace(/[^0-9]/g, '')}`} class="text-white/85 hover:text-white transition-colors">Contact</a>
-			</div>
-
-			<p class="text-xs leading-relaxed mt-10 max-w-3xl mx-auto text-white/55">
-				Barbara Kohler, MS, CRC, LCMHC, NCC is a Licensed Clinical Mental Health Counselor licensed in the State of North Carolina, and a Licensed Professional Counselor licensed in the State of South Carolina. Services are provided in accordance with the applicable licensure standards and ethics of the respective states and the ACA Code of Ethics. This website is for informational purposes only and does not constitute a therapeutic relationship. Individual results vary. The Marriage Intensive program is a private-pay service; insurance is not accepted for intensive programs.
-			</p>
+	<footer class="som-footer">
+		<p class="som-footer-name">The Kohler Group, PLLC</p>
+		<p class="som-footer-meta">Barbara Kohler, MS, CRC, LCMHC, NCC · Licensed Since 2002</p>
+		<p class="som-footer-meta">13420 Reese Blvd West, Daetwyler Plaza, Huntersville, NC 28078</p>
+		<div class="som-footer-links">
+			<a href="https://thekohlergroup.net">TheKohlerGroup.net</a>
+			<a href="https://thekohlergroup.net/intensives/marriage">Marriage Intensives</a>
+			<a href={`tel:${phone.replace(/[^0-9]/g, '')}`}>Contact</a>
 		</div>
+		<p class="som-footer-legal">
+			Barbara Kohler, MS, CRC, LCMHC, NCC is a Licensed Clinical Mental Health Counselor licensed in the State of North Carolina, and a Licensed Professional Counselor licensed in the State of South Carolina. Services are provided in accordance with the applicable licensure standards and ethics of the respective states and the ACA Code of Ethics. This website is for informational purposes only and does not constitute a therapeutic relationship. Individual results vary. The Marriage Intensive program is a private-pay service; insurance is not accepted for intensive programs.
+		</p>
 	</footer>
 </Layout>
