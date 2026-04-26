@@ -22,7 +22,27 @@ const barbaraPhotoUrl = settings?.somBarbaraPhoto
 			.format('webp')
 			.quality(85)
 			.url()
-	: 'https://cdn.sanity.io/images/2bom5gqg/production/21282e732035fa47572f5ca27d12ae838ef7fe43-600x400.jpg?w=800&h=1067&fit=crop&auto=format';
+	: 'https://cdn.sanity.io/images/2bom5gqg/production/725180bdf0526e9efb4151d71422bddf9364d86c-2400x3000.jpg?w=800&h=1067&fit=crop&auto=format';
+
+// Couple thumbnails strip — square crops, single row above "Who This Is For"
+const coupleThumbs = [
+	{
+		url: 'https://cdn.sanity.io/images/2bom5gqg/production/79bc51e151e87d59cb1cc31823371b8bdbb30a63-4349x2903.jpg?w=600&h=600&fit=crop&auto=format',
+		alt: 'Young married couple',
+	},
+	{
+		url: 'https://cdn.sanity.io/images/2bom5gqg/production/b07cc51ec5056b213e5edd18319b685c8e22c321-6022x5464.jpg?w=600&h=600&fit=crop&auto=format',
+		alt: 'Senior married couple',
+	},
+	{
+		url: 'https://images.unsplash.com/photo-1670291362999-00f36b631e15?w=600&h=600&fit=crop&auto=format&q=80',
+		alt: 'Bride and groom on their wedding day',
+	},
+	{
+		url: 'https://images.unsplash.com/photo-1652022836903-7a8728bc445e?w=600&h=600&fit=crop&auto=format&q=80',
+		alt: 'Newly married couple',
+	},
+];
 
 const heroBgUrl = settings?.somHeroBackground
 	? urlFor(settings.somHeroBackground).width(1920).format('webp').quality(80).url()
@@ -40,6 +60,7 @@ const ogImage = barbaraPhotoUrl;
 	landing={true}
 >
 	<Fragment slot="head">
+		<link rel="preconnect" href="https://images.unsplash.com" crossorigin />
 		<link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-400.woff2" crossorigin />
 		<style is:inline>
 			@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:300;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-300.woff2') format('woff2')}
@@ -414,6 +435,29 @@ const ogImage = barbaraPhotoUrl;
 					font-weight: 300;
 					color: var(--som-mid-gray);
 					line-height: 1.8;
+				}
+
+				/* ─── COUPLE THUMBS STRIP ─── */
+				body.som-page .som-couples-strip {
+					background: var(--som-cream);
+					padding: 0 0 0 0;
+				}
+				body.som-page .som-couples-grid {
+					display: grid;
+					grid-template-columns: repeat(4, 1fr);
+					gap: 0;
+				}
+				body.som-page .som-couples-grid img {
+					width: 100%;
+					aspect-ratio: 1 / 1;
+					object-fit: cover;
+					display: block;
+					filter: saturate(0.95);
+					transition: filter .35s ease;
+				}
+				body.som-page .som-couples-grid img:hover { filter: saturate(1.1); }
+				@media (max-width: 700px) {
+					body.som-page .som-couples-grid { grid-template-columns: repeat(2, 1fr); }
 				}
 
 				/* ─── WHO THIS IS FOR ─── */
@@ -841,6 +885,22 @@ const ogImage = barbaraPhotoUrl;
 					<p>Couples travel from across the Carolinas and the entire United States to work with Barbara. This is not local-only care — it is a nationally recognized specialized program you cannot find everywhere.</p>
 				</div>
 			</div>
+		</div>
+	</section>
+
+	<!-- =============== COUPLE THUMBNAILS STRIP =============== -->
+	<section class="som-couples-strip" aria-label="Couples Barbara has worked with">
+		<div class="som-couples-grid">
+			{coupleThumbs.map((c) => (
+				<img
+					src={c.url}
+					alt={c.alt}
+					width="600"
+					height="600"
+					loading="lazy"
+					decoding="async"
+				/>
+			))}
 		</div>
 	</section>
 
