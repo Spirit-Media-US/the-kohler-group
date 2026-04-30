@@ -9,7 +9,13 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 }`);
 
 const price = settings?.somPrice || '$15,000';
-const videoUrl: string | null = settings?.somVideoUrl || null;
+
+function toYouTubeEmbed(url: string | null | undefined): string | null {
+	if (!url) return null;
+	const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/);
+	return m ? `https://www.youtube.com/embed/${m[1]}` : url;
+}
+const videoUrl: string | null = toYouTubeEmbed(settings?.somVideoUrl);
 const bookingUrl = settings?.bookingUrl || 'https://thekohlergroup.clientsecure.me';
 const barbaraEmail = settings?.barbaraEmail || 'barbara@thekohlergroup.net';
 const phone = settings?.phone || '704-948-1268';
