@@ -8,6 +8,12 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   somVideoUrl, somHeroBackground, somBarbaraPhoto, somPrice
 }`);
 
+const testimonials = await sanityClient.fetch(`
+  *[_type == "testimonial"] | order(order asc) {
+    _id, service, quote
+  }
+`);
+
 const price = settings?.somPrice || '$15,000';
 
 function toYouTubeEmbed(url: string | null | undefined): string | null {
@@ -689,6 +695,52 @@ const ogImage = barbaraPhotoUrl;
 					body.som-page .som-pillar { padding: 36px 28px; }
 				}
 
+				/* ─── TESTIMONIALS ─── */
+				body.som-page .som-testimonials-section {
+					padding: 100px 24px;
+					background: var(--som-cream);
+				}
+				body.som-page .som-testimonials-grid {
+					display: grid;
+					grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+					gap: 24px;
+					margin-top: 16px;
+				}
+				body.som-page .som-testimonial {
+					background: var(--som-warm-white);
+					padding: 36px 32px;
+					border: 1px solid var(--som-light-gray);
+					display: flex;
+					flex-direction: column;
+				}
+				body.som-page .som-testimonial-mark {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: 72px;
+					font-weight: 400;
+					color: var(--som-gold);
+					line-height: 0.4;
+					margin-bottom: 20px;
+					height: 24px;
+				}
+				body.som-page .som-testimonial-quote {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: 19px;
+					font-style: italic;
+					color: var(--som-text);
+					line-height: 1.6;
+					margin-bottom: 24px;
+					flex: 1;
+				}
+				body.som-page .som-testimonial-service {
+					font-size: 10px;
+					font-weight: 700;
+					letter-spacing: 3px;
+					text-transform: uppercase;
+					color: var(--som-gold);
+					border-top: 1px solid var(--som-light-gray);
+					padding-top: 16px;
+				}
+
 				/* ─── FOOTER ─── */
 				body.som-page .som-footer {
 					background: var(--som-charcoal);
@@ -808,6 +860,7 @@ const ogImage = barbaraPhotoUrl;
 		<div class="som-cta-group">
 			<a href="#screener" class="som-btn-primary">Find Out If You Qualify</a>
 			<a href="#different" class="som-btn-outline-light">How This Works</a>
+			<a href="#testimonials" class="som-btn-primary">Client Testimonials</a>
 		</div>
 		<div class="som-hero-scroll" aria-hidden="true">Scroll</div>
 	</section>
@@ -1027,6 +1080,30 @@ const ogImage = barbaraPhotoUrl;
 			/>
 		</div>
 	</section>
+
+	<!-- =============== TESTIMONIALS =============== -->
+	{testimonials && testimonials.length > 0 && (
+		<section id="testimonials" class="som-testimonials-section">
+			<div class="som-container">
+				<div class="som-section-header">
+					<p class="som-section-label">Client Testimonials</p>
+					<h2 class="som-section-title">Stories of <em>Transformation</em></h2>
+					<p class="som-section-body">
+						Words from couples who chose to do the hard, beautiful work. To protect their privacy, all identifying details have been removed.
+					</p>
+				</div>
+				<div class="som-testimonials-grid">
+					{testimonials.map((t: any) => (
+						<article class="som-testimonial">
+							<p class="som-testimonial-mark" aria-hidden="true">"</p>
+							<p class="som-testimonial-quote">{t.quote}</p>
+							{t.service && <p class="som-testimonial-service">{t.service}</p>}
+						</article>
+					))}
+				</div>
+			</div>
+		</section>
+	)}
 
 	<!-- =============== FOOTER =============== -->
 	<footer class="som-footer">
