@@ -723,22 +723,10 @@ const ogImage = barbaraPhotoUrl;
 					height: 24px;
 				}
 				body.som-page .som-testimonial-quote {
-					font-family: 'Cormorant Garamond', Georgia, serif;
-					font-size: 19px;
-					font-style: italic;
+					font-size: 15px;
 					color: var(--som-text);
-					line-height: 1.6;
-					margin-bottom: 24px;
+					line-height: 1.7;
 					flex: 1;
-				}
-				body.som-page .som-testimonial-service {
-					font-size: 10px;
-					font-weight: 700;
-					letter-spacing: 3px;
-					text-transform: uppercase;
-					color: var(--som-gold);
-					border-top: 1px solid var(--som-light-gray);
-					padding-top: 16px;
 				}
 
 				/* ─── FOOTER ─── */
@@ -1097,7 +1085,6 @@ const ogImage = barbaraPhotoUrl;
 						<article class="som-testimonial">
 							<p class="som-testimonial-mark" aria-hidden="true">"</p>
 							<p class="som-testimonial-quote">{t.quote}</p>
-							{t.service && <p class="som-testimonial-service">{t.service}</p>}
 						</article>
 					))}
 				</div>
