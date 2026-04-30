@@ -278,7 +278,11 @@ const ogImage = barbaraPhotoUrl;
 					animation: somScrollPulse 2s ease-in-out infinite;
 				}
 				@media (max-width: 768px) {
-					body.som-page .som-hero-scroll { display: none; }
+					body.som-page .som-hero-scroll {
+						position: static;
+						transform: none;
+						margin-top: 40px;
+					}
 				}
 				@keyframes somScrollPulse {
 					0%, 100% { opacity: 0.3; transform: scaleY(1); }
