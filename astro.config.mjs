@@ -10,6 +10,10 @@ export default defineConfig({
 
 	server: { port: 4325, host: true },
 
+	image: {
+		remotePatterns: [{ protocol: 'https', hostname: 'i.ytimg.com' }],
+	},
+
 	build: {
 		inlineStylesheets: 'auto',
 	},

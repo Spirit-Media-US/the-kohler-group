@@ -1,4 +1,5 @@
 ---
+import { getImage } from 'astro:assets';
 import MarriageIntensiveQuiz from '@components/MarriageIntensiveQuiz.astro';
 import Layout from '@layouts/Layout.astro';
 import { sanityClient, urlFor } from '../lib/sanity.ts';
@@ -23,8 +24,24 @@ function getYouTubeId(url: string | null | undefined): string | null {
 }
 const videoId: string | null = getYouTubeId(settings?.somVideoUrl);
 const videoTitle = 'A Message from Barbara Kohler';
-const ytThumbMobile = videoId ? `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg` : null;
-const ytThumbDesktop = videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : null;
+
+// Pre-fetch the YouTube thumbnail at build time and serve it as a webp from
+// our own domain. Eliminates the cold cross-origin fetch to i.ytimg.com on
+// the LCP request and lets CF Pages cache it long-term.
+let ytThumb: Awaited<ReturnType<typeof getImage>> | null = null;
+if (videoId) {
+	try {
+		ytThumb = await getImage({
+			src: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+			width: 480,
+			height: 360,
+			format: 'webp',
+			quality: 80,
+		});
+	} catch (err) {
+		console.warn('[save-our-marriage] YouTube thumbnail prefetch failed:', err);
+	}
+}
 const bookingUrl = settings?.bookingUrl || 'https://thekohlergroup.clientsecure.me';
 const barbaraEmail = settings?.barbaraEmail || 'barbara@thekohlergroup.net';
 const phone = settings?.phone || '704-948-1268';
@@ -77,18 +94,13 @@ const ogImage = barbaraPhotoUrl;
 	<Fragment slot="head">
 		<link rel="preconnect" href="https://images.unsplash.com" crossorigin />
 		<link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-400.woff2" crossorigin />
-		{videoId && (
-			<>
-				<link rel="preconnect" href="https://i.ytimg.com" crossorigin />
-				<link
-					rel="preload"
-					as="image"
-					href={ytThumbDesktop}
-					imagesrcset={`${ytThumbMobile} 320w, ${ytThumbDesktop} 480w`}
-					imagesizes="(max-width: 1024px) 95vw, 650px"
-					fetchpriority="high"
-				/>
-			</>
+		{ytThumb && (
+			<link
+				rel="preload"
+				as="image"
+				href={ytThumb.src}
+				fetchpriority="high"
+			/>
 		)}
 		<style is:global>
 			@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:300;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-300.woff2') format('woff2')}
@@ -923,7 +935,7 @@ const ogImage = barbaraPhotoUrl;
 				<div class="som-hero-divider" aria-hidden="true"></div>
 			</div>
 			<div class="som-hero-media">
-				{videoId ? (
+				{ytThumb ? (
 					<button
 						type="button"
 						class="som-hero-video som-hero-video--facade"
@@ -931,9 +943,7 @@ const ogImage = barbaraPhotoUrl;
 						aria-label={`Play video: ${videoTitle}`}
 					>
 						<img
-							src={ytThumbDesktop}
-							srcset={`${ytThumbMobile} 320w, ${ytThumbDesktop} 480w`}
-							sizes="(max-width: 1024px) 95vw, 650px"
+							src={ytThumb.src}
 							width="480"
 							height="360"
 							alt=""
