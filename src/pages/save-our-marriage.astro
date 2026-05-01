@@ -37,6 +37,8 @@ if (videoId) {
 			height: 360,
 			format: 'webp',
 			quality: 80,
+			widths: [320, 480],
+			sizes: '(max-width: 1024px) 95vw, 650px',
 		});
 	} catch (err) {
 		console.warn('[save-our-marriage] YouTube thumbnail prefetch failed:', err);
@@ -99,6 +101,8 @@ const ogImage = barbaraPhotoUrl;
 				rel="preload"
 				as="image"
 				href={ytThumb.src}
+				imagesrcset={ytThumb.srcSet?.attribute}
+				imagesizes="(max-width: 1024px) 95vw, 650px"
 				fetchpriority="high"
 			/>
 		)}
@@ -944,6 +948,8 @@ const ogImage = barbaraPhotoUrl;
 					>
 						<img
 							src={ytThumb.src}
+							srcset={ytThumb.srcSet?.attribute}
+							sizes="(max-width: 1024px) 95vw, 650px"
 							width="480"
 							height="360"
 							alt=""
