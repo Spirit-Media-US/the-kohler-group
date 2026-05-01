@@ -1271,7 +1271,12 @@ const ogImage =
 
 			function openModal(id) {
 				const iframe = document.createElement('iframe');
-				iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+				// vq=hd720 hints HD start; modestbranding hides the YouTube logo;
+				// playsinline keeps the video inside the modal on iOS instead of
+				// punting to fullscreen. The iframe size (large modal) is itself
+				// the strongest quality signal — YouTube picks resolution based
+				// on render width.
+				iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1&vq=hd720`;
 				iframe.title = videoTitle;
 				iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
 				iframe.setAttribute('allowfullscreen', '');
