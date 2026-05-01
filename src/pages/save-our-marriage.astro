@@ -32,12 +32,12 @@ let ytThumb: Awaited<ReturnType<typeof getImage>> | null = null;
 if (videoId) {
 	try {
 		ytThumb = await getImage({
-			src: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
-			width: 480,
-			height: 360,
+			src: `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`,
+			width: 1280,
+			height: 720,
 			format: 'webp',
-			quality: 80,
-			widths: [320, 480],
+			quality: 82,
+			widths: [480, 960, 1280],
 			sizes: '(max-width: 1024px) 95vw, 650px',
 		});
 	} catch (err) {
@@ -952,8 +952,8 @@ const ogImage =
 							src={ytThumb.src}
 							srcset={ytThumb.srcSet?.attribute}
 							sizes="(max-width: 1024px) 95vw, 650px"
-							width="480"
-							height="360"
+							width="1280"
+							height="720"
 							alt=""
 							fetchpriority="high"
 							decoding="async"
