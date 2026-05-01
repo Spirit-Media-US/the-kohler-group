@@ -19,3 +19,7 @@
 # Old therapist-services page (shows in Google results)
 /therapist-services /our-therapists 301
 /therapist-services/ /our-therapists 301
+
+# 200 rewrite: serve content directly (no 301 hop) on the unslashed URL
+# so PSI / Lighthouse don't pay the redirect cost on /save-our-marriage
+/save-our-marriage /save-our-marriage/index.html 200
