@@ -104,11 +104,27 @@ const ogImage = barbaraPhotoUrl;
 			   on the few elements where we mix classes.
 			   ====================================================================== */
 			@layer base {
+				/* Content-visibility on below-fold sections lets the browser
+				   skip layout/paint cost on initial render, cutting LCP
+				   element render delay. Intrinsic-size estimates avoid
+				   scroll-bar jank while preserving the optimization. */
+				body.som-page .som-truth-strip,
+				body.som-page .som-different-section,
+				body.som-page .som-couples-strip,
+				body.som-page .som-who-section,
+				body.som-page .som-bio-section,
+				body.som-page .som-investment-section,
+				body.som-page .som-widget-section,
+				body.som-page .som-testimonials-section,
+				body.som-page .som-footer {
+					content-visibility: auto;
+					contain-intrinsic-size: 1px 800px;
+				}
 				body.som-page {
 					--som-sapphire: #1a4a8a;
 					--som-sapphire-deep: #0f2d5a;
 					--som-sapphire-light: #2a5fa8;
-					--som-gold: #8a7019;
+					--som-gold: #7a6516;
 					--som-gold-light: #d4af6a;
 					--som-cream: #faf7f2;
 					--som-warm-white: #fff9f3;
@@ -676,6 +692,7 @@ const ogImage = barbaraPhotoUrl;
 					color: #fff;
 				}
 				body.som-page .som-investment-section .som-section-title { color: #fff; }
+				body.som-page .som-investment-section .som-section-title em { color: var(--som-gold-light); }
 				body.som-page .som-investment-section .som-section-body { color: rgba(255,255,255,0.65); }
 				body.som-page .som-investment-price {
 					font-family: 'Cormorant Garamond', Georgia, serif;
@@ -795,7 +812,7 @@ const ogImage = barbaraPhotoUrl;
 					background: var(--som-charcoal);
 					padding: 40px 24px;
 					text-align: center;
-					color: rgba(255,255,255,0.4);
+					color: rgba(255,255,255,0.62);
 				}
 				body.som-page .som-footer-name {
 					font-family: 'Cormorant Garamond', Georgia, serif;
