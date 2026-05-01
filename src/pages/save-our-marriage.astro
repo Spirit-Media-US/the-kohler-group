@@ -119,6 +119,71 @@ const ogImage = barbaraPhotoUrl;
 					position: relative;
 					overflow: hidden;
 				}
+				body.som-page .som-hero-grid {
+					position: relative;
+					z-index: 2;
+					width: 100%;
+					max-width: 1200px;
+					margin: 0 auto;
+					display: grid;
+					grid-template-columns: 2fr 3fr;
+					gap: 60px;
+					align-items: center;
+				}
+				@media (max-width: 1024px) {
+					body.som-page .som-hero-grid {
+						grid-template-columns: 1fr;
+						gap: 40px;
+					}
+				}
+				body.som-page .som-hero-text { text-align: left; }
+				body.som-page .som-hero-text .som-hero-divider { margin: 0 0 32px 0; }
+				body.som-page .som-hero-text .som-hero-body { max-width: 100%; margin: 0; }
+				body.som-page .som-hero-media {
+					display: flex;
+					flex-direction: column;
+					gap: 28px;
+					align-items: stretch;
+				}
+				body.som-page .som-hero-video {
+					width: 100%;
+					aspect-ratio: 16/9;
+					background: var(--som-sapphire-deep);
+					position: relative;
+					overflow: hidden;
+					box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+				}
+				body.som-page .som-hero-video iframe {
+					position: absolute;
+					inset: 0;
+					width: 100%;
+					height: 100%;
+					border: 0;
+				}
+				body.som-page .som-hero-video--placeholder {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-content: center;
+					color: rgba(255,255,255,0.5);
+				}
+				body.som-page .som-hero-video--placeholder::before {
+					content: '';
+					position: absolute;
+					inset: 0;
+					background: linear-gradient(135deg, rgba(184,150,62,0.10) 0%, transparent 60%);
+				}
+				body.som-page .som-hero-video--placeholder p {
+					font-size: 13px;
+					letter-spacing: 2px;
+					text-transform: uppercase;
+					position: relative;
+					z-index: 2;
+				}
+				body.som-page .som-hero-cta {
+					display: flex;
+					justify-content: center;
+				}
 				body.som-page .som-hero::before {
 					content: '';
 					position: absolute;
@@ -853,47 +918,42 @@ const ogImage = barbaraPhotoUrl;
 	<!-- =============== HERO =============== -->
 	<section class:list={["som-hero", heroBgUrl && "has-bg"]} style={heroBgUrl ? `--som-hero-bg: url('${heroBgUrl}')` : undefined}>
 		<div class="som-hero-cross" aria-hidden="true">†</div>
-		<p class="som-hero-eyebrow">The Kohler Group, PLLC · Huntersville, NC</p>
-		<h1>
-			Your Marriage<br />
-			Can Be <em>Saved.</em>
-		</h1>
-		<p class="som-hero-subtitle">But not with another hour of weekly counseling.</p>
-		<div class="som-hero-divider" aria-hidden="true"></div>
-		<p class="som-hero-body">
-			The 5-Day Marriage Intensive is for couples who are done drifting, done fighting, and ready — truly ready — to do something transformative. For couples who believe their marriage is worth everything it takes.
-		</p>
-		<div class="som-cta-group">
-			<a href="#screener" class="som-btn-primary">Find Out If You Qualify</a>
-			<a href="#different" class="som-btn-outline-light">How This Works</a>
-			<a href="#testimonials" class="som-btn-primary">Client Testimonials</a>
+		<div class="som-hero-grid">
+			<div class="som-hero-text">
+				<p class="som-hero-eyebrow">The Kohler Group, PLLC · Huntersville, NC</p>
+				<h1>
+					Your Marriage<br />
+					Can Be <em>Saved.</em>
+				</h1>
+				<p class="som-hero-subtitle">But not with another hour of weekly counseling.</p>
+				<div class="som-hero-divider" aria-hidden="true"></div>
+				<p class="som-hero-body">
+					The 5-Day Marriage Intensive is for couples who are done drifting, done fighting, and ready — truly ready — to do something transformative. For couples who believe their marriage is worth everything it takes.
+				</p>
+			</div>
+			<div class="som-hero-media">
+				{videoUrl ? (
+					<div class="som-hero-video">
+						<iframe
+							src={videoUrl}
+							title="A Message from Barbara"
+							loading="lazy"
+							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+							allowfullscreen
+						></iframe>
+					</div>
+				) : (
+					<div class="som-hero-video som-hero-video--placeholder" aria-label="Video coming soon">
+						<div class="som-video-play-icon" aria-hidden="true"></div>
+						<p>Video Coming Soon</p>
+					</div>
+				)}
+				<div class="som-hero-cta">
+					<a href="#screener" class="som-btn-primary">Take the Next Step</a>
+				</div>
+			</div>
 		</div>
 		<div class="som-hero-scroll" aria-hidden="true">Scroll</div>
-	</section>
-
-	<!-- =============== VIDEO =============== -->
-	<section id="video" class="som-video-section">
-		<p class="som-section-label">A Message from Barbara</p>
-		<h2 class="som-section-title">Hear What's <em>Possible</em></h2>
-		<p class="som-section-body">
-			Before you read another word, watch this. Barbara will tell you in her own words what the Marriage Intensive is — and why it's unlike anything you've tried before.
-		</p>
-		{videoUrl ? (
-			<div class="som-video-iframe">
-				<iframe
-					src={videoUrl}
-					title="A Message from Barbara"
-					loading="lazy"
-					allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-					allowfullscreen
-				></iframe>
-			</div>
-		) : (
-			<div class="som-video-placeholder" aria-label="Video coming soon">
-				<div class="som-video-play-icon" aria-hidden="true"></div>
-				<p>Video Coming Soon</p>
-			</div>
-		)}
 	</section>
 
 	<!-- =============== TRUTH STRIP =============== -->
