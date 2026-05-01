@@ -128,7 +128,14 @@ const ogImage = barbaraPhotoUrl;
 					display: grid;
 					grid-template-columns: 2fr 3fr;
 					gap: 60px;
-					align-items: center;
+					align-items: start;
+				}
+				body.som-page .som-hero-body-full {
+					position: relative;
+					z-index: 2;
+					width: 100%;
+					max-width: 900px;
+					margin: 56px auto 0;
 				}
 				@media (max-width: 1024px) {
 					body.som-page .som-hero-grid {
@@ -260,12 +267,6 @@ const ogImage = barbaraPhotoUrl;
 					line-height: 1.8;
 					margin: 0 auto 48px;
 				}
-				body.som-page .som-cta-group {
-					display: flex;
-					gap: 16px;
-					flex-wrap: wrap;
-					justify-content: center;
-				}
 				body.som-page .som-btn-primary {
 					background: var(--som-gold);
 					color: #fff;
@@ -283,85 +284,6 @@ const ogImage = barbaraPhotoUrl;
 				body.som-page .som-btn-primary:hover {
 					background: var(--som-gold-light);
 					transform: translateY(-2px);
-				}
-				body.som-page .som-btn-outline-light {
-					background: transparent;
-					color: #fff;
-					font-size: 12px;
-					font-weight: 600;
-					letter-spacing: 2px;
-					text-transform: uppercase;
-					padding: 17px 40px;
-					border: 1px solid rgba(255,255,255,0.4);
-					cursor: pointer;
-					text-decoration: none;
-					display: inline-block;
-					transition: border-color .3s ease, background .3s ease;
-				}
-				body.som-page .som-btn-outline-light:hover {
-					border-color: #fff;
-					background: rgba(255,255,255,0.08);
-				}
-				body.som-page .som-btn-outline-gold {
-					background: transparent;
-					color: var(--som-gold);
-					font-size: 12px;
-					font-weight: 600;
-					letter-spacing: 2px;
-					text-transform: uppercase;
-					padding: 17px 40px;
-					border: 1px solid var(--som-gold);
-					cursor: pointer;
-					text-decoration: none;
-					display: inline-block;
-					transition: background .3s ease, color .3s ease;
-				}
-				body.som-page .som-btn-outline-gold:hover {
-					background: var(--som-gold);
-					color: #fff;
-				}
-				body.som-page .som-hero-scroll {
-					position: absolute;
-					bottom: 32px;
-					left: 50%;
-					transform: translateX(-50%);
-					color: rgba(255,255,255,0.4);
-					font-size: 11px;
-					letter-spacing: 3px;
-					text-transform: uppercase;
-					display: flex;
-					flex-direction: column;
-					align-items: center;
-					gap: 8px;
-					z-index: 2;
-				}
-				body.som-page .som-hero-scroll::after {
-					content: '';
-					width: 1px;
-					height: 40px;
-					background: rgba(255,255,255,0.3);
-					animation: somScrollPulse 2s ease-in-out infinite;
-				}
-				@media (max-width: 768px) {
-					body.som-page .som-hero-scroll {
-						position: static;
-						transform: none;
-						margin-top: 40px;
-					}
-					body.som-page .som-cta-group {
-						flex-direction: column;
-						align-items: stretch;
-						width: 100%;
-						max-width: 320px;
-					}
-					body.som-page .som-cta-group > a {
-						width: 100%;
-						text-align: center;
-					}
-				}
-				@keyframes somScrollPulse {
-					0%, 100% { opacity: 0.3; transform: scaleY(1); }
-					50% { opacity: 0.8; transform: scaleY(1.2); }
 				}
 
 				/* ─── SHARED SECTION ELEMENTS ─── */
@@ -927,9 +849,6 @@ const ogImage = barbaraPhotoUrl;
 				</h1>
 				<p class="som-hero-subtitle">But not with another hour of weekly counseling.</p>
 				<div class="som-hero-divider" aria-hidden="true"></div>
-				<p class="som-hero-body">
-					The 5-Day Marriage Intensive is for couples who are done drifting, done fighting, and ready — truly ready — to do something transformative. For couples who believe their marriage is worth everything it takes.
-				</p>
 			</div>
 			<div class="som-hero-media">
 				{videoUrl ? (
@@ -953,7 +872,9 @@ const ogImage = barbaraPhotoUrl;
 				</div>
 			</div>
 		</div>
-		<div class="som-hero-scroll" aria-hidden="true">Scroll</div>
+		<p class="som-hero-body som-hero-body-full">
+			The 5-Day Marriage Intensive is for couples who are done drifting, done fighting, and ready — truly ready — to do something transformative. For couples who believe their marriage is worth everything it takes.
+		</p>
 	</section>
 
 	<!-- =============== TRUTH STRIP =============== -->
