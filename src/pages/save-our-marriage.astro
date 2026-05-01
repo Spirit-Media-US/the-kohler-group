@@ -267,6 +267,67 @@ const ogImage =
 				body.som-page button.som-hero-video:focus-visible .som-hero-video-play {
 					background: #c00;
 				}
+
+				/* Video modal — overlay launched from the hero facade */
+				body.som-page .som-video-modal {
+					position: fixed;
+					inset: 0;
+					z-index: 100;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					padding: 24px;
+				}
+				body.som-page .som-video-modal[hidden] { display: none; }
+				body.som-page .som-video-modal-backdrop {
+					position: absolute;
+					inset: 0;
+					background: rgba(0, 0, 0, 0.88);
+					cursor: pointer;
+					animation: somModalFade .2s ease-out;
+				}
+				body.som-page .som-video-modal-content {
+					position: relative;
+					width: 100%;
+					max-width: 1100px;
+					aspect-ratio: 16 / 9;
+					background: #000;
+					animation: somModalFade .25s ease-out;
+				}
+				body.som-page .som-video-modal-content iframe {
+					position: absolute;
+					inset: 0;
+					width: 100%;
+					height: 100%;
+					border: 0;
+				}
+				body.som-page .som-video-modal-close {
+					position: absolute;
+					top: -48px;
+					right: 0;
+					width: 40px;
+					height: 40px;
+					background: transparent;
+					border: 0;
+					color: #fff;
+					font-size: 32px;
+					line-height: 1;
+					cursor: pointer;
+					padding: 0;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					transition: opacity .2s ease;
+				}
+				body.som-page .som-video-modal-close:hover { opacity: 0.7; }
+				@media (max-width: 768px) {
+					body.som-page .som-video-modal { padding: 16px; }
+					body.som-page .som-video-modal-close { top: -40px; font-size: 28px; }
+				}
+				@keyframes somModalFade {
+					from { opacity: 0; }
+					to { opacity: 1; }
+				}
 				body.som-page .som-hero-video--placeholder {
 					display: flex;
 					flex-direction: column;
@@ -1194,22 +1255,55 @@ const ogImage =
 		</section>
 	)}
 
+	<!-- Video modal (popup overlay) — opened from any [data-yt-id] facade -->
+	<div class="som-video-modal" data-video-modal hidden role="dialog" aria-modal="true" aria-label={videoTitle}>
+		<div class="som-video-modal-backdrop" data-video-modal-close></div>
+		<div class="som-video-modal-content" data-video-modal-content>
+			<button type="button" class="som-video-modal-close" data-video-modal-close aria-label="Close video">×</button>
+		</div>
+	</div>
+
 	<script is:inline define:vars={{ videoTitle }}>
-		document.querySelectorAll('[data-yt-id]').forEach((facade) => {
-			facade.addEventListener('click', function () {
-				const id = this.dataset.ytId;
-				const wrapper = document.createElement('div');
-				wrapper.className = 'som-hero-video';
+		(function () {
+			const modal = document.querySelector('[data-video-modal]');
+			const content = document.querySelector('[data-video-modal-content]');
+			if (!modal || !content) return;
+
+			function openModal(id) {
 				const iframe = document.createElement('iframe');
 				iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
 				iframe.title = videoTitle;
 				iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
 				iframe.setAttribute('allowfullscreen', '');
 				iframe.setAttribute('frameborder', '0');
-				wrapper.appendChild(iframe);
-				this.replaceWith(wrapper);
-			}, { once: true });
-		});
+				content.appendChild(iframe);
+				modal.hidden = false;
+				document.body.style.overflow = 'hidden';
+				const closeBtn = modal.querySelector('.som-video-modal-close');
+				closeBtn?.focus();
+			}
+
+			function closeModal() {
+				modal.hidden = true;
+				const iframe = content.querySelector('iframe');
+				if (iframe) iframe.remove();
+				document.body.style.overflow = '';
+			}
+
+			document.querySelectorAll('[data-yt-id]').forEach((facade) => {
+				facade.addEventListener('click', function () {
+					openModal(this.dataset.ytId);
+				});
+			});
+
+			modal.querySelectorAll('[data-video-modal-close]').forEach((el) => {
+				el.addEventListener('click', closeModal);
+			});
+
+			document.addEventListener('keydown', (e) => {
+				if (e.key === 'Escape' && !modal.hidden) closeModal();
+			});
+		})();
 	</script>
 
 	<!-- =============== FOOTER =============== -->
