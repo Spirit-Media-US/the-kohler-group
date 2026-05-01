@@ -699,6 +699,11 @@ const phoneDigits = phone.replace(/[^0-9]/g, '');
 			lines.push('');
 			lines.push('---');
 			lines.push('Submitted from saveourmarriage.us / thekohlergroup.net/save-our-marriage');
+			lines.push('');
+			lines.push('---');
+			lines.push(
+				'Please Note: The Kohler Group, PLLC uses Google Workspace (Google Business Mail) for general business communications. We have a Business Associate Agreement (BAA) with Google in place. To protect your privacy, please do not include sensitive personal or clinical information in your email. Once your complimentary consultation is scheduled, we will set up a means for you to communicate with us through our secure client portal just for you — and all confidential communications can take place safely through that portal. We look forward to connecting with you!',
+			);
 			const body = lines.join('\n');
 			const params = [`subject=${encodeURIComponent(subject)}`, `body=${encodeURIComponent(body)}`];
 			if (bcc) params.unshift(`bcc=${encodeURIComponent(bcc)}`);
