@@ -32,12 +32,12 @@ let ytThumb: Awaited<ReturnType<typeof getImage>> | null = null;
 if (videoId) {
 	try {
 		ytThumb = await getImage({
-			src: `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
-			width: 480,
-			height: 360,
+			src: `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`,
+			width: 1280,
+			height: 720,
 			format: 'webp',
-			quality: 80,
-			widths: [320, 480],
+			quality: 82,
+			widths: [480, 960, 1280],
 			sizes: '(max-width: 1024px) 95vw, 650px',
 		});
 	} catch (err) {
@@ -70,8 +70,8 @@ const coupleThumbs = [
 		alt: 'Senior married couple',
 	},
 	{
-		url: 'https://images.unsplash.com/photo-1776266099419-dde2d16f4df6?w=600&h=600&fit=crop&auto=format&q=80',
-		alt: 'Married couple smiling at each other outdoors',
+		url: 'https://cdn.sanity.io/images/2bom5gqg/production/d41cb1c8ed260dad1428587746dcc315642d3ee9-4639x3504.jpg?w=600&h=600&fit=crop&auto=format&q=80',
+		alt: 'Black married couple together',
 	},
 	{
 		url: 'https://images.unsplash.com/photo-1772419578685-f918fb5b814b?w=600&h=600&fit=crop&auto=format&q=80',
@@ -85,7 +85,7 @@ const heroBgUrl = settings?.somHeroBackground
 
 const canonicalURL = 'https://thekohlergroup.net/save-our-marriage';
 const ogImage =
-	'https://cdn.sanity.io/images/2bom5gqg/production/4acc15cc5d36b1bddfad65074b71a61ac1653349-1280x720.jpg';
+	'https://cdn.sanity.io/images/2bom5gqg/production/4acc15cc5d36b1bddfad65074b71a61ac1653349-1280x720.jpg?fm=jpg&q=95&sharpen=15';
 ---
 
 <Layout
@@ -266,6 +266,67 @@ const ogImage =
 				body.som-page button.som-hero-video:hover .som-hero-video-play,
 				body.som-page button.som-hero-video:focus-visible .som-hero-video-play {
 					background: #c00;
+				}
+
+				/* Video modal — overlay launched from the hero facade */
+				body.som-page .som-video-modal {
+					position: fixed;
+					inset: 0;
+					z-index: 100;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					padding: 24px;
+				}
+				body.som-page .som-video-modal[hidden] { display: none; }
+				body.som-page .som-video-modal-backdrop {
+					position: absolute;
+					inset: 0;
+					background: rgba(0, 0, 0, 0.88);
+					cursor: pointer;
+					animation: somModalFade .2s ease-out;
+				}
+				body.som-page .som-video-modal-content {
+					position: relative;
+					width: 100%;
+					max-width: 1100px;
+					aspect-ratio: 16 / 9;
+					background: #000;
+					animation: somModalFade .25s ease-out;
+				}
+				body.som-page .som-video-modal-content iframe {
+					position: absolute;
+					inset: 0;
+					width: 100%;
+					height: 100%;
+					border: 0;
+				}
+				body.som-page .som-video-modal-close {
+					position: absolute;
+					top: -48px;
+					right: 0;
+					width: 40px;
+					height: 40px;
+					background: transparent;
+					border: 0;
+					color: #fff;
+					font-size: 32px;
+					line-height: 1;
+					cursor: pointer;
+					padding: 0;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					transition: opacity .2s ease;
+				}
+				body.som-page .som-video-modal-close:hover { opacity: 0.7; }
+				@media (max-width: 768px) {
+					body.som-page .som-video-modal { padding: 16px; }
+					body.som-page .som-video-modal-close { top: -40px; font-size: 28px; }
+				}
+				@keyframes somModalFade {
+					from { opacity: 0; }
+					to { opacity: 1; }
 				}
 				body.som-page .som-hero-video--placeholder {
 					display: flex;
@@ -952,8 +1013,8 @@ const ogImage =
 							src={ytThumb.src}
 							srcset={ytThumb.srcSet?.attribute}
 							sizes="(max-width: 1024px) 95vw, 650px"
-							width="480"
-							height="360"
+							width="1280"
+							height="720"
 							alt=""
 							fetchpriority="high"
 							decoding="async"
@@ -1015,7 +1076,7 @@ const ogImage =
 					<div class="som-pillar-number">04</div>
 					<div class="som-pillar-accent"></div>
 					<h3>You Work on the Root, Not Just the Symptoms</h3>
-					<p>Most couples fight about money, kids, and sex. But those aren't the real issues. The real issues are the early decisions each of you made about your worth, your safety, and what love looks like — formed long before you ever met. These issues can create destructive habit patterns in your marriage and drive a wedge between you and your spouse.</p>
+					<p>Most couples fight about money, kids, and sex. While all of those are important, they are symptoms of deeper issues related to your worth, your safety, and what love looks like — formed long before you ever met. Relational wounding can create destructive habit patterns in your marriage and drive a wedge between you and your spouse.</p>
 				</div>
 				<div class="som-pillar">
 					<div class="som-pillar-number">05</div>
@@ -1027,7 +1088,7 @@ const ogImage =
 					<div class="som-pillar-number">06</div>
 					<div class="som-pillar-accent"></div>
 					<h3>Couples Travel From Across the Country</h3>
-					<p>Couples travel from across the Carolinas and the entire United States to work with Barbara. This isn't a service for locals only — it's a nationally recognized program you can't find everywhere.</p>
+					<p>Couples travel from across the Carolinas and the entire United States to work with Barbara. This isn't a service for locals only — Barbara has clients that have traveled the west coast, east coast, and as far away as Hawaii. Barbara has worked hard to learn her craft and her clients value her skill and spirituality.</p>
 				</div>
 			</div>
 		</div>
@@ -1194,20 +1255,60 @@ const ogImage =
 		</section>
 	)}
 
+	<!-- Video modal (popup overlay) — opened from any [data-yt-id] facade -->
+	<div class="som-video-modal" data-video-modal hidden role="dialog" aria-modal="true" aria-label={videoTitle}>
+		<div class="som-video-modal-backdrop" data-video-modal-close></div>
+		<div class="som-video-modal-content" data-video-modal-content>
+			<button type="button" class="som-video-modal-close" data-video-modal-close aria-label="Close video">×</button>
+		</div>
+	</div>
+
 	<script is:inline define:vars={{ videoTitle }}>
-		document.querySelectorAll('[data-yt-id]').forEach((facade) => {
-			facade.addEventListener('click', function () {
-				const id = this.dataset.ytId;
+		(function () {
+			const modal = document.querySelector('[data-video-modal]');
+			const content = document.querySelector('[data-video-modal-content]');
+			if (!modal || !content) return;
+
+			function openModal(id) {
 				const iframe = document.createElement('iframe');
-				iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+				// vq=hd720 hints HD start; modestbranding hides the YouTube logo;
+				// playsinline keeps the video inside the modal on iOS instead of
+				// punting to fullscreen. The iframe size (large modal) is itself
+				// the strongest quality signal — YouTube picks resolution based
+				// on render width.
+				iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1&vq=hd720`;
 				iframe.title = videoTitle;
 				iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
 				iframe.setAttribute('allowfullscreen', '');
 				iframe.setAttribute('frameborder', '0');
-				iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:0';
-				this.replaceWith(iframe);
-			}, { once: true });
-		});
+				content.appendChild(iframe);
+				modal.hidden = false;
+				document.body.style.overflow = 'hidden';
+				const closeBtn = modal.querySelector('.som-video-modal-close');
+				closeBtn?.focus();
+			}
+
+			function closeModal() {
+				modal.hidden = true;
+				const iframe = content.querySelector('iframe');
+				if (iframe) iframe.remove();
+				document.body.style.overflow = '';
+			}
+
+			document.querySelectorAll('[data-yt-id]').forEach((facade) => {
+				facade.addEventListener('click', function () {
+					openModal(this.dataset.ytId);
+				});
+			});
+
+			modal.querySelectorAll('[data-video-modal-close]').forEach((el) => {
+				el.addEventListener('click', closeModal);
+			});
+
+			document.addEventListener('keydown', (e) => {
+				if (e.key === 'Escape' && !modal.hidden) closeModal();
+			});
+		})();
 	</script>
 
 	<!-- =============== FOOTER =============== -->
