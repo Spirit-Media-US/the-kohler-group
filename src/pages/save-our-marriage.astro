@@ -16,12 +16,15 @@ const testimonials = await sanityClient.fetch(`
 
 const price = settings?.somPrice || '$15,000';
 
-function toYouTubeEmbed(url: string | null | undefined): string | null {
+function getYouTubeId(url: string | null | undefined): string | null {
 	if (!url) return null;
 	const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/);
-	return m ? `https://www.youtube.com/embed/${m[1]}` : url;
+	return m ? m[1] : null;
 }
-const videoUrl: string | null = toYouTubeEmbed(settings?.somVideoUrl);
+const videoId: string | null = getYouTubeId(settings?.somVideoUrl);
+const videoTitle = 'A Message from Barbara Kohler';
+const ytThumbMobile = videoId ? `https://i.ytimg.com/vi/${videoId}/mqdefault.jpg` : null;
+const ytThumbDesktop = videoId ? `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg` : null;
 const bookingUrl = settings?.bookingUrl || 'https://thekohlergroup.clientsecure.me';
 const barbaraEmail = settings?.barbaraEmail || 'barbara@thekohlergroup.net';
 const phone = settings?.phone || '704-948-1268';
@@ -74,6 +77,19 @@ const ogImage = barbaraPhotoUrl;
 	<Fragment slot="head">
 		<link rel="preconnect" href="https://images.unsplash.com" crossorigin />
 		<link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-400.woff2" crossorigin />
+		{videoId && (
+			<>
+				<link rel="preconnect" href="https://i.ytimg.com" crossorigin />
+				<link
+					rel="preload"
+					as="image"
+					href={ytThumbDesktop}
+					imagesrcset={`${ytThumbMobile} 320w, ${ytThumbDesktop} 480w`}
+					imagesizes="(max-width: 1024px) 95vw, 650px"
+					fetchpriority="high"
+				/>
+			</>
+		)}
 		<style is:inline>
 			@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:300;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-300.woff2') format('woff2')}
 			@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:400;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-400.woff2') format('woff2')}
@@ -173,6 +189,49 @@ const ogImage = barbaraPhotoUrl;
 					width: 100%;
 					height: 100%;
 					border: 0;
+				}
+				body.som-page button.som-hero-video {
+					padding: 0;
+					border: 0;
+					cursor: pointer;
+					font: inherit;
+					color: inherit;
+					display: block;
+				}
+				body.som-page .som-hero-video > img {
+					position: absolute;
+					inset: 0;
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+					display: block;
+				}
+				body.som-page .som-hero-video-play {
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					width: 68px;
+					height: 48px;
+					background: rgba(0, 0, 0, 0.72);
+					border-radius: 12px;
+					transition: background .2s ease;
+					pointer-events: none;
+				}
+				body.som-page .som-hero-video-play::before {
+					content: '';
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					margin-left: 3px;
+					border-style: solid;
+					border-width: 9px 0 9px 15px;
+					border-color: transparent transparent transparent #fff;
+				}
+				body.som-page button.som-hero-video:hover .som-hero-video-play,
+				body.som-page button.som-hero-video:focus-visible .som-hero-video-play {
+					background: #c00;
 				}
 				body.som-page .som-hero-video--placeholder {
 					display: flex;
@@ -847,16 +906,25 @@ const ogImage = barbaraPhotoUrl;
 				<div class="som-hero-divider" aria-hidden="true"></div>
 			</div>
 			<div class="som-hero-media">
-				{videoUrl ? (
-					<div class="som-hero-video">
-						<iframe
-							src={videoUrl}
-							title="A Message from Barbara"
-							loading="lazy"
-							allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-							allowfullscreen
-						></iframe>
-					</div>
+				{videoId ? (
+					<button
+						type="button"
+						class="som-hero-video som-hero-video--facade"
+						data-yt-id={videoId}
+						aria-label={`Play video: ${videoTitle}`}
+					>
+						<img
+							src={ytThumbDesktop}
+							srcset={`${ytThumbMobile} 320w, ${ytThumbDesktop} 480w`}
+							sizes="(max-width: 1024px) 95vw, 650px"
+							width="480"
+							height="360"
+							alt=""
+							fetchpriority="high"
+							decoding="async"
+						/>
+						<span class="som-hero-video-play" aria-hidden="true"></span>
+					</button>
 				) : (
 					<div class="som-hero-video som-hero-video--placeholder" aria-label="Video coming soon">
 						<div class="som-video-play-icon" aria-hidden="true"></div>
@@ -1089,6 +1157,22 @@ const ogImage = barbaraPhotoUrl;
 			</div>
 		</section>
 	)}
+
+	<script is:inline define:vars={{ videoTitle }}>
+		document.querySelectorAll('[data-yt-id]').forEach((facade) => {
+			facade.addEventListener('click', function () {
+				const id = this.dataset.ytId;
+				const iframe = document.createElement('iframe');
+				iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+				iframe.title = videoTitle;
+				iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+				iframe.setAttribute('allowfullscreen', '');
+				iframe.setAttribute('frameborder', '0');
+				iframe.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;border:0';
+				this.replaceWith(iframe);
+			}, { once: true });
+		});
+	</script>
 
 	<!-- =============== FOOTER =============== -->
 	<footer class="som-footer">
