@@ -130,21 +130,14 @@ const ogImage = barbaraPhotoUrl;
 					gap: 60px;
 					align-items: start;
 				}
-				body.som-page .som-hero-body.som-hero-body-full {
-					position: relative;
-					z-index: 2;
-					width: 100%;
-					max-width: 1200px;
-					margin: 56px auto 0;
-				}
-				@media (max-width: 1024px) {
+@media (max-width: 1024px) {
 					body.som-page .som-hero-grid {
 						grid-template-columns: 1fr;
 						gap: 40px;
 					}
 				}
 				body.som-page .som-hero-text { text-align: left; }
-				body.som-page .som-hero-text .som-hero-divider { margin: 0 0 32px 0; }
+				body.som-page .som-hero-text .som-hero-divider { margin: 0 0 18px 0; }
 				body.som-page .som-hero-text .som-hero-body { max-width: 100%; margin: 0; }
 				body.som-page .som-hero-media {
 					display: flex;
@@ -233,11 +226,15 @@ const ogImage = barbaraPhotoUrl;
 				}
 				body.som-page .som-hero-subtitle {
 					font-family: 'Cormorant Garamond', Georgia, serif;
-					font-size: clamp(20px, 3vw, 28px);
+					font-size: clamp(16px, 1.7vw, 20px);
 					font-weight: 300;
 					font-style: italic;
 					color: rgba(255,255,255,0.78);
-					margin-bottom: 40px;
+					margin-bottom: 24px;
+					white-space: nowrap;
+				}
+				@media (max-width: 1024px) {
+					body.som-page .som-hero-subtitle { white-space: normal; }
 				}
 				body.som-page .som-hero-divider {
 					width: 60px;
@@ -834,6 +831,9 @@ const ogImage = barbaraPhotoUrl;
 				</h1>
 				<p class="som-hero-subtitle">But not with another hour of weekly counseling.</p>
 				<div class="som-hero-divider" aria-hidden="true"></div>
+				<p class="som-hero-body">
+					The 5-Day Marriage Intensive is for couples who are done drifting, done fighting, and ready — truly ready — to do something transformative. For couples who believe their marriage is worth everything it takes.
+				</p>
 			</div>
 			<div class="som-hero-media">
 				{videoUrl ? (
@@ -857,9 +857,6 @@ const ogImage = barbaraPhotoUrl;
 				</div>
 			</div>
 		</div>
-		<p class="som-hero-body som-hero-body-full">
-			The 5-Day Marriage Intensive is for couples who are done drifting, done fighting, and ready — truly ready — to do something transformative. For couples who believe their marriage is worth everything it takes.
-		</p>
 	</section>
 
 	<!-- =============== TRUTH STRIP =============== -->
