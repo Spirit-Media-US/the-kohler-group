@@ -1,10 +1,11 @@
 ---
 interface Props {
 	barbaraEmail: string;
+	officeEmail: string;
 	bookingUrl: string;
 	phone: string;
 }
-const { barbaraEmail, bookingUrl, phone } = Astro.props;
+const { barbaraEmail, officeEmail, bookingUrl, phone } = Astro.props;
 const phoneDigits = phone.replace(/[^0-9]/g, '');
 ---
 
@@ -12,6 +13,8 @@ const phoneDigits = phone.replace(/[^0-9]/g, '');
 	class="som-quiz som-widget-wrapper"
 	data-barbara-user={barbaraEmail.split('@')[0]}
 	data-barbara-domain={barbaraEmail.split('@')[1]}
+	data-office-user={officeEmail.split('@')[0]}
+	data-office-domain={officeEmail.split('@')[1]}
 	data-booking-url={bookingUrl}
 	data-phone={phone}
 	data-phone-digits={phoneDigits}
@@ -668,6 +671,7 @@ const phoneDigits = phone.replace(/[^0-9]/g, '');
 			subject: string,
 			a: Answers,
 			kind: 'screening' | 'individual',
+			bcc?: string,
 		): string => {
 			const lines: string[] = [];
 			lines.push(`From: ${a.name || '(no name)'}`);
@@ -696,7 +700,9 @@ const phoneDigits = phone.replace(/[^0-9]/g, '');
 			lines.push('---');
 			lines.push('Submitted from saveourmarriage.us / thekohlergroup.net/save-our-marriage');
 			const body = lines.join('\n');
-			return `mailto:${to}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+			const params = [`subject=${encodeURIComponent(subject)}`, `body=${encodeURIComponent(body)}`];
+			if (bcc) params.unshift(`bcc=${encodeURIComponent(bcc)}`);
+			return `mailto:${to}?${params.join('&')}`;
 		};
 
 		const buildBarbaraEmail = () => {
@@ -705,13 +711,19 @@ const phoneDigits = phone.replace(/[^0-9]/g, '');
 			return `${u}@${d}`;
 		};
 
+		const buildOfficeEmail = () => {
+			const u = root.dataset.officeUser;
+			const d = root.dataset.officeDomain;
+			return u && d ? `${u}@${d}` : buildBarbaraEmail();
+		};
+
 		form.addEventListener('submit', (e) => {
 			e.preventDefault();
 			if (!validateStep(8)) return;
 			const a = collectAnswers();
 			const outcome = decideOutcome(a);
 			const subject = `Marriage Intensive Inquiry — ${a.name || 'Prospect'}`;
-			window.location.href = buildMailto(buildBarbaraEmail(), subject, a, 'screening');
+			window.location.href = buildMailto(buildOfficeEmail(), subject, a, 'screening', buildBarbaraEmail());
 			setTimeout(() => showOutcome(outcome), 200);
 		});
 
@@ -741,7 +753,7 @@ const phoneDigits = phone.replace(/[^0-9]/g, '');
 			});
 			if (!ok) return;
 			const subject = `Individual Intensive Inquiry — ${a.name || 'Prospect'}`;
-			window.location.href = buildMailto(buildBarbaraEmail(), subject, a, 'individual');
+			window.location.href = buildMailto(buildOfficeEmail(), subject, a, 'individual', buildBarbaraEmail());
 			setTimeout(() => showOutcome('thank-you'), 200);
 		});
 
