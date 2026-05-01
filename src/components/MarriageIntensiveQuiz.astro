@@ -17,8 +17,8 @@ const phoneDigits = phone.replace(/[^0-9]/g, '');
 	data-phone-digits={phoneDigits}
 >
 	<div class="som-widget-header">
-		<p class="som-section-label">First Step</p>
-		<h2>Marriage Intensive Screening</h2>
+		<p class="som-section-label">Next Step</p>
+		<h2>Tell Me About Your Marriage</h2>
 		<p>Eight short questions. Your answers are private and used only to prepare for your consultation.</p>
 	</div>
 
@@ -148,15 +148,10 @@ const phoneDigits = phone.replace(/[^0-9]/g, '');
 		<!-- Outcome screens -->
 		<div class="som-result-screen" data-outcome="qualified">
 			<div class="som-result-icon" aria-hidden="true">✦</div>
-			<h2 class="som-result-title">You Sound Like a <em>Great Fit.</em></h2>
+			<h2 class="som-result-title">Thank you for your <em>interest!</em></h2>
 			<p class="som-result-body">
-				Based on your answers, the Marriage Intensive may be exactly what you and your spouse need. Barbara would love to connect with you for a complimentary 30-minute consultation — no obligation, no pressure.
+				We will reach out to you with one business day or you can reach us at: <a href={`tel:${phoneDigits}`} style="color:var(--som-gold);text-decoration:underline;">{phone}</a>
 			</p>
-			<div class="som-result-cta-row">
-				<a href={bookingUrl} target="_blank" rel="noopener" class="som-btn-primary">Schedule Your Free Consult</a>
-				<a href={`tel:${phoneDigits}`} class="som-btn-outline-gold">Or Call: {phone}</a>
-			</div>
-			<p class="som-result-fineprint">A confirmation email has been sent to Barbara's office with your responses.</p>
 		</div>
 
 		<div class="som-result-screen" data-outcome="not-ready">
