@@ -469,31 +469,9 @@ const ogImage =
 				}
 				body.som-page .som-container { max-width: 1100px; margin: 0 auto; }
 
-				/* ─── VIDEO SECTION ─── */
-				body.som-page .som-video-section {
-					background: var(--som-cream);
-					padding: 64px 24px;
-					text-align: center;
-				}
-				body.som-page .som-video-placeholder {
-					max-width: 800px;
-					margin: 0 auto;
-					background: var(--som-sapphire-deep);
-					aspect-ratio: 16/9;
-					display: flex;
-					flex-direction: column;
-					align-items: center;
-					justify-content: center;
-					color: rgba(255,255,255,0.5);
-					position: relative;
-					overflow: hidden;
-				}
-				body.som-page .som-video-placeholder::before {
-					content: '';
-					position: absolute;
-					inset: 0;
-					background: linear-gradient(135deg, rgba(184,150,62,0.10) 0%, transparent 60%);
-				}
+				/* Play-icon used by the no-video placeholder fallback below the
+				   hero facade. Section/iframe styles for the legacy "video
+				   section" layout were dropped — markup uses the hero facade. */
 				body.som-page .som-video-play-icon {
 					width: 72px;
 					height: 72px;
@@ -511,25 +489,6 @@ const ogImage =
 					border-width: 12px 0 12px 22px;
 					border-color: transparent transparent transparent rgba(255,255,255,0.6);
 					margin-left: 6px;
-				}
-				body.som-page .som-video-placeholder p {
-					font-size: 13px;
-					letter-spacing: 2px;
-					text-transform: uppercase;
-					position: relative;
-					z-index: 2;
-				}
-				body.som-page .som-video-iframe {
-					max-width: 800px;
-					margin: 0 auto;
-					aspect-ratio: 16/9;
-					overflow: hidden;
-					position: relative;
-				}
-				body.som-page .som-video-iframe iframe {
-					width: 100%;
-					height: 100%;
-					border: 0;
 				}
 
 				/* ─── TRUTH STRIP ─── */
