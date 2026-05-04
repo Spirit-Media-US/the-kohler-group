@@ -1027,6 +1027,33 @@ const ogImage =
 		<cite>Matthew 19:6 · NASB</cite>
 	</section>
 
+	<!-- =============== TESTIMONIALS =============== -->
+	{testimonials && testimonials.length > 0 && (
+		<section id="testimonials" class="som-testimonials-section">
+			<div class="som-container">
+				<div class="som-section-header">
+					<p class="som-section-label">Real Client Testimonials</p>
+					<h2 class="som-section-title">Stories of <em>Transformation</em></h2>
+					<p class="som-section-body">
+						Words from couples who chose to do the hard, beautiful work. To protect their privacy, all identifying details have been removed.
+					</p>
+				</div>
+				<div class="som-testimonials-grid">
+					{testimonials.map((t: any) => (
+						<article class:list={["som-testimonial", t.quote && t.quote.length > 500 && "som-testimonial-wide"]}>
+							<p class="som-testimonial-mark" aria-hidden="true">"</p>
+							<div class="som-testimonial-quote">
+								{(t.quote || '').split(/\n\s*\n/).map((para: string) => (
+									<p>{para.trim()}</p>
+								))}
+							</div>
+						</article>
+					))}
+				</div>
+			</div>
+		</section>
+	)}
+
 	<!-- =============== PILLARS =============== -->
 	<section id="different" class="som-different-section">
 		<div class="som-container">
@@ -1136,6 +1163,10 @@ const ogImage =
 		</div>
 	</section>
 
+	<div style="display:flex;justify-content:center;margin:48px 0;">
+		<a href="#screener" class="som-btn-primary">Take the Next Step</a>
+	</div>
+
 	<!-- =============== BARBARA BIO =============== -->
 	<section class="som-bio-section">
 		<div class="som-bio-inner">
@@ -1173,7 +1204,7 @@ const ogImage =
 		<p class="som-section-label" style="color:var(--som-gold-light)">Your Investment</p>
 		<h2 class="som-section-title">What It Costs to<br /><em>Save Your Marriage</em></h2>
 		<p class="som-section-body">
-			Consider what divorce costs — financially, spiritually, and in the lives of your children. The Marriage Intensive is not inexpensive. But for couples who are serious, it is one of the most significant investments they will ever make.
+			Consider what divorce costs — financially, emotionally, and spiritually — for the whole family. The Marriage Intensive is not inexpensive. But for couples who are serious, it is one of the most significant investments they will ever make.
 		</p>
 		<div class="som-investment-price">{price}</div>
 		<div style="margin-top:24px;"></div>
@@ -1213,36 +1244,6 @@ const ogImage =
 			/>
 		</div>
 	</section>
-
-	<!-- =============== TESTIMONIALS =============== -->
-	{testimonials && testimonials.length > 0 && (
-		<section id="testimonials" class="som-testimonials-section">
-			<div class="som-container">
-				<div class="som-section-header">
-					<p class="som-section-label">Client Testimonials</p>
-					<h2 class="som-section-title">Stories of <em>Transformation</em></h2>
-					<p class="som-section-body">
-						Words from couples who chose to do the hard, beautiful work. To protect their privacy, all identifying details have been removed.
-					</p>
-				</div>
-				<div class="som-testimonials-grid">
-					{testimonials.map((t: any) => (
-						<article class:list={["som-testimonial", t.quote && t.quote.length > 500 && "som-testimonial-wide"]}>
-							<p class="som-testimonial-mark" aria-hidden="true">"</p>
-							<div class="som-testimonial-quote">
-								{(t.quote || '').split(/\n\s*\n/).map((para: string) => (
-									<p>{para.trim()}</p>
-								))}
-							</div>
-						</article>
-					))}
-				</div>
-				<div style="display:flex;justify-content:center;margin-top:48px;">
-					<a href="#screener" class="som-btn-primary">Take the Next Step</a>
-				</div>
-			</div>
-		</section>
-	)}
 
 	<!-- Video modal (popup overlay) — opened from any [data-yt-id] facade -->
 	<div class="som-video-modal" data-video-modal hidden role="dialog" aria-modal="true" aria-label={videoTitle}>
