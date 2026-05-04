@@ -37,8 +37,12 @@ const ogImageURL = ogImage.startsWith('http')
 		<link rel="preconnect" href="https://assets.spiritmediapublishing.com" crossorigin />
 		<link rel="preconnect" href="https://cdn.sanity.io" crossorigin />
 		{heroPreload && <link rel="preload" as="image" href={heroPreload} fetchpriority="high" />}
-		<link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-300.woff2" crossorigin />
-		<link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-400.woff2" crossorigin />
+		{!landing && (
+			<Fragment>
+				<link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-300.woff2" crossorigin />
+				<link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-400.woff2" crossorigin />
+			</Fragment>
+		)}
 
 		<meta name="description" content={description} />
 		<link rel="canonical" href={canonicalURL} />

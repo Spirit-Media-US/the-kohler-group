@@ -96,8 +96,6 @@ const ogImage =
 	landing={true}
 >
 	<Fragment slot="head">
-		<link rel="preconnect" href="https://images.unsplash.com" crossorigin />
-		<link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-400.woff2" crossorigin />
 		{ytThumb && (
 			<link
 				rel="preload"
@@ -111,8 +109,6 @@ const ogImage =
 		<style is:inline>
 			@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:300;font-display:optional;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-300.woff2') format('woff2')}
 			@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:400;font-display:optional;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-400.woff2') format('woff2')}
-			@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:500;font-display:optional;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-500.woff2') format('woff2')}
-			@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:600;font-display:optional;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-600.woff2') format('woff2')}
 			@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:400;font-display:optional;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-400-italic.woff2') format('woff2')}
 
 			/* ======================================================================
@@ -150,7 +146,11 @@ const ogImage =
 					--som-mid-gray: #666;
 					--som-light-gray: #e8e4de;
 					--som-text: #2d2d2d;
-					font-family: 'Montserrat', system-ui, sans-serif;
+					/* System UI stack only on the SOM landing — no Montserrat
+					   network round-trip on slow 4G. Cormorant still loads for
+					   the serif headlines via @font-face above (font-display:
+					   optional so it can't hurt LCP). */
+					font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 					color: var(--som-text);
 					background: var(--som-warm-white);
 					overflow-x: hidden;
@@ -546,7 +546,7 @@ const ogImage =
 				}
 				body.som-page .som-truth-strip cite {
 					display: block;
-					font-family: 'Montserrat', system-ui, sans-serif;
+					font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 					font-size: 11px;
 					font-weight: 600;
 					letter-spacing: 3px;
@@ -592,7 +592,7 @@ const ogImage =
 				body.som-page .som-pillar h3 {
 					font-family: 'Cormorant Garamond', Georgia, serif;
 					font-size: 24px;
-					font-weight: 500;
+					font-weight: 400;
 					color: var(--som-sapphire-deep);
 					margin-bottom: 14px;
 					line-height: 1.2;
@@ -685,7 +685,7 @@ const ogImage =
 					margin-top: 8px;
 				}
 				body.som-page .som-stat-caption {
-					font-family: 'Montserrat', system-ui, sans-serif;
+					font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 					font-size: 15px;
 					font-style: normal;
 					font-weight: 400;
