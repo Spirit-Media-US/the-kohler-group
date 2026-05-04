@@ -94,6 +94,7 @@ const ogImage =
 	canonicalURL={canonicalURL}
 	ogImage={ogImage}
 	landing={true}
+	bodyClass="som-page"
 >
 	<Fragment slot="head">
 		{ytThumb && (
@@ -986,8 +987,6 @@ const ogImage =
 			]
 		})} />
 	</Fragment>
-
-	<script is:inline>document.body.classList.add('som-page');</script>
 
 	<!-- =============== HERO =============== -->
 	<section class:list={["som-hero", heroBgUrl && "has-bg"]} style={heroBgUrl ? `--som-hero-bg: url('${heroBgUrl}')` : undefined}>

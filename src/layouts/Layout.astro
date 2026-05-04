@@ -10,6 +10,7 @@ interface Props {
 	ogImage?: string;
 	heroPreload?: string;
 	landing?: boolean;
+	bodyClass?: string;
 }
 
 const {
@@ -19,6 +20,7 @@ const {
 	ogImage = 'https://cdn.sanity.io/images/2bom5gqg/production/69ff224b35aa2d4c0e57339b5449330d55bf8095-468x311.jpg',
 	heroPreload,
 	landing = false,
+	bodyClass = '',
 } = Astro.props;
 
 const siteName = 'The Kohler Group PLLC';
@@ -229,7 +231,7 @@ const ogImageURL = ogImage.startsWith('http')
 			]
 		})} />
 	</head>
-	<body>
+	<body class={bodyClass}>
 		<a href="#main-content" class="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:bg-brand focus:text-white focus:px-4 focus:py-2 focus:rounded">Skip to content</a>
 		{!landing && <Nav />}
 		<main id="main-content">
