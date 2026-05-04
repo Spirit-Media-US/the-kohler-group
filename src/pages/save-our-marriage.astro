@@ -258,7 +258,7 @@ const ogImage =
 					padding-left: 24px;
 				}
 				@media (max-width: 1024px) {
-					body.som-page .som-hero-video {
+					body.som-page button.som-hero-video {
 						width: auto;
 						max-width: 360px;
 						margin: 0 auto;
@@ -270,8 +270,8 @@ const ogImage =
 						padding: 14px 24px 14px 14px;
 						box-shadow: 0 8px 24px rgba(15,45,90,0.3);
 					}
-					body.som-page .som-hero-video > picture { display: none; }
-					body.som-page .som-hero-video-play {
+					body.som-page button.som-hero-video > picture { display: none; }
+					body.som-page button.som-hero-video .som-hero-video-play {
 						position: static;
 						transform: none;
 						width: 36px;
@@ -280,11 +280,11 @@ const ogImage =
 						border-radius: 50%;
 						flex-shrink: 0;
 					}
-					body.som-page .som-hero-video-play::before {
+					body.som-page button.som-hero-video .som-hero-video-play::before {
 						margin-left: 2px;
 						border-width: 7px 0 7px 11px;
 					}
-					body.som-page .som-hero-video-label { display: inline; }
+					body.som-page button.som-hero-video .som-hero-video-label { display: inline; }
 				}
 				body.som-page .som-hero-video-play {
 					position: absolute;
