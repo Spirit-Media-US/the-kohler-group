@@ -856,6 +856,12 @@ const ogImage =
 					line-height: 1.7;
 					flex: 1;
 				}
+				body.som-page .som-testimonial-quote p {
+					margin: 0 0 1em;
+				}
+				body.som-page .som-testimonial-quote p:last-child {
+					margin-bottom: 0;
+				}
 
 				/* ─── FOOTER ─── */
 				body.som-page .som-footer {
@@ -1213,7 +1219,11 @@ const ogImage =
 					{testimonials.map((t: any) => (
 						<article class:list={["som-testimonial", t.quote && t.quote.length > 500 && "som-testimonial-wide"]}>
 							<p class="som-testimonial-mark" aria-hidden="true">"</p>
-							<p class="som-testimonial-quote">{t.quote}</p>
+							<div class="som-testimonial-quote">
+								{(t.quote || '').split(/\n\s*\n/).map((para: string) => (
+									<p>{para.trim()}</p>
+								))}
+							</div>
 						</article>
 					))}
 				</div>
