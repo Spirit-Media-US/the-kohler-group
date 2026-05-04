@@ -832,6 +832,9 @@ const ogImage =
 					display: flex;
 					flex-direction: column;
 				}
+				body.som-page .som-testimonial.som-testimonial-wide {
+					grid-column: 1 / -1;
+				}
 				body.som-page .som-testimonial-mark {
 					font-family: 'Cormorant Garamond', Georgia, serif;
 					font-size: 72px;
@@ -1203,7 +1206,7 @@ const ogImage =
 				</div>
 				<div class="som-testimonials-grid">
 					{testimonials.map((t: any) => (
-						<article class="som-testimonial">
+						<article class:list={["som-testimonial", t.quote && t.quote.length > 500 && "som-testimonial-wide"]}>
 							<p class="som-testimonial-mark" aria-hidden="true">"</p>
 							<p class="som-testimonial-quote">{t.quote}</p>
 						</article>
