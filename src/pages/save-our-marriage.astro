@@ -821,9 +821,14 @@ const ogImage =
 				}
 				body.som-page .som-testimonials-grid {
 					display: grid;
-					grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+					grid-template-columns: 1fr;
 					gap: 24px;
 					margin-top: 16px;
+				}
+				@media (min-width: 720px) {
+					body.som-page .som-testimonials-grid {
+						grid-template-columns: repeat(2, 1fr);
+					}
 				}
 				body.som-page .som-testimonial {
 					background: var(--som-warm-white);
