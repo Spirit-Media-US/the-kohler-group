@@ -40,11 +40,11 @@ if (videoId) {
 			width: 1280,
 			height: 720,
 			format: 'webp',
-			// q=72 cuts each variant ~30%; the 1080w variant (chosen on
-			// Lighthouse-mobile DPR=2.625 × ~371 CSS px) lands ~38KB instead
-			// of 65KB at the old 1280w/q=82 → ~150ms faster on Slow-4G.
-			// Play-button overlay hides any banding.
-			quality: 72,
+			// q=60 puts the 1080w mobile-LCP variant near 24KB. The play-icon
+			// + Kohler logo overlay on the source thumb hide most banding,
+			// and the facade only renders for ~1 sec before the user opens
+			// the modal (which loads the actual YouTube HD embed anyway).
+			quality: 60,
 			widths: [540, 720, 1080, 1280],
 		});
 	} catch (err) {
