@@ -589,6 +589,15 @@ const ogImage =
 				@media (max-width: 700px) {
 					body.som-page .som-couples-grid { grid-template-columns: repeat(2, 1fr); }
 				}
+				body.som-page .som-couples-disclaimer {
+					margin: 0;
+					padding: 12px 24px 16px;
+					text-align: center;
+					font-size: 11px;
+					font-style: italic;
+					color: var(--som-muted, #8a8275);
+					letter-spacing: 0.02em;
+				}
 
 				/* ─── WHO THIS IS FOR ─── */
 				body.som-page .som-who-section { background: var(--som-cream); padding: 64px 24px; }
@@ -1083,6 +1092,7 @@ const ogImage =
 				/>
 			))}
 		</div>
+		<p class="som-couples-disclaimer">For privacy, photos shown are not actual clients.</p>
 	</section>
 
 	<!-- =============== WHO THIS IS FOR =============== -->
