@@ -36,9 +36,12 @@ if (videoId) {
 			width: 1280,
 			height: 720,
 			format: 'webp',
-			quality: 82,
-			widths: [480, 960, 1280],
-			sizes: '(max-width: 1024px) 95vw, 650px',
+			// q=60 puts the 1080w mobile-LCP variant near 24KB. The play-icon
+			// + Kohler logo overlay on the source thumb hide most banding,
+			// and the facade only renders for ~1 sec before the user opens
+			// the modal (which loads the actual YouTube HD embed anyway).
+			quality: 60,
+			widths: [540, 720, 1080, 1280],
 		});
 	} catch (err) {
 		console.warn('[save-our-marriage] YouTube thumbnail prefetch failed:', err);
@@ -94,26 +97,23 @@ const ogImage =
 	canonicalURL={canonicalURL}
 	ogImage={ogImage}
 	landing={true}
+	bodyClass="som-page"
 >
 	<Fragment slot="head">
-		<link rel="preconnect" href="https://images.unsplash.com" crossorigin />
-		<link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-400.woff2" crossorigin />
 		{ytThumb && (
 			<link
 				rel="preload"
 				as="image"
 				href={ytThumb.src}
 				imagesrcset={ytThumb.srcSet?.attribute}
-				imagesizes="(max-width: 1024px) 95vw, 650px"
+				imagesizes="(max-width: 1024px) 90vw, 650px"
 				fetchpriority="high"
 			/>
 		)}
 		<style is:inline>
-			@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:300;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-300.woff2') format('woff2')}
-			@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:400;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-400.woff2') format('woff2')}
-			@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:500;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-500.woff2') format('woff2')}
-			@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:600;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-600.woff2') format('woff2')}
-			@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:400;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-400-italic.woff2') format('woff2')}
+			@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:300;font-display:optional;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-300.woff2') format('woff2')}
+			@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:400;font-display:optional;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-400.woff2') format('woff2')}
+			@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:400;font-display:optional;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-400-italic.woff2') format('woff2')}
 
 			/* ======================================================================
 			   Save Our Marriage — ported verbatim from Barbara's prototype CSS,
@@ -150,7 +150,11 @@ const ogImage =
 					--som-mid-gray: #666;
 					--som-light-gray: #e8e4de;
 					--som-text: #2d2d2d;
-					font-family: 'Montserrat', system-ui, sans-serif;
+					/* System UI stack only on the SOM landing — no Montserrat
+					   network round-trip on slow 4G. Cormorant still loads for
+					   the serif headlines via @font-face above (font-display:
+					   optional so it can't hurt LCP). */
+					font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 					color: var(--som-text);
 					background: var(--som-warm-white);
 					overflow-x: hidden;
@@ -465,31 +469,9 @@ const ogImage =
 				}
 				body.som-page .som-container { max-width: 1100px; margin: 0 auto; }
 
-				/* ─── VIDEO SECTION ─── */
-				body.som-page .som-video-section {
-					background: var(--som-cream);
-					padding: 64px 24px;
-					text-align: center;
-				}
-				body.som-page .som-video-placeholder {
-					max-width: 800px;
-					margin: 0 auto;
-					background: var(--som-sapphire-deep);
-					aspect-ratio: 16/9;
-					display: flex;
-					flex-direction: column;
-					align-items: center;
-					justify-content: center;
-					color: rgba(255,255,255,0.5);
-					position: relative;
-					overflow: hidden;
-				}
-				body.som-page .som-video-placeholder::before {
-					content: '';
-					position: absolute;
-					inset: 0;
-					background: linear-gradient(135deg, rgba(184,150,62,0.10) 0%, transparent 60%);
-				}
+				/* Play-icon used by the no-video placeholder fallback below the
+				   hero facade. Section/iframe styles for the legacy "video
+				   section" layout were dropped — markup uses the hero facade. */
 				body.som-page .som-video-play-icon {
 					width: 72px;
 					height: 72px;
@@ -507,25 +489,6 @@ const ogImage =
 					border-width: 12px 0 12px 22px;
 					border-color: transparent transparent transparent rgba(255,255,255,0.6);
 					margin-left: 6px;
-				}
-				body.som-page .som-video-placeholder p {
-					font-size: 13px;
-					letter-spacing: 2px;
-					text-transform: uppercase;
-					position: relative;
-					z-index: 2;
-				}
-				body.som-page .som-video-iframe {
-					max-width: 800px;
-					margin: 0 auto;
-					aspect-ratio: 16/9;
-					overflow: hidden;
-					position: relative;
-				}
-				body.som-page .som-video-iframe iframe {
-					width: 100%;
-					height: 100%;
-					border: 0;
 				}
 
 				/* ─── TRUTH STRIP ─── */
@@ -546,7 +509,7 @@ const ogImage =
 				}
 				body.som-page .som-truth-strip cite {
 					display: block;
-					font-family: 'Montserrat', system-ui, sans-serif;
+					font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 					font-size: 11px;
 					font-weight: 600;
 					letter-spacing: 3px;
@@ -592,7 +555,7 @@ const ogImage =
 				body.som-page .som-pillar h3 {
 					font-family: 'Cormorant Garamond', Georgia, serif;
 					font-size: 24px;
-					font-weight: 500;
+					font-weight: 400;
 					color: var(--som-sapphire-deep);
 					margin-bottom: 14px;
 					line-height: 1.2;
@@ -625,6 +588,15 @@ const ogImage =
 				body.som-page .som-couples-grid img:hover { filter: saturate(1.1); }
 				@media (max-width: 700px) {
 					body.som-page .som-couples-grid { grid-template-columns: repeat(2, 1fr); }
+				}
+				body.som-page .som-couples-disclaimer {
+					margin: 0;
+					padding: 12px 24px 16px;
+					text-align: center;
+					font-size: 11px;
+					font-style: italic;
+					color: #5d5851;
+					letter-spacing: 0.02em;
 				}
 
 				/* ─── WHO THIS IS FOR ─── */
@@ -685,7 +657,7 @@ const ogImage =
 					margin-top: 8px;
 				}
 				body.som-page .som-stat-caption {
-					font-family: 'Montserrat', system-ui, sans-serif;
+					font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
 					font-size: 15px;
 					font-style: normal;
 					font-weight: 400;
@@ -858,9 +830,14 @@ const ogImage =
 				}
 				body.som-page .som-testimonials-grid {
 					display: grid;
-					grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+					grid-template-columns: 1fr;
 					gap: 24px;
 					margin-top: 16px;
+				}
+				@media (min-width: 720px) {
+					body.som-page .som-testimonials-grid {
+						grid-template-columns: repeat(2, 1fr);
+					}
 				}
 				body.som-page .som-testimonial {
 					background: var(--som-warm-white);
@@ -868,6 +845,9 @@ const ogImage =
 					border: 1px solid var(--som-light-gray);
 					display: flex;
 					flex-direction: column;
+				}
+				body.som-page .som-testimonial.som-testimonial-wide {
+					grid-column: 1 / -1;
 				}
 				body.som-page .som-testimonial-mark {
 					font-family: 'Cormorant Garamond', Georgia, serif;
@@ -884,6 +864,12 @@ const ogImage =
 					color: var(--som-text);
 					line-height: 1.7;
 					flex: 1;
+				}
+				body.som-page .som-testimonial-quote p {
+					margin: 0 0 1em;
+				}
+				body.som-page .som-testimonial-quote p:last-child {
+					margin-bottom: 0;
 				}
 
 				/* ─── FOOTER ─── */
@@ -987,8 +973,6 @@ const ogImage =
 		})} />
 	</Fragment>
 
-	<script is:inline>document.body.classList.add('som-page');</script>
-
 	<!-- =============== HERO =============== -->
 	<section class:list={["som-hero", heroBgUrl && "has-bg"]} style={heroBgUrl ? `--som-hero-bg: url('${heroBgUrl}')` : undefined}>
 		<div class="som-hero-grid">
@@ -1012,7 +996,7 @@ const ogImage =
 						<img
 							src={ytThumb.src}
 							srcset={ytThumb.srcSet?.attribute}
-							sizes="(max-width: 1024px) 95vw, 650px"
+							sizes="(max-width: 1024px) 90vw, 650px"
 							width="1280"
 							height="720"
 							alt=""
@@ -1108,6 +1092,7 @@ const ogImage =
 				/>
 			))}
 		</div>
+		<p class="som-couples-disclaimer">For privacy, photos shown are not actual clients.</p>
 	</section>
 
 	<!-- =============== WHO THIS IS FOR =============== -->
@@ -1178,7 +1163,7 @@ const ogImage =
 				</div>
 				<p>Barbara Kohler is the Founder and CEO of The Kohler Group, PLLC — a faith-integrated Christian psychotherapy practice located in Huntersville, NC, serving the greater Charlotte and Lake Norman area, with in person and telehealth across North and South Carolina.</p>
 				<p>She has been a Licensed Clinical Mental Health Counselor since 2002 and holds National Certified Counselor credentials since 2009. She is also an ordained minister — a distinction that shapes every aspect of how she works with couples.</p>
-				<p>Barbara uses a multidimensional approach in working with individuals and couples. She integrates several powerful, effective modalities including EMDR, Re-Decision Therapy, HeartSync, Judicial Prayer, and TRET. Her approach addresses marriages at the root of each individual's life, to enable the couple to set aside toxic blaming and deal with spiritual fractures that have never been fully healed. <a href="https://thekohlergroup.net" target="_blank" rel="noopener" style="color:var(--som-gold);text-decoration:underline;">Visit thekohlergroup.net</a></p>
+				<p>Barbara uses a multidimensional approach in working with individuals and couples. She integrates several powerful, effective modalities including EMDR, Re-Decision Therapy, HeartSync, Judicial Prayer, and TRET. Her approach addresses marriages at the root of each individual's life, to enable the couple to set aside toxic blaming and deal with spiritual fractures that have never been fully healed. <a href="https://thekohlergroup.net" target="_blank" rel="noopener" style="color:var(--som-sapphire-deep);text-decoration:underline;font-weight:600;">Visit thekohlergroup.net</a></p>
 			</div>
 		</div>
 	</section>
@@ -1242,9 +1227,13 @@ const ogImage =
 				</div>
 				<div class="som-testimonials-grid">
 					{testimonials.map((t: any) => (
-						<article class="som-testimonial">
+						<article class:list={["som-testimonial", t.quote && t.quote.length > 500 && "som-testimonial-wide"]}>
 							<p class="som-testimonial-mark" aria-hidden="true">"</p>
-							<p class="som-testimonial-quote">{t.quote}</p>
+							<div class="som-testimonial-quote">
+								{(t.quote || '').split(/\n\s*\n/).map((para: string) => (
+									<p>{para.trim()}</p>
+								))}
+							</div>
 						</article>
 					))}
 				</div>
