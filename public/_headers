@@ -12,6 +12,6 @@
   Link: <https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-300.woff2>; rel=preload; as=font; type="font/woff2"; crossorigin
   Link: <https://assets.spiritmediapublishing.com/fonts/montserrat/montserrat-400.woff2>; rel=preload; as=font; type="font/woff2"; crossorigin
 
-# Save Our Marriage — Cormorant 400 (the only font preloaded at the page level too)
-/save-our-marriage
+# Save My Marriage — Cormorant 400 (the only font preloaded at the page level too)
+/save-my-marriage
   Link: <https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-400.woff2>; rel=preload; as=font; type="font/woff2"; crossorigin

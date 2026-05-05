@@ -49,7 +49,7 @@ export default {
 			title: 'SOM — Barbara Video URL',
 			type: 'url',
 			description:
-				'YouTube embed URL for "A Message from Barbara" on /save-our-marriage. Leave blank to show the placeholder.',
+				'YouTube embed URL for "A Message from Barbara" on /save-my-marriage. Leave blank to show the placeholder.',
 		},
 		{
 			name: 'somHeroBackground',
@@ -57,7 +57,7 @@ export default {
 			type: 'image',
 			options: { hotspot: true },
 			description:
-				'Optional background image for the /save-our-marriage hero. A navy overlay sits on top automatically.',
+				'Optional background image for the /save-my-marriage hero. A navy overlay sits on top automatically.',
 		},
 		{
 			name: 'somBarbaraPhoto',
@@ -65,13 +65,13 @@ export default {
 			type: 'image',
 			options: { hotspot: true },
 			description:
-				'Portrait used in the bio section of /save-our-marriage. Defaults to the existing intensive portrait if blank.',
+				'Portrait used in the bio section of /save-my-marriage. Defaults to the existing intensive portrait if blank.',
 		},
 		{
 			name: 'somPrice',
 			title: 'SOM — Marriage Intensive Price',
 			type: 'string',
-			description: 'Displayed price on /save-our-marriage. Default: $15,000',
+			description: 'Displayed price on /save-my-marriage. Default: $15,000',
 		},
 	],
 };
