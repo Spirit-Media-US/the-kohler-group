@@ -15,14 +15,15 @@ This site: The Kohler Group | Repo: github.com/Spirit-Media-US/the-kohler-group 
 - Sanity Studio embedded at /studio with deploy webhook and CORS configured
 
 ### On dev — pending Kevin's "push to main"
-- `/save-our-marriage` landing page for Barbara's $15K Marriage Intensive funnel.
+- `/save-my-marriage` landing page for Barbara's $15K Marriage Intensive funnel.
   Built to Barbara's HTML prototype design (sapphire+gold+cream, Cormorant
   Garamond serif). 8-question screening quiz with 3 branched outcomes
   (qualified / not-ready / travel-impossible) plus an Individual Intensive
   sub-form. Submit fires a mailto: to `siteSettings.barbaraEmail` with all
   answers pre-filled (TKG isn't in our GHL — matches the existing MailtoLink
   pattern on the rest of the site). Existing `/intensives/marriage` page
-  untouched. Dev preview: https://dev.the-kohler-group.pages.dev/save-our-marriage
+  untouched. Dev preview: https://dev.the-kohler-group.pages.dev/save-my-marriage
+  (legacy `/save-our-marriage` 301s to the new slug via `public/_redirects`).
 - `Layout.astro` now supports `landing={true}` prop that suppresses the global
   `<Nav>` and `<Footer>` for funnel pages, while keeping all SEO/preload/
   font/JSON-LD machinery intact. Existing pages render unchanged.
@@ -40,7 +41,7 @@ This site: The Kohler Group | Repo: github.com/Spirit-Media-US/the-kohler-group 
   `public/_headers`).
 
 ### Blocked — pending Barbara
-- `saveourmarriage.us` → 301 redirect to `/save-our-marriage`. Waiting on
+- `saveourmarriage.us` → 301 redirect to `/save-my-marriage`. Waiting on
   Barbara to confirm where the domain is registered. Once known: if it's
   on Cloudflare, add a redirect rule; if elsewhere, set a host-level 301.
 - "Message from Barbara" video — placeholder card renders until Barbara
