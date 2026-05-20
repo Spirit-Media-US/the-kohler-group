@@ -92,9 +92,12 @@ const barbaraPhotoUrl = barbaraPortraitSource
 			.url()
 	: 'https://cdn.sanity.io/images/2bom5gqg/production/725180bdf0526e9efb4151d71422bddf9364d86c-2400x3000.jpg?w=800&h=1067&fit=crop&auto=format';
 
+// Hero background — Sanity override > sensible default from the existing TKG
+// Sanity CDN ("Individual Intensives" photo on the homepage). A navy 88%
+// overlay sits on top via CSS so the headline stays readable.
 const heroBgUrl = settings?.hytHeroBackground
 	? urlFor(settings.hytHeroBackground).width(1920).format('webp').quality(80).url()
-	: null;
+	: 'https://cdn.sanity.io/images/2bom5gqg/production/072edeab37e3c23c7441d53519ec70df92ad873a-5616x3744.jpg?w=1920&h=900&fit=crop&fm=webp&q=80';
 
 // Environment grid — only render when Barbara has uploaded all 4 photos.
 const envImages =
@@ -135,7 +138,7 @@ const logoUrl =
 		<style is:inline>
 			@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:600;font-display:optional;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-600.woff2') format('woff2')}
 			@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:700;font-display:optional;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-700.woff2') format('woff2')}
-			@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:600;font-display:optional;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-600-italic.woff2') format('woff2')}
+			@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:400;font-display:optional;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-400-italic.woff2') format('woff2')}
 
 			/* ======================================================================
 			   Heal Your Trauma — ported verbatim from Barbara's prototype CSS,
@@ -199,7 +202,7 @@ const logoUrl =
 				body.hyt-page .hyt-section-title {
 					font-family: 'Cormorant Garamond', Georgia, serif;
 					font-size: clamp(32px, 5vw, 50px);
-					font-weight: 600;
+					font-weight: 700;
 					color: var(--hyt-sapphire-dark);
 					line-height: 1.15;
 					margin-bottom: 20px;
@@ -255,14 +258,13 @@ const logoUrl =
 					z-index: 100;
 					box-shadow: 0 2px 12px rgba(27, 58, 107, 0.08);
 				}
-				body.hyt-page .hyt-header img { height: 40px; width: auto; }
-				body.hyt-page .hyt-header nav {
+				body.hyt-page .hyt-header > img { height: 40px; width: auto; }
+				body.hyt-page .hyt-nav {
 					display: flex;
 					gap: 20px;
 					align-items: center;
-					flex-wrap: wrap;
 				}
-				body.hyt-page .hyt-header nav a:not(.hyt-btn-primary-link) {
+				body.hyt-page .hyt-nav a:not(.hyt-btn-primary-link) {
 					font-size: 13px;
 					font-weight: 700;
 					letter-spacing: 1px;
@@ -270,9 +272,73 @@ const logoUrl =
 					text-decoration: none;
 					text-transform: uppercase;
 				}
-				body.hyt-page .hyt-header nav .hyt-btn-primary-link {
+				body.hyt-page .hyt-nav .hyt-btn-primary-link {
 					padding: 10px 20px;
 					font-size: 12px;
+				}
+				body.hyt-page .hyt-nav-toggle { display: none; }
+				@media (max-width: 768px) {
+					body.hyt-page .hyt-nav-toggle {
+						display: inline-flex;
+						flex-direction: column;
+						justify-content: space-between;
+						width: 28px;
+						height: 22px;
+						background: transparent;
+						border: 0;
+						padding: 0;
+						cursor: pointer;
+					}
+					body.hyt-page .hyt-nav-toggle span {
+						display: block;
+						width: 100%;
+						height: 3px;
+						background: var(--hyt-sapphire-dark);
+						border-radius: 2px;
+						transition: transform 0.25s ease, opacity 0.2s ease;
+						transform-origin: center;
+					}
+					body.hyt-page .hyt-nav-toggle[aria-expanded='true'] span:nth-child(1) {
+						transform: translateY(9px) rotate(45deg);
+					}
+					body.hyt-page .hyt-nav-toggle[aria-expanded='true'] span:nth-child(2) {
+						opacity: 0;
+					}
+					body.hyt-page .hyt-nav-toggle[aria-expanded='true'] span:nth-child(3) {
+						transform: translateY(-10px) rotate(-45deg);
+					}
+					body.hyt-page .hyt-nav {
+						position: absolute;
+						top: 100%;
+						left: 0;
+						right: 0;
+						background: var(--hyt-white);
+						flex-direction: column;
+						align-items: stretch;
+						padding: 12px 28px 24px;
+						gap: 4px;
+						border-bottom: 2px solid #e8eef8;
+						box-shadow: 0 6px 16px rgba(27, 58, 107, 0.1);
+						transform: translateY(-12px);
+						opacity: 0;
+						pointer-events: none;
+						transition: transform 0.25s ease, opacity 0.2s ease;
+					}
+					body.hyt-page .hyt-nav.is-open {
+						transform: translateY(0);
+						opacity: 1;
+						pointer-events: auto;
+					}
+					body.hyt-page .hyt-nav a:not(.hyt-btn-primary-link) {
+						padding: 14px 0;
+						border-bottom: 1px solid #e8eef8;
+						font-size: 14px;
+					}
+					body.hyt-page .hyt-nav .hyt-btn-primary-link {
+						margin-top: 12px;
+						text-align: center;
+						padding: 14px 20px;
+					}
 				}
 				body.hyt-page .hyt-topbar {
 					background: var(--hyt-sapphire-dark);
@@ -292,6 +358,15 @@ const logoUrl =
 					color: var(--hyt-gold-light);
 					text-decoration: none;
 					font-weight: 700;
+				}
+				@media (max-width: 768px) {
+					body.hyt-page .hyt-topbar {
+						gap: 8px;
+						padding: 8px 20px;
+						font-size: 12px;
+					}
+					body.hyt-page .hyt-topbar img,
+					body.hyt-page .hyt-topbar .hyt-topbar-serving { display: none; }
 				}
 
 				/* HERO */
@@ -608,7 +683,7 @@ const logoUrl =
 				body.hyt-page .hyt-cost-card h3 {
 					font-family: 'Cormorant Garamond', Georgia, serif;
 					font-size: 22px;
-					font-weight: 600;
+					font-weight: 700;
 					color: var(--hyt-gold-light);
 					margin-bottom: 10px;
 				}
@@ -673,7 +748,7 @@ const logoUrl =
 				body.hyt-page .hyt-pillar-card h3 {
 					font-family: 'Cormorant Garamond', Georgia, serif;
 					font-size: 24px;
-					font-weight: 600;
+					font-weight: 700;
 					color: var(--hyt-sapphire-dark);
 					margin-bottom: 14px;
 					line-height: 1.2;
@@ -706,7 +781,7 @@ const logoUrl =
 				body.hyt-page .hyt-who-item h4 {
 					font-family: 'Cormorant Garamond', Georgia, serif;
 					font-size: 19px;
-					font-weight: 600;
+					font-weight: 700;
 					color: var(--hyt-white);
 					margin-bottom: 6px;
 				}
@@ -839,7 +914,7 @@ const logoUrl =
 				body.hyt-page .hyt-bio-content h2 {
 					font-family: 'Cormorant Garamond', Georgia, serif;
 					font-size: 38px;
-					font-weight: 600;
+					font-weight: 700;
 					color: var(--hyt-sapphire-dark);
 					line-height: 1.15;
 					margin-bottom: 6px;
@@ -884,6 +959,7 @@ const logoUrl =
 				body.hyt-page .hyt-contact-step h3 {
 					font-family: 'Cormorant Garamond', Georgia, serif;
 					font-size: 21px;
+					font-weight: 700;
 					color: var(--hyt-white);
 					margin-bottom: 10px;
 				}
@@ -960,7 +1036,19 @@ const logoUrl =
 	<!-- =============== HEADER + TOPBAR =============== -->
 	<header class="hyt-header">
 		<img src={logoUrl} alt="The Kohler Group, PLLC" />
-		<nav>
+		<button
+			type="button"
+			class="hyt-nav-toggle"
+			aria-expanded="false"
+			aria-controls="hyt-nav-menu"
+			aria-label="Toggle navigation menu"
+			data-hyt-nav-toggle
+		>
+			<span></span>
+			<span></span>
+			<span></span>
+		</button>
+		<nav id="hyt-nav-menu" class="hyt-nav" data-hyt-nav>
 			<a href="#pillars">How It Works</a>
 			<a href="#contact">Contact</a>
 			<a href="#screener" class="hyt-btn-primary-link">Apply Now</a>
@@ -970,8 +1058,10 @@ const logoUrl =
 		<img src={logoUrl} alt="" />
 		<span>
 			Questions? Call <a href={`tel:${phoneDigits}`}>{phone}</a> &nbsp;|&nbsp;
-			<a href={`mailto:${officeEmail}`}>{officeEmail}</a> &nbsp;|&nbsp;
-			Serving clients nationally from Huntersville, NC
+			<a href={`mailto:${officeEmail}`}>{officeEmail}</a>
+			<span class="hyt-topbar-serving">
+				&nbsp;|&nbsp; Serving clients nationally from Huntersville, NC
+			</span>
 		</span>
 	</div>
 
@@ -1517,6 +1607,41 @@ const logoUrl =
 
 			document.addEventListener('keydown', (e) => {
 				if (e.key === 'Escape' && !modal.hidden) closeModal();
+			});
+		})();
+	</script>
+
+	<!-- Mobile nav toggle -->
+	<script is:inline>
+		(function () {
+			const toggle = document.querySelector('[data-hyt-nav-toggle]');
+			const menu = document.querySelector('[data-hyt-nav]');
+			if (!toggle || !menu) return;
+
+			const setOpen = (open) => {
+				toggle.setAttribute('aria-expanded', String(open));
+				menu.classList.toggle('is-open', open);
+			};
+
+			toggle.addEventListener('click', () => {
+				setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+			});
+
+			// Close on link click — mobile menu shouldn't linger after navigation
+			menu.querySelectorAll('a').forEach((a) => {
+				a.addEventListener('click', () => setOpen(false));
+			});
+
+			// Close on Escape
+			document.addEventListener('keydown', (e) => {
+				if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') setOpen(false);
+			});
+
+			// Close drawer if window grows past the mobile breakpoint
+			window.addEventListener('resize', () => {
+				if (window.innerWidth > 768 && toggle.getAttribute('aria-expanded') === 'true') {
+					setOpen(false);
+				}
 			});
 		})();
 	</script>
