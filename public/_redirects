@@ -27,3 +27,6 @@
 # Legacy slug — anything pointing at the old path keeps working
 /save-our-marriage /save-my-marriage 301
 /save-our-marriage/ /save-my-marriage 301
+
+# Heal Your Trauma — Individual Trauma Intensive landing page
+/heal-your-trauma /heal-your-trauma/index.html 200

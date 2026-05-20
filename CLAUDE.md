@@ -15,6 +15,29 @@ This site: The Kohler Group | Repo: github.com/Spirit-Media-US/the-kohler-group 
 - Sanity Studio embedded at /studio with deploy webhook and CORS configured
 
 ### On dev — pending Kevin's "push to main"
+- `/heal-your-trauma` landing page for Barbara's $9,400 Individual Trauma
+  Intensive funnel. Built to Barbara's HTML prototype design (same
+  sapphire+gold+cream / Cormorant Garamond palette as SOM, but a separate
+  scoped `body.hyt-page` namespace so the two pages stay independent).
+  7-question screener (`TraumaIntensiveQuiz.astro`) with two branched
+  outcomes: "fit" (continues to the contact step + mailto: to Ashley with
+  Barbara BCC'd) and "not-ready" (auto-routes on Q6=D "distance is a
+  barrier" or Q7=D "not ready yet"). Submission pattern matches SOM —
+  TKG isn't in our GHL so we use mailto: with the office email as the
+  to-line. Existing `/intensives/individual` page untouched. Dev preview:
+  https://dev.the-kohler-group.pages.dev/heal-your-trauma
+  (300 rewrite via `public/_redirects` so PSI doesn't pay the trailing-slash
+  hop).
+- `siteSettings` schema extended with 5 HYT fields: `hytVideoUrl`,
+  `hytHeroBackground`, `hytBarbaraPhoto`, `hytPrice`, and
+  `hytEnvironmentImages` (array of up to 4 photos of Daetwyler Plaza for the
+  "Your Environment" grid; the section auto-hides until all 4 are uploaded).
+  Defaults render correctly when fields are blank: hero shows the gradient
+  with no background image, video shows a "coming soon" facade, Barbara
+  bio photo falls back to the SOM portrait, price defaults to $9,400.
+- `testimonial` schema gained a new "Trauma Intensive" service option. Until
+  Sanity has any posts tagged with it, the page falls back to four generic
+  intensive quotes ported verbatim from Barbara's prototype.
 - `/save-my-marriage` landing page for Barbara's $15K Marriage Intensive funnel.
   Built to Barbara's HTML prototype design (sapphire+gold+cream, Cormorant
   Garamond serif). 8-question screening quiz with 3 branched outcomes
@@ -46,6 +69,18 @@ This site: The Kohler Group | Repo: github.com/Spirit-Media-US/the-kohler-group 
   on Cloudflare, add a redirect rule; if elsewhere, set a host-level 301.
 - "Message from Barbara" video — placeholder card renders until Barbara
   records and pastes the YouTube URL into Studio's `SOM — Barbara Video URL`.
+- `healyourtrauma.net` → 301 redirect to `/heal-your-trauma`. Same setup
+  as saveourmarriage.us — needs registrar confirmation before redirect.
+- HYT "Hear From Barbara" video — placeholder card renders until Barbara
+  records and pastes the YouTube URL into Studio's `HYT — Barbara Video URL`.
+- HYT "Your Environment" image grid — the four Daetwyler Plaza photos were
+  base64-embedded in Barbara's original prototype HTML and were NOT
+  preserved when that file was removed from the repo root after porting.
+  Section auto-hides until Barbara uploads four photos in Studio under
+  `HYT — Environment Image Grid (4 photos)`. To recover the original four
+  shots, re-upload `Heal_Your_Trauma_Updated.html` to the code-server and
+  extract via the `data:image/jpeg;base64,...` URLs (or just upload fresh
+  photos of the Daetwyler Plaza lakeside path / pond / geese / bridge).
 
 ## Dev Commands
 
