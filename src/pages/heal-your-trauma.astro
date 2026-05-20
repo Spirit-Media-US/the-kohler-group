@@ -78,35 +78,52 @@ const officeEmail = settings?.officeEmail || 'Ashley.Bostic@thekohlergroup.net';
 const phone = settings?.phone || '704-948-1268';
 const phoneDigits = phone.replace(/[^0-9]/g, '');
 
-// Barbara bio photo — prefer hyt-specific, fall back to SOM portrait, then to
-// the production CDN URL the SOM page already ships with so the page never
-// renders without a portrait.
-const barbaraPortraitSource = settings?.hytBarbaraPhoto || settings?.somBarbaraPhoto;
+// Barbara bio photo — Sanity override (hyt-specific) > the prototype's
+// own headshot uploaded to TKG's Sanity asset library.
+const barbaraPortraitSource = settings?.hytBarbaraPhoto;
 const barbaraPhotoUrl = barbaraPortraitSource
 	? urlFor(barbaraPortraitSource)
-			.width(800)
-			.height(1067)
+			.width(560)
+			.height(700)
 			.fit('crop')
 			.format('webp')
 			.quality(85)
 			.url()
-	: 'https://cdn.sanity.io/images/2bom5gqg/production/725180bdf0526e9efb4151d71422bddf9364d86c-2400x3000.jpg?w=800&h=1067&fit=crop&auto=format';
+	: 'https://cdn.sanity.io/images/2bom5gqg/production/26668c3345068c6b44adc469806a72a911d51919-512x640.jpg?w=560&h=700&fit=crop&auto=format';
 
-// Hero background — Sanity override > sensible default from the existing TKG
-// Sanity CDN ("Individual Intensives" photo on the homepage). A navy 88%
-// overlay sits on top via CSS so the headline stays readable.
+// Hero background — Sanity override > the prototype's own pond/bridge
+// photo of Daetwyler Plaza. A navy 88% overlay sits on top via CSS.
 const heroBgUrl = settings?.hytHeroBackground
 	? urlFor(settings.hytHeroBackground).width(1920).format('webp').quality(80).url()
-	: 'https://cdn.sanity.io/images/2bom5gqg/production/072edeab37e3c23c7441d53519ec70df92ad873a-5616x3744.jpg?w=1920&h=900&fit=crop&fm=webp&q=80';
+	: 'https://cdn.sanity.io/images/2bom5gqg/production/6760f67fe866be9af8c60dea85be28951f8f3876-1400x933.jpg?w=1400&fm=webp&q=80';
 
-// Environment grid — only render when Barbara has uploaded all 4 photos.
+// Environment grid — Sanity override > the four prototype Daetwyler photos
+// uploaded to TKG's Sanity asset library (lake, walking path, geese, bridge).
+const FALLBACK_ENV = [
+	{
+		url: 'https://cdn.sanity.io/images/2bom5gqg/production/2ac09ed86e7035906b03a9758dce48117fbbfb7e-1400x933.jpg?w=720&h=480&fit=crop&fm=webp&q=80',
+		alt: 'Lake at Daetwyler Plaza',
+	},
+	{
+		url: 'https://cdn.sanity.io/images/2bom5gqg/production/892ea2206b9b5617808d0b87ec78b0bb68e77d0b-900x600.jpg?w=720&h=480&fit=crop&fm=webp&q=80',
+		alt: 'Walking path at Daetwyler Plaza',
+	},
+	{
+		url: 'https://cdn.sanity.io/images/2bom5gqg/production/6f5a86ed5ee0325184863f6c3bea9c8109dda415-900x1349.jpg?w=720&h=480&fit=crop&crop=top&fm=webp&q=80',
+		alt: 'Geese at the lake',
+	},
+	{
+		url: 'https://cdn.sanity.io/images/2bom5gqg/production/6760f67fe866be9af8c60dea85be28951f8f3876-1400x933.jpg?w=720&h=480&fit=crop&fm=webp&q=80',
+		alt: 'Pond with bridge at Daetwyler Plaza',
+	},
+];
 const envImages =
 	Array.isArray(settings?.hytEnvironmentImages) && settings.hytEnvironmentImages.length >= 4
 		? settings.hytEnvironmentImages.slice(0, 4).map((img: any) => ({
 				url: urlFor(img).width(720).height(480).fit('crop').format('webp').quality(80).url(),
 				alt: img.alt || 'Daetwyler Plaza environment',
 			}))
-		: null;
+		: FALLBACK_ENV;
 
 const canonicalURL = 'https://thekohlergroup.net/heal-your-trauma';
 const ogImage =
@@ -150,6 +167,17 @@ const logoUrl =
 			   Sapphire/gold/cream palette + Cormorant Garamond.
 			   ====================================================================== */
 			@layer base {
+				/* Override Layout.astro critical CSS h1-h6 { line-height: 1.2 } so
+				   headings without an explicit line-height inherit the body's
+				   1.75 (matches Barbara's prototype). */
+				body.hyt-page h1,
+				body.hyt-page h2,
+				body.hyt-page h3,
+				body.hyt-page h4,
+				body.hyt-page h5,
+				body.hyt-page h6 {
+					line-height: inherit;
+				}
 				body.hyt-page {
 					--hyt-sapphire: #1b3a6b;
 					--hyt-sapphire-dark: #0f2347;
@@ -193,7 +221,7 @@ const logoUrl =
 				body.hyt-page .hyt-section-title {
 					font-family: 'Cormorant Garamond', Georgia, serif;
 					font-size: clamp(32px, 5vw, 50px);
-					font-weight: 700;
+					font-weight: 600;
 					color: var(--hyt-sapphire-dark);
 					line-height: 1.15;
 					margin-bottom: 20px;
@@ -627,6 +655,22 @@ const logoUrl =
 					max-width: 860px;
 					margin: 0 auto;
 				}
+				body.hyt-page .hyt-testimonials-header {
+					text-align: center;
+					margin-bottom: 48px;
+				}
+				body.hyt-page .hyt-testimonials-heading {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: clamp(28px, 4vw, 40px);
+					color: var(--hyt-sapphire-dark);
+					margin-top: 10px;
+				}
+				body.hyt-page .hyt-testimonials-rule {
+					border: none;
+					border-top: 2px solid var(--hyt-gold);
+					width: 60px;
+					margin: 16px auto 0;
+				}
 				body.hyt-page .hyt-testimonials-grid {
 					display: flex;
 					flex-direction: column;
@@ -909,7 +953,7 @@ const logoUrl =
 				body.hyt-page .hyt-bio-content h2 {
 					font-family: 'Cormorant Garamond', Georgia, serif;
 					font-size: 38px;
-					font-weight: 700;
+					font-weight: 600;
 					color: var(--hyt-sapphire-dark);
 					line-height: 1.15;
 					margin-bottom: 6px;
@@ -951,6 +995,19 @@ const logoUrl =
 					border-radius: 3px;
 					padding: 32px 24px;
 				}
+				body.hyt-page .hyt-step-num {
+					display: inline-flex;
+					align-items: center;
+					justify-content: center;
+					width: 40px;
+					height: 40px;
+					border-radius: 50%;
+					background: var(--hyt-gold);
+					color: var(--hyt-white);
+					font-weight: 700;
+					font-size: 16px;
+					margin-bottom: 16px;
+				}
 				body.hyt-page .hyt-contact-step h3 {
 					font-family: 'Cormorant Garamond', Georgia, serif;
 					font-size: 21px;
@@ -974,7 +1031,7 @@ const logoUrl =
 					background: var(--hyt-cream);
 					padding: 88px 28px;
 				}
-				body.hyt-page .hyt-screener-section .hyt-section-header { margin-bottom: 40px; }
+				body.hyt-page .hyt-screener-section .hyt-section-header { margin-bottom: 56px; }
 
 				/* FOOTER */
 				body.hyt-page .hyt-footer {
@@ -1128,10 +1185,10 @@ const logoUrl =
 	{testimonials && testimonials.length > 0 && (
 		<section class="hyt-testimonials-section">
 			<div class="hyt-testimonials-inner">
-				<div class="hyt-section-header">
-					<span class="hyt-section-label">What Clients Say</span>
-					<h2 class="hyt-section-title">Voices From the Journey</h2>
-					<hr class="hyt-gold-rule" />
+				<div class="hyt-section-header hyt-testimonials-header">
+					<span class="hyt-section-label" style="font-size: 13px; letter-spacing: 0.12em;">What Clients Say</span>
+					<h2 class="hyt-testimonials-heading">Voices From the Journey</h2>
+					<hr class="hyt-testimonials-rule" />
 				</div>
 				<div class="hyt-testimonials-grid">
 					{testimonials.map((t: any) => (
@@ -1513,9 +1570,11 @@ const logoUrl =
 					The Intensive begins with a free virtual consultation. No pressure. No obligation. Just a
 					conversation to see if this is the right fit for you.
 				</p>
+				<hr class="hyt-gold-rule" style="margin-top: 0;" />
 			</div>
 			<div class="hyt-contact-steps">
 				<div class="hyt-contact-step">
+					<div class="hyt-step-num">1</div>
 					<h3>Email Us</h3>
 					<p>
 						Send your name and best contact number to <a href={`mailto:${officeEmail}`}>{officeEmail}</a>
@@ -1523,6 +1582,7 @@ const logoUrl =
 					</p>
 				</div>
 				<div class="hyt-contact-step">
+					<div class="hyt-step-num">2</div>
 					<h3>Call Us</h3>
 					<p>
 						Prefer to speak with someone directly? Call us at <a href={`tel:${phoneDigits}`}>{phone}</a>.
@@ -1546,6 +1606,7 @@ const logoUrl =
 					Answer seven short questions. At the end, you'll be invited to schedule a complimentary
 					virtual consultation if you are interested — no obligation, no pressure.
 				</p>
+				<hr class="hyt-gold-rule" />
 			</div>
 			<TraumaIntensiveQuiz
 				barbaraEmail={barbaraEmail}

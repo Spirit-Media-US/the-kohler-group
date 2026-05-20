@@ -199,7 +199,7 @@ const phoneDigits = phone.replace(/[^0-9]/g, '');
 	body.hyt-page .hyt-widget-header h2 {
 		font-family: 'Cormorant Garamond', Georgia, serif;
 		font-size: 30px;
-		font-weight: 700;
+		font-weight: 600;
 		color: var(--hyt-white);
 		margin-bottom: 8px;
 	}
@@ -258,6 +258,7 @@ const phoneDigits = phone.replace(/[^0-9]/g, '');
 		text-align: left;
 		font-family: 'Lato', system-ui, sans-serif;
 		font-size: 15px;
+		line-height: normal;
 		color: var(--hyt-text-body);
 		cursor: pointer;
 		transition: border-color 0.15s, background 0.15s, color 0.15s;
@@ -319,7 +320,7 @@ const phoneDigits = phone.replace(/[^0-9]/g, '');
 		text-decoration: underline;
 	}
 	body.hyt-page .hyt-nav-back:hover { color: var(--hyt-sapphire); }
-	body.hyt-page .hyt-nav-back:disabled { opacity: 0; pointer-events: none; }
+	body.hyt-page .hyt-nav-back:disabled { display: none; }
 
 	body.hyt-page .hyt-btn-primary {
 		display: inline-block;
@@ -345,7 +346,7 @@ const phoneDigits = phone.replace(/[^0-9]/g, '');
 	body.hyt-page .hyt-result-title {
 		font-family: 'Cormorant Garamond', Georgia, serif;
 		font-size: 30px;
-		font-weight: 700;
+		font-weight: 600;
 		color: var(--hyt-sapphire-dark);
 		margin-bottom: 16px;
 		line-height: 1.2;
