@@ -52,20 +52,23 @@ This site: The Kohler Group | Repo: github.com/Spirit-Media-US/the-kohler-group 
 - SOM "couples thumbnails" strip above "Who This Is For": 4 square photos —
   2 from Sanity + 2 lifestyle couple photos hot-linked from
   `images.unsplash.com` (`img-src` allowlist updated in `public/_headers`).
+- **Funnel-domain redirects live (HTTPS-capable)** — `savemymarriage.us` and
+  `healyourtrauma.net` (both registered at Name.com under Barbara) now have
+  their DNS hosted on our SMP Cloudflare account (registrar stays Name.com
+  — only nameservers moved to `alexandra.ns.cloudflare.com` +
+  `bart.ns.cloudflare.com`). Each zone has a Redirect Rule that 301s
+  every request (apex + www, http + https) to the matching TKG page with
+  trailing slash. Universal SSL active. SMP zone standard applied
+  (mirage off, 0rtt on, early_hints on; `ai_bots_protection=block`,
+  `is_robots_txt_managed=false`). Replaced the previous Name.com URL
+  Forwarding setup, which was HTTP-only — that limitation was breaking
+  ~30–70% of typed visits because modern browsers default to https://.
+  Verified 2026-05-22: all 8 variants (2 domains × apex/www × http/https)
+  return 301 → correct TKG page, served by Cloudflare. Zone IDs:
+  savemymarriage.us `9de6364029569a7b050d988c2b752f3d`,
+  healyourtrauma.net `e18917a90b5af90d1b37065437f7ff7a`.
 
 ### Blocked — pending Barbara
-- **`savemymarriage.us`** → 301 redirect to
-  `https://thekohlergroup.net/save-my-marriage/` — domain confirmed at
-  **Name.com** (Barbara Kohler / The Kohler Group PLLC). Set up via Name.com
-  → My Domains → savemymarriage.us → URL Forwarding tab → 301 forward to
-  the target URL. Footer link on both `/save-my-marriage` and
-  `/heal-your-trauma` currently points to this domain; until redirect is
-  live, those footer links are dead (HTTPS port refused on the bare domain).
-- **`healyourtrauma.net`** → 301 redirect to
-  `https://thekohlergroup.net/heal-your-trauma/` — same Name.com setup.
-  WHOIS privacy-shielded but same Name.com nameserver pattern as
-  savemymarriage.us, so almost certainly in Barbara's Name.com account.
-  Footer link state same as above.
 - "Message from Barbara" video on `/save-my-marriage` — placeholder card
   renders until Barbara records and pastes the YouTube URL into Studio's
   `SOM — Barbara Video URL`.
