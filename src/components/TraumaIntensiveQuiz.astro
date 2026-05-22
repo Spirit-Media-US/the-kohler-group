@@ -1,0 +1,582 @@
+---
+interface Props {
+	barbaraEmail: string;
+	officeEmail: string;
+	phone: string;
+}
+const { barbaraEmail, officeEmail, phone } = Astro.props;
+const phoneDigits = phone.replace(/[^0-9]/g, '');
+---
+
+<div
+	class="hyt-quiz hyt-widget-wrapper"
+	data-barbara-user={barbaraEmail.split('@')[0]}
+	data-barbara-domain={barbaraEmail.split('@')[1]}
+	data-office-user={officeEmail.split('@')[0]}
+	data-office-domain={officeEmail.split('@')[1]}
+	data-phone={phone}
+	data-phone-digits={phoneDigits}
+>
+	<div class="hyt-widget-header">
+		<span class="hyt-section-label">Trauma Intensive Screening</span>
+		<h2>Let's See If We're a Fit</h2>
+		<p>Seven short questions. About two minutes.</p>
+	</div>
+
+	<div class="hyt-widget-body">
+		<div class="hyt-progress-bar-wrap">
+			<div class="hyt-progress-bar-fill" style="width:14%" data-q-bar></div>
+		</div>
+
+		<div data-quiz-stage>
+			<form data-q-form novalidate>
+				<!-- Q1 -->
+				<div class="hyt-question-block is-active" data-step="1">
+					<span class="hyt-q-counter" data-q-counter>Question 1 of 7</span>
+					<p class="hyt-q-text">What best describes your situation right now?</p>
+					<div class="hyt-options-list" data-radios="q1">
+						<button type="button" class="hyt-option-btn" data-choice="A">I'm a business owner or entrepreneur struggling with patterns I can't break</button>
+						<button type="button" class="hyt-option-btn" data-choice="B">I'm a minister or church leader carrying wounds I've never addressed</button>
+						<button type="button" class="hyt-option-btn" data-choice="C">I'm a high achiever who has 'managed' the pain for years</button>
+						<button type="button" class="hyt-option-btn" data-choice="D">I'm in active crisis — divorce, loss, or major life disruption</button>
+						<button type="button" class="hyt-option-btn" data-choice="E">I'm not sure, but I know something needs to change</button>
+					</div>
+				</div>
+
+				<!-- Q2 -->
+				<div class="hyt-question-block" data-step="2">
+					<span class="hyt-q-counter">Question 2 of 7</span>
+					<p class="hyt-q-text">How long have you been living with the effects of trauma or unresolved pain?</p>
+					<div class="hyt-options-list" data-radios="q2">
+						<button type="button" class="hyt-option-btn" data-choice="A">Less than 1 year</button>
+						<button type="button" class="hyt-option-btn" data-choice="B">1–3 years</button>
+						<button type="button" class="hyt-option-btn" data-choice="C">3–10 years</button>
+						<button type="button" class="hyt-option-btn" data-choice="D">More than 10 years</button>
+						<button type="button" class="hyt-option-btn" data-choice="E">Most of my life</button>
+					</div>
+				</div>
+
+				<!-- Q3 -->
+				<div class="hyt-question-block" data-step="3">
+					<span class="hyt-q-counter">Question 3 of 7</span>
+					<p class="hyt-q-text">Have you done therapy before?</p>
+					<div class="hyt-options-list" data-radios="q3">
+						<button type="button" class="hyt-option-btn" data-choice="A">No, this would be my first time</button>
+						<button type="button" class="hyt-option-btn" data-choice="B">Yes — weekly therapy, but I feel stuck</button>
+						<button type="button" class="hyt-option-btn" data-choice="C">Yes — but I stopped and I'm ready to try again</button>
+						<button type="button" class="hyt-option-btn" data-choice="D">Yes — and it helped, but there's still something deeper to address</button>
+					</div>
+				</div>
+
+				<!-- Q4 -->
+				<div class="hyt-question-block" data-step="4">
+					<span class="hyt-q-counter">Question 4 of 7</span>
+					<p class="hyt-q-text">Is faith integration important to you in the healing process?</p>
+					<div class="hyt-options-list" data-radios="q4">
+						<button type="button" class="hyt-option-btn" data-choice="A">Yes — I want prayer and Scripture to be part of the work</button>
+						<button type="button" class="hyt-option-btn" data-choice="B">Somewhat — I'm open to it but it's not my primary focus</button>
+						<button type="button" class="hyt-option-btn" data-choice="C">I'm not sure yet</button>
+						<button type="button" class="hyt-option-btn" data-choice="D">Not at this time</button>
+					</div>
+				</div>
+
+				<!-- Q5 -->
+				<div class="hyt-question-block" data-step="5">
+					<span class="hyt-q-counter">Question 5 of 7</span>
+					<p class="hyt-q-text">Are you willing to invest significantly in concentrated healing — both in time and financially?</p>
+					<div class="hyt-options-list" data-radios="q5">
+						<button type="button" class="hyt-option-btn" data-choice="A">Yes — I'm ready to commit to something intensive</button>
+						<button type="button" class="hyt-option-btn" data-choice="B">I'm seriously considering it and want to learn more</button>
+						<button type="button" class="hyt-option-btn" data-choice="C">I'm not sure I'm ready for that level of commitment</button>
+						<button type="button" class="hyt-option-btn" data-choice="D">No — I'm looking for something more gradual</button>
+					</div>
+				</div>
+
+				<!-- Q6 -->
+				<div class="hyt-question-block" data-step="6">
+					<span class="hyt-q-counter">Question 6 of 7</span>
+					<p class="hyt-q-text">Are you able to travel to or near Huntersville, NC for a 3-day intensive?</p>
+					<div class="hyt-options-list" data-radios="q6">
+						<button type="button" class="hyt-option-btn" data-choice="A">Yes — I can make that work</button>
+						<button type="button" class="hyt-option-btn" data-choice="B">Possibly — I'd need to discuss logistics</button>
+						<button type="button" class="hyt-option-btn" data-choice="C">I'm not sure yet</button>
+						<button type="button" class="hyt-option-btn" data-choice="D">No — distance is a significant barrier</button>
+					</div>
+				</div>
+
+				<!-- Q7 -->
+				<div class="hyt-question-block" data-step="7">
+					<span class="hyt-q-counter">Question 7 of 7</span>
+					<p class="hyt-q-text">Are you ready to begin the healing process?</p>
+					<div class="hyt-options-list" data-radios="q7">
+						<button type="button" class="hyt-option-btn" data-choice="A">Yes — I'm ready right now</button>
+						<button type="button" class="hyt-option-btn" data-choice="B">Almost — I have a few questions first</button>
+						<button type="button" class="hyt-option-btn" data-choice="C">Not quite yet, but soon</button>
+						<button type="button" class="hyt-option-btn" data-choice="D">No — I'm not ready yet</button>
+					</div>
+				</div>
+
+				<!-- Contact step (after a "fit" answer set is detected) -->
+				<div class="hyt-question-block" data-step="8">
+					<span class="hyt-q-counter">Final Step</span>
+					<p class="hyt-q-text">How can Barbara's team reach you?</p>
+					<p class="hyt-q-helper">Your information is private and used only to prepare for your consultation.</p>
+					<div class="hyt-fields">
+						<label class="hyt-field"><span>Your Name</span><input type="text" name="name" required autocomplete="name" /></label>
+						<label class="hyt-field"><span>Email</span><input type="email" name="email" required autocomplete="email" /></label>
+						<label class="hyt-field"><span>Phone</span><input type="tel" name="phone" required autocomplete="tel" /></label>
+						<label class="hyt-field"><span>Anything you'd like Barbara to know? <em>(optional)</em></span><textarea name="note" rows="3"></textarea></label>
+					</div>
+				</div>
+
+				<!-- Hidden inputs to hold answers -->
+				<input type="hidden" name="q1" data-radio-input="q1" />
+				<input type="hidden" name="q2" data-radio-input="q2" />
+				<input type="hidden" name="q3" data-radio-input="q3" />
+				<input type="hidden" name="q4" data-radio-input="q4" />
+				<input type="hidden" name="q5" data-radio-input="q5" />
+				<input type="hidden" name="q6" data-radio-input="q6" />
+				<input type="hidden" name="q7" data-radio-input="q7" />
+
+				<div class="hyt-widget-nav">
+					<button type="button" class="hyt-nav-back" data-q-back disabled>← Back</button>
+					<button type="submit" class="hyt-btn-primary hidden" data-q-submit>Request My Consult →</button>
+				</div>
+			</form>
+		</div>
+
+		<!-- Outcome screens -->
+		<div class="hyt-result-panel" data-outcome="fit">
+			<div class="hyt-result-title">This looks like a strong fit.</div>
+			<p class="hyt-result-body">
+				Based on your answers, the Individual Trauma Intensive may be exactly what you need. The next step is a brief, complimentary virtual consultation with Barbara — no commitment required. We will reach out to you within one business day, or you can reach us directly using the contact info below.
+			</p>
+			<div class="hyt-result-contact">
+				<h4>Schedule Your Free Consultation</h4>
+				<p>Email: <a href={`mailto:${officeEmail}`}>{officeEmail}</a></p>
+				<p>Phone: <a href={`tel:${phoneDigits}`}>{phone}</a></p>
+				<p style="margin-top:12px; font-size:13px; color:#9ab0d4;">Include your name and best contact number and we will reach out within one business day.</p>
+			</div>
+		</div>
+
+		<div class="hyt-result-panel" data-outcome="not-ready">
+			<div class="hyt-result-title">That's okay — healing happens in its own time.</div>
+			<p class="hyt-result-body">
+				The Intensive may not be the right fit right now — and that's completely fine. When you feel ready, we're here. In the meantime, The Kohler Group, PLLC offers individual counseling that can help you move toward healing at your own pace.
+			</p>
+			<div class="hyt-result-not-ready">
+				<p>
+					To learn about individual counseling options, visit <a href="https://www.thekohlergroup.net/">thekohlergroup.net</a> or call us at <a href={`tel:${phoneDigits}`}>{phone}</a>.
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+
+<style is:global>
+	body.hyt-page .hyt-widget-wrapper {
+		max-width: 680px;
+		margin: 0 auto;
+		background: var(--hyt-white);
+		border-radius: 4px;
+		box-shadow: var(--hyt-shadow);
+		overflow: hidden;
+	}
+	body.hyt-page .hyt-widget-header {
+		background: var(--hyt-sapphire-dark);
+		padding: 36px 40px 28px;
+	}
+	body.hyt-page .hyt-widget-header .hyt-section-label {
+		font-family: 'Lato', system-ui, sans-serif;
+		font-size: 11px;
+		font-weight: 700;
+		letter-spacing: 3px;
+		text-transform: uppercase;
+		color: var(--hyt-gold-light);
+		margin-bottom: 12px;
+		display: block;
+	}
+	body.hyt-page .hyt-widget-header h2 {
+		font-family: 'Cormorant Garamond', Georgia, serif;
+		font-size: 30px;
+		font-weight: 600;
+		color: var(--hyt-white);
+		margin-bottom: 8px;
+	}
+	body.hyt-page .hyt-widget-header p { font-size: 15px; color: #c5d2e8; }
+
+	body.hyt-page .hyt-widget-body { padding: 36px 40px; }
+	body.hyt-page .hyt-progress-bar-wrap {
+		background: #e2e8f0;
+		border-radius: 99px;
+		height: 5px;
+		margin-bottom: 32px;
+		overflow: hidden;
+	}
+	body.hyt-page .hyt-progress-bar-fill {
+		height: 100%;
+		background: var(--hyt-gold);
+		border-radius: 99px;
+		transition: width 0.4s ease;
+	}
+
+	body.hyt-page .hyt-question-block { display: none; }
+	body.hyt-page .hyt-question-block.is-active { display: block; animation: hytFadeIn .35s ease; }
+	@keyframes hytFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+	body.hyt-page .hyt-q-counter {
+		font-size: 12px;
+		font-weight: 700;
+		letter-spacing: 2px;
+		color: var(--hyt-text-muted);
+		text-transform: uppercase;
+		margin-bottom: 12px;
+		display: block;
+	}
+	body.hyt-page .hyt-q-text {
+		font-family: 'Cormorant Garamond', Georgia, serif;
+		font-size: 22px;
+		font-weight: 600;
+		color: var(--hyt-sapphire-dark);
+		margin-bottom: 24px;
+		line-height: 1.35;
+	}
+	body.hyt-page .hyt-q-helper {
+		font-size: 14px;
+		color: var(--hyt-text-muted);
+		margin-top: -16px;
+		margin-bottom: 24px;
+		line-height: 1.6;
+	}
+
+	body.hyt-page .hyt-options-list { display: flex; flex-direction: column; gap: 10px; }
+	body.hyt-page .hyt-option-btn {
+		background: var(--hyt-white);
+		border: 2px solid #dde3ec;
+		border-radius: 3px;
+		padding: 14px 18px;
+		text-align: left;
+		font-family: 'Lato', system-ui, sans-serif;
+		font-size: 15px;
+		line-height: normal;
+		color: var(--hyt-text-body);
+		cursor: pointer;
+		transition: border-color 0.15s, background 0.15s, color 0.15s;
+		width: 100%;
+	}
+	body.hyt-page .hyt-option-btn:hover {
+		border-color: var(--hyt-sapphire);
+		background: #f0f4fa;
+		color: var(--hyt-sapphire-dark);
+	}
+	body.hyt-page .hyt-option-btn.is-selected {
+		border-color: var(--hyt-sapphire);
+		background: var(--hyt-sapphire);
+		color: var(--hyt-white);
+	}
+
+	body.hyt-page .hyt-fields { display: grid; gap: 16px; }
+	body.hyt-page .hyt-field { display: block; }
+	body.hyt-page .hyt-field > span {
+		display: block;
+		font-size: 10px;
+		font-weight: 600;
+		letter-spacing: 2px;
+		text-transform: uppercase;
+		color: var(--hyt-text-muted);
+		margin-bottom: 8px;
+	}
+	body.hyt-page .hyt-field input,
+	body.hyt-page .hyt-field textarea {
+		width: 100%;
+		padding: 12px 16px;
+		font-family: 'Lato', system-ui, sans-serif;
+		font-size: 14px;
+		color: var(--hyt-text-body);
+		background: #fff;
+		border: 1px solid var(--hyt-light-gray);
+		outline: none;
+		transition: border-color .15s ease;
+	}
+	body.hyt-page .hyt-field input:focus,
+	body.hyt-page .hyt-field textarea:focus { border-color: var(--hyt-sapphire); }
+	body.hyt-page .hyt-field input.invalid,
+	body.hyt-page .hyt-field textarea.invalid { border-color: #c0392b; }
+
+	body.hyt-page .hyt-widget-nav {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: 28px;
+	}
+	body.hyt-page .hyt-nav-back {
+		background: none;
+		border: none;
+		font-size: 14px;
+		color: var(--hyt-text-muted);
+		cursor: pointer;
+		padding: 8px 0;
+		font-family: 'Lato', system-ui, sans-serif;
+		text-decoration: underline;
+	}
+	body.hyt-page .hyt-nav-back:hover { color: var(--hyt-sapphire); }
+	body.hyt-page .hyt-nav-back:disabled { display: none; }
+
+	body.hyt-page .hyt-btn-primary {
+		display: inline-block;
+		background: var(--hyt-gold);
+		color: var(--hyt-white);
+		font-family: 'Lato', system-ui, sans-serif;
+		font-size: 13px;
+		font-weight: 700;
+		letter-spacing: 2px;
+		text-transform: uppercase;
+		padding: 16px 36px;
+		border-radius: 2px;
+		text-decoration: none;
+		transition: background 0.2s, transform 0.2s;
+		cursor: pointer;
+		border: none;
+	}
+	body.hyt-page .hyt-btn-primary:hover { background: var(--hyt-gold-light); transform: translateY(-1px); }
+	body.hyt-page .hyt-btn-primary.hidden { display: none; }
+
+	body.hyt-page .hyt-result-panel { display: none; padding: 20px 0; }
+	body.hyt-page .hyt-result-panel.is-active { display: block; animation: hytFadeIn .45s ease; }
+	body.hyt-page .hyt-result-title {
+		font-family: 'Cormorant Garamond', Georgia, serif;
+		font-size: 30px;
+		font-weight: 600;
+		color: var(--hyt-sapphire-dark);
+		margin-bottom: 16px;
+		line-height: 1.2;
+	}
+	body.hyt-page .hyt-result-body {
+		font-size: 16px;
+		color: var(--hyt-text-body);
+		line-height: 1.8;
+		margin-bottom: 24px;
+	}
+	body.hyt-page .hyt-result-contact {
+		background: var(--hyt-sapphire-dark);
+		color: var(--hyt-white);
+		border-radius: 4px;
+		padding: 28px;
+		margin-top: 8px;
+	}
+	body.hyt-page .hyt-result-contact h4 {
+		font-family: 'Cormorant Garamond', Georgia, serif;
+		font-size: 22px;
+		font-weight: 600;
+		color: var(--hyt-gold-light);
+		margin-bottom: 12px;
+	}
+	body.hyt-page .hyt-result-contact p { font-size: 15px; color: #c5d2e8; margin-bottom: 6px; }
+	body.hyt-page .hyt-result-contact a { color: var(--hyt-gold-light); font-weight: 700; text-decoration: none; }
+	body.hyt-page .hyt-result-not-ready {
+		background: var(--hyt-cream);
+		border: 1px solid #e0d4b8;
+		border-radius: 4px;
+		padding: 28px;
+		margin-top: 8px;
+		text-align: center;
+	}
+	body.hyt-page .hyt-result-not-ready p {
+		font-size: 16px;
+		color: var(--hyt-text-body);
+		margin-bottom: 16px;
+		line-height: 1.75;
+	}
+	body.hyt-page .hyt-result-not-ready a {
+		color: var(--hyt-sapphire);
+		font-weight: 700;
+	}
+</style>
+
+<script>
+	type Answers = Record<string, string>;
+
+	function initTraumaQuiz(root: HTMLElement) {
+		const form = root.querySelector<HTMLFormElement>('[data-q-form]');
+		const back = root.querySelector<HTMLButtonElement>('[data-q-back]');
+		const submit = root.querySelector<HTMLButtonElement>('[data-q-submit]');
+		const bar = root.querySelector<HTMLElement>('[data-q-bar]');
+		const stage = root.querySelector<HTMLElement>('[data-quiz-stage]');
+		if (!form || !back || !submit || !bar || !stage) return;
+
+		const TOTAL_QUESTIONS = 7;
+		const CONTACT_STEP = 8;
+		let step = 1;
+		// Track whether the user has been routed to the "fit" track (continues to
+		// the contact step) vs. "not-ready" track (already shown the outcome).
+		let outcomeForced: string | null = null;
+
+		// Choice buttons drive hidden inputs
+		root.querySelectorAll<HTMLDivElement>('[data-radios]').forEach((group) => {
+			const name = group.dataset.radios!;
+			const hidden = root.querySelector<HTMLInputElement>(`[data-radio-input="${name}"]`);
+			group.querySelectorAll<HTMLButtonElement>('.hyt-option-btn').forEach((btn) => {
+				btn.addEventListener('click', () => {
+					group.querySelectorAll('.hyt-option-btn').forEach((b) => b.classList.remove('is-selected'));
+					btn.classList.add('is-selected');
+					if (hidden) hidden.value = btn.dataset.choice!;
+					// Auto-advance to next question on selection (mirrors the prototype)
+					setTimeout(() => handleAdvance(), 320);
+				});
+			});
+		});
+
+		const showStep = (n: number) => {
+			step = n;
+			root.querySelectorAll<HTMLElement>('.hyt-question-block').forEach((el) => {
+				el.classList.toggle('is-active', parseInt(el.dataset.step ?? '0', 10) === n);
+			});
+			const pct = n === CONTACT_STEP ? 100 : Math.round((n / TOTAL_QUESTIONS) * 100);
+			bar!.style.width = `${pct}%`;
+			back!.disabled = n === 1;
+			submit!.classList.toggle('hidden', n !== CONTACT_STEP);
+		};
+
+		const handleAdvance = () => {
+			// Distance question (Q6) — option D ("No — distance is a significant
+			// barrier") routes to not-ready outcome immediately.
+			if (step === 6) {
+				const q6 = form.querySelector<HTMLInputElement>('[data-radio-input="q6"]')?.value;
+				if (q6 === 'D') { outcomeForced = 'not-ready'; showOutcome('not-ready'); return; }
+			}
+			// Readiness question (Q7) — option D ("No — I'm not ready yet")
+			// routes to not-ready outcome immediately.
+			if (step === 7) {
+				const q7 = form.querySelector<HTMLInputElement>('[data-radio-input="q7"]')?.value;
+				if (q7 === 'D') { outcomeForced = 'not-ready'; showOutcome('not-ready'); return; }
+				// Otherwise advance to contact step
+				showStep(CONTACT_STEP);
+				return;
+			}
+			if (step < TOTAL_QUESTIONS) showStep(step + 1);
+		};
+
+		back.addEventListener('click', () => {
+			if (step === CONTACT_STEP) { showStep(7); return; }
+			if (step > 1) showStep(step - 1);
+		});
+
+		const collectAnswers = (): Answers => {
+			const data = new FormData(form);
+			const a: Answers = {};
+			for (let i = 1; i <= 7; i++) {
+				const v = data.get(`q${i}`);
+				if (v != null) a[`q${i}`] = String(v);
+			}
+			a.name = String(data.get('name') ?? '');
+			a.email = String(data.get('email') ?? '');
+			a.phone = String(data.get('phone') ?? '');
+			a.note = String(data.get('note') ?? '');
+			return a;
+		};
+
+		const showOutcome = (key: string) => {
+			stage.style.display = 'none';
+			bar!.style.width = '100%';
+			root.querySelectorAll<HTMLElement>('.hyt-result-panel').forEach((el) => el.classList.remove('is-active'));
+			const target = root.querySelector<HTMLElement>(`[data-outcome="${key}"]`);
+			if (target) {
+				target.classList.add('is-active');
+				target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+			}
+		};
+
+		const friendlyAnswer = (q: string, v: string): string => {
+			const map: Record<string, Record<string, string>> = {
+				q1: { A: 'Business owner / entrepreneur', B: 'Minister / church leader', C: 'High achiever — managed the pain', D: 'Active crisis', E: 'Not sure — knows something must change' },
+				q2: { A: 'Less than 1 year', B: '1–3 years', C: '3–10 years', D: 'More than 10 years', E: 'Most of life' },
+				q3: { A: 'Never', B: 'Weekly therapy, but stuck', C: 'Stopped — ready to try again', D: 'Helped — but something deeper remains' },
+				q4: { A: 'Yes — wants prayer + Scripture', B: 'Somewhat open', C: 'Not sure', D: 'Not at this time' },
+				q5: { A: 'Ready to commit', B: 'Seriously considering', C: 'Not sure ready', D: 'Wants something more gradual' },
+				q6: { A: 'Can make travel work', B: 'Possibly — needs to discuss logistics', C: 'Not sure yet', D: 'Distance is a significant barrier' },
+				q7: { A: 'Ready right now', B: 'Almost — questions first', C: 'Not quite yet, but soon', D: 'Not ready yet' },
+			};
+			return map[q]?.[v] ?? v;
+		};
+
+		const buildMailto = (to: string, subject: string, a: Answers, bcc?: string): string => {
+			const lines: string[] = [];
+			lines.push(`From: ${a.name || '(no name)'}`);
+			lines.push(`Email: ${a.email || '(no email)'}`);
+			lines.push(`Phone: ${a.phone || '(no phone)'}`);
+			lines.push('');
+			lines.push('--- Trauma Intensive Screening ---');
+			if (a.q1) lines.push(`1. Situation: ${friendlyAnswer('q1', a.q1)}`);
+			if (a.q2) lines.push(`2. Duration of trauma: ${friendlyAnswer('q2', a.q2)}`);
+			if (a.q3) lines.push(`3. Prior therapy: ${friendlyAnswer('q3', a.q3)}`);
+			if (a.q4) lines.push(`4. Faith integration: ${friendlyAnswer('q4', a.q4)}`);
+			if (a.q5) lines.push(`5. Commitment to intensive: ${friendlyAnswer('q5', a.q5)}`);
+			if (a.q6) lines.push(`6. Travel to Huntersville: ${friendlyAnswer('q6', a.q6)}`);
+			if (a.q7) lines.push(`7. Readiness to begin: ${friendlyAnswer('q7', a.q7)}`);
+			if (a.note) {
+				lines.push('');
+				lines.push('Notes from prospect:');
+				lines.push(a.note);
+			}
+			lines.push('');
+			lines.push('---');
+			lines.push('Submitted from healyourtrauma.net / thekohlergroup.net/heal-your-trauma');
+			lines.push('');
+			lines.push('---');
+			lines.push(
+				'Please Note: The Kohler Group, PLLC uses Google Workspace (Google Business Mail) for general business communications. We have a Business Associate Agreement (BAA) with Google in place. To protect your privacy, please do not include sensitive personal or clinical information in your email. Once your complimentary consultation is scheduled, we will set up a means for you to communicate with us through our secure client portal — and all confidential communications can take place safely through that portal.',
+			);
+			const body = lines.join('\n');
+			const params = [`subject=${encodeURIComponent(subject)}`, `body=${encodeURIComponent(body)}`];
+			if (bcc) params.unshift(`bcc=${encodeURIComponent(bcc)}`);
+			return `mailto:${to}?${params.join('&')}`;
+		};
+
+		const buildBarbaraEmail = () => {
+			const u = root.dataset.barbaraUser;
+			const d = root.dataset.barbaraDomain;
+			return `${u}@${d}`;
+		};
+		const buildOfficeEmail = () => {
+			const u = root.dataset.officeUser;
+			const d = root.dataset.officeDomain;
+			return u && d ? `${u}@${d}` : buildBarbaraEmail();
+		};
+
+		const validateContact = (): boolean => {
+			const name = form.querySelector<HTMLInputElement>('input[name="name"]');
+			const email = form.querySelector<HTMLInputElement>('input[name="email"]');
+			const phoneEl = form.querySelector<HTMLInputElement>('input[name="phone"]');
+			let ok = true;
+			[name, email, phoneEl].forEach((el) => {
+				if (!el) return;
+				const v = el.value.trim();
+				const valid = v.length > 0 && (el.type !== 'email' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+				el.classList.toggle('invalid', !valid);
+				if (!valid) ok = false;
+			});
+			return ok;
+		};
+
+		form.addEventListener('submit', (e) => {
+			e.preventDefault();
+			if (!validateContact()) return;
+			const a = collectAnswers();
+			const subject = `Trauma Intensive Inquiry — ${a.name || 'Prospect'}`;
+			window.location.href = buildMailto(buildOfficeEmail(), subject, a, buildBarbaraEmail());
+			setTimeout(() => showOutcome(outcomeForced ?? 'fit'), 200);
+		});
+
+		showStep(1);
+	}
+
+	function bootTraumaQuizzes() {
+		document.querySelectorAll<HTMLElement>('.hyt-quiz').forEach(initTraumaQuiz);
+	}
+
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', bootTraumaQuizzes);
+	} else {
+		bootTraumaQuizzes();
+	}
+</script>

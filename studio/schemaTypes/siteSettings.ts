@@ -73,5 +73,50 @@ export default {
 			type: 'string',
 			description: 'Displayed price on /save-my-marriage. Default: $15,000',
 		},
+		// ---------------- Heal Your Trauma landing page ----------------
+		{
+			name: 'hytVideoUrl',
+			title: 'HYT — Barbara Video URL',
+			type: 'url',
+			description:
+				'YouTube embed URL for "Hear From Barbara" on /heal-your-trauma. Leave blank to show the placeholder.',
+		},
+		{
+			name: 'hytHeroBackground',
+			title: 'HYT — Hero Background Image (optional)',
+			type: 'image',
+			options: { hotspot: true },
+			description:
+				'Optional background image for the /heal-your-trauma hero. A navy overlay sits on top automatically.',
+		},
+		{
+			name: 'hytBarbaraPhoto',
+			title: 'HYT — Barbara Bio Photo',
+			type: 'image',
+			options: { hotspot: true },
+			description:
+				'Portrait used in the bio section of /heal-your-trauma. Defaults to the SOM portrait if blank.',
+		},
+		{
+			name: 'hytPrice',
+			title: 'HYT — Trauma Intensive Price',
+			type: 'string',
+			description: 'Displayed price on /heal-your-trauma. Default: $9,400',
+		},
+		{
+			name: 'hytEnvironmentImages',
+			title: 'HYT — Environment Image Grid (4 photos)',
+			type: 'array',
+			of: [
+				{
+					type: 'image',
+					options: { hotspot: true },
+					fields: [{ name: 'alt', title: 'Alt Text', type: 'string' }],
+				},
+			],
+			validation: (Rule: any) => Rule.max(4),
+			description:
+				'Four photos of the Daetwyler Plaza environment. Grid hides if fewer than 4 are uploaded.',
+		},
 	],
 };

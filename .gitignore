@@ -65,3 +65,4 @@ public/studio/
 # Playwright MCP session logs
 .playwright-mcp/
 .claude/settings.local.json
+.wrangler/

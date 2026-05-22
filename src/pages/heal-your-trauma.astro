@@ -1,0 +1,1812 @@
+---
+import { getImage } from 'astro:assets';
+import TraumaIntensiveQuiz from '@components/TraumaIntensiveQuiz.astro';
+import Layout from '@layouts/Layout.astro';
+import { sanityClient, urlFor } from '../lib/sanity.ts';
+
+const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
+  phone, email, barbaraEmail, officeEmail,
+  hytVideoUrl, hytHeroBackground, hytBarbaraPhoto, hytPrice, hytEnvironmentImages,
+  somBarbaraPhoto
+}`);
+
+const traumaTestimonials = await sanityClient.fetch(`
+  *[_type == "testimonial" && service == "Trauma Intensive"] | order(order asc) {
+    _id, clientName, quote
+  }
+`);
+
+// Fallback testimonials from Barbara's prototype — used until Sanity has any
+// posts tagged "Trauma Intensive". Kept generic + identity-free.
+const fallbackTestimonials = [
+	{
+		_id: 'fb-1',
+		clientName: 'Intensive Client',
+		quote:
+			"I wasn't sure what to expect in the beginning. But it was so much better than what I could have thought. Thank you so much!",
+	},
+	{
+		_id: 'fb-2',
+		clientName: 'Intensive Client',
+		quote:
+			'The flow of the day was well paced, including breaks and ending early enough to have time after to process. I liked the variation in modalities used. It kept things interesting and gave me a way to connect to differently.',
+	},
+	{
+		_id: 'fb-3',
+		clientName: 'Former Client',
+		quote:
+			"I arrived broken and hopeless with feelings of failure and a loss of purpose. I was no longer able to push back the images of abuse and years of secrecy and confusion. Barbara asked me simple questions and affirmed my pain and helped me feel seen and heard. She introduced me to the power of the Holy Spirit and the unconditional love of the Lord. Through clinical techniques as a master psychotherapist, and through Biblical knowledge and wisdom, Barbara continues to guide me in Redecision Therapy and experience the freedom of God's grace and protection. After decades of talk therapy with a variety of therapists, I had given up on counseling. I am grateful to my husband for encouraging me to call Barbara's office and I am forever grateful for the woman who answered the phone, listened to me cry, and immediately scheduled me to see Barbara. My phone rang seconds later and it was Barbara, herself, and my healing began. Today, I walk, with confidence, through my past and my present. I am able to embrace my God given gifts, forgive those who have caused me pain and isolation, and I actively pursue opportunities to share my testimony with others so they feel the common bond of trauma, but hear the truth in God's restoration, and the hope of a fulfilling life of promises found in the healing within working with Barbara and the blessings of a Godly woman and therapist.",
+	},
+	{
+		_id: 'fb-4',
+		clientName: 'Intensive Client',
+		quote:
+			'The first time I came to see Barbara I was in a desperate place. I had tried multiple other therapists and types of counseling. Nothing was helping beyond essentially medicating the pain and trauma I was working through. By the time I reached her, it would have been similar to someone coming into the emergency room on a crash cart. Barely alive. I needed assistance to feed and dress myself and was not safe to drive a car. My first Intensive with Barbara put me on life support and gave me the first glimpse of hope in many many months. I continued forward with her guidance and multiple Intensives to follow. I can honestly say that I am alive today as a result of her therapeutic techniques and work. I and my family will be forever grateful.',
+	},
+];
+const testimonials =
+	traumaTestimonials && traumaTestimonials.length > 0 ? traumaTestimonials : fallbackTestimonials;
+
+const price = settings?.hytPrice || '$9,400';
+
+function getYouTubeId(url: string | null | undefined): string | null {
+	if (!url) return null;
+	const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|shorts\/))([\w-]{11})/);
+	return m ? m[1] : null;
+}
+const videoId: string | null = getYouTubeId(settings?.hytVideoUrl);
+const videoTitle = 'Hear From Barbara — Trauma Intensive';
+
+let ytThumb: Awaited<ReturnType<typeof getImage>> | null = null;
+if (videoId) {
+	try {
+		ytThumb = await getImage({
+			src: `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`,
+			width: 1280,
+			height: 720,
+			format: 'webp',
+			quality: 65,
+			widths: [540, 720, 1080, 1280],
+		});
+	} catch (err) {
+		console.warn('[heal-your-trauma] YouTube thumbnail prefetch failed:', err);
+	}
+}
+
+const barbaraEmail = settings?.barbaraEmail || 'barbara@thekohlergroup.net';
+const officeEmail = settings?.officeEmail || 'Ashley.Bostic@thekohlergroup.net';
+const phone = settings?.phone || '704-948-1268';
+const phoneDigits = phone.replace(/[^0-9]/g, '');
+
+// Barbara bio photo — Sanity override (hyt-specific) > the prototype's
+// own headshot uploaded to TKG's Sanity asset library.
+const barbaraPortraitSource = settings?.hytBarbaraPhoto;
+const barbaraPhotoUrl = barbaraPortraitSource
+	? urlFor(barbaraPortraitSource)
+			.width(560)
+			.height(700)
+			.fit('crop')
+			.format('webp')
+			.quality(85)
+			.url()
+	: 'https://cdn.sanity.io/images/2bom5gqg/production/26668c3345068c6b44adc469806a72a911d51919-512x640.jpg?w=560&h=700&fit=crop&auto=format';
+
+// Hero background — Sanity override > the prototype's own pond/bridge
+// photo of Daetwyler Plaza. A navy 88% overlay sits on top via CSS.
+const heroBgUrl = settings?.hytHeroBackground
+	? urlFor(settings.hytHeroBackground).width(1920).format('webp').quality(80).url()
+	: 'https://cdn.sanity.io/images/2bom5gqg/production/6760f67fe866be9af8c60dea85be28951f8f3876-1400x933.jpg?w=1400&fm=webp&q=80';
+
+// Environment grid — Sanity override > three prototype Daetwyler photos
+// uploaded to TKG's Sanity asset library (lake, walking path, bridge).
+const FALLBACK_ENV = [
+	{
+		url: 'https://cdn.sanity.io/images/2bom5gqg/production/2ac09ed86e7035906b03a9758dce48117fbbfb7e-1400x933.jpg?w=720&h=480&fit=crop&fm=webp&q=80',
+		alt: 'Lake at Daetwyler Plaza',
+	},
+	{
+		url: 'https://cdn.sanity.io/images/2bom5gqg/production/892ea2206b9b5617808d0b87ec78b0bb68e77d0b-900x600.jpg?w=720&h=480&fit=crop&fm=webp&q=80',
+		alt: 'Walking path at Daetwyler Plaza',
+	},
+	{
+		url: 'https://cdn.sanity.io/images/2bom5gqg/production/6760f67fe866be9af8c60dea85be28951f8f3876-1400x933.jpg?w=720&h=480&fit=crop&fm=webp&q=80',
+		alt: 'Pond with bridge at Daetwyler Plaza',
+	},
+];
+const envImages =
+	Array.isArray(settings?.hytEnvironmentImages) && settings.hytEnvironmentImages.length >= 3
+		? settings.hytEnvironmentImages.slice(0, 3).map((img: any) => ({
+				url: urlFor(img).width(720).height(480).fit('crop').format('webp').quality(80).url(),
+				alt: img.alt || 'Daetwyler Plaza environment',
+			}))
+		: FALLBACK_ENV;
+
+// Illustrative client photos shown alongside testimonials. Not actual
+// clients — disclaimer rendered in the strip, mirroring the SOM pattern.
+const clientThumbs = [
+	{
+		url: 'https://cdn.sanity.io/images/2bom5gqg/production/ce21d190820b77700ce22531ad10ca5b2660c320-8192x5464.jpg?w=600&h=600&fit=crop&auto=format&q=80',
+		alt: 'Woman in reflective moment (illustrative)',
+	},
+	{
+		url: 'https://cdn.sanity.io/images/2bom5gqg/production/9e95ec73cadfdcd688be17b7f34c6a3ae2c09d73-500x500.jpg?w=600&h=600&fit=crop&auto=format&q=80',
+		alt: 'Portrait of a client (illustrative)',
+	},
+	{
+		url: 'https://cdn.sanity.io/images/2bom5gqg/production/d00ff393c28bd124f497e72965a0e14404a352cc-6000x4000.jpg?w=600&h=600&fit=crop&auto=format&q=80',
+		alt: 'Person in healing journey (illustrative)',
+	},
+	{
+		url: 'https://cdn.sanity.io/images/2bom5gqg/production/41f6718176722e916f5f956ed3793b5af62b378c-5351x3567.jpg?w=600&h=600&fit=crop&auto=format&q=80',
+		alt: 'Person in quiet reflection (illustrative)',
+	},
+];
+
+const canonicalURL = 'https://thekohlergroup.net/heal-your-trauma';
+const ogImage =
+	'https://cdn.sanity.io/images/2bom5gqg/production/4acc15cc5d36b1bddfad65074b71a61ac1653349-1280x720.jpg?fm=jpg&q=95&sharpen=15';
+
+const logoUrl =
+	'https://cdn.sanity.io/images/2bom5gqg/production/c60dd6674bab6d1f50562e6ff3f61365e0639f1a-1416x921.png?w=400';
+---
+
+<Layout
+	title="Heal Your Trauma | Psychotherapy & Personal Growth Intensives — Barbara Kohler, LCMHC"
+	description="Psychotherapy and Personal Growth Intensives — clinically rigorous, uniquely personalized, licensed-therapist-led. The Individual Trauma Intensive with Barbara Kohler, LCMHC offers concentrated, root-cause healing for high achievers, business owners, and ministers — three concentrated days in Huntersville, NC."
+	canonicalURL={canonicalURL}
+	ogImage={ogImage}
+	landing={true}
+	bodyClass="hyt-page"
+>
+	<Fragment slot="head">
+		{ytThumb && (
+			<link
+				rel="preload"
+				as="image"
+				href={ytThumb.src}
+				imagesrcset={ytThumb.srcSet?.attribute}
+				imagesizes="(max-width: 1024px) 90vw, 540px"
+				fetchpriority="high"
+			/>
+		)}
+		<link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/lato/lato-400.woff2" crossorigin />
+		<link rel="preload" as="font" type="font/woff2" href="https://assets.spiritmediapublishing.com/fonts/lato/lato-700.woff2" crossorigin />
+		<style is:inline>
+			@font-face{font-family:'Lato';font-style:normal;font-weight:400;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/lato/lato-400.woff2') format('woff2')}
+			@font-face{font-family:'Lato';font-style:normal;font-weight:700;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/lato/lato-700.woff2') format('woff2')}
+			@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:600;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-600.woff2') format('woff2')}
+			@font-face{font-family:'Cormorant Garamond';font-style:normal;font-weight:700;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-700.woff2') format('woff2')}
+			@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:400;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-400-italic.woff2') format('woff2')}
+			@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:500;font-display:swap;src:url('https://assets.spiritmediapublishing.com/fonts/cormorant-garamond/cormorant-garamond-500-italic.woff2') format('woff2')}
+
+			/* ======================================================================
+			   Heal Your Trauma — ported verbatim from Barbara's prototype CSS,
+			   scoped under body.hyt-page so nothing leaks into the rest of TKG.
+			   Sapphire/gold/cream palette + Cormorant Garamond.
+			   ====================================================================== */
+			@layer base {
+				/* Override Layout.astro critical CSS h1-h6 { line-height: 1.2 } so
+				   headings without an explicit line-height inherit the body's
+				   1.75 (matches Barbara's prototype). */
+				body.hyt-page h1,
+				body.hyt-page h2,
+				body.hyt-page h3,
+				body.hyt-page h4,
+				body.hyt-page h5,
+				body.hyt-page h6 {
+					line-height: inherit;
+				}
+				body.hyt-page {
+					--hyt-sapphire: #1b3a6b;
+					--hyt-sapphire-dark: #0f2347;
+					--hyt-sapphire-mid: #254d8f;
+					--hyt-gold: #b8872a;
+					--hyt-gold-light: #d4a843;
+					--hyt-gold-pale: #f5e6c8;
+					--hyt-cream: #faf7f2;
+					--hyt-white: #ffffff;
+					--hyt-text-dark: #0d1117;
+					--hyt-text-body: #1a202c;
+					--hyt-text-mid: #2d3748;
+					--hyt-text-muted: #4a5568;
+					--hyt-light-gray: #e8e4de;
+					--hyt-shadow: 0 4px 24px rgba(27, 58, 107, 0.13);
+					font-family: 'Lato', system-ui, sans-serif;
+					background: var(--hyt-white);
+					color: var(--hyt-text-body);
+					font-size: 17px;
+					line-height: 1.75;
+				}
+				body.hyt-page * { box-sizing: border-box; }
+				body.hyt-page html { scroll-behavior: smooth; }
+
+				body.hyt-page .hyt-container {
+					max-width: 960px;
+					margin: 0 auto;
+					padding: 0 28px;
+				}
+
+				body.hyt-page .hyt-section-label {
+					font-family: 'Lato', system-ui, sans-serif;
+					font-size: 11px;
+					font-weight: 700;
+					letter-spacing: 3px;
+					text-transform: uppercase;
+					color: var(--hyt-gold);
+					margin-bottom: 12px;
+					display: block;
+				}
+				body.hyt-page .hyt-section-title {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: clamp(32px, 5vw, 50px);
+					font-weight: 600;
+					color: var(--hyt-sapphire-dark);
+					line-height: 1.15;
+					margin-bottom: 20px;
+				}
+				body.hyt-page .hyt-section-title em { font-style: italic; color: var(--hyt-gold); }
+				body.hyt-page .hyt-section-body {
+					font-size: 17px;
+					color: var(--hyt-text-body);
+					max-width: 680px;
+					line-height: 1.8;
+				}
+				body.hyt-page .hyt-section-header { text-align: center; margin-bottom: 56px; }
+				body.hyt-page .hyt-section-header .hyt-section-body { margin: 0 auto; }
+				body.hyt-page .hyt-gold-rule {
+					width: 60px;
+					height: 3px;
+					background: var(--hyt-gold);
+					margin: 20px auto 0;
+					border: none;
+				}
+
+				body.hyt-page .hyt-btn-primary-link {
+					display: inline-block;
+					background: var(--hyt-gold);
+					color: var(--hyt-white);
+					font-family: 'Lato', system-ui, sans-serif;
+					font-size: 13px;
+					font-weight: 700;
+					letter-spacing: 2px;
+					text-transform: uppercase;
+					padding: 16px 36px;
+					border-radius: 2px;
+					text-decoration: none;
+					transition: background 0.2s, transform 0.2s;
+					cursor: pointer;
+					border: none;
+				}
+				body.hyt-page .hyt-btn-primary-link:hover {
+					background: var(--hyt-gold-light);
+					transform: translateY(-1px);
+				}
+
+				/* HEADER + TOPBAR */
+				body.hyt-page .hyt-header {
+					background: var(--hyt-white);
+					padding: 14px 28px;
+					display: flex;
+					align-items: center;
+					justify-content: space-between;
+					border-bottom: 2px solid #e8eef8;
+					position: sticky;
+					top: 0;
+					z-index: 100;
+					box-shadow: 0 2px 12px rgba(27, 58, 107, 0.08);
+				}
+				body.hyt-page .hyt-header > img { height: 40px; width: auto; }
+				body.hyt-page .hyt-nav {
+					display: flex;
+					gap: 20px;
+					align-items: center;
+				}
+				body.hyt-page .hyt-nav a:not(.hyt-btn-primary-link) {
+					font-size: 13px;
+					font-weight: 700;
+					letter-spacing: 1px;
+					color: var(--hyt-sapphire-dark);
+					text-decoration: none;
+					text-transform: uppercase;
+				}
+				body.hyt-page .hyt-nav .hyt-btn-primary-link {
+					padding: 10px 20px;
+					font-size: 12px;
+				}
+				body.hyt-page .hyt-nav-toggle { display: none; }
+				@media (max-width: 768px) {
+					body.hyt-page .hyt-nav-toggle {
+						display: inline-flex;
+						flex-direction: column;
+						justify-content: space-between;
+						width: 28px;
+						height: 22px;
+						background: transparent;
+						border: 0;
+						padding: 0;
+						cursor: pointer;
+					}
+					body.hyt-page .hyt-nav-toggle span {
+						display: block;
+						width: 100%;
+						height: 3px;
+						background: var(--hyt-sapphire-dark);
+						border-radius: 2px;
+						transition: transform 0.25s ease, opacity 0.2s ease;
+						transform-origin: center;
+					}
+					body.hyt-page .hyt-nav-toggle[aria-expanded='true'] span:nth-child(1) {
+						transform: translateY(9px) rotate(45deg);
+					}
+					body.hyt-page .hyt-nav-toggle[aria-expanded='true'] span:nth-child(2) {
+						opacity: 0;
+					}
+					body.hyt-page .hyt-nav-toggle[aria-expanded='true'] span:nth-child(3) {
+						transform: translateY(-10px) rotate(-45deg);
+					}
+					body.hyt-page .hyt-nav {
+						position: absolute;
+						top: 100%;
+						left: 0;
+						right: 0;
+						background: var(--hyt-white);
+						flex-direction: column;
+						align-items: stretch;
+						padding: 12px 28px 24px;
+						gap: 4px;
+						border-bottom: 2px solid #e8eef8;
+						box-shadow: 0 6px 16px rgba(27, 58, 107, 0.1);
+						transform: translateY(-12px);
+						opacity: 0;
+						pointer-events: none;
+						transition: transform 0.25s ease, opacity 0.2s ease;
+					}
+					body.hyt-page .hyt-nav.is-open {
+						transform: translateY(0);
+						opacity: 1;
+						pointer-events: auto;
+					}
+					body.hyt-page .hyt-nav a:not(.hyt-btn-primary-link) {
+						padding: 14px 0;
+						border-bottom: 1px solid #e8eef8;
+						font-size: 14px;
+					}
+					body.hyt-page .hyt-nav .hyt-btn-primary-link {
+						margin-top: 12px;
+						text-align: center;
+						padding: 14px 20px;
+					}
+				}
+				body.hyt-page .hyt-topbar {
+					background: var(--hyt-sapphire-dark);
+					padding: 10px 28px;
+					text-align: center;
+					font-size: 13px;
+					color: #c5d2e8;
+					letter-spacing: 0.5px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					gap: 24px;
+					flex-wrap: wrap;
+				}
+				body.hyt-page .hyt-topbar img { height: 32px; width: auto; }
+				body.hyt-page .hyt-topbar a {
+					color: var(--hyt-gold-light);
+					text-decoration: none;
+					font-weight: 700;
+				}
+				@media (max-width: 768px) {
+					body.hyt-page .hyt-topbar {
+						gap: 8px;
+						padding: 8px 20px;
+						font-size: 12px;
+					}
+					body.hyt-page .hyt-topbar img,
+					body.hyt-page .hyt-topbar .hyt-topbar-serving { display: none; }
+				}
+
+				/* HERO */
+				body.hyt-page .hyt-hero {
+					background: var(--hyt-sapphire-dark);
+					color: var(--hyt-white);
+					padding: 72px 28px 80px;
+					position: relative;
+					overflow: hidden;
+				}
+				body.hyt-page .hyt-hero.has-bg-image {
+					background-size: cover;
+					background-position: center;
+				}
+				body.hyt-page .hyt-hero::before {
+					content: '';
+					position: absolute;
+					inset: 0;
+					background: radial-gradient(ellipse at 60% 40%, rgba(184, 135, 42, 0.12) 0%, transparent 65%);
+					pointer-events: none;
+				}
+				body.hyt-page .hyt-hero-inner {
+					display: grid;
+					grid-template-columns: 1fr 1fr;
+					gap: 52px;
+					align-items: center;
+					max-width: 1060px;
+					margin: 0 auto;
+					position: relative;
+					z-index: 2;
+				}
+				body.hyt-page .hyt-hero-text { text-align: left; }
+				body.hyt-page .hyt-hero-eyebrow {
+					font-size: 15px;
+					font-weight: 700;
+					letter-spacing: 4px;
+					text-transform: uppercase;
+					color: var(--hyt-gold-light);
+					margin-bottom: 20px;
+					display: block;
+				}
+				body.hyt-page .hyt-hero h1 {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: clamp(36px, 5vw, 62px);
+					font-weight: 700;
+					line-height: 1.08;
+					margin-bottom: 24px;
+					color: var(--hyt-white);
+				}
+				body.hyt-page .hyt-hero h1 em { font-style: italic; color: var(--hyt-gold-light); }
+				body.hyt-page .hyt-hero-divider {
+					width: 50px;
+					height: 2px;
+					background: var(--hyt-gold);
+					margin: 24px 0;
+				}
+				body.hyt-page .hyt-hero-sub {
+					font-size: 17px;
+					color: #d0ddf5;
+					margin: 0 0 32px;
+					line-height: 1.75;
+					font-weight: 300;
+				}
+				body.hyt-page .hyt-hero-creds {
+					font-size: 15px;
+					font-weight: 700;
+					color: var(--hyt-gold-light);
+					letter-spacing: 0.6px;
+					margin-top: 24px;
+				}
+				body.hyt-page .hyt-hero-video-col { position: relative; }
+				body.hyt-page .hyt-hero-video-label {
+					font-size: 11px;
+					font-weight: 700;
+					letter-spacing: 2px;
+					text-transform: uppercase;
+					color: var(--hyt-gold-light);
+					margin-bottom: 12px;
+					display: block;
+					text-align: center;
+				}
+				body.hyt-page .hyt-hero-video-wrap {
+					background: rgba(255, 255, 255, 0.06);
+					border: 2px solid rgba(212, 168, 67, 0.4);
+					border-radius: 6px;
+					aspect-ratio: 16 / 9;
+					position: relative;
+					overflow: hidden;
+					box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+				}
+				body.hyt-page button.hyt-hero-video-wrap {
+					padding: 0;
+					cursor: pointer;
+					font: inherit;
+					color: inherit;
+					display: block;
+					width: 100%;
+				}
+				body.hyt-page .hyt-hero-video-wrap > img {
+					position: absolute;
+					inset: 0;
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+					display: block;
+				}
+				body.hyt-page .hyt-hero-video-play {
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					width: 68px;
+					height: 48px;
+					background: rgba(0, 0, 0, 0.72);
+					border-radius: 12px;
+					transition: background 0.2s ease;
+					pointer-events: none;
+				}
+				body.hyt-page .hyt-hero-video-play::before {
+					content: '';
+					position: absolute;
+					top: 50%;
+					left: 50%;
+					transform: translate(-50%, -50%);
+					margin-left: 3px;
+					border-style: solid;
+					border-width: 9px 0 9px 15px;
+					border-color: transparent transparent transparent #fff;
+				}
+				body.hyt-page button.hyt-hero-video-wrap:hover .hyt-hero-video-play,
+				body.hyt-page button.hyt-hero-video-wrap:focus-visible .hyt-hero-video-play {
+					background: #c00;
+				}
+				body.hyt-page .hyt-hero-video-placeholder {
+					display: flex;
+					flex-direction: column;
+					align-items: center;
+					justify-content: center;
+					color: #9ab0d4;
+					font-size: 14px;
+					height: 100%;
+				}
+				body.hyt-page .hyt-hero-video-placeholder .hyt-play-icon {
+					width: 56px;
+					height: 56px;
+					border: 3px solid var(--hyt-gold);
+					border-radius: 50%;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					margin-bottom: 14px;
+					color: var(--hyt-gold);
+					font-size: 22px;
+				}
+
+				/* Video modal */
+				body.hyt-page .hyt-video-modal {
+					position: fixed;
+					inset: 0;
+					z-index: 1000;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					padding: 24px;
+				}
+				body.hyt-page .hyt-video-modal[hidden] { display: none; }
+				body.hyt-page .hyt-video-modal-backdrop {
+					position: absolute;
+					inset: 0;
+					background: rgba(0, 0, 0, 0.88);
+					cursor: pointer;
+				}
+				body.hyt-page .hyt-video-modal-content {
+					position: relative;
+					width: 100%;
+					max-width: 1100px;
+					aspect-ratio: 16 / 9;
+					background: #000;
+				}
+				body.hyt-page .hyt-video-modal-content iframe {
+					position: absolute;
+					inset: 0;
+					width: 100%;
+					height: 100%;
+					border: 0;
+				}
+				body.hyt-page .hyt-video-modal-close {
+					position: absolute;
+					top: -48px;
+					right: 0;
+					width: 40px;
+					height: 40px;
+					background: transparent;
+					border: 0;
+					color: #fff;
+					font-size: 32px;
+					line-height: 1;
+					cursor: pointer;
+					padding: 0;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				}
+
+				@media (max-width: 760px) {
+					body.hyt-page .hyt-hero-inner { grid-template-columns: 1fr; }
+					body.hyt-page .hyt-hero-text { text-align: center; }
+					body.hyt-page .hyt-hero-divider { margin: 24px auto; }
+					body.hyt-page .hyt-hero-eyebrow {
+						font-size: 12px;
+						letter-spacing: 2px;
+					}
+				}
+
+				/* SCRIPTURE STRIPS */
+				body.hyt-page .hyt-scripture-strip {
+					background: var(--hyt-sapphire);
+					padding: 36px 28px;
+					text-align: center;
+				}
+				body.hyt-page .hyt-scripture-strip blockquote {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: clamp(20px, 3vw, 26px);
+					font-style: italic;
+					color: #e8eef8;
+					max-width: 740px;
+					margin: 0 auto 10px;
+					line-height: 1.55;
+				}
+				body.hyt-page .hyt-scripture-strip cite {
+					font-size: 12px;
+					font-weight: 700;
+					letter-spacing: 2.5px;
+					text-transform: uppercase;
+					color: var(--hyt-gold-light);
+				}
+
+				body.hyt-page .hyt-scripture-strip-2 {
+					background: var(--hyt-cream);
+					padding: 48px 28px;
+					text-align: center;
+					border-top: 1px solid #e0d4b8;
+					border-bottom: 1px solid #e0d4b8;
+				}
+				body.hyt-page .hyt-scripture-strip-2 blockquote {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: clamp(20px, 3vw, 26px);
+					font-style: italic;
+					color: var(--hyt-sapphire-dark);
+					max-width: 740px;
+					margin: 0 auto 10px;
+					line-height: 1.55;
+				}
+				body.hyt-page .hyt-scripture-strip-2 cite {
+					font-size: 12px;
+					font-weight: 700;
+					letter-spacing: 2.5px;
+					text-transform: uppercase;
+					color: var(--hyt-gold);
+				}
+
+				/* TESTIMONIALS */
+				body.hyt-page .hyt-testimonials-section {
+					background: var(--hyt-cream);
+					padding: 64px 28px;
+				}
+				body.hyt-page .hyt-testimonials-inner {
+					max-width: 860px;
+					margin: 0 auto;
+				}
+				body.hyt-page .hyt-testimonials-header {
+					text-align: center;
+					margin-bottom: 48px;
+				}
+				body.hyt-page .hyt-testimonials-heading {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: clamp(28px, 4vw, 40px);
+					color: var(--hyt-sapphire-dark);
+					margin-top: 10px;
+				}
+				body.hyt-page .hyt-testimonials-rule {
+					border: none;
+					border-top: 2px solid var(--hyt-gold);
+					width: 60px;
+					margin: 16px auto 0;
+				}
+				body.hyt-page .hyt-testimonials-grid {
+					display: flex;
+					flex-direction: column;
+					gap: 36px;
+				}
+				body.hyt-page .hyt-testimonial {
+					background: var(--hyt-white);
+					border-left: 4px solid var(--hyt-gold);
+					border-radius: 4px;
+					padding: 36px 40px;
+					box-shadow: var(--hyt-shadow);
+				}
+				body.hyt-page .hyt-testimonial-quote {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: clamp(17px, 2.2vw, 21px);
+					font-style: italic;
+					font-weight: 500;
+					color: var(--hyt-text-dark);
+					line-height: 1.75;
+					margin-bottom: 20px;
+				}
+				body.hyt-page .hyt-testimonial-author {
+					font-size: 13px;
+					letter-spacing: 0.1em;
+					text-transform: uppercase;
+					color: var(--hyt-gold);
+					font-weight: 700;
+				}
+
+				/* CLIENT PHOTO STRIP — mirrors SOM pattern, scoped to hyt- */
+				body.hyt-page .hyt-clients-strip {
+					background: var(--hyt-cream);
+					padding: 0 0 0 0;
+				}
+				body.hyt-page .hyt-clients-grid {
+					display: grid;
+					grid-template-columns: repeat(4, 1fr);
+					gap: 0;
+				}
+				body.hyt-page .hyt-clients-grid img {
+					width: 100%;
+					aspect-ratio: 1 / 1;
+					object-fit: cover;
+					display: block;
+					filter: saturate(0.95);
+					transition: filter .35s ease;
+				}
+				body.hyt-page .hyt-clients-grid img:hover { filter: saturate(1.1); }
+				@media (max-width: 700px) {
+					body.hyt-page .hyt-clients-grid { grid-template-columns: repeat(2, 1fr); }
+				}
+				body.hyt-page .hyt-clients-disclaimer {
+					margin: 0;
+					padding: 12px 24px 16px;
+					text-align: center;
+					font-size: 11px;
+					font-style: italic;
+					color: #5d5851;
+					letter-spacing: 0.02em;
+				}
+
+				/* COST SECTION */
+				body.hyt-page .hyt-cost-section {
+					background: var(--hyt-sapphire-dark);
+					padding: 88px 28px;
+				}
+				body.hyt-page .hyt-cost-section .hyt-section-title { color: var(--hyt-white); }
+				body.hyt-page .hyt-cost-section .hyt-section-body { color: #c5d2e8; }
+				body.hyt-page .hyt-cost-grid {
+					display: grid;
+					grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+					gap: 20px;
+					margin-top: 48px;
+				}
+				body.hyt-page .hyt-cost-card {
+					background: rgba(255, 255, 255, 0.06);
+					border: 1px solid rgba(212, 168, 67, 0.25);
+					border-top: 3px solid var(--hyt-gold);
+					border-radius: 3px;
+					padding: 28px 24px;
+				}
+				body.hyt-page .hyt-cost-card h3 {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: 22px;
+					font-weight: 700;
+					color: var(--hyt-gold-light);
+					margin-bottom: 10px;
+				}
+				body.hyt-page .hyt-cost-card p {
+					font-size: 15px;
+					color: #c5d2e8;
+					line-height: 1.7;
+				}
+
+				/* PULL QUOTE */
+				body.hyt-page .hyt-pull-quote {
+					background: var(--hyt-gold);
+					padding: 64px 28px;
+					text-align: center;
+				}
+				body.hyt-page .hyt-pull-quote blockquote {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: clamp(24px, 4vw, 36px);
+					font-style: italic;
+					color: var(--hyt-white);
+					max-width: 760px;
+					margin: 0 auto 16px;
+					line-height: 1.4;
+				}
+				body.hyt-page .hyt-pull-quote cite {
+					font-size: 12px;
+					font-weight: 700;
+					letter-spacing: 2.5px;
+					text-transform: uppercase;
+					color: rgba(255, 255, 255, 0.85);
+				}
+
+				/* PILLARS */
+				body.hyt-page .hyt-pillars-section {
+					background: var(--hyt-white);
+					padding: 88px 28px;
+				}
+				body.hyt-page .hyt-pillars-grid {
+					display: grid;
+					grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+					gap: 28px;
+					margin-top: 52px;
+				}
+				body.hyt-page .hyt-pillar-card {
+					border: 1px solid #dde3ec;
+					border-top: 4px solid var(--hyt-sapphire);
+					border-radius: 3px;
+					padding: 32px 28px;
+					background: var(--hyt-white);
+					transition: box-shadow 0.2s;
+				}
+				body.hyt-page .hyt-pillar-card:hover { box-shadow: var(--hyt-shadow); }
+				body.hyt-page .hyt-pillar-number {
+					font-size: 11px;
+					font-weight: 700;
+					letter-spacing: 3px;
+					color: var(--hyt-gold);
+					text-transform: uppercase;
+					margin-bottom: 10px;
+					display: block;
+				}
+				body.hyt-page .hyt-pillar-card h3 {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: 24px;
+					font-weight: 700;
+					color: var(--hyt-sapphire-dark);
+					margin-bottom: 14px;
+					line-height: 1.2;
+				}
+				body.hyt-page .hyt-pillar-card p {
+					font-size: 16px;
+					color: var(--hyt-text-body);
+					line-height: 1.8;
+				}
+				body.hyt-page .hyt-pillar-card p + p { margin-top: 12px; }
+
+				/* WHO SECTION */
+				body.hyt-page .hyt-who-section {
+					background: var(--hyt-sapphire);
+					padding: 88px 28px;
+				}
+				body.hyt-page .hyt-who-section .hyt-section-title { color: var(--hyt-white); }
+				body.hyt-page .hyt-who-grid {
+					display: grid;
+					grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+					gap: 20px;
+					margin-top: 48px;
+				}
+				body.hyt-page .hyt-who-item {
+					background: rgba(255, 255, 255, 0.08);
+					border-left: 4px solid var(--hyt-gold);
+					padding: 22px 22px 22px 24px;
+					border-radius: 0 3px 3px 0;
+				}
+				body.hyt-page .hyt-who-item h4 {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: 19px;
+					font-weight: 600;
+					color: var(--hyt-white);
+					margin-bottom: 6px;
+				}
+				body.hyt-page .hyt-who-item p {
+					font-size: 15px;
+					color: #c5d2e8;
+					line-height: 1.65;
+				}
+				body.hyt-page .hyt-stat-row {
+					display: flex;
+					gap: 32px;
+					justify-content: center;
+					flex-wrap: wrap;
+					margin-top: 56px;
+					padding-top: 48px;
+					border-top: 1px solid rgba(212, 168, 67, 0.3);
+				}
+				body.hyt-page .hyt-stat-box { text-align: center; }
+				body.hyt-page .hyt-stat-number {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: 52px;
+					font-weight: 700;
+					color: var(--hyt-gold-light);
+					line-height: 1;
+					display: block;
+				}
+				body.hyt-page .hyt-stat-label {
+					font-size: 13px;
+					color: #9ab0d4;
+					letter-spacing: 1px;
+					margin-top: 6px;
+				}
+
+				/* INVESTMENT */
+				body.hyt-page .hyt-investment-section {
+					background: var(--hyt-sapphire-dark);
+					padding: 88px 28px;
+					text-align: center;
+				}
+				body.hyt-page .hyt-investment-section .hyt-section-title { color: var(--hyt-white); }
+				body.hyt-page .hyt-investment-section .hyt-section-body { color: #c5d2e8; }
+				body.hyt-page .hyt-investment-price {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: clamp(52px, 8vw, 80px);
+					font-weight: 700;
+					color: var(--hyt-gold-light);
+					line-height: 1;
+					margin: 32px 0 8px;
+				}
+				body.hyt-page .hyt-investment-duration {
+					font-size: 14px;
+					font-weight: 700;
+					letter-spacing: 2px;
+					text-transform: uppercase;
+					color: #9ab0d4;
+					margin-bottom: 36px;
+				}
+				body.hyt-page .hyt-investment-includes {
+					display: flex;
+					flex-wrap: wrap;
+					justify-content: center;
+					gap: 12px;
+					max-width: 680px;
+					margin: 0 auto 40px;
+				}
+				body.hyt-page .hyt-include-item {
+					background: rgba(255, 255, 255, 0.08);
+					border: 1px solid rgba(212, 168, 67, 0.3);
+					border-radius: 2px;
+					padding: 8px 18px;
+					font-size: 13px;
+					color: #c5d2e8;
+					letter-spacing: 0.5px;
+				}
+				body.hyt-page .hyt-investment-note {
+					font-size: 15px;
+					color: #9ab0d4;
+					max-width: 560px;
+					margin: 0 auto 36px;
+					line-height: 1.75;
+					font-style: italic;
+				}
+				body.hyt-page .hyt-investment-extended-note {
+					font-size: 12px;
+					font-weight: 700;
+					letter-spacing: 2px;
+					text-transform: uppercase;
+					color: var(--hyt-gold-light);
+					max-width: 680px;
+					margin: 0 auto 36px;
+					line-height: 1.55;
+				}
+
+				/* ENVIRONMENT */
+				body.hyt-page .hyt-environment-section {
+					background: var(--hyt-white);
+					padding: 88px 28px;
+				}
+				body.hyt-page .hyt-env-grid {
+					display: grid;
+					grid-template-columns: repeat(3, 1fr);
+					gap: 16px;
+					margin-top: 16px;
+					max-width: 960px;
+					margin-left: auto;
+					margin-right: auto;
+				}
+				body.hyt-page .hyt-env-grid img {
+					width: 100%;
+					height: 240px;
+					object-fit: cover;
+					border-radius: 3px;
+					display: block;
+				}
+				@media (max-width: 680px) {
+					body.hyt-page .hyt-env-grid { grid-template-columns: 1fr; }
+				}
+
+				/* BIO */
+				body.hyt-page .hyt-bio-section {
+					background: var(--hyt-cream);
+					padding: 88px 28px;
+				}
+				body.hyt-page .hyt-bio-inner {
+					display: grid;
+					grid-template-columns: 280px 1fr;
+					gap: 56px;
+					align-items: start;
+					max-width: 880px;
+					margin: 0 auto;
+				}
+				@media (max-width: 680px) {
+					body.hyt-page .hyt-bio-inner { grid-template-columns: 1fr; }
+				}
+				body.hyt-page .hyt-bio-photo {
+					width: 100%;
+					aspect-ratio: 3 / 4;
+					border-radius: 3px;
+					border: 3px solid var(--hyt-gold);
+					object-fit: cover;
+					display: block;
+				}
+				body.hyt-page .hyt-bio-content h2 {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: 38px;
+					font-weight: 600;
+					color: var(--hyt-sapphire-dark);
+					line-height: 1.15;
+					margin-bottom: 6px;
+				}
+				body.hyt-page .hyt-bio-title {
+					font-size: 13px;
+					font-weight: 700;
+					letter-spacing: 1.5px;
+					text-transform: uppercase;
+					color: var(--hyt-gold);
+					margin-bottom: 24px;
+					display: block;
+				}
+				body.hyt-page .hyt-bio-content p {
+					font-size: 16px;
+					color: var(--hyt-text-body);
+					line-height: 1.8;
+					margin-bottom: 16px;
+				}
+
+				/* CONTACT */
+				body.hyt-page .hyt-contact-section {
+					background: var(--hyt-sapphire-dark);
+					padding: 88px 28px;
+					text-align: center;
+				}
+				body.hyt-page .hyt-contact-section .hyt-section-title { color: var(--hyt-white); }
+				body.hyt-page .hyt-contact-section .hyt-section-body { color: #c5d2e8; }
+				body.hyt-page .hyt-contact-steps {
+					display: grid;
+					grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+					gap: 24px;
+					max-width: 700px;
+					margin: 0 auto 48px;
+				}
+				body.hyt-page .hyt-contact-step {
+					background: rgba(255, 255, 255, 0.07);
+					border: 1px solid rgba(212, 168, 67, 0.3);
+					border-radius: 3px;
+					padding: 32px 24px;
+				}
+				body.hyt-page .hyt-step-num {
+					display: inline-flex;
+					align-items: center;
+					justify-content: center;
+					width: 40px;
+					height: 40px;
+					border-radius: 50%;
+					background: var(--hyt-gold);
+					color: var(--hyt-white);
+					font-weight: 700;
+					font-size: 16px;
+					margin-bottom: 16px;
+				}
+				body.hyt-page .hyt-contact-step h3 {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: 21px;
+					font-weight: 600;
+					color: var(--hyt-white);
+					margin-bottom: 10px;
+				}
+				body.hyt-page .hyt-contact-step p {
+					font-size: 15px;
+					color: #c5d2e8;
+					line-height: 1.7;
+				}
+				body.hyt-page .hyt-contact-step a {
+					color: var(--hyt-gold-light);
+					text-decoration: none;
+					font-weight: 700;
+				}
+
+				/* SCREENER */
+				body.hyt-page .hyt-screener-section {
+					background: var(--hyt-cream);
+					padding: 88px 28px;
+				}
+				body.hyt-page .hyt-screener-section .hyt-section-header { margin-bottom: 56px; }
+
+				/* FOOTER */
+				body.hyt-page .hyt-footer {
+					background: #080f1c;
+					padding: 48px 28px 36px;
+					text-align: center;
+					color: #6b7a99;
+				}
+				body.hyt-page .hyt-footer img {
+					height: 48px;
+					width: auto;
+					margin: 0 auto 10px;
+					display: block;
+				}
+				body.hyt-page .hyt-footer-name {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: 22px;
+					color: var(--hyt-gold-light);
+					margin-bottom: 10px;
+					display: block;
+				}
+				body.hyt-page .hyt-footer p {
+					font-size: 13px;
+					line-height: 1.9;
+					margin-bottom: 4px;
+				}
+				body.hyt-page .hyt-footer a {
+					color: #9ab0d4;
+					text-decoration: none;
+				}
+				body.hyt-page .hyt-footer-legal {
+					margin-top: 28px;
+					font-size: 12px;
+					color: #fff;
+					border-top: 1px solid rgba(255, 255, 255, 0.06);
+					padding-top: 24px;
+					max-width: 680px;
+					margin-left: auto;
+					margin-right: auto;
+				}
+				body.hyt-page .hyt-footer-legal p { color: #fff; }
+				body.hyt-page .hyt-footer-legal p + p { margin-top: 10px; }
+
+				@media (max-width: 600px) {
+					body.hyt-page .hyt-hero { padding: 60px 20px 70px; }
+					body.hyt-page .hyt-pillars-grid,
+					body.hyt-page .hyt-who-grid,
+					body.hyt-page .hyt-cost-grid { grid-template-columns: 1fr; }
+				}
+			}
+		</style>
+	</Fragment>
+
+	<!-- =============== HEADER + TOPBAR =============== -->
+	<header class="hyt-header">
+		<img src={logoUrl} alt="The Kohler Group, PLLC" />
+		<button
+			type="button"
+			class="hyt-nav-toggle"
+			aria-expanded="false"
+			aria-controls="hyt-nav-menu"
+			aria-label="Toggle navigation menu"
+			data-hyt-nav-toggle
+		>
+			<span></span>
+			<span></span>
+			<span></span>
+		</button>
+		<nav id="hyt-nav-menu" class="hyt-nav" data-hyt-nav>
+			<a href="#pillars">How It Works</a>
+			<a href="#contact">Contact</a>
+			<a href="#screener" class="hyt-btn-primary-link">Take the Next Step</a>
+		</nav>
+	</header>
+	<div class="hyt-topbar">
+		<img src={logoUrl} alt="" />
+		<span>
+			Questions? Call <a href={`tel:${phoneDigits}`}>{phone}</a> &nbsp;|&nbsp;
+			<a href={`mailto:${officeEmail}`}>{officeEmail}</a>
+			<span class="hyt-topbar-serving">
+				&nbsp;|&nbsp; Serving clients nationally from Huntersville, NC
+			</span>
+		</span>
+	</div>
+
+	<!-- =============== HERO =============== -->
+	<section
+		class:list={["hyt-hero", heroBgUrl && "has-bg-image"]}
+		style={heroBgUrl
+			? `background-image: linear-gradient(rgba(15,35,71,0.78), rgba(15,35,71,0.62)), url(${heroBgUrl});`
+			: undefined}
+	>
+		<div class="hyt-hero-inner">
+			<div class="hyt-hero-text">
+				<span class="hyt-hero-eyebrow">
+					Individual Trauma Intensive &nbsp;·&nbsp; The Kohler Group, PLLC
+				</span>
+				<h1>Is Trauma Stealing<br /><em>Everything You've Built?</em></h1>
+				<div class="hyt-hero-divider"></div>
+				<p class="hyt-hero-sub">
+					Your business. Your marriage. Your finances. Your calling. Your hope. Time does not heal all
+					wounds. But you can, indeed, heal. Gain incredible momentum in your healing journey in
+					three concentrated days working with a seasoned clinician who uses a multidimensional
+					approach.
+				</p>
+				<p class="hyt-hero-creds">
+					Barbara Kohler, MS, CRC, LCMHC, NCC &nbsp;·&nbsp; Ordained Minister &nbsp;·&nbsp; 30+ Years
+					Experience
+				</p>
+			</div>
+			<div class="hyt-hero-video-col">
+				<span class="hyt-hero-video-label">Hear From Barbara</span>
+				{ytThumb ? (
+					<button
+						type="button"
+						class="hyt-hero-video-wrap"
+						data-yt-id={videoId}
+						aria-label={`Play video: ${videoTitle}`}
+					>
+						<img
+							src={ytThumb.src}
+							srcset={ytThumb.srcSet?.attribute}
+							sizes="(max-width: 1024px) 90vw, 540px"
+							width="1280"
+							height="720"
+							alt=""
+							fetchpriority="high"
+							decoding="async"
+						/>
+						<span class="hyt-hero-video-play" aria-hidden="true"></span>
+					</button>
+				) : (
+					<div class="hyt-hero-video-wrap" aria-label="Video coming soon">
+						<div class="hyt-hero-video-placeholder">
+							<div class="hyt-play-icon">▶</div>
+							<p>Video coming soon</p>
+						</div>
+					</div>
+				)}
+			</div>
+		</div>
+	</section>
+
+	<!-- =============== SCRIPTURE STRIP 1 =============== -->
+	<div class="hyt-scripture-strip">
+		<blockquote>"He heals the brokenhearted and binds up their wounds."</blockquote>
+		<cite>Psalm 147:3 &nbsp;·&nbsp; NASB</cite>
+	</div>
+
+	<!-- =============== TESTIMONIALS =============== -->
+	{testimonials && testimonials.length > 0 && (
+		<section class="hyt-testimonials-section">
+			<div class="hyt-testimonials-inner">
+				<div class="hyt-section-header hyt-testimonials-header">
+					<span class="hyt-section-label" style="font-size: 13px; letter-spacing: 0.12em;">What Clients Say</span>
+					<h2 class="hyt-testimonials-heading">Voices From the Journey</h2>
+					<hr class="hyt-testimonials-rule" />
+				</div>
+				<div class="hyt-testimonials-grid">
+					{testimonials.map((t: any) => (
+						<article class="hyt-testimonial">
+							<p class="hyt-testimonial-quote">"{t.quote}"</p>
+							<p class="hyt-testimonial-author">— {t.clientName || 'Intensive Client'}</p>
+						</article>
+					))}
+				</div>
+			</div>
+		</section>
+	)}
+
+	<!-- =============== CLIENT PHOTO STRIP =============== -->
+	<section class="hyt-clients-strip" aria-label="Photos representing Barbara's intensive clients">
+		<div class="hyt-clients-grid">
+			{clientThumbs.map((c) => (
+				<img
+					src={c.url}
+					alt={c.alt}
+					width="600"
+					height="600"
+					loading="lazy"
+					decoding="async"
+				/>
+			))}
+		</div>
+		<p class="hyt-clients-disclaimer">For privacy, photos shown are not actual clients.</p>
+	</section>
+
+	<!-- =============== COST OF WAITING =============== -->
+	<section class="hyt-cost-section">
+		<div class="hyt-container">
+			<div class="hyt-section-header">
+				<span class="hyt-section-label">The Real Cost of Waiting</span>
+				<h2 class="hyt-section-title">What Unhealed Trauma<br /><em>Is Costing You Right Now</em></h2>
+				<p class="hyt-section-body">
+					Trauma does not stay in the past. It shows up every day — in your decisions, your
+					relationships, your body, and your faith.
+				</p>
+				<hr class="hyt-gold-rule" />
+			</div>
+			<div class="hyt-cost-grid">
+				<div class="hyt-cost-card">
+					<h3>Your Business &amp; Career</h3>
+					<p>
+						Trauma hijacks decision-making, leadership, and executive function. High achievers often
+						trace their biggest blind spots directly to unresolved wounds.
+					</p>
+				</div>
+				<div class="hyt-cost-card">
+					<h3>Your Finances</h3>
+					<p>
+						Reckless or fear-based spending, self-sabotage, and risk avoidance are frequently trauma
+						responses — not necessarily personality traits. The roots run deep.
+					</p>
+				</div>
+				<div class="hyt-cost-card">
+					<h3>Your Marriage &amp; Relationships</h3>
+					<p>
+						Trauma distorts attachment, intimacy, trust, and communication. The people closest to
+						you absorb the impact of wounds they didn't cause.
+					</p>
+				</div>
+				<div class="hyt-cost-card">
+					<h3>Your Body &amp; Health</h3>
+					<p>
+						The body remembers trauma and often manifests its objections through chronic pain,
+						fatigue, anxiety, insomnia, and physical symptoms — often the nervous system signaling
+						unprocessed trauma.
+					</p>
+				</div>
+				<div class="hyt-cost-card">
+					<h3>Your Calling &amp; Ministry</h3>
+					<p>
+						Wounded leaders wound people. Ministers, pastors, and Kingdom builders carry heavy
+						weight — and unhealed trauma limits the full expression of your calling.
+					</p>
+				</div>
+				<div class="hyt-cost-card">
+					<h3>Your Hope</h3>
+					<p>
+						Perhaps most devastating — trauma convinces you that things cannot change. That this is
+						just who you are. That healing is for other people. It is a lie.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- =============== PULL QUOTE =============== -->
+	<div class="hyt-pull-quote">
+		<blockquote>
+			"You have been managing your pain for years. Imagine what your life can look like when you
+			actually heal it."
+		</blockquote>
+		<cite>— Barbara Kohler, MS, CRC, LCMHC, NCC</cite>
+	</div>
+
+	<!-- =============== PILLARS =============== -->
+	<section class="hyt-pillars-section" id="pillars">
+		<div class="hyt-container">
+			<div class="hyt-section-header">
+				<span class="hyt-section-label">How We Work</span>
+				<h2 class="hyt-section-title">Six Pillars of the<br /><em>Trauma Intensive</em></h2>
+				<p class="hyt-section-body" style="font-size: clamp(17px, 2vw, 20px);">
+					This is not traditional weekly therapy. It is three concentrated days of root-cause clinical
+					and spiritual work designed to produce transformation that years of weekly sessions often
+					cannot reach.
+				</p>
+				<hr class="hyt-gold-rule" />
+			</div>
+			<div class="hyt-pillars-grid">
+				<div class="hyt-pillar-card">
+					<span class="hyt-pillar-number">Pillar 01</span>
+					<h3>Re-Decision Therapy — Foundational Clinical Work</h3>
+					<p>
+						Symptoms are signals. We go beneath the surface to address the early decisions, beliefs,
+						and wounds that drive your current struggles. We look at your individual personality and
+						what works for you, and what does not. Using Re-Decision Therapy is a powerful clinical
+						foundation for the Christian Psychotherapy Intensive!
+					</p>
+				</div>
+				<div class="hyt-pillar-card">
+					<span class="hyt-pillar-number">Pillar 02</span>
+					<h3>EMDR &amp; Trauma Processing</h3>
+					<p>
+						Eye Movement Desensitization and Reprocessing (EMDR) is one of the most evidence-based
+						trauma treatments available. In an intensive format, we can complete what months of
+						weekly EMDR sessions might only begin — unlocking stored trauma from the nervous system
+						at depth.
+					</p>
+				</div>
+				<div class="hyt-pillar-card">
+					<span class="hyt-pillar-number">Pillar 03</span>
+					<h3>HeartSync</h3>
+					<p>
+						HeartSync is a Spirit-led ministry approach that addresses fragmentation of the heart —
+						the disconnected parts of self that form in response to wounding. Through HeartSync, we
+						work toward integration, wholeness, and a restored capacity for relationship with God
+						and others.
+					</p>
+				</div>
+				<div class="hyt-pillar-card">
+					<span class="hyt-pillar-number">Pillar 04</span>
+					<h3>Faith Integration &amp; TRET</h3>
+					<p>
+						Trauma Resolution Energy Therapy (TRET) is an excellent technique for addressing
+						unconscious trauma that affects your physical health. Barbara does not practice
+						medicine; however, when you heal the emotions, your body often follows. Trauma affects
+						your emotions and your physical health. Barbara applies a Christ-centered approach when
+						using this energy technique, as devout Christians are sometimes concerned about any
+						technique that is energy related. Barbara is, as well. Therefore, only those techniques
+						that can be supported by Scripture are used. Clients have experienced wonderful
+						breakthroughs with this technique, even biblical deliverance. God designed the human
+						body to be able to release itself from trauma. Barbara will show you how if you are
+						interested in applying this technique (optional).
+					</p>
+				</div>
+				<div class="hyt-pillar-card">
+					<span class="hyt-pillar-number">Pillar 05</span>
+					<h3>Judicial Prayer</h3>
+					<p>
+						God wants you to have a clean conscience. Many times, trauma leads to sinful behavior —
+						and you are likely already judging yourself more harshly than Jesus ever would. The
+						Court of Mercy gives you a place where you know, without question, that you are fully
+						forgiven. Having a clear conscience is often a byproduct of the Intensive. Barbara uses
+						the Courts of Heaven prayer paradigm to seek the Lord with the client as to obstacles to
+						business, relationships, and finances. Trauma often destroys multiple areas of your
+						life. This prayer paradigm is powerful when used the right way.
+					</p>
+				</div>
+				<div class="hyt-pillar-card">
+					<span class="hyt-pillar-number">Pillar 06</span>
+					<h3>The Maintenance-Free Victory of the Cross</h3>
+					<p>
+						One of Barbara's deepest goals in working with trauma survivors is that they experience
+						the transforming power of the cross of Christ in the healing process. Barbara cannot
+						guarantee you will experience this on your first visit — but she believes it is
+						possible, and she pursues it with every client.
+					</p>
+					<p>
+						At The Kohler Group, PLLC, we affectionately call this a <em>"Barbara-ology"</em> — because
+						Barbara believes wholeheartedly in the power of the cross working through you as you
+						heal. That you can have real, lasting victory in any area of your life. It takes time,
+						process, hard work, and faith. But what more worthy goal could there be? And it is a
+						tangible goal. Let's go for it.
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- =============== SCRIPTURE STRIP 2 =============== -->
+	<div class="hyt-scripture-strip-2">
+		<blockquote>
+			"'For I will restore you to health and I will heal you of your wounds,' declares the LORD."
+		</blockquote>
+		<cite>Jeremiah 30:17 &nbsp;·&nbsp; NASB</cite>
+	</div>
+
+	<!-- =============== WHO THIS IS FOR =============== -->
+	<section class="hyt-who-section">
+		<div class="hyt-container">
+			<div class="hyt-section-header">
+				<span class="hyt-section-label">Is This For You?</span>
+				<h2 class="hyt-section-title">
+					Who the Trauma Intensive<br /><em>Is Designed For</em>
+				</h2>
+				<hr class="hyt-gold-rule" />
+			</div>
+			<div class="hyt-who-grid">
+				<div class="hyt-who-item">
+					<h4>Business Owners &amp; Entrepreneurs</h4>
+					<p>
+						You've built something significant — but trauma is creating blind spots, relational
+						friction, high turnover, and a ceiling you seem to break through.
+					</p>
+				</div>
+				<div class="hyt-who-item">
+					<h4>Ministers &amp; Church Leaders</h4>
+					<p>
+						You carry others' wounds while your own go unaddressed. Intensive work provides a
+						confidential, clinical, and spiritually safe space to finally heal.
+					</p>
+				</div>
+				<div class="hyt-who-item">
+					<h4>High Achievers &amp; Executives</h4>
+					<p>
+						Success has not brought the peace you expected. You've managed the pain well — but
+						"managing" is not healing.
+					</p>
+				</div>
+				<div class="hyt-who-item">
+					<h4>Those Willing to Travel</h4>
+					<p>
+						Barbara works with clients nationally. She is a high achiever and she attracts those
+						clients who do not settle for a mediocre life or tolerable recovery. The Intensive is
+						worth the journey.
+					</p>
+				</div>
+				<div class="hyt-who-item">
+					<h4>People in Crisis or Transition</h4>
+					<p>
+						Divorce, loss, ministry failure, business collapse, health crisis — sometimes the pain
+						demands an intensive response rather than a weekly one.
+					</p>
+				</div>
+				<div class="hyt-who-item">
+					<h4>Those Who Want Privacy</h4>
+					<p>
+						The Intensive format is private, discreet, and entirely individual. No groups. Complete
+						confidentiality.
+					</p>
+				</div>
+			</div>
+			<div class="hyt-stat-row">
+				<div class="hyt-stat-box">
+					<span class="hyt-stat-number">30+</span>
+					<div class="hyt-stat-label">Years in Clinical Practice</div>
+				</div>
+				<div class="hyt-stat-box">
+					<span class="hyt-stat-number">18+</span>
+					<div class="hyt-stat-label">Years Specializing in Intensives</div>
+				</div>
+				<div class="hyt-stat-box">
+					<span class="hyt-stat-number">NC &amp; SC</span>
+					<div class="hyt-stat-label">Dual-State Licensure</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- =============== INVESTMENT =============== -->
+	<section class="hyt-investment-section">
+		<div class="hyt-container">
+			<div class="hyt-section-header">
+				<span class="hyt-section-label">Your Investment</span>
+				<h2 class="hyt-section-title">What It Costs to<br /><em>Finally Heal</em></h2>
+				<p class="hyt-section-body" style="margin: 0 auto;">
+					Consider what unhealed trauma is already costing you — in your relationships, your
+					business, your health, and your calling. The Trauma Intensive is an investment in your
+					mental health, your peace of mind. It is one of the most significant investments you will
+					ever make in yourself. Barbara's desire is that you feel the value far exceeds the cost.
+					The goal is a transformed life.
+				</p>
+				<hr class="hyt-gold-rule" />
+			</div>
+			<div class="hyt-investment-price">{price}</div>
+			<div class="hyt-investment-duration">
+				Three Consecutive Days &nbsp;·&nbsp; 24 Clinical Hours
+			</div>
+			<p class="hyt-investment-extended-note">
+				Longer Individual Intensives for severe trauma are available at an additional cost.
+			</p>
+			<div class="hyt-investment-includes">
+				<span class="hyt-include-item">Three full clinical days</span>
+				<span class="hyt-include-item">Pre-intensive consultation</span>
+				<span class="hyt-include-item">Clinical assessments</span>
+				<span class="hyt-include-item">Personality survey</span>
+				<span class="hyt-include-item">Administrative coordination</span>
+				<span class="hyt-include-item">Re-Decision Therapy</span>
+				<span class="hyt-include-item">EMDR</span>
+				<span class="hyt-include-item">HeartSync</span>
+				<span class="hyt-include-item">Judicial Prayer / TRET</span>
+				<span class="hyt-include-item">Faith-integrated prayer</span>
+				<span class="hyt-include-item">Post-intensive planning</span>
+			</div>
+			<p class="hyt-investment-note">
+				Aftercare coaching packages are available following the Intensive for an additional
+				investment. Ask about options during your complimentary consultation.
+			</p>
+			<a href="#screener" class="hyt-btn-primary-link">I Need to Know a Few Things About You</a>
+		</div>
+	</section>
+
+	<!-- =============== ENVIRONMENT =============== -->
+	{envImages && (
+		<section class="hyt-environment-section">
+			<div class="hyt-container">
+				<div class="hyt-section-header">
+					<span class="hyt-section-label">Your Environment</span>
+					<h2 class="hyt-section-title">Heal in a Setting of<br /><em>Peace &amp; Beauty</em></h2>
+					<p class="hyt-section-body">
+						Between sessions, clients have access to the serene outdoor spaces surrounding Daetwyler
+						Plaza in Huntersville, NC — a lakeside walking path just steps from our office, offering
+						quiet reflection time that is itself part of the healing process.
+					</p>
+					<hr class="hyt-gold-rule" />
+				</div>
+				<div class="hyt-env-grid">
+					{envImages.map((img: any) => (
+						<img src={img.url} alt={img.alt} loading="lazy" decoding="async" />
+					))}
+				</div>
+			</div>
+		</section>
+	)}
+
+	<!-- =============== BIO =============== -->
+	<section class="hyt-bio-section">
+		<div class="hyt-container">
+			<div class="hyt-section-header">
+				<span class="hyt-section-label">Your Clinician</span>
+				<h2 class="hyt-section-title">Meet Barbara Kohler</h2>
+				<hr class="hyt-gold-rule" />
+			</div>
+			<div class="hyt-bio-inner">
+				<img
+					src={barbaraPhotoUrl}
+					alt="Barbara Kohler, MS, CRC, LCMHC, NCC"
+					class="hyt-bio-photo"
+					loading="lazy"
+					decoding="async"
+				/>
+				<div class="hyt-bio-content">
+					<h2>Barbara Kohler</h2>
+					<span class="hyt-bio-title">
+						MS, CRC, LCMHC, NCC &nbsp;·&nbsp; Ordained Minister
+					</span>
+					<p>
+						Barbara Kohler is the Founder and CEO of The Kohler Group, PLLC — a faith-integrated
+						Christian psychotherapy practice located in Huntersville, NC, serving the greater
+						Charlotte and Lake Norman area, with in-person and telehealth across North and South
+						Carolina.
+					</p>
+					<p>
+						She has been a Licensed Clinical Mental Health Counselor since 2002 and holds National
+						Certified Counselor credentials since 2009. She is also an ordained minister — a
+						distinction that shapes every aspect of how she works with individuals and couples.
+					</p>
+					<p>
+						Barbara uses a multidimensional approach in working with individuals and couples to help
+						them change their lives. She integrates several powerful, effective modalities including
+						EMDR, Re-Decision Therapy, HeartSync, Judicial Prayer, and TRET. Barbara does trauma
+						work, and also personal growth work to help the client self-actualize.
+					</p>
+					<a
+						href="https://www.thekohlergroup.net/"
+						class="hyt-btn-primary-link"
+						style="font-size:12px; padding:13px 28px;"
+					>
+						Visit thekohlergroup.net
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- =============== CONTACT =============== -->
+	<section class="hyt-contact-section" id="contact">
+		<div class="hyt-container">
+			<div class="hyt-section-header">
+				<span class="hyt-section-label">Get Started</span>
+				<h2 class="hyt-section-title">
+					Ready to Heal?<br /><em>Here Is Your Next Step.</em>
+				</h2>
+				<p class="hyt-section-body" style="margin: 0 auto 48px;">
+					The Intensive begins with a free virtual consultation. No pressure. No obligation. Just a
+					conversation to see if this is the right fit for you.
+				</p>
+			</div>
+			<div class="hyt-contact-steps">
+				<div class="hyt-contact-step">
+					<div class="hyt-step-num">1</div>
+					<h3>Email Us</h3>
+					<p>
+						Send your name and best contact number to <a href={`mailto:${officeEmail}`}>{officeEmail}</a>
+						and we will reach out to schedule your complimentary consultation.
+					</p>
+				</div>
+				<div class="hyt-contact-step">
+					<div class="hyt-step-num">2</div>
+					<h3>Call Us</h3>
+					<p>
+						Prefer to speak with someone directly? Call us at <a href={`tel:${phoneDigits}`}>{phone}</a>.
+						We are based in Huntersville, NC and serve clients nationally.
+					</p>
+				</div>
+			</div>
+			<a href={`mailto:${officeEmail}`} class="hyt-btn-primary-link">Email Us Now</a>
+		</div>
+	</section>
+
+	<!-- =============== SCREENER =============== -->
+	<section class="hyt-screener-section" id="screener">
+		<div class="hyt-container">
+			<div class="hyt-section-header">
+				<span class="hyt-section-label">First Step</span>
+				<h2 class="hyt-section-title">
+					Is the Trauma Intensive<br /><em>Right for You?</em>
+				</h2>
+				<p class="hyt-section-body">
+					Answer seven short questions. At the end, you'll be invited to schedule a complimentary
+					virtual consultation if you are interested — no obligation, no pressure.
+				</p>
+			</div>
+			<TraumaIntensiveQuiz
+				barbaraEmail={barbaraEmail}
+				officeEmail={officeEmail}
+				phone={phone}
+			/>
+		</div>
+	</section>
+
+	<!-- Video modal (popup overlay) — opened from any [data-yt-id] facade -->
+	<div class="hyt-video-modal" data-video-modal hidden role="dialog" aria-modal="true" aria-label={videoTitle}>
+		<div class="hyt-video-modal-backdrop" data-video-modal-close></div>
+		<div class="hyt-video-modal-content" data-video-modal-content>
+			<button type="button" class="hyt-video-modal-close" data-video-modal-close aria-label="Close video">×</button>
+		</div>
+	</div>
+
+	<script is:inline define:vars={{ videoTitle }}>
+		(function () {
+			const modal = document.querySelector('[data-video-modal]');
+			const content = document.querySelector('[data-video-modal-content]');
+			if (!modal || !content) return;
+
+			function openModal(id) {
+				const iframe = document.createElement('iframe');
+				iframe.src = `https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&modestbranding=1&playsinline=1&vq=hd720`;
+				iframe.title = videoTitle;
+				iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+				iframe.setAttribute('allowfullscreen', '');
+				iframe.setAttribute('frameborder', '0');
+				content.appendChild(iframe);
+				modal.hidden = false;
+				document.body.style.overflow = 'hidden';
+				const closeBtn = modal.querySelector('.hyt-video-modal-close');
+				closeBtn?.focus();
+			}
+
+			function closeModal() {
+				modal.hidden = true;
+				const iframe = content.querySelector('iframe');
+				if (iframe) iframe.remove();
+				document.body.style.overflow = '';
+			}
+
+			document.querySelectorAll('[data-yt-id]').forEach((facade) => {
+				facade.addEventListener('click', function () {
+					openModal(this.dataset.ytId);
+				});
+			});
+
+			modal.querySelectorAll('[data-video-modal-close]').forEach((el) => {
+				el.addEventListener('click', closeModal);
+			});
+
+			document.addEventListener('keydown', (e) => {
+				if (e.key === 'Escape' && !modal.hidden) closeModal();
+			});
+		})();
+	</script>
+
+	<!-- Mobile nav toggle -->
+	<script is:inline>
+		(function () {
+			const toggle = document.querySelector('[data-hyt-nav-toggle]');
+			const menu = document.querySelector('[data-hyt-nav]');
+			if (!toggle || !menu) return;
+
+			const setOpen = (open) => {
+				toggle.setAttribute('aria-expanded', String(open));
+				menu.classList.toggle('is-open', open);
+			};
+
+			toggle.addEventListener('click', () => {
+				setOpen(toggle.getAttribute('aria-expanded') !== 'true');
+			});
+
+			// Close on link click — mobile menu shouldn't linger after navigation
+			menu.querySelectorAll('a').forEach((a) => {
+				a.addEventListener('click', () => setOpen(false));
+			});
+
+			// Close on Escape
+			document.addEventListener('keydown', (e) => {
+				if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') setOpen(false);
+			});
+
+			// Close drawer if window grows past the mobile breakpoint
+			window.addEventListener('resize', () => {
+				if (window.innerWidth > 768 && toggle.getAttribute('aria-expanded') === 'true') {
+					setOpen(false);
+				}
+			});
+		})();
+	</script>
+
+	<!-- =============== FOOTER =============== -->
+	<footer class="hyt-footer">
+		<img src={logoUrl} alt="The Kohler Group, PLLC" />
+		<span class="hyt-footer-name">The Kohler Group, PLLC</span>
+		<p>13420 Reese Blvd West &nbsp;·&nbsp; Daetwyler Plaza &nbsp;·&nbsp; Huntersville, NC 28078</p>
+		<p>
+			<a href={`tel:${phoneDigits}`}>{phone}</a> &nbsp;·&nbsp;
+			<a href={`mailto:${officeEmail}`}>{officeEmail}</a>
+		</p>
+		<p>
+			<a href="https://www.thekohlergroup.net/">thekohlergroup.net</a> &nbsp;·&nbsp;
+			<a href="https://www.healyourtrauma.net/">healyourtrauma.net</a> &nbsp;·&nbsp;
+			<a href="https://savemymarriage.us/">savemymarriage.us</a>
+		</p>
+		<div class="hyt-footer-legal">
+			<p>
+				Barbara Kohler, MS, CRC, LCMHC, NCC is licensed as a Clinical Mental Health Counselor in
+				North Carolina and a Licensed Professional Counselor in South Carolina. This website is for
+				informational purposes only and does not constitute a therapeutic relationship. If you are
+				in crisis, please call 988 or go to your nearest emergency room.
+			</p>
+			<p>© {new Date().getFullYear()} The Kohler Group, PLLC. All rights reserved. • Powered by <a href="https://spiritmediapublishing.com" style="color:#9ab0d4;">Spirit Media</a></p>
+		</div>
+	</footer>
+</Layout>
