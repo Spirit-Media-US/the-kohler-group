@@ -97,8 +97,8 @@ const heroBgUrl = settings?.hytHeroBackground
 	? urlFor(settings.hytHeroBackground).width(1920).format('webp').quality(80).url()
 	: 'https://cdn.sanity.io/images/2bom5gqg/production/6760f67fe866be9af8c60dea85be28951f8f3876-1400x933.jpg?w=1400&fm=webp&q=80';
 
-// Environment grid — Sanity override > the four prototype Daetwyler photos
-// uploaded to TKG's Sanity asset library (lake, walking path, geese, bridge).
+// Environment grid — Sanity override > three prototype Daetwyler photos
+// uploaded to TKG's Sanity asset library (lake, walking path, bridge).
 const FALLBACK_ENV = [
 	{
 		url: 'https://cdn.sanity.io/images/2bom5gqg/production/2ac09ed86e7035906b03a9758dce48117fbbfb7e-1400x933.jpg?w=720&h=480&fit=crop&fm=webp&q=80',
@@ -109,21 +109,38 @@ const FALLBACK_ENV = [
 		alt: 'Walking path at Daetwyler Plaza',
 	},
 	{
-		url: 'https://cdn.sanity.io/images/2bom5gqg/production/6f5a86ed5ee0325184863f6c3bea9c8109dda415-900x1349.jpg?w=720&h=480&fit=crop&crop=top&fm=webp&q=80',
-		alt: 'Geese at the lake',
-	},
-	{
 		url: 'https://cdn.sanity.io/images/2bom5gqg/production/6760f67fe866be9af8c60dea85be28951f8f3876-1400x933.jpg?w=720&h=480&fit=crop&fm=webp&q=80',
 		alt: 'Pond with bridge at Daetwyler Plaza',
 	},
 ];
 const envImages =
-	Array.isArray(settings?.hytEnvironmentImages) && settings.hytEnvironmentImages.length >= 4
-		? settings.hytEnvironmentImages.slice(0, 4).map((img: any) => ({
+	Array.isArray(settings?.hytEnvironmentImages) && settings.hytEnvironmentImages.length >= 3
+		? settings.hytEnvironmentImages.slice(0, 3).map((img: any) => ({
 				url: urlFor(img).width(720).height(480).fit('crop').format('webp').quality(80).url(),
 				alt: img.alt || 'Daetwyler Plaza environment',
 			}))
 		: FALLBACK_ENV;
+
+// Illustrative client photos shown alongside testimonials. Not actual
+// clients — disclaimer rendered in the strip, mirroring the SOM pattern.
+const clientThumbs = [
+	{
+		url: 'https://cdn.sanity.io/images/2bom5gqg/production/ce21d190820b77700ce22531ad10ca5b2660c320-8192x5464.jpg?w=600&h=600&fit=crop&auto=format&q=80',
+		alt: 'Woman in reflective moment (illustrative)',
+	},
+	{
+		url: 'https://cdn.sanity.io/images/2bom5gqg/production/9e95ec73cadfdcd688be17b7f34c6a3ae2c09d73-500x500.jpg?w=600&h=600&fit=crop&auto=format&q=80',
+		alt: 'Portrait of a client (illustrative)',
+	},
+	{
+		url: 'https://cdn.sanity.io/images/2bom5gqg/production/d00ff393c28bd124f497e72965a0e14404a352cc-6000x4000.jpg?w=600&h=600&fit=crop&auto=format&q=80',
+		alt: 'Person in healing journey (illustrative)',
+	},
+	{
+		url: 'https://cdn.sanity.io/images/2bom5gqg/production/41f6718176722e916f5f956ed3793b5af62b378c-5351x3567.jpg?w=600&h=600&fit=crop&auto=format&q=80',
+		alt: 'Person in quiet reflection (illustrative)',
+	},
+];
 
 const canonicalURL = 'https://thekohlergroup.net/heal-your-trauma';
 const ogImage =
@@ -134,8 +151,8 @@ const logoUrl =
 ---
 
 <Layout
-	title="Heal Your Trauma | Individual Intensive — Barbara Kohler, LCMHC"
-	description="Trauma is stealing your business, your relationships, your finances, and your hope. The Individual Trauma Intensive with Barbara Kohler, LCMHC offers concentrated, root-cause healing for high achievers, business owners, and ministers — three concentrated days in Huntersville, NC."
+	title="Heal Your Trauma | Psychotherapy & Personal Growth Intensives — Barbara Kohler, LCMHC"
+	description="Psychotherapy and Personal Growth Intensives — clinically rigorous, uniquely personalized, licensed-therapist-led. The Individual Trauma Intensive with Barbara Kohler, LCMHC offers concentrated, root-cause healing for high achievers, business owners, and ministers — three concentrated days in Huntersville, NC."
 	canonicalURL={canonicalURL}
 	ogImage={ogImage}
 	landing={true}
@@ -451,9 +468,10 @@ const logoUrl =
 					font-weight: 300;
 				}
 				body.hyt-page .hyt-hero-creds {
-					font-size: 13px;
-					color: #9ab0d4;
-					letter-spacing: 0.5px;
+					font-size: 15px;
+					font-weight: 700;
+					color: var(--hyt-gold-light);
+					letter-spacing: 0.6px;
 					margin-top: 24px;
 				}
 				body.hyt-page .hyt-hero-video-col { position: relative; }
@@ -701,6 +719,38 @@ const logoUrl =
 					font-weight: 700;
 				}
 
+				/* CLIENT PHOTO STRIP — mirrors SOM pattern, scoped to hyt- */
+				body.hyt-page .hyt-clients-strip {
+					background: var(--hyt-cream);
+					padding: 0 0 0 0;
+				}
+				body.hyt-page .hyt-clients-grid {
+					display: grid;
+					grid-template-columns: repeat(4, 1fr);
+					gap: 0;
+				}
+				body.hyt-page .hyt-clients-grid img {
+					width: 100%;
+					aspect-ratio: 1 / 1;
+					object-fit: cover;
+					display: block;
+					filter: saturate(0.95);
+					transition: filter .35s ease;
+				}
+				body.hyt-page .hyt-clients-grid img:hover { filter: saturate(1.1); }
+				@media (max-width: 700px) {
+					body.hyt-page .hyt-clients-grid { grid-template-columns: repeat(2, 1fr); }
+				}
+				body.hyt-page .hyt-clients-disclaimer {
+					margin: 0;
+					padding: 12px 24px 16px;
+					text-align: center;
+					font-size: 11px;
+					font-style: italic;
+					color: #5d5851;
+					letter-spacing: 0.02em;
+				}
+
 				/* COST SECTION */
 				body.hyt-page .hyt-cost-section {
 					background: var(--hyt-sapphire-dark);
@@ -905,6 +955,16 @@ const logoUrl =
 					line-height: 1.75;
 					font-style: italic;
 				}
+				body.hyt-page .hyt-investment-extended-note {
+					font-size: 12px;
+					font-weight: 700;
+					letter-spacing: 2px;
+					text-transform: uppercase;
+					color: var(--hyt-gold-light);
+					max-width: 680px;
+					margin: 0 auto 36px;
+					line-height: 1.55;
+				}
 
 				/* ENVIRONMENT */
 				body.hyt-page .hyt-environment-section {
@@ -913,7 +973,7 @@ const logoUrl =
 				}
 				body.hyt-page .hyt-env-grid {
 					display: grid;
-					grid-template-columns: repeat(2, 1fr);
+					grid-template-columns: repeat(3, 1fr);
 					gap: 16px;
 					margin-top: 16px;
 					max-width: 960px;
@@ -926,6 +986,9 @@ const logoUrl =
 					object-fit: cover;
 					border-radius: 3px;
 					display: block;
+				}
+				@media (max-width: 680px) {
+					body.hyt-page .hyt-env-grid { grid-template-columns: 1fr; }
 				}
 
 				/* BIO */
@@ -1131,7 +1194,7 @@ const logoUrl =
 				<span class="hyt-hero-eyebrow">
 					Individual Trauma Intensive &nbsp;·&nbsp; The Kohler Group, PLLC
 				</span>
-				<h1>Trauma Is Stealing<br /><em>Everything You've Built.</em></h1>
+				<h1>Is Trauma Stealing<br /><em>Everything You've Built?</em></h1>
 				<div class="hyt-hero-divider"></div>
 				<p class="hyt-hero-sub">
 					Your business. Your marriage. Your finances. Your calling. Your hope. Time does not heal all
@@ -1203,6 +1266,23 @@ const logoUrl =
 			</div>
 		</section>
 	)}
+
+	<!-- =============== CLIENT PHOTO STRIP =============== -->
+	<section class="hyt-clients-strip" aria-label="Photos representing Barbara's intensive clients">
+		<div class="hyt-clients-grid">
+			{clientThumbs.map((c) => (
+				<img
+					src={c.url}
+					alt={c.alt}
+					width="600"
+					height="600"
+					loading="lazy"
+					decoding="async"
+				/>
+			))}
+		</div>
+		<p class="hyt-clients-disclaimer">For privacy, photos shown are not actual clients.</p>
+	</section>
 
 	<!-- =============== COST OF WAITING =============== -->
 	<section class="hyt-cost-section">
@@ -1466,6 +1546,9 @@ const logoUrl =
 			<div class="hyt-investment-duration">
 				Three Consecutive Days &nbsp;·&nbsp; 24 Clinical Hours
 			</div>
+			<p class="hyt-investment-extended-note">
+				Longer Individual Intensives for severe trauma are available at an additional cost.
+			</p>
 			<div class="hyt-investment-includes">
 				<span class="hyt-include-item">Three full clinical days</span>
 				<span class="hyt-include-item">Pre-intensive consultation</span>
