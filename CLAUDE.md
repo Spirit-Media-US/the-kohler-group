@@ -8,79 +8,75 @@ This site: The Kohler Group | Repo: github.com/Spirit-Media-US/the-kohler-group 
 **Sanity Studio:** Embedded at thekohlergroup.net/studio/ (static build)
 **Infrastructure:** Deploy webhook wired, CORS origins configured, studio deployed
 
-## Status — as of 2026-04-26
+## Status — as of 2026-05-22
 
 ### Completed & Live on Main
 - Live site, completed migration
 - Sanity Studio embedded at /studio with deploy webhook and CORS configured
-
-### On dev — pending Kevin's "push to main"
-- `/heal-your-trauma` landing page for Barbara's $9,400 Individual Trauma
-  Intensive funnel. Built to Barbara's HTML prototype design (same
-  sapphire+gold+cream / Cormorant Garamond palette as SOM, but a separate
-  scoped `body.hyt-page` namespace so the two pages stay independent).
-  7-question screener (`TraumaIntensiveQuiz.astro`) with two branched
-  outcomes: "fit" (continues to the contact step + mailto: to Ashley with
-  Barbara BCC'd) and "not-ready" (auto-routes on Q6=D "distance is a
-  barrier" or Q7=D "not ready yet"). Submission pattern matches SOM —
-  TKG isn't in our GHL so we use mailto: with the office email as the
-  to-line. Existing `/intensives/individual` page untouched. Dev preview:
-  https://dev.the-kohler-group.pages.dev/heal-your-trauma
-  (300 rewrite via `public/_redirects` so PSI doesn't pay the trailing-slash
-  hop).
-- `siteSettings` schema extended with 5 HYT fields: `hytVideoUrl`,
-  `hytHeroBackground`, `hytBarbaraPhoto`, `hytPrice`, and
-  `hytEnvironmentImages` (array of up to 4 photos of Daetwyler Plaza for the
-  "Your Environment" grid; the section auto-hides until all 4 are uploaded).
-  Defaults render correctly when fields are blank: hero shows the gradient
-  with no background image, video shows a "coming soon" facade, Barbara
-  bio photo falls back to the SOM portrait, price defaults to $9,400.
-- `testimonial` schema gained a new "Trauma Intensive" service option. Until
-  Sanity has any posts tagged with it, the page falls back to four generic
-  intensive quotes ported verbatim from Barbara's prototype.
-- `/save-my-marriage` landing page for Barbara's $15K Marriage Intensive funnel.
-  Built to Barbara's HTML prototype design (sapphire+gold+cream, Cormorant
-  Garamond serif). 8-question screening quiz with 3 branched outcomes
-  (qualified / not-ready / travel-impossible) plus an Individual Intensive
-  sub-form. Submit fires a mailto: to `siteSettings.barbaraEmail` with all
-  answers pre-filled (TKG isn't in our GHL — matches the existing MailtoLink
-  pattern on the rest of the site). Existing `/intensives/marriage` page
-  untouched. Dev preview: https://dev.the-kohler-group.pages.dev/save-my-marriage
-  (legacy `/save-our-marriage` 301s to the new slug via `public/_redirects`).
-- `Layout.astro` now supports `landing={true}` prop that suppresses the global
-  `<Nav>` and `<Footer>` for funnel pages, while keeping all SEO/preload/
-  font/JSON-LD machinery intact. Existing pages render unchanged.
-- `siteSettings` schema extended with 4 SOM fields: `somVideoUrl`,
-  `somHeroBackground`, `somBarbaraPhoto`, `somPrice`. Barbara can edit from
-  Studio without code changes. Defaults render correctly when fields are blank.
-- Cormorant Garamond self-hosted to `assets.spiritmediapublishing.com/fonts/cormorant-garamond/`
-  per the perf gate. Single weight (400) preloaded; rest load via `font-display:swap`.
-- SOM page CSS scoped under `body.som-page` so the navy/gold/cream palette and
-  Cormorant serif don't leak into the rest of TKG. Verbatim port of Barbara's
-  prototype CSS.
-- Couples thumbnails strip above "Who This Is For": 4 square photos —
-  young-couple + senior-couple from Sanity, plus 2 lifestyle couple photos
-  hot-linked from `images.unsplash.com` (`img-src` allowlist updated in
-  `public/_headers`).
+- `/save-my-marriage` landing page (Barbara's $15K Marriage Intensive funnel) —
+  Barbara's HTML prototype design ported verbatim, scoped under `body.som-page`.
+  8-question screening quiz (`MarriageIntensiveQuiz.astro`) with 3 branched
+  outcomes (qualified / not-ready / travel-impossible) plus an Individual
+  Intensive sub-form. Submit fires a mailto: to `siteSettings.barbaraEmail`
+  with all answers pre-filled (TKG isn't in our GHL — matches the existing
+  MailtoLink pattern). Existing `/intensives/marriage` page untouched.
+  Legacy `/save-our-marriage` 301s to the new slug via `public/_redirects`.
+- `/heal-your-trauma` landing page (Barbara's $9,400 Individual Trauma
+  Intensive funnel) — launched 2026-05-22. Sapphire+gold+cream / Cormorant
+  Garamond palette scoped under `body.hyt-page`. 7-question screener
+  (`TraumaIntensiveQuiz.astro`) with branched "fit" / "not-ready" outcomes.
+  Mailto: submission pattern same as SOM. Existing `/intensives/individual`
+  page untouched. Hero h1 is the question form: "Is Trauma Stealing Everything
+  You've Built?" Video (`https://youtu.be/xq--LBt3LX4`) wired through
+  `siteSettings.hytVideoUrl`. Investment section includes "Longer Individual
+  Intensives for severe trauma are available at an additional cost." note.
+  Client-photo strip under Testimonials (4 illustrative photos + "For privacy"
+  disclaimer, mirroring the SOM couples strip pattern). Environment grid
+  uses 3-up layout from 3 Sanity fallback Daetwyler photos; threshold lowered
+  to ≥3 so Barbara's eventual upload of 3 photos in Studio under "HYT —
+  Environment Image Grid" will replace the fallbacks.
+- `Layout.astro` supports `landing={true}` prop that suppresses the global
+  `<Nav>` and `<Footer>` for funnel pages, while keeping SEO/preload/font/JSON-LD
+  machinery intact.
+- `siteSettings` schema extended with SOM fields (`somVideoUrl`,
+  `somHeroBackground`, `somBarbaraPhoto`, `somPrice`) and HYT fields
+  (`hytVideoUrl`, `hytHeroBackground`, `hytBarbaraPhoto`, `hytPrice`,
+  `hytEnvironmentImages`). Barbara can edit all of these from Studio without
+  code changes. Defaults render correctly when fields are blank.
+- `testimonial` schema has a "Trauma Intensive" service option. Until Sanity
+  has any posts tagged with it, HYT falls back to four generic intensive
+  quotes ported verbatim from Barbara's prototype.
+- Cormorant Garamond self-hosted to
+  `assets.spiritmediapublishing.com/fonts/cormorant-garamond/` per the perf
+  gate. Single weight (400) preloaded; rest load via `font-display:swap`.
+- SOM "couples thumbnails" strip above "Who This Is For": 4 square photos —
+  2 from Sanity + 2 lifestyle couple photos hot-linked from
+  `images.unsplash.com` (`img-src` allowlist updated in `public/_headers`).
+- **Funnel-domain redirects live (HTTPS-capable)** — `savemymarriage.us` and
+  `healyourtrauma.net` (both registered at Name.com under Barbara) now have
+  their DNS hosted on our SMP Cloudflare account (registrar stays Name.com
+  — only nameservers moved to `alexandra.ns.cloudflare.com` +
+  `bart.ns.cloudflare.com`). Each zone has a Redirect Rule that 301s
+  every request (apex + www, http + https) to the matching TKG page with
+  trailing slash. Universal SSL active. SMP zone standard applied
+  (mirage off, 0rtt on, early_hints on; `ai_bots_protection=block`,
+  `is_robots_txt_managed=false`). Replaced the previous Name.com URL
+  Forwarding setup, which was HTTP-only — that limitation was breaking
+  ~30–70% of typed visits because modern browsers default to https://.
+  Verified 2026-05-22: all 8 variants (2 domains × apex/www × http/https)
+  return 301 → correct TKG page, served by Cloudflare. Zone IDs:
+  savemymarriage.us `9de6364029569a7b050d988c2b752f3d`,
+  healyourtrauma.net `e18917a90b5af90d1b37065437f7ff7a`.
 
 ### Blocked — pending Barbara
-- `saveourmarriage.us` → 301 redirect to `/save-my-marriage`. Waiting on
-  Barbara to confirm where the domain is registered. Once known: if it's
-  on Cloudflare, add a redirect rule; if elsewhere, set a host-level 301.
-- "Message from Barbara" video — placeholder card renders until Barbara
-  records and pastes the YouTube URL into Studio's `SOM — Barbara Video URL`.
-- `healyourtrauma.net` → 301 redirect to `/heal-your-trauma`. Same setup
-  as saveourmarriage.us — needs registrar confirmation before redirect.
-- HYT "Hear From Barbara" video — placeholder card renders until Barbara
-  records and pastes the YouTube URL into Studio's `HYT — Barbara Video URL`.
-- HYT "Your Environment" image grid — the four Daetwyler Plaza photos were
-  base64-embedded in Barbara's original prototype HTML and were NOT
-  preserved when that file was removed from the repo root after porting.
-  Section auto-hides until Barbara uploads four photos in Studio under
-  `HYT — Environment Image Grid (4 photos)`. To recover the original four
-  shots, re-upload `Heal_Your_Trauma_Updated.html` to the code-server and
-  extract via the `data:image/jpeg;base64,...` URLs (or just upload fresh
-  photos of the Daetwyler Plaza lakeside path / pond / geese / bridge).
+- "Message from Barbara" video on `/save-my-marriage` — placeholder card
+  renders until Barbara records and pastes the YouTube URL into Studio's
+  `SOM — Barbara Video URL`.
+- HYT "Your Environment" image grid — currently displays 3 Sanity fallback
+  photos. Barbara can upload her own 3 photos of Daetwyler Plaza (lakeside
+  path / pond / bridge) in Studio under "HYT — Environment Image Grid" to
+  replace the fallbacks. (Note: previously specced for 4 photos; reduced
+  to 3 on 2026-05-22 when one Sanity photo was removed.)
 
 ## Dev Commands
 
