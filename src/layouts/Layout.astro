@@ -1,6 +1,7 @@
 ---
 import Footer from '../components/Footer.astro';
 import Nav from '../components/Nav.astro';
+import { sanityClient, urlFor } from '../lib/sanity.ts';
 import '../styles/global.css';
 
 interface Props {
@@ -13,11 +14,18 @@ interface Props {
 	bodyClass?: string;
 }
 
+// Default social-share image is client-editable in Sanity (Site Settings →
+// "Default Social Share Image"); falls back to the current image when blank.
+const ogSettings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{ ogImage }`);
+const ogImageDefault = ogSettings?.ogImage?.asset
+	? urlFor(ogSettings.ogImage).width(1200).height(630).fit('crop').format('jpg').url()
+	: 'https://cdn.sanity.io/images/2bom5gqg/production/69ff224b35aa2d4c0e57339b5449330d55bf8095-468x311.jpg';
+
 const {
 	title,
 	description = 'Barbara Kohler — Christian counseling, marriage intensives, and individual therapy in Huntersville, NC. Faith-based psychotherapy near Charlotte and Lake Norman.',
 	canonicalURL = Astro.url.href,
-	ogImage = 'https://cdn.sanity.io/images/2bom5gqg/production/69ff224b35aa2d4c0e57339b5449330d55bf8095-468x311.jpg',
+	ogImage = ogImageDefault,
 	heroPreload,
 	landing = false,
 	bodyClass = '',
