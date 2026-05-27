@@ -43,6 +43,45 @@ export default {
 			],
 			description: 'Gallery images displayed on the testimonials page',
 		},
+		// ---------------- Home page images (client-editable) ----------------
+		{
+			name: 'homeServiceImages',
+			title: 'Home — Service Card Images (Marriage, Therapy, Individual)',
+			type: 'array',
+			of: [
+				{
+					type: 'image',
+					options: { hotspot: true },
+					fields: [{ name: 'alt', title: 'Alt Text', type: 'string' }],
+				},
+			],
+			validation: (Rule: any) => Rule.max(3),
+			description:
+				'The three photos on the homepage service cards, in order: 1) Marriage Intensives, 2) Therapy Sessions, 3) Individual Intensives. Leave a slot empty to keep the current image.',
+		},
+		{
+			name: 'homeGalleryImages',
+			title: 'Home — Photo Gallery (4 images)',
+			type: 'array',
+			of: [
+				{
+					type: 'image',
+					options: { hotspot: true },
+					fields: [{ name: 'alt', title: 'Alt Text', type: 'string' }],
+				},
+			],
+			validation: (Rule: any) => Rule.max(4),
+			description:
+				'The four photos in the homepage gallery grid (including the team photo). Replace any one to swap it out. Leave a slot empty to keep the current image.',
+		},
+		{
+			name: 'ogImage',
+			title: 'Default Social Share Image',
+			type: 'image',
+			options: { hotspot: true },
+			description:
+				'The preview image shown when the site is shared on Facebook/LinkedIn/etc. Leave blank to keep the current default.',
+		},
 		// ---------------- Save Our Marriage landing page ----------------
 		{
 			name: 'somVideoUrl',
