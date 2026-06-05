@@ -35,6 +35,19 @@ const siteName = 'The Kohler Group PLLC';
 const ogImageURL = ogImage.startsWith('http')
 	? ogImage
 	: new URL(ogImage, Astro.site ?? Astro.url).href;
+
+// Simpli.fi tracking pixels (Dani Tubio's ad campaigns, installed 2026-06-05).
+// Intensive campaign pixel fires on the intensive funnel pages; General
+// Practice pixel fires everywhere else. Loaded on first user interaction
+// with an 8s fallback — same deferred pattern as GA4 (perf gate trait 5).
+const SIFI_INTENSIVE = 'd6e476eb-73c2-441e-85e7-b472471ef1df';
+const SIFI_GENERAL = 'd0d408e9-0afd-4e19-b3d1-f5e25603693a';
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+const isIntensivePage =
+	['/save-my-marriage', '/heal-your-trauma'].includes(pathname) ||
+	pathname === '/intensives' ||
+	pathname.startsWith('/intensives/');
+const simplifiTagId = isIntensivePage ? SIFI_INTENSIVE : SIFI_GENERAL;
 ---
 
 <!doctype html>
@@ -172,6 +185,23 @@ const ogImageURL = ogImage.startsWith('http')
 			gaEvents.forEach(function(e){ window.addEventListener(e, gaTrigger, {passive:true, once:true}); });
 			// Fallback: load after 8s even if no interaction (keeps analytics intact)
 			setTimeout(function(){ if(!window.__gaLoaded) loadGA(); }, 8000);
+		</script>
+
+		<!-- Simpli.fi tracking pixel (ad campaign retargeting — loaded on first user interaction to protect LCP/TBT) -->
+		<script is:inline define:vars={{ simplifiTagId }}>
+			function loadSifi() {
+				if (window.__sifiLoaded) return;
+				window.__sifiLoaded = true;
+				var s = document.createElement('script');
+				s.async = true;
+				s.src = 'https://tag.simpli.fi/sifitag/' + simplifiTagId;
+				document.head.appendChild(s);
+			}
+			var sifiEvents = ['scroll', 'mousemove', 'touchstart', 'keydown', 'click'];
+			function sifiTrigger(){ sifiEvents.forEach(function(e){ window.removeEventListener(e, sifiTrigger, {passive:true}); }); loadSifi(); }
+			sifiEvents.forEach(function(e){ window.addEventListener(e, sifiTrigger, {passive:true, once:true}); });
+			// Fallback: load after 8s even if no interaction (keeps pixel tracking intact)
+			setTimeout(function(){ if(!window.__sifiLoaded) loadSifi(); }, 8000);
 		</script>
 
 		<!-- LocalBusiness JSON-LD Structured Data -->
