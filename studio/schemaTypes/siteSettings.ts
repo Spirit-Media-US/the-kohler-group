@@ -157,5 +157,52 @@ export default {
 			description:
 				'Four photos of the Daetwyler Plaza environment. Grid hides if fewer than 4 are uploaded.',
 		},
+		// ---------------- Interior page content photos (client-editable) ----------------
+		{
+			name: 'intensivesAboutPhoto',
+			title: 'Intensives: About — Barbara Photo',
+			type: 'image',
+			options: { hotspot: true },
+			description:
+				'Photo beside the intro text on /intensives/about. Leave blank to keep the current image.',
+		},
+		{
+			name: 'intensivesIndividualPhoto',
+			title: 'Intensives: Individual — Section Photo',
+			type: 'image',
+			options: { hotspot: true },
+			description:
+				'Photo in the lower section of /intensives/individual. Leave blank to keep the current image.',
+		},
+		{
+			name: 'intensivesMarriagePhoto',
+			title: 'Intensives: Marriage — Section Photo',
+			type: 'image',
+			options: { hotspot: true },
+			description:
+				'Photo in the lower section of /intensives/marriage. Leave blank to keep the current image.',
+		},
+		{
+			name: 'survivingTraumaPhoto',
+			title: 'Education: Surviving Trauma — Section Photo',
+			type: 'image',
+			options: { hotspot: true },
+			description: 'Photo on /education/surviving-trauma. Leave blank to keep the current image.',
+		},
+		{
+			name: 'hytClientThumbs',
+			title: 'HYT — Illustrative Client Photos (4)',
+			type: 'array',
+			of: [
+				{
+					type: 'image',
+					options: { hotspot: true },
+					fields: [{ name: 'alt', title: 'Alt Text', type: 'string' }],
+				},
+			],
+			validation: (Rule: any) => Rule.max(4),
+			description:
+				'The four illustrative (non-client) portraits beside the testimonials on /heal-your-trauma. Leave empty to keep the current images.',
+		},
 	],
 };

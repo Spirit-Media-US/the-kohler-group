@@ -13,7 +13,7 @@ const mediaTracks = await getMediaTracks();
 <Layout
 	title="Media | Barbara Kohler — Christian Counseling Huntersville NC"
 	description="Media and interviews from Barbara Kohler — Christian counseling insights on marriage, trauma recovery, and faith-based therapy in Huntersville, NC."
-	heroPreload="https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"
+	heroPreload={settings?.defaultHeroImage ? urlFor(settings.defaultHeroImage).width(1905).url() : "https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"}
 >
 	<Fragment slot="head">
 		<script type="application/ld+json" set:html={JSON.stringify({
@@ -39,7 +39,7 @@ const mediaTracks = await getMediaTracks();
 	<!-- Hero -->
 	<section
 		class="relative flex h-[250px] items-center justify-center bg-cover bg-top bg-no-repeat"
-		style="background-image: url('https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg')"
+		style={`background-image: url('${settings?.defaultHeroImage ? urlFor(settings.defaultHeroImage).width(1905).url() : "https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"}')`}
 	>
 		<div class="absolute inset-0 bg-brand/80"></div>
 		<div class="container relative z-10 text-center">

@@ -11,7 +11,7 @@ import {
 const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   phone, email, barbaraEmail, officeEmail, bookingUrl,
   facebook, instagram,
-  heroImage, aboutHeroImage, defaultHeroImage, logo
+  heroImage, aboutHeroImage, defaultHeroImage, logo, intensivesMarriagePhoto
 }`);
 const healingStages = await getIntensiveStages('marriage', 'healing');
 const awarenessStages = await getIntensiveStages('marriage', 'awareness');
@@ -33,7 +33,7 @@ for (const s of daySchedules) {
 <Layout
 	title="Christian Marriage Intensive | Barbara Kohler — Huntersville NC"
 	description="5-day Christian marriage intensive with Barbara Kohler in Huntersville, NC. Faith-based couples therapy with Re-decision Therapy and HeartSync."
-	heroPreload="https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"
+	heroPreload={settings?.defaultHeroImage ? urlFor(settings.defaultHeroImage).width(1905).url() : "https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"}
 >
 	<!-- JSON-LD Structured Data -->
 	<script type="application/ld+json" set:html={JSON.stringify({
@@ -98,7 +98,7 @@ for (const s of daySchedules) {
 	<!-- Hero -->
 	<section
 		class="relative flex h-[250px] items-center justify-center bg-cover bg-top bg-no-repeat"
-		style="background-image: url('https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg')"
+		style={`background-image: url('${settings?.defaultHeroImage ? urlFor(settings.defaultHeroImage).width(1905).url() : "https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"}')`}
 	>
 		<div class="absolute inset-0 bg-brand/80"></div>
 		<div class="container relative z-10 text-center">
@@ -212,7 +212,7 @@ for (const s of daySchedules) {
 	<section class="bg-white py-10">
 		<div class="container max-w-4xl">
 			<img
-				src="https://cdn.sanity.io/images/2bom5gqg/production/21282e732035fa47572f5ca27d12ae838ef7fe43-600x400.jpg"
+				src={settings?.intensivesMarriagePhoto ? urlFor(settings.intensivesMarriagePhoto).width(600).url() : "https://cdn.sanity.io/images/2bom5gqg/production/21282e732035fa47572f5ca27d12ae838ef7fe43-600x400.jpg"}
 				alt="Barbara Kohler, Christian marriage intensive counselor in Huntersville, NC"
 				class="w-full rounded-lg object-cover shadow-md"
 				width="600"
