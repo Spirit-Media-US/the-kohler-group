@@ -6,7 +6,7 @@ import { getIntensiveStages, sanityClient, urlFor } from '../../lib/sanity.ts';
 const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   phone, email, barbaraEmail, officeEmail, bookingUrl,
   facebook, instagram,
-  heroImage, aboutHeroImage, defaultHeroImage, logo
+  heroImage, aboutHeroImage, defaultHeroImage, logo, intensivesAboutPhoto
 }`);
 const healingStages = await getIntensiveStages('about', 'healing');
 const awarenessStages = await getIntensiveStages('about', 'awareness');
@@ -16,7 +16,7 @@ const preparationItems = await getIntensiveStages('about', 'preparation');
 <Layout
 	title="Therapy Intensives | Barbara Kohler — Huntersville NC"
 	description="Barbara Kohler offers Christian marriage and individual therapy intensives in Huntersville, NC. Multi-day faith-based counseling for lasting transformation."
-	heroPreload="https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"
+	heroPreload={settings?.defaultHeroImage ? urlFor(settings.defaultHeroImage).width(1905).url() : "https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"}
 >
 	<script type="application/ld+json" set:html={JSON.stringify({
 		"@context": "https://schema.org",
@@ -54,7 +54,7 @@ const preparationItems = await getIntensiveStages('about', 'preparation');
 	<!-- Hero -->
 	<section
 		class="relative flex h-[250px] items-center justify-center bg-cover bg-top bg-no-repeat"
-		style="background-image: url('https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg')"
+		style={`background-image: url('${settings?.defaultHeroImage ? urlFor(settings.defaultHeroImage).width(1905).url() : "https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"}')`}
 	>
 		<div class="absolute inset-0 bg-brand/80"></div>
 		<div class="container relative z-10 text-center">
@@ -73,7 +73,7 @@ const preparationItems = await getIntensiveStages('about', 'preparation');
 				</p>
 				<figure class="flex-shrink-0 md:w-72">
 					<img
-						src="https://cdn.sanity.io/images/2bom5gqg/production/bc923c7086ed045549abb1546b07fcadb5518221-3000x2001.jpg"
+						src={settings?.intensivesAboutPhoto ? urlFor(settings.intensivesAboutPhoto).width(600).url() : "https://cdn.sanity.io/images/2bom5gqg/production/bc923c7086ed045549abb1546b07fcadb5518221-3000x2001.jpg"}
 						alt="Barbara Kohler, Founder of The Kohler Group"
 						width="288"
 						height="192"

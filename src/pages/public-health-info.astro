@@ -1,24 +1,24 @@
 ---
-import { sanityClient, urlFor } from '../lib/sanity.ts';
-import Layout from '@layouts/Layout.astro';
 import MailtoLink from '@components/MailtoLink.astro';
+import Layout from '@layouts/Layout.astro';
+import { sanityClient, urlFor } from '../lib/sanity.ts';
+
 const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   phone, email, barbaraEmail, officeEmail, bookingUrl,
   facebook, instagram,
   heroImage, aboutHeroImage, defaultHeroImage, logo
 }`);
-
 ---
 
 <Layout
 	title="Public Health Info | The Kohler Group, PLLC — Huntersville, NC"
 	description="Public health and wellness policy for The Kohler Group, PLLC."
-	heroPreload="https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"
+	heroPreload={settings?.defaultHeroImage ? urlFor(settings.defaultHeroImage).width(1905).url() : "https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"}
 >
 	<!-- Hero -->
 	<section
 		class="relative flex h-[250px] items-center justify-center bg-cover bg-top bg-no-repeat"
-		style="background-image: url('https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg')"
+		style={`background-image: url('${settings?.defaultHeroImage ? urlFor(settings.defaultHeroImage).width(1905).url() : "https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"}')`}
 	>
 		<div class="absolute inset-0 bg-brand/80"></div>
 		<div class="container relative z-10 text-center">

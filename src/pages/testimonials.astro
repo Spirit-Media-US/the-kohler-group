@@ -21,7 +21,7 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 <Layout
 	title="Testimonials | Barbara Kohler — Christian Counseling Huntersville NC"
 	description="Client experiences from Barbara Kohler's Christian counseling in Huntersville, NC. Marriage intensives and faith-based therapy near Charlotte."
-	heroPreload="https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"
+	heroPreload={settings?.defaultHeroImage ? urlFor(settings.defaultHeroImage).width(1905).url() : "https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"}
 >
 	<Fragment slot="head">
 		<script type="application/ld+json" set:html={JSON.stringify({
@@ -51,7 +51,7 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 	<!-- Hero -->
 	<section
 		class="relative flex h-[250px] items-center justify-center bg-cover bg-top bg-no-repeat"
-		style="background-image: url('https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg')"
+		style={`background-image: url('${settings?.defaultHeroImage ? urlFor(settings.defaultHeroImage).width(1905).url() : "https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"}')`}
 	>
 		<div class="absolute inset-0 bg-brand/80"></div>
 		<div class="container relative z-10 text-center">

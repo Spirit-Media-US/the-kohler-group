@@ -1,7 +1,7 @@
 ---
 import Layout from '@layouts/Layout.astro';
 import { PortableText } from 'astro-portabletext';
-import { sanityClient } from '../../lib/sanity.ts';
+import { sanityClient, urlFor } from '../../lib/sanity.ts';
 
 export async function getStaticPaths() {
 	const therapists = await sanityClient.fetch(`
@@ -36,7 +36,7 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{ officeEm
 <Layout
 	title={`${therapist.name}, ${therapist.credentials} | Christian Therapist Huntersville NC`}
 	description={`${therapist.name}, ${therapist.credentials} — licensed Christian therapist at The Kohler Group in Huntersville, NC. Faith-based psychotherapy serving Charlotte & Lake Norman.`}
-	heroPreload="https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"
+	heroPreload={settings?.defaultHeroImage ? urlFor(settings.defaultHeroImage).width(1905).url() : "https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"}
 >
 	<!-- Person JSON-LD -->
 	<script type="application/ld+json" set:html={JSON.stringify({
@@ -68,7 +68,7 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{ officeEm
 	<!-- Hero -->
 	<section
 		class="relative flex h-[250px] items-center justify-center bg-cover bg-top bg-no-repeat"
-		style="background-image: url('https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg')"
+		style={`background-image: url('${settings?.defaultHeroImage ? urlFor(settings.defaultHeroImage).width(1905).url() : "https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"}')`}
 	>
 		<div class="absolute inset-0 bg-brand/80"></div>
 		<div class="container relative z-10 text-center">

@@ -5,19 +5,19 @@ import { sanityClient, urlFor } from '../../lib/sanity.ts';
 const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
   phone, email, barbaraEmail, officeEmail, bookingUrl,
   facebook, instagram,
-  heroImage, aboutHeroImage, defaultHeroImage, logo
+  heroImage, aboutHeroImage, defaultHeroImage, logo, survivingTraumaPhoto
 }`);
 ---
 
 <Layout
 	title="Surviving Trauma | Barbara Kohler — Christian Therapy Huntersville NC"
 	description="A message from Barbara Kohler on surviving trauma — healing from abuse, reconnecting with God, and finding restoration through Christian counseling and therapy intensives in Huntersville, NC."
-	heroPreload="https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"
+	heroPreload={settings?.defaultHeroImage ? urlFor(settings.defaultHeroImage).width(1905).url() : "https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"}
 >
 	<!-- Hero -->
 	<section
 		class="relative flex h-[250px] items-center justify-center bg-cover bg-top bg-no-repeat"
-		style="background-image: url('https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg')"
+		style={`background-image: url('${settings?.defaultHeroImage ? urlFor(settings.defaultHeroImage).width(1905).url() : "https://cdn.sanity.io/images/2bom5gqg/production/a0bbde8a51ad33bc1a14aeeb0c5d87eeede972c1-1905x196.jpg"}')`}
 	>
 		<div class="absolute inset-0 bg-brand/80"></div>
 		<div class="container relative z-10 text-center">
@@ -63,7 +63,7 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 			<!-- Signature -->
 			<div class="mt-12 flex items-center gap-6 border-t border-gray-100 pt-8">
 				<img
-					src="https://cdn.sanity.io/images/2bom5gqg/production/eeb91e7708bcf7838969f4b32604e1ecdff9eb84-225x225.jpg"
+					src={settings?.survivingTraumaPhoto ? urlFor(settings.survivingTraumaPhoto).width(450).url() : "https://cdn.sanity.io/images/2bom5gqg/production/eeb91e7708bcf7838969f4b32604e1ecdff9eb84-225x225.jpg"}
 					alt="Barbara Kohler"
 					class="h-20 w-20 rounded-full object-cover object-top shadow-md"
 					width="225"
