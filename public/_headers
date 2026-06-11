@@ -8,7 +8,13 @@
   X-Robots-Tag: index, follow
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: camera=(), microphone=(), geolocation=()
-  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://tag.simpli.fi https://*.simpli.fi; style-src 'self' 'unsafe-inline'; font-src 'self' https://assets.spiritmediapublishing.com; img-src 'self' https: data:; media-src 'self' https://pub-d77219c850804c8ca2ddc9c193465856.r2.dev; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://www.google.com https://pub-d77219c850804c8ca2ddc9c193465856.r2.dev https://static.cloudflareinsights.com https://*.simpli.fi; frame-src https://barbara-kohler.clientsecure.me https://www.youtube.com https://www.youtube-nocookie.com https://*.simpli.fi; base-uri 'self'; form-action 'self'
+  # Single site-wide CSP. The embedded Sanity Studio (/studio) lives on this same
+  # origin, and CF Pages enforces multiple CSP headers as an AND (most restrictive
+  # wins) — so a path-scoped looser policy for /studio does NOT work. Instead this
+  # one policy keeps the marketing site on a named allowlist while also permitting
+  # the Sanity vendor origins the Studio needs (core.sanity-cdn.com bridge,
+  # studio-static.sanity.io fonts, blob: workers, *.sanity.io content/asset APIs).
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://tag.simpli.fi https://*.simpli.fi https://core.sanity-cdn.com https://*.sanity-cdn.com; style-src 'self' 'unsafe-inline'; font-src 'self' data: https://assets.spiritmediapublishing.com https://studio-static.sanity.io; img-src 'self' https: data: blob:; media-src 'self' blob: https://pub-d77219c850804c8ca2ddc9c193465856.r2.dev; worker-src 'self' blob:; child-src 'self' blob:; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://www.google.com https://pub-d77219c850804c8ca2ddc9c193465856.r2.dev https://static.cloudflareinsights.com https://*.simpli.fi https://*.api.sanity.io wss://*.api.sanity.io https://api.sanity.io https://*.apicdn.sanity.io https://cdn.sanity.io https://*.sanity.io https://*.sanity.work https://core.sanity-cdn.com https://*.sanity-cdn.com https://studio-static.sanity.io; frame-src https://barbara-kohler.clientsecure.me https://www.youtube.com https://www.youtube-nocookie.com https://*.simpli.fi https://*.sanity.io https://core.sanity-cdn.com; base-uri 'self'; form-action 'self' https://*.sanity.io
 
 # Homepage — 103 Early Hints for LCP resources (CF Pages auto-forwards as Early Hints)
 /

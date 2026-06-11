@@ -61,6 +61,7 @@ filesystem/
 *.bak
 .mcp.json
 public/studio/
+public/static/
 
 # Playwright MCP session logs
 .playwright-mcp/
