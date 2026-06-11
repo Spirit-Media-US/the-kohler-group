@@ -48,8 +48,8 @@ const heroPreloadUrl = settings?.aboutHeroImage
 	     Hero Banner
 	     ============================================================ -->
 	<section
-		class="relative flex min-h-[420px] md:min-h-[65vh] items-center bg-cover bg-top bg-no-repeat"
-		style={`background-image: url(${settings?.aboutHeroImage ? urlFor(settings.aboutHeroImage).width(1920).url() : ''})`}
+		class="relative flex min-h-[420px] md:min-h-[65vh] items-center bg-cover bg-no-repeat"
+		style={`background-image: url(${settings?.aboutHeroImage ? urlFor(settings.aboutHeroImage).width(1920).url() : ''}); background-position: center 35%;`}
 	>
 		<div class="absolute inset-0 bg-brand/50"></div>
 	</section>
