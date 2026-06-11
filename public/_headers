@@ -10,6 +10,15 @@
   Permissions-Policy: camera=(), microphone=(), geolocation=()
   Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com https://static.cloudflareinsights.com https://tag.simpli.fi https://*.simpli.fi; style-src 'self' 'unsafe-inline'; font-src 'self' https://assets.spiritmediapublishing.com; img-src 'self' https: data:; media-src 'self' https://pub-d77219c850804c8ca2ddc9c193465856.r2.dev; connect-src 'self' https://www.google-analytics.com https://*.google-analytics.com https://www.google.com https://pub-d77219c850804c8ca2ddc9c193465856.r2.dev https://static.cloudflareinsights.com https://*.simpli.fi; frame-src https://barbara-kohler.clientsecure.me https://www.youtube.com https://www.youtube-nocookie.com https://*.simpli.fi; base-uri 'self'; form-action 'self'
 
+# Studio (/studio) needs a looser CSP than the marketing site: the Sanity v5 Studio
+# loads its auth/session bridge from core.sanity-cdn.com, fonts from studio-static.sanity.io,
+# runs web workers (blob:), and talks to the Sanity content/asset APIs. The strict
+# site-wide CSP above blocked these, which broke login, image uploads, and editing.
+# CF Pages applies the most specific path's value for a duplicate header, so this
+# overrides Content-Security-Policy for /studio only; the security headers from /* still apply.
+/studio/*
+  Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://core.sanity-cdn.com https://*.sanity-cdn.com; style-src 'self' 'unsafe-inline'; font-src 'self' data: https://studio-static.sanity.io; img-src 'self' https: data: blob:; media-src 'self' https: blob:; worker-src 'self' blob:; child-src 'self' blob:; connect-src 'self' https://*.api.sanity.io wss://*.api.sanity.io https://api.sanity.io https://*.apicdn.sanity.io https://cdn.sanity.io https://*.sanity.io https://*.sanity.work https://core.sanity-cdn.com https://*.sanity-cdn.com https://studio-static.sanity.io; frame-src 'self' https://*.sanity.io https://core.sanity-cdn.com; base-uri 'self'; form-action 'self' https://*.sanity.io
+
 # Homepage — 103 Early Hints for LCP resources (CF Pages auto-forwards as Early Hints)
 /
   Link: <https://assets.spiritmediapublishing.com/the-kohler-group/hero-mobile.webp>; rel=preload; as=image; fetchpriority=high
