@@ -13,6 +13,16 @@ This site: The Kohler Group | Repo: github.com/Spirit-Media-US/the-kohler-group 
 ### Completed & Live on Main
 - Live site, completed migration
 - Sanity Studio embedded at /studio with deploy webhook and CORS configured
+- **Landing-page copy is Sanity-editable (2026-06-12).** `somPage` ("Save My
+  Marriage — Page") and `hytPage` ("Heal Your Trauma — Page") singleton schemas
+  expose the editable prose (hero, section labels/intros, pillars, who-this-is-for,
+  stat boxes, investment copy + includes, bio paragraphs, testimonials/quiz
+  intros, footer legal) as grouped fields + arrays. Each `.astro` field is
+  `{page?.x || 'hardcoded default'}` — blank Sanity = original render, so the
+  pages never break. Stylized gold-italic section TITLES, hero H1, the quizzes,
+  video, and JSON-LD stay in code. One published doc per page is pre-filled with
+  current copy for editing. Landing-page testimonials are driven by Testimonial
+  `service` type: Marriage Intensive → SOM; Trauma OR Individual Intensive → HYT.
 - `/save-my-marriage` landing page (Barbara's $15K Marriage Intensive funnel) —
   Barbara's HTML prototype design ported verbatim, scoped under `body.som-page`.
   8-question screening quiz (`MarriageIntensiveQuiz.astro`) with 3 branched
