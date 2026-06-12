@@ -11,7 +11,7 @@ const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
 }`);
 
 const traumaTestimonials = await sanityClient.fetch(`
-  *[_type == "testimonial" && service == "Trauma Intensive"] | order(order asc) {
+  *[_type == "testimonial" && service in ["Trauma Intensive", "Individual Intensive"]] | order(order asc) {
     _id, clientName, quote
   }
 `);
