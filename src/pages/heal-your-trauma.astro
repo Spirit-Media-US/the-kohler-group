@@ -47,6 +47,132 @@ const fallbackTestimonials = [
 const testimonials =
 	traumaTestimonials && traumaTestimonials.length > 0 ? traumaTestimonials : fallbackTestimonials;
 
+// Editable page copy (Studio: "Heal Your Trauma — Page"). Every field is
+// optional — blank fields fall back to the hardcoded defaults below, so an
+// empty document renders identically to the original page.
+const page = await sanityClient.fetch(`*[_type == "hytPage"][0]`);
+
+const DEFAULT_COST_CARDS = [
+	{
+		title: 'Your Business & Career',
+		body: 'Trauma hijacks decision-making, leadership, and executive function. High achievers often trace their biggest blind spots directly to unresolved wounds.',
+	},
+	{
+		title: 'Your Finances',
+		body: 'Reckless or fear-based spending, self-sabotage, and risk avoidance are frequently trauma responses — not necessarily personality traits. The roots run deep.',
+	},
+	{
+		title: 'Your Marriage & Relationships',
+		body: "Trauma distorts attachment, intimacy, trust, and communication. The people closest to you absorb the impact of wounds they didn't cause.",
+	},
+	{
+		title: 'Your Body & Health',
+		body: 'The body remembers trauma and often manifests its objections through chronic pain, fatigue, anxiety, insomnia, and physical symptoms — often the nervous system signaling unprocessed trauma.',
+	},
+	{
+		title: 'Your Calling & Ministry',
+		body: 'Wounded leaders wound people. Ministers, pastors, and Kingdom builders carry heavy weight — and unhealed trauma limits the full expression of your calling.',
+	},
+	{
+		title: 'Your Hope',
+		body: 'Perhaps most devastating — trauma convinces you that things cannot change. That this is just who you are. That healing is for other people. It is a lie.',
+	},
+];
+const costCards = page?.costCards?.length ? page.costCards : DEFAULT_COST_CARDS;
+
+const DEFAULT_PILLARS = [
+	{
+		number: 'Pillar 01',
+		title: 'Re-Decision Therapy — Foundational Clinical Work',
+		body: 'Symptoms are signals. We go beneath the surface to address the early decisions, beliefs, and wounds that drive your current struggles. We look at your individual personality and what works for you, and what does not. Using Re-Decision Therapy is a powerful clinical foundation for the Christian Psychotherapy Intensive!',
+	},
+	{
+		number: 'Pillar 02',
+		title: 'EMDR & Trauma Processing',
+		body: 'Eye Movement Desensitization and Reprocessing (EMDR) is one of the most evidence-based trauma treatments available. In an intensive format, we can complete what months of weekly EMDR sessions might only begin — unlocking stored trauma from the nervous system at depth.',
+	},
+	{
+		number: 'Pillar 03',
+		title: 'HeartSync',
+		body: 'HeartSync is a Spirit-led ministry approach that addresses fragmentation of the heart — the disconnected parts of self that form in response to wounding. Through HeartSync, we work toward integration, wholeness, and a restored capacity for relationship with God and others.',
+	},
+	{
+		number: 'Pillar 04',
+		title: 'Faith Integration & TRET',
+		body: 'Trauma Resolution Energy Therapy (TRET) is an excellent technique for addressing unconscious trauma that affects your physical health. Barbara does not practice medicine; however, when you heal the emotions, your body often follows. Trauma affects your emotions and your physical health. Barbara applies a Christ-centered approach when using this energy technique, as devout Christians are sometimes concerned about any technique that is energy related. Barbara is, as well. Therefore, only those techniques that can be supported by Scripture are used. Clients have experienced wonderful breakthroughs with this technique, even biblical deliverance. God designed the human body to be able to release itself from trauma. Barbara will show you how if you are interested in applying this technique (optional).',
+	},
+	{
+		number: 'Pillar 05',
+		title: 'Judicial Prayer',
+		body: 'God wants you to have a clean conscience. Many times, trauma leads to sinful behavior — and you are likely already judging yourself more harshly than Jesus ever would. The Court of Mercy gives you a place where you know, without question, that you are fully forgiven. Having a clear conscience is often a byproduct of the Intensive. Barbara uses the Courts of Heaven prayer paradigm to seek the Lord with the client as to obstacles to business, relationships, and finances. Trauma often destroys multiple areas of your life. This prayer paradigm is powerful when used the right way.',
+	},
+	{
+		number: 'Pillar 06',
+		title: 'The Maintenance-Free Victory of the Cross',
+		body: 'One of Barbara\'s deepest goals in working with trauma survivors is that they experience the transforming power of the cross of Christ in the healing process. Barbara cannot guarantee you will experience this on your first visit — but she believes it is possible, and she pursues it with every client.\n\nAt The Kohler Group, PLLC, we affectionately call this a "Barbara-ology" — because Barbara believes wholeheartedly in the power of the cross working through you as you heal. That you can have real, lasting victory in any area of your life. It takes time, process, hard work, and faith. But what more worthy goal could there be? And it is a tangible goal. Let\'s go for it.',
+	},
+];
+const pillars = page?.pillars?.length ? page.pillars : DEFAULT_PILLARS;
+
+const DEFAULT_WHO_ITEMS = [
+	{
+		title: 'Business Owners & Entrepreneurs',
+		body: "You've built something significant — but trauma is creating blind spots, relational friction, high turnover, and a ceiling you seem to break through.",
+	},
+	{
+		title: 'Ministers & Church Leaders',
+		body: "You carry others' wounds while your own go unaddressed. Intensive work provides a confidential, clinical, and spiritually safe space to finally heal.",
+	},
+	{
+		title: 'High Achievers & Executives',
+		body: 'Success has not brought the peace you expected. You\'ve managed the pain well — but "managing" is not healing.',
+	},
+	{
+		title: 'Those Willing to Travel',
+		body: 'Barbara works with clients nationally. She is a high achiever and she attracts those clients who do not settle for a mediocre life or tolerable recovery. The Intensive is worth the journey.',
+	},
+	{
+		title: 'People in Crisis or Transition',
+		body: 'Divorce, loss, ministry failure, business collapse, health crisis — sometimes the pain demands an intensive response rather than a weekly one.',
+	},
+	{
+		title: 'Those Who Want Privacy',
+		body: 'The Intensive format is private, discreet, and entirely individual. No groups. Complete confidentiality.',
+	},
+];
+const whoItems = page?.whoItems?.length ? page.whoItems : DEFAULT_WHO_ITEMS;
+
+const DEFAULT_STAT_BOXES = [
+	{ number: '30+', label: 'Years in Clinical Practice' },
+	{ number: '18+', label: 'Years Specializing in Intensives' },
+	{ number: 'NC & SC', label: 'Dual-State Licensure' },
+];
+const statBoxes = page?.statBoxes?.length ? page.statBoxes : DEFAULT_STAT_BOXES;
+
+const DEFAULT_HYT_INCLUDES = [
+	'Three full clinical days',
+	'Pre-intensive consultation',
+	'Clinical assessments',
+	'Personality survey',
+	'Administrative coordination',
+	'Re-Decision Therapy',
+	'EMDR',
+	'HeartSync',
+	'Judicial Prayer / TRET',
+	'Faith-integrated prayer',
+	'Post-intensive planning',
+];
+const investmentIncludes = page?.investmentIncludes?.length
+	? page.investmentIncludes
+	: DEFAULT_HYT_INCLUDES;
+
+const DEFAULT_HYT_BIO_PARAS = [
+	'Barbara Kohler is the Founder and CEO of The Kohler Group, PLLC — a faith-integrated Christian psychotherapy practice located in Huntersville, NC, serving the greater Charlotte and Lake Norman area, with in-person and telehealth across North and South Carolina.',
+	'She has been a Licensed Clinical Mental Health Counselor since 2002 and holds National Certified Counselor credentials since 2009. She is also an ordained minister — a distinction that shapes every aspect of how she works with individuals and couples.',
+	'Barbara uses a multidimensional approach in working with individuals and couples to help them change their lives. She integrates several powerful, effective modalities including EMDR, Re-Decision Therapy, HeartSync, Judicial Prayer, and TRET. Barbara does trauma work, and also personal growth work to help the client self-actualize.',
+];
+const bioParagraphs = page?.bioParagraphs?.length ? page.bioParagraphs : DEFAULT_HYT_BIO_PARAS;
+
 const price = settings?.hytPrice || '$9,400';
 
 function getYouTubeId(url: string | null | undefined): string | null {
@@ -1201,23 +1327,19 @@ const logoUrl =
 		<div class="hyt-hero-inner">
 			<div class="hyt-hero-text">
 				<span class="hyt-hero-eyebrow">
-					Individual Trauma Intensive &nbsp;·&nbsp; The Kohler Group, PLLC
+					{page?.heroEyebrow || 'Individual Trauma Intensive · The Kohler Group, PLLC'}
 				</span>
 				<h1>Is Trauma Stealing<br /><em>Everything You've Built?</em></h1>
 				<div class="hyt-hero-divider"></div>
 				<p class="hyt-hero-sub">
-					Your business. Your marriage. Your finances. Your calling. Your hope. Time does not heal all
-					wounds. But you can, indeed, heal. Gain incredible momentum in your healing journey in
-					three concentrated days working with a seasoned clinician who uses a multidimensional
-					approach.
+					{page?.heroSub || 'Your business. Your marriage. Your finances. Your calling. Your hope. Time does not heal all wounds. But you can, indeed, heal. Gain incredible momentum in your healing journey in three concentrated days working with a seasoned clinician who uses a multidimensional approach.'}
 				</p>
 				<p class="hyt-hero-creds">
-					Barbara Kohler, MS, CRC, LCMHC, NCC &nbsp;·&nbsp; Ordained Minister &nbsp;·&nbsp; 30+ Years
-					Experience
+					{page?.heroCreds || 'Barbara Kohler, MS, CRC, LCMHC, NCC · Ordained Minister · 30+ Years Experience'}
 				</p>
 			</div>
 			<div class="hyt-hero-video-col">
-				<span class="hyt-hero-video-label">Hear From Barbara</span>
+				<span class="hyt-hero-video-label">{page?.heroVideoLabel || 'Hear From Barbara'}</span>
 				{ytThumb ? (
 					<button
 						type="button"
@@ -1251,8 +1373,8 @@ const logoUrl =
 
 	<!-- =============== SCRIPTURE STRIP 1 =============== -->
 	<div class="hyt-scripture-strip">
-		<blockquote>"He heals the brokenhearted and binds up their wounds."</blockquote>
-		<cite>Psalm 147:3 &nbsp;·&nbsp; NASB</cite>
+		<blockquote>"{page?.scripture1Quote || 'He heals the brokenhearted and binds up their wounds.'}"</blockquote>
+		<cite>{page?.scripture1Cite || 'Psalm 147:3 · NASB'}</cite>
 	</div>
 
 	<!-- =============== TESTIMONIALS =============== -->
@@ -1260,8 +1382,8 @@ const logoUrl =
 		<section class="hyt-testimonials-section">
 			<div class="hyt-testimonials-inner">
 				<div class="hyt-section-header hyt-testimonials-header">
-					<span class="hyt-section-label" style="font-size: 13px; letter-spacing: 0.12em;">What Clients Say</span>
-					<h2 class="hyt-testimonials-heading">Voices From the Journey</h2>
+					<span class="hyt-section-label" style="font-size: 13px; letter-spacing: 0.12em;">{page?.testimonialsLabel || 'What Clients Say'}</span>
+					<h2 class="hyt-testimonials-heading">{page?.testimonialsHeading || 'Voices From the Journey'}</h2>
 					<hr class="hyt-testimonials-rule" />
 				</div>
 				<div class="hyt-testimonials-grid">
@@ -1297,242 +1419,91 @@ const logoUrl =
 	<section class="hyt-cost-section">
 		<div class="hyt-container">
 			<div class="hyt-section-header">
-				<span class="hyt-section-label">The Real Cost of Waiting</span>
+				<span class="hyt-section-label">{page?.costLabel || 'The Real Cost of Waiting'}</span>
 				<h2 class="hyt-section-title">What Unhealed Trauma<br /><em>Is Costing You Right Now</em></h2>
 				<p class="hyt-section-body">
-					Trauma does not stay in the past. It shows up every day — in your decisions, your
-					relationships, your body, and your faith.
+					{page?.costBody || 'Trauma does not stay in the past. It shows up every day — in your decisions, your relationships, your body, and your faith.'}
 				</p>
 				<hr class="hyt-gold-rule" />
 			</div>
 			<div class="hyt-cost-grid">
-				<div class="hyt-cost-card">
-					<h3>Your Business &amp; Career</h3>
-					<p>
-						Trauma hijacks decision-making, leadership, and executive function. High achievers often
-						trace their biggest blind spots directly to unresolved wounds.
-					</p>
+					{costCards.map((card: any) => (
+						<div class="hyt-cost-card">
+							<h3>{card.title}</h3>
+							<p>{card.body}</p>
+						</div>
+					))}
 				</div>
-				<div class="hyt-cost-card">
-					<h3>Your Finances</h3>
-					<p>
-						Reckless or fear-based spending, self-sabotage, and risk avoidance are frequently trauma
-						responses — not necessarily personality traits. The roots run deep.
-					</p>
-				</div>
-				<div class="hyt-cost-card">
-					<h3>Your Marriage &amp; Relationships</h3>
-					<p>
-						Trauma distorts attachment, intimacy, trust, and communication. The people closest to
-						you absorb the impact of wounds they didn't cause.
-					</p>
-				</div>
-				<div class="hyt-cost-card">
-					<h3>Your Body &amp; Health</h3>
-					<p>
-						The body remembers trauma and often manifests its objections through chronic pain,
-						fatigue, anxiety, insomnia, and physical symptoms — often the nervous system signaling
-						unprocessed trauma.
-					</p>
-				</div>
-				<div class="hyt-cost-card">
-					<h3>Your Calling &amp; Ministry</h3>
-					<p>
-						Wounded leaders wound people. Ministers, pastors, and Kingdom builders carry heavy
-						weight — and unhealed trauma limits the full expression of your calling.
-					</p>
-				</div>
-				<div class="hyt-cost-card">
-					<h3>Your Hope</h3>
-					<p>
-						Perhaps most devastating — trauma convinces you that things cannot change. That this is
-						just who you are. That healing is for other people. It is a lie.
-					</p>
-				</div>
-			</div>
 		</div>
 	</section>
 
 	<!-- =============== PULL QUOTE =============== -->
 	<div class="hyt-pull-quote">
 		<blockquote>
-			"You have been managing your pain for years. Imagine what your life can look like when you
-			actually heal it."
+			"{page?.pullQuote || 'You have been managing your pain for years. Imagine what your life can look like when you actually heal it.'}"
 		</blockquote>
-		<cite>— Barbara Kohler, MS, CRC, LCMHC, NCC</cite>
+		<cite>{page?.pullCite || '— Barbara Kohler, MS, CRC, LCMHC, NCC'}</cite>
 	</div>
 
 	<!-- =============== PILLARS =============== -->
 	<section class="hyt-pillars-section" id="pillars">
 		<div class="hyt-container">
 			<div class="hyt-section-header">
-				<span class="hyt-section-label">How We Work</span>
+				<span class="hyt-section-label">{page?.pillarsLabel || 'How We Work'}</span>
 				<h2 class="hyt-section-title">Six Pillars of the<br /><em>Trauma Intensive</em></h2>
 				<p class="hyt-section-body" style="font-size: clamp(17px, 2vw, 20px);">
-					This is not traditional weekly therapy. It is three concentrated days of root-cause clinical
-					and spiritual work designed to produce transformation that years of weekly sessions often
-					cannot reach.
+					{page?.pillarsBody || 'This is not traditional weekly therapy. It is three concentrated days of root-cause clinical and spiritual work designed to produce transformation that years of weekly sessions often cannot reach.'}
 				</p>
 				<hr class="hyt-gold-rule" />
 			</div>
 			<div class="hyt-pillars-grid">
-				<div class="hyt-pillar-card">
-					<span class="hyt-pillar-number">Pillar 01</span>
-					<h3>Re-Decision Therapy — Foundational Clinical Work</h3>
-					<p>
-						Symptoms are signals. We go beneath the surface to address the early decisions, beliefs,
-						and wounds that drive your current struggles. We look at your individual personality and
-						what works for you, and what does not. Using Re-Decision Therapy is a powerful clinical
-						foundation for the Christian Psychotherapy Intensive!
-					</p>
+					{pillars.map((pillar: any) => (
+						<div class="hyt-pillar-card">
+							<span class="hyt-pillar-number">{pillar.number}</span>
+							<h3>{pillar.title}</h3>
+							{(pillar.body || '').split(/\n\n+/).map((para: string) => (
+								<p>{para}</p>
+							))}
+						</div>
+					))}
 				</div>
-				<div class="hyt-pillar-card">
-					<span class="hyt-pillar-number">Pillar 02</span>
-					<h3>EMDR &amp; Trauma Processing</h3>
-					<p>
-						Eye Movement Desensitization and Reprocessing (EMDR) is one of the most evidence-based
-						trauma treatments available. In an intensive format, we can complete what months of
-						weekly EMDR sessions might only begin — unlocking stored trauma from the nervous system
-						at depth.
-					</p>
-				</div>
-				<div class="hyt-pillar-card">
-					<span class="hyt-pillar-number">Pillar 03</span>
-					<h3>HeartSync</h3>
-					<p>
-						HeartSync is a Spirit-led ministry approach that addresses fragmentation of the heart —
-						the disconnected parts of self that form in response to wounding. Through HeartSync, we
-						work toward integration, wholeness, and a restored capacity for relationship with God
-						and others.
-					</p>
-				</div>
-				<div class="hyt-pillar-card">
-					<span class="hyt-pillar-number">Pillar 04</span>
-					<h3>Faith Integration &amp; TRET</h3>
-					<p>
-						Trauma Resolution Energy Therapy (TRET) is an excellent technique for addressing
-						unconscious trauma that affects your physical health. Barbara does not practice
-						medicine; however, when you heal the emotions, your body often follows. Trauma affects
-						your emotions and your physical health. Barbara applies a Christ-centered approach when
-						using this energy technique, as devout Christians are sometimes concerned about any
-						technique that is energy related. Barbara is, as well. Therefore, only those techniques
-						that can be supported by Scripture are used. Clients have experienced wonderful
-						breakthroughs with this technique, even biblical deliverance. God designed the human
-						body to be able to release itself from trauma. Barbara will show you how if you are
-						interested in applying this technique (optional).
-					</p>
-				</div>
-				<div class="hyt-pillar-card">
-					<span class="hyt-pillar-number">Pillar 05</span>
-					<h3>Judicial Prayer</h3>
-					<p>
-						God wants you to have a clean conscience. Many times, trauma leads to sinful behavior —
-						and you are likely already judging yourself more harshly than Jesus ever would. The
-						Court of Mercy gives you a place where you know, without question, that you are fully
-						forgiven. Having a clear conscience is often a byproduct of the Intensive. Barbara uses
-						the Courts of Heaven prayer paradigm to seek the Lord with the client as to obstacles to
-						business, relationships, and finances. Trauma often destroys multiple areas of your
-						life. This prayer paradigm is powerful when used the right way.
-					</p>
-				</div>
-				<div class="hyt-pillar-card">
-					<span class="hyt-pillar-number">Pillar 06</span>
-					<h3>The Maintenance-Free Victory of the Cross</h3>
-					<p>
-						One of Barbara's deepest goals in working with trauma survivors is that they experience
-						the transforming power of the cross of Christ in the healing process. Barbara cannot
-						guarantee you will experience this on your first visit — but she believes it is
-						possible, and she pursues it with every client.
-					</p>
-					<p>
-						At The Kohler Group, PLLC, we affectionately call this a <em>"Barbara-ology"</em> — because
-						Barbara believes wholeheartedly in the power of the cross working through you as you
-						heal. That you can have real, lasting victory in any area of your life. It takes time,
-						process, hard work, and faith. But what more worthy goal could there be? And it is a
-						tangible goal. Let's go for it.
-					</p>
-				</div>
-			</div>
 		</div>
 	</section>
 
 	<!-- =============== SCRIPTURE STRIP 2 =============== -->
 	<div class="hyt-scripture-strip-2">
 		<blockquote>
-			"'For I will restore you to health and I will heal you of your wounds,' declares the LORD."
+			"{page?.scripture2Quote || `'For I will restore you to health and I will heal you of your wounds,' declares the LORD.`}"
 		</blockquote>
-		<cite>Jeremiah 30:17 &nbsp;·&nbsp; NASB</cite>
+		<cite>{page?.scripture2Cite || 'Jeremiah 30:17 · NASB'}</cite>
 	</div>
 
 	<!-- =============== WHO THIS IS FOR =============== -->
 	<section class="hyt-who-section">
 		<div class="hyt-container">
 			<div class="hyt-section-header">
-				<span class="hyt-section-label">Is This For You?</span>
+				<span class="hyt-section-label">{page?.whoLabel || 'Is This For You?'}</span>
 				<h2 class="hyt-section-title">
 					Who the Trauma Intensive<br /><em>Is Designed For</em>
 				</h2>
 				<hr class="hyt-gold-rule" />
 			</div>
 			<div class="hyt-who-grid">
-				<div class="hyt-who-item">
-					<h4>Business Owners &amp; Entrepreneurs</h4>
-					<p>
-						You've built something significant — but trauma is creating blind spots, relational
-						friction, high turnover, and a ceiling you seem to break through.
-					</p>
+					{whoItems.map((item: any) => (
+						<div class="hyt-who-item">
+							<h4>{item.title}</h4>
+							<p>{item.body}</p>
+						</div>
+					))}
 				</div>
-				<div class="hyt-who-item">
-					<h4>Ministers &amp; Church Leaders</h4>
-					<p>
-						You carry others' wounds while your own go unaddressed. Intensive work provides a
-						confidential, clinical, and spiritually safe space to finally heal.
-					</p>
-				</div>
-				<div class="hyt-who-item">
-					<h4>High Achievers &amp; Executives</h4>
-					<p>
-						Success has not brought the peace you expected. You've managed the pain well — but
-						"managing" is not healing.
-					</p>
-				</div>
-				<div class="hyt-who-item">
-					<h4>Those Willing to Travel</h4>
-					<p>
-						Barbara works with clients nationally. She is a high achiever and she attracts those
-						clients who do not settle for a mediocre life or tolerable recovery. The Intensive is
-						worth the journey.
-					</p>
-				</div>
-				<div class="hyt-who-item">
-					<h4>People in Crisis or Transition</h4>
-					<p>
-						Divorce, loss, ministry failure, business collapse, health crisis — sometimes the pain
-						demands an intensive response rather than a weekly one.
-					</p>
-				</div>
-				<div class="hyt-who-item">
-					<h4>Those Who Want Privacy</h4>
-					<p>
-						The Intensive format is private, discreet, and entirely individual. No groups. Complete
-						confidentiality.
-					</p>
-				</div>
-			</div>
 			<div class="hyt-stat-row">
-				<div class="hyt-stat-box">
-					<span class="hyt-stat-number">30+</span>
-					<div class="hyt-stat-label">Years in Clinical Practice</div>
+					{statBoxes.map((s: any) => (
+						<div class="hyt-stat-box">
+							<span class="hyt-stat-number">{s.number}</span>
+							<div class="hyt-stat-label">{s.label}</div>
+						</div>
+					))}
 				</div>
-				<div class="hyt-stat-box">
-					<span class="hyt-stat-number">18+</span>
-					<div class="hyt-stat-label">Years Specializing in Intensives</div>
-				</div>
-				<div class="hyt-stat-box">
-					<span class="hyt-stat-number">NC &amp; SC</span>
-					<div class="hyt-stat-label">Dual-State Licensure</div>
-				</div>
-			</div>
 		</div>
 	</section>
 
@@ -1540,42 +1511,29 @@ const logoUrl =
 	<section class="hyt-investment-section">
 		<div class="hyt-container">
 			<div class="hyt-section-header">
-				<span class="hyt-section-label">Your Investment</span>
+				<span class="hyt-section-label">{page?.investmentLabel || 'Your Investment'}</span>
 				<h2 class="hyt-section-title">What It Costs to<br /><em>Finally Heal</em></h2>
 				<p class="hyt-section-body" style="margin: 0 auto;">
-					Consider what unhealed trauma is already costing you — in your relationships, your
-					business, your health, and your calling. The Trauma Intensive is an investment in your
-					mental health, your peace of mind. It is one of the most significant investments you will
-					ever make in yourself. Barbara's desire is that you feel the value far exceeds the cost.
-					The goal is a transformed life.
+					{page?.investmentBody || 'Consider what unhealed trauma is already costing you — in your relationships, your business, your health, and your calling. The Trauma Intensive is an investment in your mental health, your peace of mind. It is one of the most significant investments you will ever make in yourself. Barbara\'s desire is that you feel the value far exceeds the cost. The goal is a transformed life.'}
 				</p>
 				<hr class="hyt-gold-rule" />
 			</div>
 			<div class="hyt-investment-price">{price}</div>
 			<div class="hyt-investment-duration">
-				Three Consecutive Days &nbsp;·&nbsp; 24 Clinical Hours
+				{page?.investmentDuration || 'Three Consecutive Days · 24 Clinical Hours'}
 			</div>
 			<p class="hyt-investment-extended-note">
-				Longer Individual Intensives for severe trauma are available at an additional cost.
+				{page?.investmentExtendedNote || 'Longer Individual Intensives for severe trauma are available at an additional cost.'}
 			</p>
 			<div class="hyt-investment-includes">
-				<span class="hyt-include-item">Three full clinical days</span>
-				<span class="hyt-include-item">Pre-intensive consultation</span>
-				<span class="hyt-include-item">Clinical assessments</span>
-				<span class="hyt-include-item">Personality survey</span>
-				<span class="hyt-include-item">Administrative coordination</span>
-				<span class="hyt-include-item">Re-Decision Therapy</span>
-				<span class="hyt-include-item">EMDR</span>
-				<span class="hyt-include-item">HeartSync</span>
-				<span class="hyt-include-item">Judicial Prayer / TRET</span>
-				<span class="hyt-include-item">Faith-integrated prayer</span>
-				<span class="hyt-include-item">Post-intensive planning</span>
-			</div>
+					{investmentIncludes.map((item: string) => (
+						<span class="hyt-include-item">{item}</span>
+					))}
+				</div>
 			<p class="hyt-investment-note">
-				Aftercare coaching packages are available following the Intensive for an additional
-				investment. Ask about options during your complimentary consultation.
+				{page?.investmentNote || 'Aftercare coaching packages are available following the Intensive for an additional investment. Ask about options during your complimentary consultation.'}
 			</p>
-			<a href="#screener" class="hyt-btn-primary-link">I Need to Know a Few Things About You</a>
+			<a href="#screener" class="hyt-btn-primary-link">{page?.investmentCtaLabel || 'I Need to Know a Few Things About You'}</a>
 		</div>
 	</section>
 
@@ -1584,12 +1542,10 @@ const logoUrl =
 		<section class="hyt-environment-section">
 			<div class="hyt-container">
 				<div class="hyt-section-header">
-					<span class="hyt-section-label">Your Environment</span>
+					<span class="hyt-section-label">{page?.envLabel || 'Your Environment'}</span>
 					<h2 class="hyt-section-title">Heal in a Setting of<br /><em>Peace &amp; Beauty</em></h2>
 					<p class="hyt-section-body">
-						Between sessions, clients have access to the serene outdoor spaces surrounding Daetwyler
-						Plaza in Huntersville, NC — a lakeside walking path just steps from our office, offering
-						quiet reflection time that is itself part of the healing process.
+						{page?.envBody || 'Between sessions, clients have access to the serene outdoor spaces surrounding Daetwyler Plaza in Huntersville, NC — a lakeside walking path just steps from our office, offering quiet reflection time that is itself part of the healing process.'}
 					</p>
 					<hr class="hyt-gold-rule" />
 				</div>
@@ -1606,7 +1562,7 @@ const logoUrl =
 	<section class="hyt-bio-section">
 		<div class="hyt-container">
 			<div class="hyt-section-header">
-				<span class="hyt-section-label">Your Clinician</span>
+				<span class="hyt-section-label">{page?.bioLabel || 'Your Clinician'}</span>
 				<h2 class="hyt-section-title">Meet Barbara Kohler</h2>
 				<hr class="hyt-gold-rule" />
 			</div>
@@ -1623,23 +1579,7 @@ const logoUrl =
 					<span class="hyt-bio-title">
 						MS, CRC, LCMHC, NCC &nbsp;·&nbsp; Ordained Minister
 					</span>
-					<p>
-						Barbara Kohler is the Founder and CEO of The Kohler Group, PLLC — a faith-integrated
-						Christian psychotherapy practice located in Huntersville, NC, serving the greater
-						Charlotte and Lake Norman area, with in-person and telehealth across North and South
-						Carolina.
-					</p>
-					<p>
-						She has been a Licensed Clinical Mental Health Counselor since 2002 and holds National
-						Certified Counselor credentials since 2009. She is also an ordained minister — a
-						distinction that shapes every aspect of how she works with individuals and couples.
-					</p>
-					<p>
-						Barbara uses a multidimensional approach in working with individuals and couples to help
-						them change their lives. She integrates several powerful, effective modalities including
-						EMDR, Re-Decision Therapy, HeartSync, Judicial Prayer, and TRET. Barbara does trauma
-						work, and also personal growth work to help the client self-actualize.
-					</p>
+					{bioParagraphs.map((para: string) => (<p>{para}</p>))}
 					<a
 						href="https://www.thekohlergroup.net/"
 						class="hyt-btn-primary-link"
@@ -1656,13 +1596,12 @@ const logoUrl =
 	<section class="hyt-contact-section" id="contact">
 		<div class="hyt-container">
 			<div class="hyt-section-header">
-				<span class="hyt-section-label">Get Started</span>
+				<span class="hyt-section-label">{page?.contactLabel || 'Get Started'}</span>
 				<h2 class="hyt-section-title">
 					Ready to Heal?<br /><em>Here Is Your Next Step.</em>
 				</h2>
 				<p class="hyt-section-body" style="margin: 0 auto 48px;">
-					The Intensive begins with a free virtual consultation. No pressure. No obligation. Just a
-					conversation to see if this is the right fit for you.
+					{page?.contactBody || 'The Intensive begins with a free virtual consultation. No pressure. No obligation. Just a conversation to see if this is the right fit for you.'}
 				</p>
 			</div>
 			<div class="hyt-contact-steps">
@@ -1691,13 +1630,12 @@ const logoUrl =
 	<section class="hyt-screener-section" id="screener">
 		<div class="hyt-container">
 			<div class="hyt-section-header">
-				<span class="hyt-section-label">First Step</span>
+				<span class="hyt-section-label">{page?.screenerLabel || 'First Step'}</span>
 				<h2 class="hyt-section-title">
 					Is the Trauma Intensive<br /><em>Right for You?</em>
 				</h2>
 				<p class="hyt-section-body">
-					Answer seven short questions. At the end, you'll be invited to schedule a complimentary
-					virtual consultation if you are interested — no obligation, no pressure.
+					{page?.screenerBody || `Answer seven short questions. At the end, you'll be invited to schedule a complimentary virtual consultation if you are interested — no obligation, no pressure.`}
 				</p>
 			</div>
 			<TraumaIntensiveQuiz
@@ -1810,10 +1748,7 @@ const logoUrl =
 		</p>
 		<div class="hyt-footer-legal">
 			<p>
-				Barbara Kohler, MS, CRC, LCMHC, NCC is licensed as a Clinical Mental Health Counselor in
-				North Carolina and a Licensed Professional Counselor in South Carolina. This website is for
-				informational purposes only and does not constitute a therapeutic relationship. If you are
-				in crisis, please call 988 or go to your nearest emergency room.
+				{page?.footerLegal || 'Barbara Kohler, MS, CRC, LCMHC, NCC is licensed as a Clinical Mental Health Counselor in North Carolina and a Licensed Professional Counselor in South Carolina. This website is for informational purposes only and does not constitute a therapeutic relationship. If you are in crisis, please call 988 or go to your nearest emergency room.'}
 			</p>
 			<p>© {new Date().getFullYear()} The Kohler Group, PLLC. All rights reserved. • Powered by <a href="https://spiritmediapublishing.com" style="color:#9ab0d4;">Spirit Media</a></p>
 		</div>
