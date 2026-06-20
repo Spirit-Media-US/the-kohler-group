@@ -78,10 +78,20 @@ This site: The Kohler Group | Repo: github.com/Spirit-Media-US/the-kohler-group 
   savemymarriage.us `9de6364029569a7b050d988c2b752f3d`,
   healyourtrauma.net `e18917a90b5af90d1b37065437f7ff7a`.
 
+### Funnel-page videos — LIVE (2026-06-15)
+- Both funnel pages were shipping a "Video Coming Soon" placeholder because
+  `siteSettings.somVideoUrl` / `hytVideoUrl` were never populated (the video
+  facade only renders when the field holds a YouTube URL). Populated both
+  fields directly in published Sanity and the Sanity→CF webhook rebuilt prod:
+  `/save-my-marriage` → `https://youtu.be/l_mb3yx43I0` (Barbara's existing
+  "Christian Marriage Intensive" video, same as `/intensives/marriage`);
+  `/heal-your-trauma` → `https://youtu.be/xq--LBt3LX4` (the documented HYT
+  video). If Barbara records a dedicated personal-message video for either
+  funnel, swap the URL in Studio under "SOM/HYT — Barbara Video URL" + Publish.
+- NOTE: never instruct Barbara/Ashley (the client) to fix Sanity content
+  themselves — devs do that work. See team-rules "DEVS DELIVER, KEVIN REVIEWS".
+
 ### Blocked — pending Barbara
-- "Message from Barbara" video on `/save-my-marriage` — placeholder card
-  renders until Barbara records and pastes the YouTube URL into Studio's
-  `SOM — Barbara Video URL`.
 - HYT "Your Environment" image grid — currently displays 3 Sanity fallback
   photos. Barbara can upload her own 3 photos of Daetwyler Plaza (lakeside
   path / pond / bridge) in Studio under "HYT — Environment Image Grid" to
