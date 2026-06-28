@@ -67,3 +67,6 @@ public/static/
 .playwright-mcp/
 .claude/settings.local.json
 .wrangler/
+
+# 100 Club registry — generated at build time by scripts/sync-100club-registry.mjs (from R2); not source
+src/data/100club-sites.json
