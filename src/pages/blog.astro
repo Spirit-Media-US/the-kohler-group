@@ -3,7 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import { sanityClient } from '../lib/sanity';
 
 const FALLBACK_IMAGE =
-	'https://cdn.sanity.io/images/2bom5gqg/production/69ff224b35aa2d4c0e57339b5449330d55bf8095-468x311.jpg?w=800&auto=format';
+	'https://cdn.sanity.io/images/2bom5gqg/production/d9f61eeda58a8dce608ade94ad026b2fed019857-468x311.jpg?w=800&auto=format';
 
 const rawSanityPosts = await sanityClient.fetch(`
 	*[_type == "blogPost" && defined(slug.current)] | order(publishDate desc) {
