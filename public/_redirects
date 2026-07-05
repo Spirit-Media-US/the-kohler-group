@@ -12,6 +12,12 @@
 /therapists/nancy-csehoski /our-therapists/nancy-csehoski 301
 /therapists/* /our-therapists 301
 
+# New-structure safety net: a departed therapist's bio 301s to the team index
+# instead of 404ing (mirrors the old /therapists/* rule). CF Pages serves
+# existing static assets BEFORE evaluating _redirects, so live bios + the
+# /our-therapists/ index are unaffected — only missing slugs hit this rule.
+/our-therapists/* /our-therapists 301
+
 # Old flat URLs → new nested structure
 /surviving-trauma /education/surviving-trauma 301
 /media /education/media 301
