@@ -19,7 +19,7 @@ interface Props {
 const ogSettings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{ ogImage }`);
 const ogImageDefault = ogSettings?.ogImage?.asset
 	? urlFor(ogSettings.ogImage).width(1200).height(630).fit('crop').format('jpg').url()
-	: 'https://cdn.sanity.io/images/2bom5gqg/production/69ff224b35aa2d4c0e57339b5449330d55bf8095-468x311.jpg';
+	: 'https://cdn.sanity.io/images/2bom5gqg/production/d9f61eeda58a8dce608ade94ad026b2fed019857-468x311.jpg';
 
 const {
 	title,
