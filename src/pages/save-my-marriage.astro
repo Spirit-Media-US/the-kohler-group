@@ -113,7 +113,11 @@ const investmentIncludes = page?.investmentIncludes?.length
 	? page.investmentIncludes
 	: DEFAULT_INCLUDES;
 
-const price = settings?.somPrice || '$15,000';
+const price = settings?.somPrice || '$13,000';
+const priceOld = settings?.somPriceOld || '$15,000';
+const priceSavings =
+	settings?.somPriceSavings ||
+	'Limited-Time Savings. Save $2,000 when you reserve your marriage intensive today.';
 
 function getYouTubeId(url: string | null | undefined): string | null {
 	if (!url) return null;
@@ -849,7 +853,27 @@ const ogImage =
 					font-weight: 300;
 					color: var(--som-gold-light);
 					line-height: 1;
-					margin: 40px 0 8px;
+					margin: 8px 0 8px;
+				}
+				body.som-page .som-investment-price-old {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: clamp(26px, 4vw, 38px);
+					font-weight: 400;
+					color: rgba(255,255,255,0.55);
+					text-decoration: line-through;
+					text-decoration-thickness: 2px;
+					line-height: 1;
+					margin: 40px 0 0;
+				}
+				body.som-page .som-investment-savings {
+					font-size: 14px;
+					font-weight: 700;
+					letter-spacing: 1px;
+					text-transform: uppercase;
+					color: var(--som-gold-light);
+					max-width: 560px;
+					margin: 0 auto 8px;
+					line-height: 1.6;
 				}
 				body.som-page .som-investment-duration {
 					font-size: 13px;
@@ -1263,7 +1287,9 @@ const ogImage =
 		<p class="som-section-body">
 			{page?.investmentBody || 'Consider what divorce costs — financially, emotionally, and spiritually — for the whole family. The Marriage Intensive is not inexpensive. But for couples who are serious, it is one of the most significant investments they will ever make.'}
 		</p>
+		<div class="som-investment-price-old">{priceOld}</div>
 		<div class="som-investment-price">{price}</div>
+		<p class="som-investment-savings">{priceSavings}</p>
 		<div style="margin-top:24px;"></div>
 		{investmentNotes.map((note: string, i: number) => (
 			<p class="som-investment-duration" style={`${i > 0 ? 'margin-top:-16px;' : ''}color:var(--som-gold-light);`}>{note}</p>
