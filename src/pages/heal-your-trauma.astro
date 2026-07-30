@@ -173,7 +173,11 @@ const DEFAULT_HYT_BIO_PARAS = [
 ];
 const bioParagraphs = page?.bioParagraphs?.length ? page.bioParagraphs : DEFAULT_HYT_BIO_PARAS;
 
-const price = settings?.hytPrice || '$9,400';
+const price = settings?.hytPrice || '$8,200';
+const priceOld = settings?.hytPriceOld || '$9,400';
+const priceSavings =
+	settings?.hytPriceSavings ||
+	'Limited-Time Savings. Save $1,200 when you reserve your individual intensive today.';
 
 function getYouTubeId(url: string | null | undefined): string | null {
 	if (!url) return null;
@@ -1055,7 +1059,27 @@ const logoUrl =
 					font-weight: 700;
 					color: var(--hyt-gold-light);
 					line-height: 1;
-					margin: 32px 0 8px;
+					margin: 8px 0 8px;
+				}
+				body.hyt-page .hyt-investment-price-old {
+					font-family: 'Cormorant Garamond', Georgia, serif;
+					font-size: clamp(24px, 3.5vw, 34px);
+					font-weight: 600;
+					color: #9ab0d4;
+					text-decoration: line-through;
+					text-decoration-thickness: 2px;
+					line-height: 1;
+					margin: 32px 0 0;
+				}
+				body.hyt-page .hyt-investment-savings {
+					font-size: 13px;
+					font-weight: 700;
+					letter-spacing: 1px;
+					text-transform: uppercase;
+					color: var(--hyt-gold);
+					max-width: 520px;
+					margin: 0 auto 20px;
+					line-height: 1.6;
 				}
 				body.hyt-page .hyt-investment-duration {
 					font-size: 14px;
@@ -1518,7 +1542,9 @@ const logoUrl =
 				</p>
 				<hr class="hyt-gold-rule" />
 			</div>
+			<div class="hyt-investment-price-old">{priceOld}</div>
 			<div class="hyt-investment-price">{price}</div>
+			<p class="hyt-investment-savings">{priceSavings}</p>
 			<div class="hyt-investment-duration">
 				{page?.investmentDuration || 'Three Consecutive Days · 24 Clinical Hours'}
 			</div>
