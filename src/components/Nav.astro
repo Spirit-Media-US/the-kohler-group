@@ -1,5 +1,6 @@
 ---
 import { sanityClient, urlFor } from '../lib/sanity';
+import MailtoLink from './MailtoLink.astro';
 
 const settings = await sanityClient.fetch(
 	`*[_type=="siteSettings"][0]{ logo, bookingUrl, phone, facebook, instagram }`,
@@ -101,8 +102,18 @@ function isActive(href: string) {
 				</button>
 			</div>
 
-			<!-- Desktop: logo centered -->
-			<div class="hidden justify-center py-6 lg:flex">
+			<!-- Mobile: résumé link -->
+			<div class="pb-4 text-center lg:hidden">
+				<MailtoLink
+					email="ashley.bostic@thekohlergroup.net"
+					class="text-xs leading-relaxed text-white/70 underline decoration-white/40 underline-offset-2 transition hover:text-white"
+				>
+					Interested in working with The Kohler Group PLLC? Click here to email your r&eacute;sum&eacute; to our Practice Manager
+				</MailtoLink>
+			</div>
+
+			<!-- Desktop: logo centered, résumé link in right corner -->
+			<div class="relative hidden justify-center py-6 lg:flex">
 				<a href="/" aria-label="The Kohler Group PLLC">
 					<img
 						src={logoDesktopUrl}
@@ -113,6 +124,12 @@ function isActive(href: string) {
 						decoding="async"
 					/>
 				</a>
+				<MailtoLink
+					email="ashley.bostic@thekohlergroup.net"
+					class="absolute right-0 top-6 max-w-[19rem] text-right text-xs leading-relaxed text-white/70 underline decoration-white/40 underline-offset-2 transition hover:text-white hover:decoration-white"
+				>
+					Interested in working with The Kohler Group PLLC? Click here to email your r&eacute;sum&eacute; to our Practice Manager
+				</MailtoLink>
 			</div>
 		</div>
 	</div>
