@@ -5,10 +5,12 @@ import { sanityClient, urlFor } from '../../lib/sanity.ts';
 
 export async function getStaticPaths() {
 	const therapists = await sanityClient.fetch(`
-		*[_type == "therapist" && active != false && defined(slug.current)] {
-			"slug": slug.current
+		*[_type == "therapist" && active != false] {
+			"slug": coalesce(slug.current, _id)
 		}
 	`);
+	// A therapist added in the Studio without a slug is linked by _id on the
+	// listing page, so build that path too — otherwise the bio 404s (April Morris, 2026-09-11).
 	return therapists.map((t: any) => ({
 		params: { slug: t.slug },
 	}));
