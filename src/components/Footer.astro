@@ -27,7 +27,7 @@ const year = new Date().getFullYear();
 
 		<!-- Contact info -->
 		<div class="flex flex-wrap items-center justify-center gap-3 text-sm text-white">
-			<span>Phone: <a href="tel:2527588636" class="transition hover:text-white">{settings?.phone}</a></span>
+			<span>Phone: <a href={`tel:${(settings?.phone || "704-948-1268").replace(/[^0-9]/g, "")}`} class="transition hover:text-white">{settings?.phone || "704-948-1268"}</a></span>
 			<span class="text-white">|</span>
 			<span>Fax: <a href="tel:2527582227" class="transition hover:text-white">252-758-2227</a></span>
 			<span class="text-white">|</span>
