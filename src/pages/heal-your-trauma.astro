@@ -2,6 +2,7 @@
 import { getImage } from 'astro:assets';
 import TraumaIntensiveQuiz from '@components/TraumaIntensiveQuiz.astro';
 import Layout from '@layouts/Layout.astro';
+import MailtoLink from '../components/MailtoLink.astro';
 import { sanityClient, urlFor } from '../lib/sanity.ts';
 
 const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
@@ -1310,7 +1311,7 @@ const logoUrl =
 		<img src={logoUrl} alt="" />
 		<span>
 			Questions? Call <a href={`tel:${phoneDigits}`}>{phone}</a> &nbsp;|&nbsp;
-			<a href={`mailto:${officeEmail}`}>{officeEmail}</a>
+			<MailtoLink email={officeEmail}>Email us</MailtoLink>
 			<span class="hyt-topbar-serving">
 				&nbsp;|&nbsp; Serving clients nationally from Huntersville, NC
 			</span>
@@ -1609,7 +1610,7 @@ const logoUrl =
 					<div class="hyt-step-num">1</div>
 					<h3>Email Us</h3>
 					<p>
-						Send your name and best contact number to <a href={`mailto:${officeEmail}`}>{officeEmail}</a>
+						<MailtoLink email={officeEmail}>Email us</MailtoLink> your name and best contact number
 						and we will reach out to schedule your complimentary consultation.
 					</p>
 				</div>
@@ -1622,7 +1623,7 @@ const logoUrl =
 					</p>
 				</div>
 			</div>
-			<a href={`mailto:${officeEmail}`} class="hyt-btn-primary-link">Email Us Now</a>
+			<MailtoLink email={officeEmail} class="hyt-btn-primary-link">Email Us Now</MailtoLink>
 		</div>
 	</section>
 
@@ -1739,7 +1740,7 @@ const logoUrl =
 		<p>13420 Reese Blvd West &nbsp;·&nbsp; Daetwyler Plaza &nbsp;·&nbsp; Huntersville, NC 28078</p>
 		<p>
 			<a href={`tel:${phoneDigits}`}>{phone}</a> &nbsp;·&nbsp;
-			<a href={`mailto:${officeEmail}`}>{officeEmail}</a>
+			<MailtoLink email={officeEmail}>Email us</MailtoLink>
 		</p>
 		<p>
 			<a href="https://www.thekohlergroup.net/">thekohlergroup.net</a> &nbsp;·&nbsp;
