@@ -1,4 +1,6 @@
 ---
+import MailtoLink from './MailtoLink.astro';
+
 interface Props {
 	barbaraEmail: string;
 	officeEmail: string;
@@ -153,7 +155,7 @@ const phoneDigits = phone.replace(/[^0-9]/g, '');
 			</p>
 			<div class="hyt-result-contact">
 				<h4>Schedule Your Free Consultation</h4>
-				<p>Email: <a href={`mailto:${officeEmail}`}>{officeEmail}</a></p>
+				<p><MailtoLink email={officeEmail}>Email us</MailtoLink></p>
 				<p>Phone: <a href={`tel:${phoneDigits}`}>{phone}</a></p>
 				<p style="margin-top:12px; font-size:13px; color:#9ab0d4;">Include your name and best contact number and we will reach out within one business day.</p>
 			</div>

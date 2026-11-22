@@ -2,6 +2,7 @@
 import { getImage } from 'astro:assets';
 import MarriageIntensiveQuiz from '@components/MarriageIntensiveQuiz.astro';
 import Layout from '@layouts/Layout.astro';
+import MailtoLink from '../components/MailtoLink.astro';
 import { sanityClient, urlFor } from '../lib/sanity.ts';
 
 const settings = await sanityClient.fetch(`*[_type=="siteSettings"][0]{
@@ -1361,7 +1362,7 @@ const ogImage =
 			<a href="https://thekohlergroup.net">TheKohlerGroup.net</a>
 			<a href="https://thekohlergroup.net/intensives/marriage">Marriage Intensives</a>
 			<a href={`tel:${phone.replace(/[^0-9]/g, '')}`}>Call Us</a>
-			<a href="mailto:Ashley.Bostic@thekohlergroup.net">Email Us</a>
+			<MailtoLink email="Ashley.Bostic@thekohlergroup.net">Email Us</MailtoLink>
 		</div>
 		<p class="som-footer-legal">
 			{page?.footerLegal || 'Barbara Kohler, MS, CRC, LCMHC, NCC is a Licensed Clinical Mental Health Counselor licensed in the State of North Carolina, and a Licensed Professional Counselor licensed in the State of South Carolina. Services are provided in accordance with the applicable licensure standards and ethics of the respective states and the ACA Code of Ethics. This website is for informational purposes only and does not constitute a therapeutic relationship. Individual results vary. The Marriage Intensive program is a private-pay service; insurance is not accepted for intensive programs.'}
